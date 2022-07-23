@@ -28,5 +28,20 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+		/// <summary>
+		/// Метод GetTour(int id), кот. возвращает данные одного туристического тура
+		/// </summary>
+		/// <param name="id">id тура</param>
+		/// <returns></returns>
+		public ActionResult GetTour(int id)
+		{
+			TourProductsRepository repository = new TourProductsRepository();
+
+			TourProduct tourProduct = repository.GetTourProduct(id);
+
+			return View(tourProduct);
+		}
+
+
 	}
 }
