@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="NLog.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.schema\5.0.1\contentFiles\any\any\NLog.xsd" />
   </ItemGroup>
@@ -27,8 +23,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog" Version="5.0.1" />
-    <PackageReference Include="NLog.Config" Version="4.7.15" />
-    <PackageReference Include="NLog.Schema" Version="5.0.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="NLog.config" />
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
