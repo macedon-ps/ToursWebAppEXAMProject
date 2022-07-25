@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.schema\5.0.1\contentFiles\any\any\NLog.xsd" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildWebCompiler2022" Version="1.14.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +28,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="6.0.7" />
     <PackageReference Include="NLog" Version="5.0.1" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.0" />
@@ -34,9 +42,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
