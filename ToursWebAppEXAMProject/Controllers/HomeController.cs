@@ -37,17 +37,17 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			ProductsRepository repository = new ProductsRepository();
 
-			Product tourProduct = repository.GetTourProduct(id);
+			Product product = repository.GetTour(id);
 
-			return View(tourProduct);
+			return View(product);
 		}
-		public ActionResult GetAllTourProducts()
+		public ActionResult GetAllTours()
 		{
 			ProductsRepository repository = new ProductsRepository();
 
-			List<Product> tourProducts = repository.Products;
+			List<Product>? products = repository.Products;
 
-			return View(tourProducts);
+			return View(products);
 		}
 
 	}

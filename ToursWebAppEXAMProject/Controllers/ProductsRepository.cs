@@ -37,7 +37,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-		public IEnumerable<Product> GetAllTourProducts()
+		public IEnumerable<Product> GetAllTours()
 		{
 			// запрос к БД
 			var commandText = "select * from Product";
@@ -79,34 +79,45 @@ namespace ToursWebAppEXAMProject.Controllers
 			return Products;
 		}
 
-		public Product GetTourProduct(int id)
+		public Product GetTour(int id)
 		{
+			// запрос к БД
+			var commandText = "select * from Product where Id=@id";
+
+			// выполнение SQL запроса
+			var command = new SqlCommand(commandText, _connection);
+			command.Parameters.AddWithValue("id", id);
+
 			logger.Trace($"Запрашивваемый id туристического продукта: {id}");
 
 			Console.WriteLine($"Запрашивваемый id туристического продукта: {id}");
 
-
-			var tourProduct = Products?.FirstOrDefault(x => x.Id == id);
-			if (tourProduct == null)
+			using var reader = command.ExecuteReader();
+			
+			// обработать неуспешное чтение данных
+			if (!reader.Read())
 			{
 				logger.Error($"Не найден туристический тур по id = {id}");
-
 				Console.WriteLine($"Не найден туристический тур по id = {id}");
-
-				return tourProduct = new Product();
+				return new Product();
 			}
 			else
 			{
 				IsConnected = true;
 			}
-
+			
 			logger.Trace($"Попытка подключения к источнику данных: {IsConnected}");
 			logger.Trace($"Подключения прошло {(IsConnected == true ? "успешно" : "неуспешно")}");
 
 			Console.WriteLine($"Попытка подключения к источнику данных:");
 			Console.WriteLine($"Подключения прошло {(IsConnected == true ? "успешно" : "неуспешно")}");
 
-			return tourProduct;
+			return new Product()
+			{
+				Id = reader.GetInt32(0),
+				Name = reader.GetString(1),
+				Description = reader.GetString(2)
+			};
 		}
 	}
 }
