@@ -1,11 +1,17 @@
+using Microsoft.Extensions.Configuration;
 using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<ITourProduct, TourProductsRepository>();
+builder.Services.AddTransient<IProduct, ProductsRepository>();
+
+// сопоставляем параметры конфигурационного файла appsettings.json (ключ "Project") со свойствами класса ConfigData 
+builder.Configuration.Bind("Project", new ConfigData());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

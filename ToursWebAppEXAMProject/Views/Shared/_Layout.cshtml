@@ -14,7 +14,9 @@
 					<div class="col-8 col-12-medium">
                         <!-- TODO: Это шаблон для RenderBody. Пока заглушка  -->
                         @await Html.PartialAsync("MainPartial")
-                        
+                        <h3>Название фирмы: @ConfigData.CompanyName</h3>
+                        <p>Телефон: @ConfigData.CompanyPhone</p>
+                        <p>Email: <a>@ConfigData.CompanyEmail</a></p>   
                         @RenderBody()
                     </div>
                 </div>

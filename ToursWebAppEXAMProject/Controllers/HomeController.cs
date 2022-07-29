@@ -35,13 +35,20 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public ActionResult GetTour(int id)
 		{
-			TourProductsRepository repository = new TourProductsRepository();
+			ProductsRepository repository = new ProductsRepository();
 
-			TourProduct tourProduct = repository.GetTourProduct(id);
+			Product tourProduct = repository.GetTourProduct(id);
 
 			return View(tourProduct);
 		}
+		public ActionResult GetAllTourProducts()
+		{
+			ProductsRepository repository = new ProductsRepository();
 
+			List<Product> tourProducts = repository.Products;
+
+			return View(tourProducts);
+		}
 
 	}
 }
