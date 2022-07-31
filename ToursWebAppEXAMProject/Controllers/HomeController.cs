@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Diagnostics;
+using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Controllers
@@ -33,19 +35,20 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="id">id тура</param>
 		/// <returns></returns>
-		public ActionResult GetTour(int id)
+		public IActionResult GetTour(int id)
 		{
-			ProductsRepository repository = new ProductsRepository();
+			TourFirmaDBContext context = new TourFirmaDBContext();
 
-			Product product = repository.GetTour(id);
-
+			var product = context.Products.FirstOrDefault(t => t.Id == id);
+			if (product == null) return View("Error", id);
+			
 			return View(product);
 		}
-		public ActionResult GetAllTours()
+		public IActionResult GetAllTours()
 		{
-			ProductsRepository repository = new ProductsRepository();
+			TourFirmaDBContext context = new TourFirmaDBContext();
 
-			List<Product>? products = repository.Products;
+			var products = context.Products.ToList();
 
 			return View(products);
 		}
