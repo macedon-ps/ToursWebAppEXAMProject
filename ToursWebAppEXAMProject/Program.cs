@@ -7,9 +7,11 @@ using ToursWebAppEXAMProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// подключение сервиса, кот. добавляет контроллеры и представления
 builder.Services.AddControllersWithViews();
+// подключение сервиса, кот. связывает интерфейс и класс, кот. его реализует
 builder.Services.AddTransient<IProduct, ProductsRepository>();
+
 // подключение сервиса использования MS SQL Server и БД
 builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
 

@@ -31,27 +31,34 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 		/// <summary>
-		/// Метод GetTour(int id), кот. возвращает данные одного туристического тура
+		/// Метод GetProduct(int id), кот. возвращает данные одного туристического тура
 		/// </summary>
 		/// <param name="id">id тура</param>
 		/// <returns></returns>
-		public IActionResult GetTour(int id)
+		public IActionResult GetProduct(int id)
 		{
-			TourFirmaDBContext context = new TourFirmaDBContext();
+			var productRepository = new ProductsRepository(new TourFirmaDBContext());
 
-			var product = context.Products.FirstOrDefault(t => t.Id == id);
-			if (product == null) return View("Error", id);
-			
+			var product = productRepository.GetProduct(id);
+
+			if(product.Id == 0) return View("Error", id);
+
 			return View(product);
-		}
-		public IActionResult GetAllTours()
-		{
-			TourFirmaDBContext context = new TourFirmaDBContext();
 
-			var products = context.Products.ToList();
+		}
+		/// <summary>
+		/// Метод GetAllProducts(), кот. возвращает данные всех туристических продуктов из БД
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult GetAllProducts()
+		{
+			var productRepository = new ProductsRepository(new TourFirmaDBContext());
+
+			var products = productRepository.GetAllProducts().ToList<Product>();
+
+			if (products == null) return View("Error");
 
 			return View(products);
 		}
-
 	}
 }

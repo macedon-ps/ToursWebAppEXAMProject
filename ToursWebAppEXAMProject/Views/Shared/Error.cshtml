@@ -16,8 +16,15 @@
 
 @* Заглушка: *@
 <p>
-      <strong>ID product:</strong> <code>Туристического продукта с Id = @Model не существует</code>
- </p>
+     @if(@Model!=null)
+     {
+        <strong>ID product:</strong> <code>Туристического продукта с Id = @Model не существует</code>
+    }
+    else
+    {
+        <strong>ID product:</strong> <code>Туристического продукта не существует</code>
+    }
+</p>
 
 <h3>Режим разработки</h3>
 <p>

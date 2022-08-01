@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using NLog;
+using System.Collections.Generic;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -10,14 +11,6 @@ namespace ToursWebAppEXAMProject.Controllers
 {
 	public class ProductsRepository : IProduct
 	{
-		//public List<Product> Products { get; set; } = null!;
-		public bool IsConnected { get; set; } = false;
-
-		
-
-		// создаем подключение к БД
-		// private readonly SqlConnection _connection;
-
 		/// <summary>
 		/// Контекст подключения к MS SQL Server, к БД TourFirmaDB
 		/// </summary>
@@ -43,26 +36,39 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// Метод по возврату коллекции турпродуктов из БД
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Product> GetAllTours()
+		public IEnumerable<Product> GetAllProducts()
 		{
-			logger.Debug("Отправлен запрос к БД по выборке всех туров");
-			Console.WriteLine("Отправлен запрос к БД по выборке всех туров");
+			logger.Debug("Запрашиваются все туристические продукты");
+			Console.WriteLine("Запрашиваются все туристические продукты");
 
 			try
             {
-				logger.Debug("Выборка осуществлена успешно");
-				Console.WriteLine("Выборка осуществлена успешно");
+				var products = context.Products;
+				
+				if(products == null)
+				{
+					logger.Warn($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
+					Console.WriteLine($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
 
-				return context.Products;
+					return new List<Product>();
+				}
+				else
+				{
+					logger.Debug("Выборка осуществлена успешно\n");
+					Console.WriteLine("Выборка осуществлена успешно\n");
+
+					return products;
+				}
+				
 			}
 			catch(Exception ex)
             {
-				logger.Debug("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
+				logger.Error("Выборка не осуществлена");
+				logger.Error($"Код ошибки: {ex.Message}\n");
                 Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
+				Console.WriteLine($"Код ошибки: {ex.Message}\n");
 				
-				return Enumerable.Empty<Product>();
+				return new List<Product>();
 			}
 		}
 		/// <summary>
@@ -70,24 +76,37 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="id">идентификатор турпродукта</param>
 		/// <returns></returns>
-		public Product GetTour(int id)
+		public Product GetProduct(int id)
 		{
 			logger.Trace($"Запрашивваемый id туристического продукта: {id}");
 			Console.WriteLine($"Запрашивваемый id туристического продукта: {id}");
 
 			try
 			{
-				logger.Debug("Выборка осуществлена успешно");
-				Console.WriteLine("Выборка осуществлена успешно");
+				var product = context.Products.FirstOrDefault(x => x.Id == id);
+				
+				if (product == null)
+				{
+					logger.Warn($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
+					Console.WriteLine($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
 
-				return context.Products.FirstOrDefault(x => x.Id == id);
+					return new Product();
+				}
+				else
+				{
+					logger.Debug("Выборка осуществлена успешно\n");
+					Console.WriteLine("Выборка осуществлена успешно\n");
+
+					return product;
+				}
+				
 			}
 			catch(Exception ex)
             {
-				logger.Debug($"Выборка турпродукта с Id = {id} не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
+				logger.Error($"Выборка турпродукта с Id = {id} не осуществлена");
+				logger.Error($"Код ошибки: {ex.Message}\n");
 				Console.WriteLine($"Выборка турпродукта с Id = {id} не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
+				Console.WriteLine($"Код ошибки: {ex.Message}\n");
 				return new Product();
 			}
 		}

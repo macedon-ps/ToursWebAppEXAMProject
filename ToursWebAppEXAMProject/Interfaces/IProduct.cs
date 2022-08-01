@@ -11,14 +11,14 @@ namespace ToursWebAppEXAMProject.Interfaces
 		/// Метод интерфейса GetAllTourProducts(), кот. возвращает список всех существующих в базе туров
 		/// </summary>
 		/// <returns></returns>
-		IEnumerable<Product> GetAllTours();
+		IEnumerable<Product> GetAllProducts();
 
 		/// <summary>
 		/// Метод интерфейса GetTourProduct(int id), кот. возвращает из базы одного стдента по его id
 		/// </summary>
 		/// <param name="id">id тура</param>
 		/// <returns></returns>
-		Product GetTour(int id);
+		Product GetProduct(int id);
 
 	}
 }
