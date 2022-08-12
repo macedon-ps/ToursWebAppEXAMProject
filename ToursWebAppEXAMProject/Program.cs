@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,5 +40,16 @@ app.UseAuthorization();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapControllerRoute(
+	name: "research",
+	pattern: "{controller=Search}/{action=Index}/{id?}");
+app.MapControllerRoute(
+	name: "admin",
+	pattern: "{controller=Admin}/{action=Index}/{id?}");
+app.MapControllerRoute(
+	name: "support",
+	pattern: "{controller=Support}/{action=Index}/{id?}");
+app.MapControllerRoute(
+	name: "about",
+	pattern: "{controller=About}/{action=Index}/{id?}");
 app.Run();

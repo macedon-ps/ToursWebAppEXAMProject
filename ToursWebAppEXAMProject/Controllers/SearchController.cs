@@ -1,40 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Diagnostics;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public class HomeController : Controller
+	public class SearchController: Controller
 	{
-		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
-
+		/// <summary>
+		/// Метод Index(), кот. выводит дефолтный вид страницы Search
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult Index()
 		{
+			
 			return View();
 		}
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
 		/// <summary>
-		/// Метод GetProduct(int id), кот. возвращает данные одного туристического тура
+		/// Метод GetProduct(), кот. возвращает данные турпродукта по его id
 		/// </summary>
-		/// <param name="id">id тура</param>
+		/// <param name="id">уникальный идентификатор турпродукта</param>
 		/// <returns></returns>
 		public IActionResult GetProduct(int id)
 		{
@@ -42,11 +28,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			var product = productRepository.GetProduct(id);
 
-			if(product.Id == 0) return View("Error", id);
+			if (product.Id == 0) return View("Error", id);
 
 			return View(product);
 
 		}
+
 		/// <summary>
 		/// Метод GetAllProducts(), кот. возвращает данные всех туристических продуктов из БД
 		/// </summary>
@@ -61,5 +48,8 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			return View(products);
 		}
+
+
+
 	}
 }

@@ -32,13 +32,17 @@
 			<div class="col-12">
 
 				<header id="header">
-					<h1><a href="index.html" id="logo">Minimaxing</a></h1>
+					<h1><a href="index.html" id="logo">@ConfigData.CompanyName.ToString()</a></h1>
 					<nav id="nav">
-						<a href="index.html">Homepage</a>
-						<a href="twocolumn1.html" class="current-page-item">Two Column #1</a>
-						<a href="twocolumn2.html">Two Column #2</a>
-						<a href="onecolumn.html">One Column</a>
-						<a href="threecolumn.html">Three Column</a>
+						<a class="" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="" asp-area="" asp-controller="Search" asp-action="Index">Search</a>
+                        <a class="" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        <a class="" asp-area="" asp-controller="Support" asp-action="Index">Support</a>
+                        <a class="" asp-area="" asp-controller="About" asp-action="Index">About</a>
+                                                                       
+                        <!--    формат заимствованного html/css шаблона -->
+                        <!--    <a href="index.html">Homepage</a>   -->
+						<!--    <a href="twocolumn1.html" class="current-page-item">Two Column #1</a>   -->
 					</nav>
 				</header>
 

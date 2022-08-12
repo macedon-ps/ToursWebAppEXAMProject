@@ -7,7 +7,7 @@ using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Services;
 
-namespace ToursWebAppEXAMProject.Controllers
+namespace ToursWebAppEXAMProject.Repositories
 {
 	public class ProductsRepository : IProduct
 	{
@@ -20,7 +20,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
 		/// <param name="_context">контекст подключения к БД</param>
-		public ProductsRepository(TourFirmaDBContext _context) 
+		public ProductsRepository(TourFirmaDBContext _context)
 		{
 			context = _context;
 			logger.Debug("Произведено подключение к базе данных");
@@ -42,10 +42,10 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Запрашиваются все туристические продукты");
 
 			try
-            {
+			{
 				var products = context.Products;
-				
-				if(products == null)
+
+				if (products == null)
 				{
 					logger.Warn($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
 					Console.WriteLine($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
@@ -59,15 +59,15 @@ namespace ToursWebAppEXAMProject.Controllers
 
 					return products;
 				}
-				
+
 			}
-			catch(Exception ex)
-            {
+			catch (Exception ex)
+			{
 				logger.Error("Выборка не осуществлена");
 				logger.Error($"Код ошибки: {ex.Message}\n");
-                Console.WriteLine("Выборка не осуществлена");
+				Console.WriteLine("Выборка не осуществлена");
 				Console.WriteLine($"Код ошибки: {ex.Message}\n");
-				
+
 				return new List<Product>();
 			}
 		}
@@ -84,7 +84,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			try
 			{
 				var product = context.Products.FirstOrDefault(x => x.Id == id);
-				
+
 				if (product == null)
 				{
 					logger.Warn($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
@@ -99,10 +99,10 @@ namespace ToursWebAppEXAMProject.Controllers
 
 					return product;
 				}
-				
+
 			}
-			catch(Exception ex)
-            {
+			catch (Exception ex)
+			{
 				logger.Error($"Выборка турпродукта с Id = {id} не осуществлена");
 				logger.Error($"Код ошибки: {ex.Message}\n");
 				Console.WriteLine($"Выборка турпродукта с Id = {id} не осуществлена");
