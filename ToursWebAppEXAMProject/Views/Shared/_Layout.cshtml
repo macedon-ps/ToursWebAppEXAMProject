@@ -19,9 +19,12 @@
                         <p>Email: <a>@ConfigData.CompanyEmail</a></p>   
                         @RenderBody()
                     </div>
+                    <!-- TODO: Создать боковую часть "SidePartial". Пока заглушка  -->
+                    <div class="col-4 col-12-medium">
+                        @await Html.PartialAsync("SidePartial")
+                    </div>
                 </div>
-                <!-- TODO: Создать боковую часть "SidePartial". Пока заглушка  -->
-                @await Html.PartialAsync("SidePartial")
+                
             </div>
         </div>
         <!-- TODO: Создать футер. Пока заглушка  -->
