@@ -38,7 +38,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IEnumerable<Product> GetAllProducts()
 		{
-			logger.Debug("Запрашиваются все туристические продукты");
+			logger.Trace("Запрашиваются все туристические продукты");
 			Console.WriteLine("Запрашиваются все туристические продукты");
 
 			try
