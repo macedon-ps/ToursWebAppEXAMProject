@@ -41,7 +41,7 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
-	name: "research",
+	name: "search",
 	pattern: "{controller=Search}/{action=Index}/{id?}");
 app.MapControllerRoute(
 	name: "admin",
