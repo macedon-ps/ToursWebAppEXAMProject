@@ -84,7 +84,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			try
 			{
 				var product = context.Products.FirstOrDefault(x => x.Id == id);
-
+				
 				if (product == null)
 				{
 					logger.Warn($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
