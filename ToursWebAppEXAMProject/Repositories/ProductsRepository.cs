@@ -17,6 +17,11 @@ namespace ToursWebAppEXAMProject.Repositories
 		private readonly TourFirmaDBContext context;
 
 		/// <summary>
+		/// Статическое сойство для логирования событий
+		/// </summary>
+		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+		/// <summary>
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
 		/// <param name="_context">контекст подключения к БД</param>
@@ -26,11 +31,6 @@ namespace ToursWebAppEXAMProject.Repositories
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
 		}
-
-		/// <summary>
-		/// Статическое сойство для логирования событий
-		/// </summary>
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Метод по возврату коллекции турпродуктов из БД
@@ -47,15 +47,15 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (products == null)
 				{
-					logger.Warn($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
-					Console.WriteLine($"Выборка туристических продуктов не осуществлена. Они не существуют\n");
+					logger.Warn($"Выборка туристических продуктов не осуществлена. Они не существуют");
+					Console.WriteLine($"Выборка туристических продуктов не осуществлена. Они не существуют");
 
 					return new List<Product>();
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно\n");
-					Console.WriteLine("Выборка осуществлена успешно\n");
+					logger.Debug("Выборка осуществлена успешно");
+					Console.WriteLine("Выборка осуществлена успешно");
 
 					return products;
 				}
@@ -64,9 +64,9 @@ namespace ToursWebAppEXAMProject.Repositories
 			catch (Exception ex)
 			{
 				logger.Error("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}\n");
+				logger.Error($"Код ошибки: {ex.Message}");
 				Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}\n");
+				Console.WriteLine($"Код ошибки: {ex.Message}");
 
 				return new List<Product>();
 			}
@@ -87,15 +87,15 @@ namespace ToursWebAppEXAMProject.Repositories
 				
 				if (product == null)
 				{
-					logger.Warn($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
-					Console.WriteLine($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует\n");
+					logger.Warn($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует");
+					Console.WriteLine($"Выборка турпродукта не осуществлена. Турпродукта с Id = {id} не существует");
 
 					return new Product();
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно\n");
-					Console.WriteLine("Выборка осуществлена успешно\n");
+					logger.Debug("Выборка осуществлена успешно");
+					Console.WriteLine("Выборка осуществлена успешно");
 
 					return product;
 				}
@@ -104,9 +104,9 @@ namespace ToursWebAppEXAMProject.Repositories
 			catch (Exception ex)
 			{
 				logger.Error($"Выборка турпродукта с Id = {id} не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}\n");
+				logger.Error($"Код ошибки: {ex.Message}");
 				Console.WriteLine($"Выборка турпродукта с Id = {id} не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}\n");
+				Console.WriteLine($"Код ошибки: {ex.Message}");
 				return new Product();
 			}
 		}
