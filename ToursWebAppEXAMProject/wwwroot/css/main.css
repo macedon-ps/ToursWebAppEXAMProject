@@ -85,15 +85,15 @@ input, select, textarea {
 		width: device-width;
 	}
 
-	body {
-		font-size: 13.5pt;
-		font-family: sans-serif;
-		background-color: #e3e9dc;
-		font-family: 'Ubuntu Condensed', sans-serif;
-		color: #878e83;
-		letter-spacing: -1px;
+body {
+	font-size: 13.5pt;
+	font-family: sans-serif;
+	background-color: #e3e9dc;
+	font-family: 'Ubuntu Condensed', sans-serif;
+	color: #878e83;
+	letter-spacing: -1px;
 	}
-
+	
 	h1, h2, h3, h4 {
 		color: #007897;
 		font-weight: normal;
@@ -2006,8 +2006,17 @@ input, select, textarea {
 				line-height: 1.5em;
 			}
 
-				#copyright a {
-					color: #A6A88F;
-				}
-
+			#copyright a {
+				color: #A6A88F;
+			}
 	}
+
+.palms {
+	background-image: url(../images/tropical-sea.jpg);
+	background-repeat: no-repeat;
+	background-size: auto auto;
+	background-position: center;
+	/*opacity: 0.9;*/
+}
+
+
