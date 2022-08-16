@@ -2,7 +2,7 @@
     TODO: Изучить и использовать    
     @model ErrorViewModel
 *@
-    @model Int32
+    @model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }   
@@ -16,9 +16,9 @@
 
 @* Заглушка: *@
 <p>
-     @if(@Model!=null)
+    @if(@Model.RequestId!=null)
      {
-        <strong>ID product:</strong> <code>Туристического продукта с Id = @Model не существует</code>
+        <strong>ID product:</strong> <code>Туристического продукта с Id = @Model.RequestId не существует</code>
     }
     else
     {

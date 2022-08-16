@@ -38,7 +38,6 @@
   <ItemGroup>
     <Folder Include="Areas\Controllers\" />
     <Folder Include="Areas\Views\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
