@@ -1,7 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
- }
+﻿@model List<Product>
 
+@{
+    ViewData["Title"] = "Home Page";
+    var productId = 1;
+}
+ 
+ <h2>Страница для администратора:</h2>
+ <h3>Виды туристических продуктов:</h3>
+
+@{
+    if (Model.Any())
+    {
+        foreach(var product in Model)
+        {
+            <a asp-controller="Admin" asp-action="Index" id="@product.Id" onclick="alert('клац по @product.Id')">@product.Name"</a><br/>
+        }       
+    }
+}
+    
+@*
 <div class="text-center">
     <h1 class="display-4">Страница для администратора</h1>
     <p>Тут будут редактироваться новости, статистика, рейтинги, ссылки на другой функционал</p>
@@ -23,3 +40,4 @@
             <li></li>
         </ul>
 </div>
+*@
