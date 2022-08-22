@@ -1,34 +1,36 @@
-﻿namespace ToursWebAppEXAMProject.Repositories
+﻿using ToursWebAppEXAMProject.Interfaces;
+
+namespace ToursWebAppEXAMProject.Repositories
 {
 	public class DataManager
 	{
-		public ProductsRepository productsRepository;
-		public CitiesRepository citiesRepository;
-		public CountriesRepository countriesRepository;
-		public HotelsRepository hotelsRepository;
-		public LocationsRepository locationsRepository;
-		public DateToursRepository dateToursRepository;
-		public FoodsRepository foodsRepository;
-		public ToursRepository toursRepository;
-		public CustomersRepository customersRepository;
-		public SallersRepository sallersRepository;
-		public OfertumsRepository ofertumsRepository;
-		public NewsRepository newsRepository;
-		public ArticlesRepository articlesRepository;  
+		public IProduct productsRepository { get; set; }
+		public ICity citiesRepository { get; set; }
+		public ICountry countriesRepository { get; set; }
+		public IHotel hotelsRepository { get; set; }
+		public ILocation locationsRepository { get; set; }
+		public IDateTour dateToursRepository { get; set; }
+		public IFood foodsRepository { get; set; }
+		public ITour toursRepository { get; set; }
+		public ICustomer customersRepository { get; set; }
+		public ISaller sallersRepository { get; set; }
+		public IOfertum ofertumsRepository { get; set; }
+		public INew newsRepository	{ get; set; }
+		public IArticle articlesRepository { get; set; }
 
-		public DataManager(	ProductsRepository productsRepository, 
-							CitiesRepository citiesRepository, 
-							CountriesRepository countriesRepository,
-							HotelsRepository hotelsRepository,
-							LocationsRepository locationsRepository,
-							DateToursRepository dateToursRepository,
-							FoodsRepository foodsRepository,
-							ToursRepository toursRepository,
-							CustomersRepository customersRepository,
-							SallersRepository sallersRepository,
-							OfertumsRepository ofertumsRepository,
-							NewsRepository newsRepository,
-							ArticlesRepository articlesRepository)
+		public DataManager(	IProduct productsRepository, 
+							ICity citiesRepository, 
+							ICountry countriesRepository,
+							IHotel hotelsRepository,
+							ILocation locationsRepository,
+							IDateTour dateToursRepository,
+							IFood foodsRepository,
+							ITour toursRepository,
+							ICustomer customersRepository,
+							ISaller sallersRepository,
+							IOfertum ofertumsRepository,
+							INew newsRepository,
+							IArticle articlesRepository)
 		{
 			this.productsRepository = productsRepository;
 			this.citiesRepository = citiesRepository;

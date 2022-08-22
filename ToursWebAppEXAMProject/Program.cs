@@ -13,6 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // подключение сервиса, кот. связывает интерфейс и класс, кот. его реализует
 builder.Services.AddTransient<IProduct, ProductsRepository>();
+builder.Services.AddTransient<IArticle, ArticlesRepository>();
+builder.Services.AddTransient<ICity, CitiesRepository>();
+builder.Services.AddTransient<ICountry, CountriesRepository>();
+builder.Services.AddTransient<ICustomer, CustomersRepository>();
+builder.Services.AddTransient<IDateTour, DateToursRepository>();
+builder.Services.AddTransient<IFood, FoodsRepository>();
+builder.Services.AddTransient<IHotel, HotelsRepository>();
+builder.Services.AddTransient<ILocation, LocationsRepository>();
+builder.Services.AddTransient<INew, NewsRepository>();
+builder.Services.AddTransient<IOfertum, OfertumsRepository>();
+builder.Services.AddTransient<ISaller, SallersRepository>();
+builder.Services.AddTransient<ITour, ToursRepository>();
 builder.Services.AddTransient<DataManager>();
 
 // подключение сервиса использования MS SQL Server и БД

@@ -21,7 +21,8 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml");
 			Console.WriteLine("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml");
 			
-			var products = DataManager.productsRepository.GetAllProducts().ToList();
+			var products = new List<Product>();
+			products = DataManager.productsRepository.GetAllProducts().ToList();
 			
 			return View(products);
 		}

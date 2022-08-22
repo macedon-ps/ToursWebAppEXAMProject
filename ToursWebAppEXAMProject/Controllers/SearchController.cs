@@ -38,8 +38,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace($"Переход по маршруту /Search/GetProduct?id={id}");
 			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
-			
-			var product = DataManager.productsRepository.GetProduct(id);
+
+			var product = new Product();
+			product = DataManager.productsRepository.GetProduct(id);
 			logger.Debug($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
 			Console.WriteLine($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
 
@@ -63,7 +64,8 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Search/GetAllProducts");
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
 			
-			var products = DataManager.productsRepository.GetAllProducts().ToList<Product>();
+			var products = new List<Product>();
+			products = DataManager.productsRepository.GetAllProducts().ToList();
 			logger.Debug("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
 			Console.WriteLine("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
 
