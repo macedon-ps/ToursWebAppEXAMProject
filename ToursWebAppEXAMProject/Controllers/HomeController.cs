@@ -11,13 +11,13 @@ namespace ToursWebAppEXAMProject.Controllers
 	public class HomeController : Controller
 	{
 		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-		
-		/*private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		private readonly DataManager DataManager;
+
+		public HomeController(DataManager DataManager)
 		{
-			_logger = logger;
-		}*/
+			this.DataManager = DataManager;
+		}
 
 		public IActionResult Index()
 		{
@@ -50,9 +50,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
 			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
-			//var newRepository = new NewsRepository(new TourFirmaDBContext()); ????
+			
+			var new = DataManager.newsRepository.GetNew(id);
 
-			var new = newRepository.GetNew(id);
 			logger.Debug($"Вывод новости с id={id}. Возвращено представление Home/GetNew.cshtml\n");
 			Console.WriteLine($"Вывод новости с id={id}. Возвращено представление Home/GetNew.cshtml\n");
 
@@ -60,7 +60,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Warn($"Отсутствие данных о новости с id={id}. Возвращено представление /Home/Error.cshtml\n");
 			Console.WriteLine($"Отсутствие данных о новости с id={id}. Возвращеноя представление /Home/Error.cshtml\n");
 
-			return View(product);
+			return View(new);
 		}
 		*/
 
@@ -73,17 +73,16 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Home/GetAllNews");
 			Console.WriteLine("Переход по маршруту /Home/GetAllNews");
-			//var newRepository = new NewsRepository(new TourFirmaDBContext()); ????
-
-			var news = newRepository.GetAllNews().ToList<New>();
+			
+			var news = DataManager.newsRepository.GetAllNews().ToList<New>();
 			logger.Debug("Вывод всех новостей. Возвращено представление Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Вывод всех новостей. Возвращено представление Home/GetAllNews.cshtml\n");
 
-			if (products == null) return View("Error");
+			if (news == null) return View("Error");
 			logger.Warn("Отсутствие данных о новостях. Возвращеноя представление /Home/Error.cshtml\n");
 			Console.WriteLine("Отсутствие данных о новостях. Возвращенося представление /Home/Error.cshtml\n");
 
-			return View(products);
+			return View(news);
 		}
 		*/
 	}

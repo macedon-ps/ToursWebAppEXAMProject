@@ -11,6 +11,13 @@ namespace ToursWebAppEXAMProject.Controllers
 	{
 		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
+		private readonly DataManager DataManager;
+
+		public SearchController(DataManager DataManager)
+		{
+			this.DataManager = DataManager;
+		}
+
 		/// <summary>
 		/// Метод Index(), кот. выводит дефолтный вид страницы Search
 		/// </summary>
@@ -31,9 +38,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace($"Переход по маршруту /Search/GetProduct?id={id}");
 			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
-			var productRepository = new ProductsRepository(new TourFirmaDBContext());
-
-			var product = productRepository.GetProduct(id);
+			
+			var product = DataManager.productsRepository.GetProduct(id);
 			logger.Debug($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
 			Console.WriteLine($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
 
@@ -56,9 +62,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Search/GetAllProducts");
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
-			var productRepository = new ProductsRepository(new TourFirmaDBContext());
-
-			var products = productRepository.GetAllProducts().ToList<Product>();
+			
+			var products = DataManager.productsRepository.GetAllProducts().ToList<Product>();
 			logger.Debug("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
 			Console.WriteLine("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
 
