@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // подключение сервиса, кот. связывает интерфейс и класс, кот. его реализует
 builder.Services.AddTransient<IProduct, ProductsRepository>();
+builder.Services.AddTransient<DataManager>();
 
 // подключение сервиса использования MS SQL Server и БД
 builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
