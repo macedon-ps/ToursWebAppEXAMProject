@@ -12,10 +12,6 @@
 			<div class="container"> <!-- class="palms"-->
 				<div class="row main-row">
 					<div class="col-9 col-12-medium">
-                        <!-- TODO: Это шаблон для RenderBody. Пока заглушка  -->
-                        <h3>Название фирмы: @ConfigData.CompanyName</h3>
-                        <p>Телефон: @ConfigData.CompanyPhone</p>
-                        <p>Email: <a>@ConfigData.CompanyEmail</a></p>   
                         @RenderBody()
                     </div>
                     <!-- TODO: Создать боковую часть "SidePartial". Пока заглушка  -->
@@ -23,8 +19,7 @@
                         @await Html.PartialAsync("SidePartial")
                     </div>
                 </div>
-                
-            </div>
+             </div>
         </div>
         <!-- TODO: Создать футер. Пока заглушка  -->
         @await Html.PartialAsync("FooterPartial")
