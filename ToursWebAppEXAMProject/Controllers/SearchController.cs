@@ -43,14 +43,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (product.Id == 0)
 			{
-				logger.Warn($"Отсутствие данных о турподукте с id={id}. Возвращено представление /Search/Error.cshtml\n");
-				Console.WriteLine($"Отсутствие данных о турподукте с id={id}. Возвращеноя представление /Search/Error.cshtml\n");
+				logger.Warn($"Возвращено представление /Search/Error.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /Search/Error.cshtml\n");
 				ViewData["id"] = id;
 				return View("Error");
 			}
 
-			logger.Debug($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml\n");
-			Console.WriteLine($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml\n");
+			logger.Debug($"Возвращено представление /Search/GetProduct.cshtml\n");
+			Console.WriteLine($"Возвращено представление /Search/GetProduct.cshtml\n");
 			return View(product);
 		}
 
@@ -67,13 +67,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (products == null)
 			{
-				logger.Warn("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml\n");
-				Console.WriteLine("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml\n");
+				logger.Warn("Возвращено представление /Search/Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Search/Error.cshtml\n");
 				return View("Error");
 			}
 			
-			logger.Debug("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml\n");
-			Console.WriteLine("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml\n");
+			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
+			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
 		}
 		
