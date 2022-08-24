@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.Services;
 
@@ -11,20 +12,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // подключение сервиса, кот. добавляет контроллеры и представления
 builder.Services.AddControllersWithViews();
-// подключение сервиса, кот. связывает интерфейс и класс, кот. его реализует
-builder.Services.AddTransient<IProduct, ProductsRepository>();
-builder.Services.AddTransient<IArticle, ArticlesRepository>();
-builder.Services.AddTransient<ICity, CitiesRepository>();
-builder.Services.AddTransient<ICountry, CountriesRepository>();
-builder.Services.AddTransient<ICustomer, CustomersRepository>();
-builder.Services.AddTransient<IDateTour, DateToursRepository>();
-builder.Services.AddTransient<IFood, FoodsRepository>();
-builder.Services.AddTransient<IHotel, HotelsRepository>();
-builder.Services.AddTransient<ILocation, LocationsRepository>();
-builder.Services.AddTransient<INew, NewsRepository>();
-builder.Services.AddTransient<IOfertum, OfertumsRepository>();
-builder.Services.AddTransient<ISaller, SallersRepository>();
-builder.Services.AddTransient<ITour, ToursRepository>();
+// подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
+builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
+builder.Services.AddTransient<IBaseInterface<Country>, BaseRepository<Country>>();
+builder.Services.AddTransient<IBaseInterface<City>, BaseRepository<City>>();
+builder.Services.AddTransient<IBaseInterface<Hotel>, BaseRepository<Hotel>>();
+builder.Services.AddTransient<IBaseInterface<Location>, BaseRepository<Location>>();
+builder.Services.AddTransient<IBaseInterface<DateTour>, BaseRepository<DateTour>>();
+builder.Services.AddTransient<IBaseInterface<Food>, BaseRepository<Food>>();
+builder.Services.AddTransient<IBaseInterface<Tour>, BaseRepository<Tour>>();
+builder.Services.AddTransient<IBaseInterface<Customer>, BaseRepository<Customer>>();
+builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
+builder.Services.AddTransient<IBaseInterface<Ofertum>, BaseRepository<Ofertum>>();
+builder.Services.AddTransient<IBaseInterface<Article>, BaseRepository<Article>>();
+builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<DataManager>();
 
 // подключение сервиса использования MS SQL Server и БД
