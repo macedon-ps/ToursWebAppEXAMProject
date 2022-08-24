@@ -16,8 +16,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml");
-			Console.WriteLine("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml");
+			logger.Trace("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml\n");
 			return View();
 		}
 	}

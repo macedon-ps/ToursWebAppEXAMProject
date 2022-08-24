@@ -21,23 +21,23 @@ namespace ToursWebAppEXAMProject.Controllers
 
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /. Возвращаено представление Home/Index.cshtml");
-			Console.WriteLine("Переход по маршруту /. Возвращено представление Home/Index.cshtml");
+			logger.Trace("Переход по маршруту /. Возвращаено представление Home/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /. Возвращено представление Home/Index.cshtml\n");
 			return View();
 		}
 
 		public IActionResult Privacy()
 		{
-			logger.Trace("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml");
-			Console.WriteLine("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml");
+			logger.Trace("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml\n");
 			return View();
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
-			logger.Trace($"Переход по маршруту /Home/Error");
-			Console.WriteLine($"Переход по маршруту /Home/Error");
+			logger.Trace($"Переход по маршруту /Home/Error\n");
+			Console.WriteLine($"Переход по маршруту /Home/Error\n");
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 		/// <summary>

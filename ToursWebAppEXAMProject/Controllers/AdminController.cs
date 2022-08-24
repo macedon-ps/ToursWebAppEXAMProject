@@ -18,10 +18,10 @@ namespace ToursWebAppEXAMProject.Controllers
 
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml");
-			Console.WriteLine("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml");
+			logger.Trace("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml\n");
 			
-			var products = DataManager.productsRepository.GetAllProducts().ToList();
+			var products = DataManager.productBaseInterface.GetAllItems();
 			
 			return View(products);
 		}

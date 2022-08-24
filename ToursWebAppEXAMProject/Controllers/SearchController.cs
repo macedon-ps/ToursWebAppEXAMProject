@@ -24,8 +24,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml");
-			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml");
+			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			return View();
 		}
 
@@ -39,18 +39,18 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace($"Переход по маршруту /Search/GetProduct?id={id}");
 			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
 
-			var product = DataManager.productsRepository.GetProduct(id);
-			logger.Debug($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
-			Console.WriteLine($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml");
-
+			var product = DataManager.productBaseInterface.GetItemById(id);
+			
 			if (product.Id == 0)
 			{
-				logger.Warn($"Отсутствие данных о турподукте с id={id}. Возвращено представление /Search/Error.cshtml");
-				Console.WriteLine($"Отсутствие данных о турподукте с id={id}. Возвращеноя представление /Search/Error.cshtml");
+				logger.Warn($"Отсутствие данных о турподукте с id={id}. Возвращено представление /Search/Error.cshtml\n");
+				Console.WriteLine($"Отсутствие данных о турподукте с id={id}. Возвращеноя представление /Search/Error.cshtml\n");
 				ViewData["id"] = id;
 				return View("Error");
 			}
-			
+
+			logger.Debug($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml\n");
+			Console.WriteLine($"Вывод турпродукта с id={id}. Возвращено представление /Search/GetProduct.cshtml\n");
 			return View(product);
 		}
 
@@ -62,26 +62,26 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Search/GetAllProducts");
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
-			
-			var products = DataManager.productsRepository.GetAllProducts().ToList();
-			logger.Debug("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
-			Console.WriteLine("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml");
 
+			var products = DataManager.productBaseInterface.GetAllItems();
+			
 			if (products == null)
 			{
-				logger.Warn("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml");
-				Console.WriteLine("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml");
+				logger.Warn("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml\n");
+				Console.WriteLine("Отсутствие данных о турподуктах. Возвращено представление /Search/Error.cshtml\n");
 				return View("Error");
 			}
 			
+			logger.Debug("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml\n");
+			Console.WriteLine("Вывод всех турпродуктов. Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
 		}
 		
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
-			logger.Trace($"Переход по маршруту /Search/Error");
-			Console.WriteLine($"Переход по маршруту /Search/Error");
+			logger.Trace($"Переход по маршруту /Search/Error\n");
+			Console.WriteLine($"Переход по маршруту /Search/Error\n");
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 	}
