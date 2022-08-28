@@ -1,18 +1,39 @@
 ﻿@model List<Product>
+
 @{
-    foreach(var product in @Model){
-    <div>
-        <div class="padding_bottom_2">
-            <h3>Id тура: @product.Id</h3>
+   <div class="homePage">
+        <div class="searchButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllArticles">Путешественникам от "А" до "Я"</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
+             </button>
         </div>
-        <div class="padding_bottom_2">
-            <h3>Название тура: </h3>
-            <h2>@product.Name</h2>
+        <div class="searchHeader">
+            @foreach(var product in @Model)
+            {
+                <div>
+                    <div class="padding_bottom_2">
+                        <h2>@product.Name</h2>
+                    </div>
+                    <div class="padding_bottom_2">
+                        <h4>@product.Description</h4>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="padding_bottom_2">
-            <h3>Описание тура: </h3>
-            <h4>@product.Description</h4>
-        </div>
-    </div>
-    }
+   </div>
 }
+
+
+
+
+
+

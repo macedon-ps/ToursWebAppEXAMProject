@@ -19,7 +19,16 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
+			
 			return View();
+		}
+		public IActionResult GetSupport(string service)
+		{
+			logger.Trace("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
+
+			var serviceItem = service;
+			return View("GetSupport", serviceItem);
 		}
 	}
 }

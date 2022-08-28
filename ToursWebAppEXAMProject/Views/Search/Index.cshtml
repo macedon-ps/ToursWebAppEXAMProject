@@ -2,11 +2,31 @@
     ViewData["Title"] = "Search Page";
  }
 
-@Model 
+@{
+   <div class="searchPage">
+        <div class="searchButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllArticles">Путешественникам от "А" до "Я"</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
+             </button>
+        </div>
+        <div class="searchHeader">
+            
+        </div>
+   </div>
+    
+}
 
 
-
-<div class="text-center">
+<!--<div class="text-center">
     <h1 class="display-4">Поиск туристических продуктов</h1>
     <p>Тут будут меню выбора: страны, города, дат тура, количества туристов и кнопка "Найти"</p>
     <p>карта местности и описания</p>
@@ -57,3 +77,4 @@
             </li>
         </ul>
 </div>
+-->

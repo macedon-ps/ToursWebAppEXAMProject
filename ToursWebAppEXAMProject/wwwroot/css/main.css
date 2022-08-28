@@ -1639,7 +1639,7 @@ h1 {
 /* Footer */
 
 	#footer-wrapper {
-		padding: 1em 0 0 0;
+		background-color: #ced0b7;
 	}
 
 /* Copyright */
@@ -1648,8 +1648,8 @@ h1 {
 		text-align: center;
 		color: #A6A88F;
 		border-top: solid 1px #ced0b7;
-		padding: 3em 0 0 0;
-		margin: 3em 0 0 0;
+		padding: 1.5em 0 1.5em 0;
+		margin: 1.5em 0 1.5em 0;
 	}
 
 		#copyright a {
@@ -1708,14 +1708,14 @@ h1 {
 		/* Footer */
 
 			#footer-wrapper {
-				padding: 4em 0;
+				padding: 2em;
 			}
 
 		/* Copyright */
 
 			#copyright {
-				padding: 3em 0 0 0;
-				margin: 4em 0 0 0;
+				padding: 1em 0 0 0;
+				margin: 2em 0 0 0;
 			}
 
 	}
@@ -2013,36 +2013,40 @@ h1 {
 			}
 	}
 
-/*.palms {
+	/*
+	.palms {
 	background-image: url(../images/tropical-sea.jpg);
 	background-repeat: no-repeat;
 	background-size: auto auto;
 	background-position: center;
-	/*opacity: 0.9;*/
-}*/
-.main-row-block{
-	
-}
-.homePage {
+	opacity: 0.9;
+	}
+	*/
+
+.homePage, .searchPage, .adminPage,
+.supportPage, .aboutPage {
 	position: relative;
-	height: 520px;
-	margin: 1em 1em 0 0;
+	height: 550px;
 }
-.homeHeader {
-	min-height: 520px;
+.homeHeader, .searchHeader, .adminHeader,
+.supportHeader, .aboutHeader {
+	height: 500px;
 	background-color: #7dced8;
-	padding: 1em;
+	padding: 2em 1em 1em 1em;
+	margin: 0;
+	overflow-y: scroll;
 }
-.homeButton {
-	position: absolute;
-	bottom: 10px;
+.homeButton, .searchButton, .adminButton, 
+.supportButton, .aboutButton{
 	background-color: #7dced8;
+	margin-top: 1em;
 	padding: 1em;
+	border-bottom: 2px solid white;
 }
 .asidePage {
-	min-height: 520px;
+	min-height: 560px;
 	background-color: #7dced8;
-	margin: 1em 0 0 0;
+	margin: 1em 0 0 1em;
 	padding: 1em;
 }
 

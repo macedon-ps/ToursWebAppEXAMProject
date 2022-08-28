@@ -1,16 +1,32 @@
 ﻿@model Product
 
-<div>
-    <div class="padding_bottom_2">
-        <h3>Id тура: @Model.Id</h3>
-    </div>
-    <div class="padding_bottom_2">
-        <h3>Название тура: </h3>
-        <h2>@Model.Name</h2>
-    </div>
-    <div class="padding_bottom_2">
-        <h3>Описание тура: </h3>
-        <h4>@Model.Description</h4>
+ <div class="homePage">
+     <div class="searchButton">
+        <button class="">
+            <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+        </button>
+        <button class="">
+            <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
+        </button>
+        <button class="">
+            <a class="" asp-area="" asp-controller="Home" asp-action="GetAllArticles">Путешественникам от "А" до "Я"</a>
+        </button>
+        <button class="">
+            <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
+        </button>
+     </div>
+     <div class="searchHeader">
+        <div class="padding_bottom_2">
+            <h3>Id турпродукта: @Model.Id</h3>
+        </div>
+        <div class="padding_bottom_2">
+            <h3>Название турпродукта: </h3>
+            <h2>@Model.Name</h2>
+        </div>
+        <div class="padding_bottom_2">
+            <h3>Описание турпродукта: </h3>
+            <h4>@Model.Description</h4>
+        </div>
     </div>
 </div>
 
