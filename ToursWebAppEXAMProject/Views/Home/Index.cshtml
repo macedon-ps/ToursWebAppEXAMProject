@@ -1,25 +1,36 @@
-﻿@{
+﻿@model List<New>
+
+@{
     ViewData["Title"] = "Home Page";
- }
+}
 
- <button class="">
-     <a class="" asp-area="" asp-controller="Home" asp-action="News">Новости со всего мира</a>
- </button>
- 
- <button class="">
-     <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
- </button>
- <button class="">
-     <a class="" asp-area="" asp-controller="Home" asp-action="Knowledges">Путешественникам от "А" до "Я"</a>
- </button>
- <button class="">
-     <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
- </button>
+@{
+   <div class="homePage">
+        <div class="homeHeader">
+            
+        </div>
+        <div class="homeButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllArticles">Путешественникам от "А" до "Я"</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
+             </button>
+        </div>
+   </div>
+    
+}
 
-
+ @*
 <div class="text-center">
     <h1 class="display-4">Домашняя страница</h1>
-    <p>Тут будут новости, статистика, рейтинги, ссылки на другой функционал</a>.</p>
+    <p>Тут будут новости, статистика, рейтинги, ссылки на другой функционал</p>
         <ul>
             <li>данная страница содержит <strong>большую красивую пейзажную картинку</strong> (м.б. тропический остров с
                 пальмами) <strong>и 4 кнопки</strong> (сверху - вниз):
@@ -49,3 +60,4 @@
                 прочитать всю информацию, нажав на ссылку/кнопку <strong>"Читать больше"</strong></li>
         </ul>
 </div>
+*@

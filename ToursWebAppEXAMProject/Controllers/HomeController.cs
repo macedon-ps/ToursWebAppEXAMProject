@@ -19,20 +19,67 @@ namespace ToursWebAppEXAMProject.Controllers
 			this.DataManager = DataManager;
 		}
 
+		/// <summary>
+		/// Метод Index() для стартовой страницы Home
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult Index()
 		{
 			logger.Trace("Переход по маршруту /. Возвращаено представление Home/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /. Возвращено представление Home/Index.cshtml\n");
+			
 			return View();
 		}
 
-		public IActionResult Privacy()
+		/// <summary>
+		/// Метод GetAllNews(), кот. возвращает все новости
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult GetALLNews()
 		{
-			logger.Trace("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Home/Privacy. Возвращено представление Home/Privacy.cshtml\n");
+			logger.Trace("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
+
+			// TODO: добавить данные в БД, пока - вывод данных из view GetAllNews.cshtml
+			// var news = DataManager.newBaseInterface.GetAllItems();
+			
+			/*if (news == null) 
+			{
+				logger.Warn("Возвращено представление /Home/Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Home/Error.cshtml\n");
+				return View("Error");
+			}*/
+			logger.Debug("Возвращено представление /Home/GetAllNews.cshtml\n");
+			Console.WriteLine("Возвращено представление /Home/GetAllNews.cshtml\n");
+			//return View(news);
 			return View();
+
 		}
 
+		/// <summary>
+		/// Метод GetNew(int id), кот. возвращает одну новость
+		/// </summary>
+		/// <param name="id">id новости</param>
+		/// <returns></returns>
+		public IActionResult GetNew(int id)
+		{
+			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
+			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
+
+			// TODO: добавить данные в БД, пока - вывод данных из view GetAllNews.cshtml
+			// var new_ = DataManager.newBaseInterface.GetItemById(id);
+
+			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
+			Console.WriteLine($"Возвращено представление Home/GetNew.cshtml\n");
+
+			/*if (new_.Id == 0) return View("/Home/Error");
+			logger.Warn($"Возвращено представление /Home/Error.cshtml\n");
+			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");*/
+
+			//return View(new_);
+			return View("GetNew", id);	// временно, потом нужно передавать модель New
+		}
+		
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
@@ -40,50 +87,5 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine($"Переход по маршруту /Home/Error\n");
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
-		/// <summary>
-		/// Метод GetNew(int id), кот. возвращает одну новость
-		/// </summary>
-		/// <param name="id">id новости</param>
-		/// <returns></returns>
-		/*
-		public IActionResult GetNew(int id)
-		{
-			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
-			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
-			
-			var new = DataManager.newsRepository.GetNew(id);
-
-			logger.Debug($"Вывод новости с id={id}. Возвращено представление Home/GetNew.cshtml\n");
-			Console.WriteLine($"Вывод новости с id={id}. Возвращено представление Home/GetNew.cshtml\n");
-
-			if (new.Id == 0) return View("/Home/Error");
-			logger.Warn($"Отсутствие данных о новости с id={id}. Возвращено представление /Home/Error.cshtml\n");
-			Console.WriteLine($"Отсутствие данных о новости с id={id}. Возвращеноя представление /Home/Error.cshtml\n");
-
-			return View(new);
-		}
-		*/
-
-		/// <summary>
-		/// Метод GetAllNews(), кот. возвращает все новости
-		/// </summary>
-		/// <returns></returns>
-		/*
-		public IActionResult GetAllNews()
-		{
-			logger.Trace("Переход по маршруту /Home/GetAllNews");
-			Console.WriteLine("Переход по маршруту /Home/GetAllNews");
-			
-			var news = DataManager.newsRepository.GetAllNews().ToList<New>();
-			logger.Debug("Вывод всех новостей. Возвращено представление Home/GetAllNews.cshtml\n");
-			Console.WriteLine("Вывод всех новостей. Возвращено представление Home/GetAllNews.cshtml\n");
-
-			if (news == null) return View("Error");
-			logger.Warn("Отсутствие данных о новостях. Возвращеноя представление /Home/Error.cshtml\n");
-			Console.WriteLine("Отсутствие данных о новостях. Возвращенося представление /Home/Error.cshtml\n");
-
-			return View(news);
-		}
-		*/
 	}
 }
