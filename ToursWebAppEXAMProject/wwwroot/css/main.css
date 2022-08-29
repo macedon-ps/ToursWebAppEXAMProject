@@ -2049,5 +2049,18 @@ h1 {
 	margin: 1em 0 0 1em;
 	padding: 1em;
 }
-
+.asidePage > div{
+	display: flex;
+	margin-bottom: 0.5em;
+}
+.asidePage > div > a {
+	display: flex;
+	align-items: center;
+	margin-right: 1em;
+}
+.asidePage > div > a > h3,
+.asidePage > div > a > h4 {
+	margin-left: 0.5em;
+	margin-bottom: 0;
+}
 

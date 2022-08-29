@@ -5,32 +5,56 @@
 <div class="asidePage">
     <h2>Полезные ссылки:</h2>
 
-    <h3>Позвонить:</h3>
-    <a asp-controller="Support" asp-action="" asp-route-service="call" >
-        <img src="~/images/Dial.bmp" alt="Позвонить" width="24" height="24">
-    </a>
- 
-    <h3>Задать вопрос:</h3>
-    <a asp-controller="Support" asp-action="" asp-route-service="ask">
-        <img src="~/images/Question.bmp" alt="Задать вопрос" width="24" height="24">
-    </a>   
-    <h3>Посчитать тур:</h3>
-    <a asp-controller="Support" asp-action="" asp-route-service="calculate">
-        <img src="~/images/Calculator.bmp" alt="Посчитать тур:" width="24" height="24">
-    </a>    
+    <div>
+       <a href="tel:+380952030852"
+            <a asp-controller="Support" asp-action="" asp-route-service="call">
+                <img src="~/images/Dial.bmp" alt="Позвонить" width="24" height="24">
+                <h3>Позвонить</h3>
+            </a>
+       
+       </a>
+    </div>
+    <div>   
+        <a href="mailto:macedon1971@gmail.com"
+            <a asp-controller="Support" asp-action="" asp-route-service="ask">
+                <img src="~/images/Question.bmp" alt="Задать вопрос" width="24" height="24">
+                <h4>Задать вопрос</h4>
+            </a> 
+        
+        </a> 
+    </div> 
+    <div>
+        <a asp-controller="Support" asp-action="" asp-route-service="calculate">
+            <img src="~/images/Calculator.bmp" alt="Посчитать тур:" width="24" height="24">
+            <h4>Посчитать тур</h4>
+        </a>   
+    </div>
+    <br/>
     <h2>Мы в соцсетях:</h2>
-    <a asp-controller="Support" asp-action="">
-        <img src="" alt="Facebook" width="24" height="24">
-    </a><br/>
-    <a asp-controller="Support" asp-action="">
-        <img src="" alt="Instagram" width="24" height="24">
-    </a><br/>
-    <a asp-controller="Support" asp-action="">
-        <img src="" alt="Telegram" width="24" height="24">
-    </a><br/>
-    <a asp-controller="Support" asp-action="">
-        <img src="" alt="Viber" width="24" height="24">
-    </a><br/>
+    <div>
+        <a asp-controller="Support" asp-action="">
+            <img src="~/images/Facebook.png" alt="Facebook" width="24" height="24">
+            <h3>Facebook</h3>
+        </a>
+    </div>
+    <div>
+        <a asp-controller="Support" asp-action="">
+            <img src="~/images/Instagram.png" alt="Instagram" width="24" height="24">
+            <h3>Instagram</h3>
+        </a>
+    </div>
+    <div>
+        <a asp-controller="Support" asp-action="">
+            <img src="~/images/Telegram.png" alt="Telegram" width="24" height="24">
+            <h3>Telegram</h3>
+        </a>
+    </div>
+    <div>
+        <a asp-controller="Support" asp-action="">
+            <img src="~/images/Viber.png" alt="Viber" width="24" height="24">
+            <h3>Viber</h3>
+        </a>
+    </div>
 </div>
 
     
