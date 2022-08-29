@@ -1,28 +1,29 @@
-﻿@{
+﻿@*@model DataManager *@
+@{
     ViewData["Title"] = "Search Page";
- }
+}
 
 @{
    <div class="searchPage">
         <div class="searchButton">
             <button class="">
-                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+                <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
              </button>
              <button class="">
-                 <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
+                @* TODO:  реализовать поиск тура по id, имени или др. параметрам*@ 
+                <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
              </button>
              <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllArticles">Путешественникам от "А" до "Я"</a>
+                 <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв"</a>
              </button>
              <button class="">
-                 <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
+                 <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв 2</a>
              </button>
         </div>
         <div class="searchHeader">
-            
+            <h1>Поиск туристических продуктов:</h1>
         </div>
    </div>
-    
 }
 
 

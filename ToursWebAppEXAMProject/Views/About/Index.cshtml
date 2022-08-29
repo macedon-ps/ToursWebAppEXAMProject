@@ -1,7 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
- }
+﻿@*@model DataManager *@
 
+@{
+    ViewData["Title"] = "About Page";
+}
+
+@{
+   <div class="homePage">
+        <div class="homeButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="About" asp-action="">Наши реквизиты</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="">Режим работы</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="">Фотогаллерея</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="About" asp-action="">Обратная связь</a>
+             </button>
+        </div>
+        <div class="homeHeader">
+            <h1>Информация о нас:</h1>
+        </div>
+   </div>
+}
+
+@*
 <div class="text-center">
     <h1 class="display-4">Страница о турфирме</h1>
     <p>Тут будет название и реквизиты турфирмы</p>
@@ -16,3 +41,4 @@
             <li><strong>Обратная связь</strong>с турфирмой, т.е. можно задать вопрос, можно позвонить и т.д.</li>
         </ul>
 </div>
+*@
