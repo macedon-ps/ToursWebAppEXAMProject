@@ -24,7 +24,7 @@ builder.Services.AddTransient<IBaseInterface<Tour>, BaseRepository<Tour>>();
 builder.Services.AddTransient<IBaseInterface<Customer>, BaseRepository<Customer>>();
 builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
 builder.Services.AddTransient<IBaseInterface<Ofertum>, BaseRepository<Ofertum>>();
-builder.Services.AddTransient<IBaseInterface<Article>, BaseRepository<Article>>();
+builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<DataManager>();
 

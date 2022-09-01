@@ -70,8 +70,8 @@ namespace ToursWebAppEXAMProject.Repositories
 				case "Ofertum":
 					itemKeyword[0] = "оферта"; itemKeyword[1] = "оферты"; itemKeyword[2] = "оферты"; itemKeyword[3] = "оферт";
 					break;
-				case "Article":
-					itemKeyword[0] = "статья"; itemKeyword[1] = "статьи"; itemKeyword[2] = "статьи"; itemKeyword[3] = "статей";
+				case "Blog":
+					itemKeyword[0] = "сообщение блога"; itemKeyword[1] = "сообщения блога"; itemKeyword[2] = "сообщения блогов"; itemKeyword[3] = "сообщений блогов";
 					break;
 				case "New":
 					itemKeyword[0] = "новость"; itemKeyword[1] = "новости"; itemKeyword[2] = "новости"; itemKeyword[3] = "новостей";

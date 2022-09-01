@@ -16,22 +16,8 @@ namespace ToursWebAppEXAMProject.Repositories
 		public IBaseInterface<Customer> customertBaseInterface { get; set; }
 		public IBaseInterface<Saller> sallerBaseInterface { get; set; }
 		public IBaseInterface<Ofertum> ofertumBaseInterface { get; set; }
-		public IBaseInterface<Article> articleBaseInterface { get; set; }
+		public IBaseInterface<Blog> blogBaseInterface { get; set; }
 		public IBaseInterface<New> newBaseInterface { get; set; }
-
-		/*public IProduct productsRepository { get; set; }
-		public ICity citiesRepository { get; set; }
-		public ICountry countriesRepository { get; set; }
-		public IHotel hotelsRepository { get; set; }
-		public ILocation locationsRepository { get; set; }
-		public IDateTour dateToursRepository { get; set; }
-		public IFood foodsRepository { get; set; }
-		public ITour toursRepository { get; set; }
-		public ICustomer customersRepository { get; set; }
-		public ISaller sallersRepository { get; set; }
-		public IOfertum ofertumsRepository { get; set; }
-		public INew newsRepository	{ get; set; }
-		public IArticle articlesRepository { get; set; }*/
 
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
 							IBaseInterface<Country> countryBaseInterface,
@@ -44,7 +30,7 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Customer> customertBaseInterface,
 							IBaseInterface<Saller> sallerBaseInterface,
 							IBaseInterface<Ofertum> ofertumBaseInterface,
-							IBaseInterface<Article> articleBaseInterface,
+							IBaseInterface<Blog> blogBaseInterface,
 							IBaseInterface<New> newBaseInterface
 							)
 		{
@@ -59,7 +45,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.customertBaseInterface = customertBaseInterface;
 			this.sallerBaseInterface = sallerBaseInterface;
 			this.ofertumBaseInterface = ofertumBaseInterface;
-			this.articleBaseInterface = articleBaseInterface;
+			this.blogBaseInterface = blogBaseInterface;
 			this.newBaseInterface = newBaseInterface;
 		}
 	}
