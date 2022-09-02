@@ -6,10 +6,11 @@ namespace ToursWebAppEXAMProject.DBContext
 {
 	public partial class TourFirmaDBContext : DbContext
 	{
-		public TourFirmaDBContext() {}
+		public TourFirmaDBContext() { }
 
-		public TourFirmaDBContext(DbContextOptions<TourFirmaDBContext> options): base(options)	{}
+		public TourFirmaDBContext(DbContextOptions<TourFirmaDBContext> options) : base(options) { }
 
+		public virtual DbSet<Blog> Blogs { get; set; } = null!;
 		public virtual DbSet<City> Cities { get; set; } = null!;
 		public virtual DbSet<Country> Countries { get; set; } = null!;
 		public virtual DbSet<Customer> Customers { get; set; } = null!;
@@ -17,6 +18,7 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Food> Foods { get; set; } = null!;
 		public virtual DbSet<Hotel> Hotels { get; set; } = null!;
 		public virtual DbSet<Location> Locations { get; set; } = null!;
+		public virtual DbSet<New> News { get; set; } = null!;
 		public virtual DbSet<Ofertum> Oferta { get; set; } = null!;
 		public virtual DbSet<Product> Products { get; set; } = null!;
 		public virtual DbSet<Saller> Sallers { get; set; } = null!;
@@ -32,6 +34,25 @@ namespace ToursWebAppEXAMProject.DBContext
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Blog>(entity =>
+			{
+				entity.ToTable("Blog");
+
+				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+
+				entity.Property(e => e.FullMessageLine).HasDefaultValueSql("('Полная строка сообщений')");
+
+				entity.Property(e => e.Message)
+					.HasMaxLength(50)
+					.HasDefaultValueSql("('Сообщение участника блога')");
+
+				entity.Property(e => e.Title)
+					.HasMaxLength(50)
+					.HasDefaultValueSql("('Заголовок блога')");
+
+				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+			});
+
 			modelBuilder.Entity<City>(entity =>
 			{
 				entity.ToTable("City");
@@ -42,7 +63,7 @@ namespace ToursWebAppEXAMProject.DBContext
 					.WithMany(p => p.Cities)
 					.HasForeignKey(d => d.CountryId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__City__CountryId__29572725");
+					.HasConstraintName("FK__City__CountryId__2D27B809");
 			});
 
 			modelBuilder.Entity<Country>(entity =>
@@ -93,7 +114,7 @@ namespace ToursWebAppEXAMProject.DBContext
 					.WithMany(p => p.Hotels)
 					.HasForeignKey(d => d.CityId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Hotel__CityId__2E1BDC42");
+					.HasConstraintName("FK__Hotel__CityId__31EC6D26");
 			});
 
 			modelBuilder.Entity<Location>(entity =>
@@ -104,19 +125,38 @@ namespace ToursWebAppEXAMProject.DBContext
 					.WithMany(p => p.Locations)
 					.HasForeignKey(d => d.CityId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Location__CityId__31EC6D26");
+					.HasConstraintName("FK__Location__CityId__35BCFE0A");
 
 				entity.HasOne(d => d.Country)
 					.WithMany(p => p.Locations)
 					.HasForeignKey(d => d.CountryId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Location__Countr__30F848ED");
+					.HasConstraintName("FK__Location__Countr__34C8D9D1");
 
 				entity.HasOne(d => d.Hotel)
 					.WithMany(p => p.Locations)
 					.HasForeignKey(d => d.HotelId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Location__HotelI__32E0915F");
+					.HasConstraintName("FK__Location__HotelI__36B12243");
+			});
+
+			modelBuilder.Entity<New>(entity =>
+			{
+				entity.ToTable("New");
+
+				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+
+				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
+
+				entity.Property(e => e.ShortDescription)
+					.HasMaxLength(100)
+					.HasDefaultValueSql("('Краткое орисание новости')");
+
+				entity.Property(e => e.Title)
+					.HasMaxLength(50)
+					.HasDefaultValueSql("('Заголовок новости')");
+
+				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
 			});
 
 			modelBuilder.Entity<Ofertum>(entity =>
@@ -125,19 +165,19 @@ namespace ToursWebAppEXAMProject.DBContext
 					.WithMany(p => p.Oferta)
 					.HasForeignKey(d => d.CustomerId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__Customer__571DF1D5");
+					.HasConstraintName("FK__Oferta__Customer__4D94879B");
 
 				entity.HasOne(d => d.Saller)
 					.WithMany(p => p.Oferta)
 					.HasForeignKey(d => d.SallerId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__SallerId__5812160E");
+					.HasConstraintName("FK__Oferta__SallerId__4E88ABD4");
 
 				entity.HasOne(d => d.Tour)
 					.WithMany(p => p.Oferta)
 					.HasForeignKey(d => d.TourId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__TourId__59063A47");
+					.HasConstraintName("FK__Oferta__TourId__4F7CD00D");
 			});
 
 			modelBuilder.Entity<Product>(entity =>
@@ -170,25 +210,25 @@ namespace ToursWebAppEXAMProject.DBContext
 					.WithMany(p => p.Tours)
 					.HasForeignKey(d => d.DateTourId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Tour__DateTourId__49C3F6B7");
+					.HasConstraintName("FK__Tour__DateTourId__403A8C7D");
 
 				entity.HasOne(d => d.Food)
 					.WithMany(p => p.Tours)
 					.HasForeignKey(d => d.FoodId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Tour__FoodId__4BAC3F29");
+					.HasConstraintName("FK__Tour__FoodId__4222D4EF");
 
 				entity.HasOne(d => d.Location)
 					.WithMany(p => p.Tours)
 					.HasForeignKey(d => d.LocationId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Tour__LocationId__4AB81AF0");
+					.HasConstraintName("FK__Tour__LocationId__412EB0B6");
 
 				entity.HasOne(d => d.Product)
 					.WithMany(p => p.Tours)
 					.HasForeignKey(d => d.ProductId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Tour__ProductId__48CFD27E");
+					.HasConstraintName("FK__Tour__ProductId__3F466844");
 			});
 
 			OnModelCreatingPartial(modelBuilder);

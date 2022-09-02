@@ -40,20 +40,17 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
 
-			// TODO: добавить данные в БД, пока - вывод данных из view GetAllNews.cshtml
-			// var news = DataManager.newBaseInterface.GetAllItems();
+			var news = DataManager.newBaseInterface.GetAllItems();
 			
-			/*if (news == null) 
+			if (news == null) 
 			{
 				logger.Warn("Возвращено представление /Home/Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Home/Error.cshtml\n");
 				return View("Error");
-			}*/
+			}
 			logger.Debug("Возвращено представление /Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Возвращено представление /Home/GetAllNews.cshtml\n");
-			//return View(news);
-			return View();
-
+			return View(news);
 		}
 
 		/// <summary>
@@ -67,17 +64,16 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
 
 			// TODO: добавить данные в БД, пока - вывод данных из view GetAllNews.cshtml
-			// var new_ = DataManager.newBaseInterface.GetItemById(id);
+			var new_ = DataManager.newBaseInterface.GetItemById(id);
 
 			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
 			Console.WriteLine($"Возвращено представление Home/GetNew.cshtml\n");
 
-			/*if (new_.Id == 0) return View("/Home/Error");
+			if (new_.Id == 0) return View("/Home/Error");
 			logger.Warn($"Возвращено представление /Home/Error.cshtml\n");
-			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");*/
+			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");
 
-			//return View(new_);
-			return View("GetNew", id);	// временно, потом нужно передавать модель New
+			return View(new_);
 		}
 		
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

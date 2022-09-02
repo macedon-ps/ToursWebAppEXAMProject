@@ -2,7 +2,7 @@
 
 namespace ToursWebAppEXAMProject.Models
 {
-	public class Blog
+	public partial class Blog
 	{
 		public Blog() { }
 
@@ -14,12 +14,16 @@ namespace ToursWebAppEXAMProject.Models
 		public string Title { get; set; } = "Заголовок блога";
 
 		[Display(Name = "Сообщение")]
-		public string Message { get; set; } = "Сообщение";
+		public string? Message { get; set; } = "Сообщение";
 
 		[Display(Name = "Полная строка сообщений")]
-		public string FullMessageLine { get; set; } = "Полная строка сообщений";
+		public string? FullMessageLine { get; set; } = "Полная строка сообщений";
 
 		[Display(Name = "Титульная картинка")]
-		public string TitleImagePath { get; set; } = null!;
+		public string? TitleImagePath { get; set; } 
+
+		[Display(Name = "Время создания")]
+		[DataType(DataType.Time)]
+		public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 	}
 }
