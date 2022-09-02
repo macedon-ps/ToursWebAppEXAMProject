@@ -1,0 +1,41 @@
+﻿@model List<Blog>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="homePage">
+         <div class="homeButton">
+             <button class="">
+                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв 2</a>
+             </button>
+         </div>
+         <div class="homeHeader">
+           @foreach(var blog in Model)
+           {
+                <p>Данные:</p>
+                <div>
+                    <div class="padding_bottom_2">
+                        <h2>@blog.Title</h2>
+                    </div>
+                    <div class="padding_bottom_2">
+                        <h4>@blog.Message</h4>
+                    </div>
+                    <div class="padding_bottom_2">
+                        <h4>@blog.DateAdded</h4>
+                    </div>
+                    <div>
+                        <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                    </div>
+                </div> 
+           }
+        </div>
+     </div>

@@ -24,6 +24,6 @@ namespace ToursWebAppEXAMProject.Models
 
 		[Display(Name = "Время создания")]
 		[DataType(DataType.Time)]
-		public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+		public DateTime? DateAdded { get; set; } = DateTime.UtcNow;
 	}
 }

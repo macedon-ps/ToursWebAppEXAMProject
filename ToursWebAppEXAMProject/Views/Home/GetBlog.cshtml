@@ -1,0 +1,29 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+ <div class="homePage">
+        <div class="homeButton">
+             <button class="">
+                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв 2</a>
+             </button>
+        </div>
+        <div class="homeHeader">
+            <div class="padding_bottom_2">
+                <h2>@Model.Title</h2>
+            </div>
+            <div class="padding_bottom_2">
+                <h4>@Model.FullMessageLine</h4>
+            </div>
+        </div>
+     </div>

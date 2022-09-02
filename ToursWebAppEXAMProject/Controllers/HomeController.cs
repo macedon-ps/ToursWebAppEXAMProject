@@ -63,7 +63,6 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
 			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
 
-			// TODO: добавить данные в БД, пока - вывод данных из view GetAllNews.cshtml
 			var new_ = DataManager.newBaseInterface.GetItemById(id);
 
 			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
@@ -76,6 +75,41 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(new_);
 		}
 		
+		public IActionResult GetAllBlogs()
+		{
+			logger.Trace("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
+
+			var blogs = DataManager.blogBaseInterface.GetAllItems();
+
+			if (blogs == null)
+			{
+				logger.Warn("Возвращено представление /Home/Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Home/Error.cshtml\n");
+				return View("Error");
+			}
+			logger.Debug("Возвращено представление /Home/GetAllBlogs.cshtml\n");
+			Console.WriteLine("Возвращено представление /Home/GetAllBlogs.cshtml\n");
+			return View(blogs);
+		}
+
+		public IActionResult GetBlog(int id)
+		{
+			logger.Trace($"Переход по маршруту /Home/GetBlog?id={id}");
+			Console.WriteLine($"Переход по маршруту /Home/GetBlog?id={id}");
+
+			var blog = DataManager.blogBaseInterface.GetItemById(id);
+
+			logger.Debug($"Возвращено представление Home/GetBlog.cshtml\n");
+			Console.WriteLine($"Возвращено представление Home/GetBlog.cshtml\n");
+
+			if (blog.Id == 0) return View("/Home/Error");
+			logger.Warn($"Возвращено представление /Home/Error.cshtml\n");
+			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");
+
+			return View(blog);
+		}
+
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
