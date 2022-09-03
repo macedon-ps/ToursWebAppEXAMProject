@@ -43,10 +43,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (product.Id == 0)
 			{
-				logger.Warn($"Возвращено представление /Search/Error.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /Search/Error.cshtml\n");
-				ViewData["id"] = id;
-				return View("Error");
+				logger.Warn($"Возвращено представление /Error.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
+
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType, id - обязательные параметры, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(Product), id);
+				return View("Error", errorInfo);
 			}
 
 			logger.Debug($"Возвращено представление /Search/GetProduct.cshtml\n");
@@ -67,22 +71,19 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (products == null)
 			{
-				logger.Warn("Возвращено представление /Search/Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Search/Error.cshtml\n");
-				return View("Error");
+				logger.Warn("Возвращено представление /Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Error.cshtml\n");
+
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType, id - обязательные параметры, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Product>));
+				return View("Error", errorInfo);
 			}
 			
 			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
-		}
-		
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			logger.Trace($"Переход по маршруту /Search/Error\n");
-			Console.WriteLine($"Переход по маршруту /Search/Error\n");
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 	}
 }

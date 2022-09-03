@@ -1,38 +1,45 @@
-﻿@*
-    TODO: Изучить и использовать    
-    @model ErrorViewModel
-*@
-    @model ErrorViewModel
+﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
-}   
+}  
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="errorPage">
+        <div class="errorButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="" asp-action="">Назад</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 2</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 3</a>
+             </button>
+        </div>
+        <div class="errorHeader">
+            <h1>Страница вывода ошибок:</h1>
+            <h2 class="text-danger">Возникла ошибка</h2>
+            <h2 class="text-danger">@Model.MessageToErrorViewModel</h2>
+            <p>
+                Тип объекта, вызвавший ошибку:  @Model.ModelTypeCalledError
+            </p>
+            @{
+                var requestId = Model.RequestId ?? null;
+                if (Model.IsRequestId(requestId))
+                {
+                    <p>Возможно, объект с указанным id = @requestId отсутствует в БД</p>
+                }
+                else
+                {
+                    <p>Возможно, указанный объект отсутствует в БД</p>
+                }
+                <h3>Время появления ошибки: @Model.DateTimeError</h3>
+            }
+         </div>
+   </div>
 
-@* По умолчанию:
-@if (Model.ShowRequestId) { <p> <strong>Request ID:</strong> <code>@error.RequestId</code> </p> }
-*@
 
-@* Заглушка: *@
-<p>
-    @if(@Model.RequestId!=null)
-     {
-        <strong>ID product:</strong> <code>Туристического продукта с Id = @Model.RequestId не существует</code>
-    }
-    else
-    {
-        <strong>ID product:</strong> <code>Туристического продукта не существует</code>
-    }
-</p>
 
-<h3>Режим разработки</h3>
-<p>
-    При переключении в среду <strong>Development</strong> будет отображаться более подробная информация о возникшей ошибке.
-</p>
-<p>
-    <strong>Среда разработки не должна быть включена для развернутых приложений.</strong>
-    Это может привести к отображению конфиденциальной информации из исключений для конечных пользователей.
-     Для локальной отладки включите среду <strong>Development</strong> задав для переменной среды <strong>ASPNETCORE_ENVIRONMENT</strong> значение <strong>Development</strong>
-    и перезапустить приложение.
-</p>
+

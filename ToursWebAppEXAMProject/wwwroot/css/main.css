@@ -2024,12 +2024,12 @@ h1 {
 	*/
 
 .homePage, .searchPage, .adminPage,
-.supportPage, .aboutPage {
+.supportPage, .aboutPage, .errorPage {
 	position: relative;
 	height: 550px;
 }
 .homeHeader, .searchHeader, .adminHeader,
-.supportHeader, .aboutHeader {
+.supportHeader, .aboutHeader, .errorHeader {
 	height: 500px;
 	background-color: #7dced8;
 	padding: 2em 1em 1em 1em;
@@ -2037,7 +2037,7 @@ h1 {
 	overflow-y: scroll;
 }
 .homeButton, .searchButton, .adminButton, 
-.supportButton, .aboutButton{
+.supportButton, .aboutButton, .errorButton {
 	background-color: #7dced8;
 	margin-top: 1em;
 	padding: 1em;

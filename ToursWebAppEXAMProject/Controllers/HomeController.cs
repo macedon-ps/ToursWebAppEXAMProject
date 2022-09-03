@@ -44,9 +44,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (news == null) 
 			{
-				logger.Warn("Возвращено представление /Home/Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Home/Error.cshtml\n");
-				return View("Error");
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType - обязательный параметр, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<New>));
+
+				logger.Warn("Возвращено представление /Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Error.cshtml\n");
+				return View("Error", errorInfo);
 			}
 			logger.Debug("Возвращено представление /Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Возвращено представление /Home/GetAllNews.cshtml\n");
@@ -65,16 +70,27 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			var new_ = DataManager.newBaseInterface.GetItemById(id);
 
+			if (new_.Id == 0) 
+			{
+				logger.Warn($"Возвращено представление /Error.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
+
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType, id - обязательные параметры, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(New), id);
+				return View("Error", errorInfo);
+			}
+
 			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
 			Console.WriteLine($"Возвращено представление Home/GetNew.cshtml\n");
-
-			if (new_.Id == 0) return View("/Home/Error");
-			logger.Warn($"Возвращено представление /Home/Error.cshtml\n");
-			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");
-
 			return View(new_);
 		}
-		
+
+		/// <summary>
+		/// Метод GetAllBlogs(), кот. возвращает все блоги
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult GetAllBlogs()
 		{
 			logger.Trace("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
@@ -84,15 +100,25 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			if (blogs == null)
 			{
-				logger.Warn("Возвращено представление /Home/Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Home/Error.cshtml\n");
-				return View("Error");
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType - обязательный параметр, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Blog>));
+
+				logger.Warn("Возвращено представление /Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Error.cshtml\n");
+				return View("Error", errorInfo);
 			}
 			logger.Debug("Возвращено представление /Home/GetAllBlogs.cshtml\n");
 			Console.WriteLine("Возвращено представление /Home/GetAllBlogs.cshtml\n");
 			return View(blogs);
 		}
 
+		/// <summary>
+		/// Метод GetBlog(int id), кот. возвращает один блог
+		/// </summary>
+		/// <param name="id">id блога</param>
+		/// <returns></returns>
 		public IActionResult GetBlog(int id)
 		{
 			logger.Trace($"Переход по маршруту /Home/GetBlog?id={id}");
@@ -103,19 +129,19 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Debug($"Возвращено представление Home/GetBlog.cshtml\n");
 			Console.WriteLine($"Возвращено представление Home/GetBlog.cshtml\n");
 
-			if (blog.Id == 0) return View("/Home/Error");
-			logger.Warn($"Возвращено представление /Home/Error.cshtml\n");
-			Console.WriteLine($"Возвращеноя представление /Home/Error.cshtml\n");
+			if (blog.Id == 0) 
+			{
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType, id - обязательные параметры, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(Blog), id);
 
+				logger.Warn($"Возвращено представление /Error.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
+				return View("Error", errorInfo);
+			}
+			
 			return View(blog);
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			logger.Trace($"Переход по маршруту /Home/Error\n");
-			Console.WriteLine($"Переход по маршруту /Home/Error\n");
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 	}
 }
