@@ -46,7 +46,7 @@ namespace ToursWebAppEXAMProject.DBContext
 					.HasMaxLength(50)
 					.HasDefaultValueSql("('Сообщение участника блога')");
 
-				entity.Property(e => e.Title)
+				entity.Property(e => e.Name)
 					.HasMaxLength(50)
 					.HasDefaultValueSql("('Заголовок блога')");
 
@@ -152,7 +152,7 @@ namespace ToursWebAppEXAMProject.DBContext
 					.HasMaxLength(100)
 					.HasDefaultValueSql("('Краткое орисание новости')");
 
-				entity.Property(e => e.Title)
+				entity.Property(e => e.Name)
 					.HasMaxLength(50)
 					.HasDefaultValueSql("('Заголовок новости')");
 
