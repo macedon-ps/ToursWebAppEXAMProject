@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NLog;
+using System.Linq;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -16,7 +17,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <summary>
 		/// Универсальный репозиторий даннных БД
 		/// </summary>
-		DbSet<T> dbSetItems;
+		DbSet<T> dbSetEntityItems;
 
 		/// <summary>
 		/// Статическое сойство для логирования событий
@@ -25,7 +26,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public string[] itemKeyword = new string[4];
 		private readonly string itemTypeName;
-
+		
 		/// <summary>
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
@@ -33,7 +34,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		public BaseRepository(TourFirmaDBContext _context)
 		{
 			context = _context;
-			dbSetItems = _context.Set<T>();		
+			dbSetEntityItems = _context.Set<T>();		
 			itemTypeName = typeof(T).Name;
 			switch (itemTypeName)
 			{
@@ -92,7 +93,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 			try
 			{
-				var items = dbSetItems.AsNoTracking().ToList();
+				var items = dbSetEntityItems.AsNoTracking().ToList();
 
 				if (items == null)
 				{
@@ -134,7 +135,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 			try
 			{
-				var item = dbSetItems.Find(id);
+				var item = dbSetEntityItems.Find(id);
 
 				if (item == null)
 				{
@@ -162,6 +163,67 @@ namespace ToursWebAppEXAMProject.Repositories
 		}
 
 		/// <summary>
+		/// Метод GetQueryResultItems(string keyword), кот. используется для возврата результатов выборки сущностей из БД по ключевому слову
+		/// </summary>
+		/// <param name="keyword">ключевое слово для поиска</param>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public IEnumerable<T> GetQueryResultItems(string keyword, bool isFullName)
+		{
+			logger.Debug("Произведено подключение к базе данных");
+			Console.WriteLine("Произведено подключение к базе данных");
+			logger.Trace($"Запрашиваются {itemKeyword[2]} по ключевому слову {keyword}");
+			Console.WriteLine($"Запрашиваются {itemKeyword[2]} по ключевому слову {keyword}");
+
+			try
+			{
+				// предполагается возможность поиска коллекции сущностей:
+				// по полному названию						keyword - полное название, isFullName = true
+				// по ключевому слову в названии			keyword - ключевое слово,  isFullName = false
+				// p.s. предполагается, что одинаковых названий м.б. несколько, т.к. нет ограничения уникальности для названия объекта сущности
+
+				var items = new List<T>();
+				
+				if (isFullName)
+				{
+					items = dbSetEntityItems
+					.FromSqlRaw($"Select * from {itemTypeName} where Name = '{keyword}'")
+					.ToList();
+				}
+				else
+				{
+					items = dbSetEntityItems
+					.FromSqlRaw($"Select * from {itemTypeName} where Name like '%{keyword}%'")
+					.ToList();
+				}
+												
+				if (items == null)
+				{
+					logger.Warn($"Выборка {itemKeyword[3]} по названию / ключевому слову {keyword} не осуществлена.");
+					Console.WriteLine($"Выборка {itemKeyword[3]} по названию / ключевому слову {keyword} не осуществлена.");
+
+					return new List<T>();
+				}
+				else
+				{
+					logger.Debug("Выборка осуществлена успешно");
+					Console.WriteLine("Выборка осуществлена успешно");
+
+					return items;
+				}
+			}
+			catch (Exception ex)
+			{
+				logger.Error("Выборка не осуществлена");
+				logger.Error($"Код ошибки: {ex.Message}");
+				Console.WriteLine("Выборка не осуществлена");
+				Console.WriteLine($"Код ошибки: {ex.Message}");
+
+				return new List<T>();
+			}
+		}
+
+		/// <summary>
 		/// Метод SaveItem(T item), кот. используется для создания новой/изменения существующей сущности по ее объекту
 		/// </summary>
 		/// <param name="item">объект сущности</param>
@@ -171,13 +233,13 @@ namespace ToursWebAppEXAMProject.Repositories
 			Console.WriteLine("Произведено подключение к базе данных");
 			try
 			{
-				var item = dbSetItems.Find(tItem);
+				var item = dbSetEntityItems.Find(tItem);
 
 				if (item == null)
 				{
 					logger.Trace($"Создание нового(ой) {itemKeyword[1]}");
 					Console.WriteLine($"Создание нового(ой) {itemKeyword[1]}");
-					dbSetItems.Add(tItem);	
+					dbSetEntityItems.Add(tItem);	
 				}
 				else
 				{
@@ -206,12 +268,12 @@ namespace ToursWebAppEXAMProject.Repositories
 			Console.WriteLine("Произведено подключение к базе данных");
 			try
 			{
-				if (dbSetItems.Find(tItem)!=null)
+				if (dbSetEntityItems.Find(tItem)!=null)
 				{
 					logger.Trace($"Удаление {itemKeyword[1]}");
 					Console.WriteLine($"Удаление {itemKeyword[1]}");
 
-					dbSetItems.Remove(tItem);
+					dbSetEntityItems.Remove(tItem);
 					context.SaveChanges();
 				}
 			}
@@ -223,5 +285,5 @@ namespace ToursWebAppEXAMProject.Repositories
 				Console.WriteLine($"Код ошибки: {ex.Message}");
 			}
 		}
-	}
+    }
 }

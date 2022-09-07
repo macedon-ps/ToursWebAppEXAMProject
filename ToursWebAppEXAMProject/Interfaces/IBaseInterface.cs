@@ -4,6 +4,8 @@
 	{
 		IEnumerable<T> GetAllItems();
 
+		IEnumerable<T> GetQueryResultItems(string keyword, bool isFullName);
+
 		T GetItemById(int id);
 
 		void SaveItem(T tItem);
