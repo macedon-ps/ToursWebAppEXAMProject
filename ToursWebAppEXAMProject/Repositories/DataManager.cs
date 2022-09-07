@@ -5,20 +5,21 @@ namespace ToursWebAppEXAMProject.Repositories
 {
 	public class DataManager
 	{
-		public IBaseInterface<Product> productBaseInterface { get; set; }
-		public IBaseInterface<Country> countryBaseInterface { get; set; }
-		public IBaseInterface<City> cityBaseInterface { get; set; }
-		public IBaseInterface<Hotel> hotelBaseInterface { get; set; }
-		public IBaseInterface<Location> locationBaseInterface { get; set; }
-		public IBaseInterface<DateTour> datetourBaseInterface { get; set; }
-		public IBaseInterface<Food> foodBaseInterface { get; set; }
-		public IBaseInterface<Tour> tourBaseInterface { get; set; }
-		public IBaseInterface<Customer> customertBaseInterface { get; set; }
-		public IBaseInterface<Saller> sallerBaseInterface { get; set; }
-		public IBaseInterface<Ofertum> ofertumBaseInterface { get; set; }
-		public IBaseInterface<Blog> blogBaseInterface { get; set; }
-		public IBaseInterface<New> newBaseInterface { get; set; }
+		public IBaseInterface<Product> ProductBaseInterface { get; set; }
+		public IBaseInterface<Country> CountryBaseInterface { get; set; }
+		public IBaseInterface<City> CityBaseInterface { get; set; }
+		public IBaseInterface<Hotel> HotelBaseInterface { get; set; }
+		public IBaseInterface<Location> LocationBaseInterface { get; set; }
+		public IBaseInterface<DateTour> DatetourBaseInterface { get; set; }
+		public IBaseInterface<Food> FoodBaseInterface { get; set; }
+		public IBaseInterface<Tour> TourBaseInterface { get; set; }
+		public IBaseInterface<Customer> CustomertBaseInterface { get; set; }
+		public IBaseInterface<Saller> SallerBaseInterface { get; set; }
+		public IBaseInterface<Ofertum> OfertumBaseInterface { get; set; }
+		public IBaseInterface<Blog> BlogBaseInterface { get; set; }
+		public IBaseInterface<New> NewBaseInterface { get; set; }
 
+		public DataManager() { }
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
 							IBaseInterface<Country> countryBaseInterface,
 							IBaseInterface<City> cityBaseInterface,
@@ -34,19 +35,19 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<New> newBaseInterface
 							)
 		{
-			this.productBaseInterface = productBaseInterface;
-			this.countryBaseInterface = countryBaseInterface;
-			this.cityBaseInterface = cityBaseInterface;
-			this.hotelBaseInterface = hotelBaseInterface;
-			this.locationBaseInterface = locationBaseInterface;
-			this.datetourBaseInterface = datetourBaseInterface;
-			this.foodBaseInterface = foodBaseInterface;
-			this.tourBaseInterface = tourBaseInterface;
-			this.customertBaseInterface = customertBaseInterface;
-			this.sallerBaseInterface = sallerBaseInterface;
-			this.ofertumBaseInterface = ofertumBaseInterface;
-			this.blogBaseInterface = blogBaseInterface;
-			this.newBaseInterface = newBaseInterface;
+			this.ProductBaseInterface = productBaseInterface;
+			this.CountryBaseInterface = countryBaseInterface;
+			this.CityBaseInterface = cityBaseInterface;
+			this.HotelBaseInterface = hotelBaseInterface;
+			this.LocationBaseInterface = locationBaseInterface;
+			this.DatetourBaseInterface = datetourBaseInterface;
+			this.FoodBaseInterface = foodBaseInterface;
+			this.TourBaseInterface = tourBaseInterface;
+			this.CustomertBaseInterface = customertBaseInterface;
+			this.SallerBaseInterface = sallerBaseInterface;
+			this.OfertumBaseInterface = ofertumBaseInterface;
+			this.BlogBaseInterface = blogBaseInterface;
+			this.NewBaseInterface = newBaseInterface;
 		}
 	}
 }

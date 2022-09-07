@@ -11,7 +11,7 @@ namespace ToursWebAppEXAMProject.Models
 
 		[Required]
 		[Display(Name = "Заголовок блога")]
-		public string Title { get; set; } = "Заголовок блога";
+		public string Name { get; set; } = "Заголовок блога";
 
 		[Display(Name = "Сообщение")]
 		public string? Message { get; set; } = "Сообщение";

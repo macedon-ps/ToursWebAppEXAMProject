@@ -40,7 +40,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
 
-			var news = DataManager.newBaseInterface.GetAllItems();
+			var news = DataManager.NewBaseInterface.GetAllItems();
 			
 			if (news == null) 
 			{
@@ -68,7 +68,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
 			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
 
-			var new_ = DataManager.newBaseInterface.GetItemById(id);
+			var new_ = DataManager.NewBaseInterface.GetItemById(id);
 
 			if (new_.Id == 0) 
 			{
@@ -96,7 +96,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
 
-			var blogs = DataManager.blogBaseInterface.GetAllItems();
+			var blogs = DataManager.BlogBaseInterface.GetAllItems();
 
 			if (blogs == null)
 			{
@@ -124,7 +124,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace($"Переход по маршруту /Home/GetBlog?id={id}");
 			Console.WriteLine($"Переход по маршруту /Home/GetBlog?id={id}");
 
-			var blog = DataManager.blogBaseInterface.GetItemById(id);
+			var blog = DataManager.BlogBaseInterface.GetItemById(id);
 
 			logger.Debug($"Возвращено представление Home/GetBlog.cshtml\n");
 			Console.WriteLine($"Возвращено представление Home/GetBlog.cshtml\n");
