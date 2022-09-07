@@ -39,7 +39,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace($"Переход по маршруту /Search/GetProduct?id={id}");
 			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
 
-			var product = DataManager.productBaseInterface.GetItemById(id);
+			var product = DataManager.ProductBaseInterface.GetItemById(id);
 			
 			if (product.Id == 0)
 			{
@@ -67,7 +67,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Search/GetAllProducts");
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
 
-			var products = DataManager.productBaseInterface.GetAllItems();
+			var products = DataManager.ProductBaseInterface.GetAllItems();
 			
 			if (products == null)
 			{
@@ -81,6 +81,34 @@ namespace ToursWebAppEXAMProject.Controllers
 				return View("Error", errorInfo);
 			}
 			
+			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
+			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
+			return View(products);
+		}
+
+		/// <summary>
+		/// Метод GetQueryResultProducts(), кот. возвращает данные некоторых туристических продуктов из БД по имени / ключевому слову
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult GetQueryResultProducts(string keyword, bool isFullName)
+		{
+			logger.Trace("Переход по маршруту /Search/GetAllProducts");
+			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
+
+			var products = DataManager.ProductBaseInterface.GetQueryResultItems(keyword, isFullName);
+
+			if (products == null)
+			{
+				logger.Warn("Возвращено представление /Error.cshtml\n");
+				Console.WriteLine("Возвращено представление /Error.cshtml\n");
+
+				// задаем входные параметры для объекта ErrorViewModel
+				// можно передать: modelType, id - обязательные параметры, message - опционально;
+				// message = "";
+				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Product>));
+				return View("Error", errorInfo);
+			}
+
 			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
