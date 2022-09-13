@@ -19,7 +19,7 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Hotel> Hotels { get; set; } = null!;
 		public virtual DbSet<Location> Locations { get; set; } = null!;
 		public virtual DbSet<New> News { get; set; } = null!;
-		public virtual DbSet<Ofertum> Oferta { get; set; } = null!;
+		public virtual DbSet<Offer> Offers { get; set; } = null!;
 		public virtual DbSet<Product> Products { get; set; } = null!;
 		public virtual DbSet<Saller> Sallers { get; set; } = null!;
 		public virtual DbSet<Tour> Tours { get; set; } = null!;
@@ -159,8 +159,10 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
 			});
 
-			modelBuilder.Entity<Ofertum>(entity =>
+			modelBuilder.Entity<Offer>(entity =>
 			{
+				entity.ToTable("Offer");
+
 				entity.HasOne(d => d.Customer)
 					.WithMany(p => p.Oferta)
 					.HasForeignKey(d => d.CustomerId)
