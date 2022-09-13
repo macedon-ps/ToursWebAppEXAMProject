@@ -15,7 +15,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		public IBaseInterface<Tour> TourBaseInterface { get; set; }
 		public IBaseInterface<Customer> CustomertBaseInterface { get; set; }
 		public IBaseInterface<Saller> SallerBaseInterface { get; set; }
-		public IBaseInterface<Ofertum> OfertumBaseInterface { get; set; }
+		public IBaseInterface<Offer> OfferBaseInterface { get; set; }
 		public IBaseInterface<Blog> BlogBaseInterface { get; set; }
 		public IBaseInterface<New> NewBaseInterface { get; set; }
 
@@ -30,7 +30,7 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Tour> tourBaseInterface,
 							IBaseInterface<Customer> customertBaseInterface,
 							IBaseInterface<Saller> sallerBaseInterface,
-							IBaseInterface<Ofertum> ofertumBaseInterface,
+							IBaseInterface<Offer> offerBaseInterface,
 							IBaseInterface<Blog> blogBaseInterface,
 							IBaseInterface<New> newBaseInterface
 							)
@@ -45,7 +45,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.TourBaseInterface = tourBaseInterface;
 			this.CustomertBaseInterface = customertBaseInterface;
 			this.SallerBaseInterface = sallerBaseInterface;
-			this.OfertumBaseInterface = ofertumBaseInterface;
+			this.OfferBaseInterface = offerBaseInterface;
 			this.BlogBaseInterface = blogBaseInterface;
 			this.NewBaseInterface = newBaseInterface;
 		}

@@ -7,7 +7,7 @@ namespace ToursWebAppEXAMProject.Models
     {
         public Customer()
         {
-            Oferta = new HashSet<Ofertum>();
+            Oferta = new HashSet<Offer>();
         }
 
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace ToursWebAppEXAMProject.Models
         public string Gender { get; set; } = null!;
         public int Age { get; set; }
 
-        public virtual ICollection<Ofertum> Oferta { get; set; }
+        public virtual ICollection<Offer> Oferta { get; set; }
     }
 }

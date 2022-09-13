@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToursWebAppEXAMProject.Models
 {
-    public partial class Ofertum
+    public partial class Offer
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
