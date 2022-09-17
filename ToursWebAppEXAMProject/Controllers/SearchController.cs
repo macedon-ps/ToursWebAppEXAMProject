@@ -49,7 +49,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(Product), id);
+				var errorInfo = new ErrorViewModel(typeof(Product), id);
 				return View("Error", errorInfo);
 			}
 
@@ -77,7 +77,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Product>));
+				var errorInfo = new ErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 			
@@ -105,7 +105,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Product>));
+				var errorInfo = new ErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 

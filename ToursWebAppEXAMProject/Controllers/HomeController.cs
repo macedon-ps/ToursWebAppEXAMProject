@@ -47,7 +47,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType - обязательный параметр, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<New>));
+				var errorInfo = new ErrorViewModel(typeof(List<New>));
 
 				logger.Warn("Возвращено представление /Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Error.cshtml\n");
@@ -78,7 +78,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(New), id);
+				var errorInfo = new ErrorViewModel(typeof(New), id);
 				return View("Error", errorInfo);
 			}
 
@@ -103,7 +103,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType - обязательный параметр, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(List<Blog>));
+				var errorInfo = new ErrorViewModel(typeof(List<Blog>));
 
 				logger.Warn("Возвращено представление /Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Error.cshtml\n");
@@ -134,7 +134,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				// задаем входные параметры для объекта ErrorViewModel
 				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = ErrorViewModel.GetErrorInfo(typeof(Blog), id);
+				var errorInfo = new ErrorViewModel(typeof(Blog), id);
 
 				logger.Warn($"Возвращено представление /Error.cshtml\n");
 				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
