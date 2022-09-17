@@ -172,8 +172,8 @@ namespace ToursWebAppEXAMProject.Repositories
 		{
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
-			logger.Trace($"Запрашиваются {itemKeyword[2]} по ключевому слову {keyword}");
-			Console.WriteLine($"Запрашиваются {itemKeyword[2]} по ключевому слову {keyword}");
+			logger.Trace($"Запрашиваются {itemKeyword[2]} по ключевому слову \"{keyword}\"");
+			Console.WriteLine($"Запрашиваются {itemKeyword[2]} по ключевому слову \"{keyword}\"");
 
 			try
 			{
@@ -199,8 +199,8 @@ namespace ToursWebAppEXAMProject.Repositories
 												
 				if (items == null)
 				{
-					logger.Warn($"Выборка {itemKeyword[3]} по названию / ключевому слову {keyword} не осуществлена.");
-					Console.WriteLine($"Выборка {itemKeyword[3]} по названию / ключевому слову {keyword} не осуществлена.");
+					logger.Warn($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена.");
+					Console.WriteLine($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена.");
 
 					return new List<T>();
 				}
