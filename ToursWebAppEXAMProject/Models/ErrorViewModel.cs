@@ -39,30 +39,17 @@ namespace ToursWebAppEXAMProject.Models
 		/// </summary>
 		public bool IsErrorMessage => !string.IsNullOrEmpty(MessageToErrorViewModel);
 
-		public ErrorViewModel()
+		public ErrorViewModel(Type modelType, int id, string? message = "")
 		{
 			DateTimeError = DateTime.UtcNow;
+			ModelTypeCalledError = modelType.ToString();
+			RequestId = id;
+			if (message != null && id != 0) MessageToErrorViewModel = message ?? $"вывод значения сущности с id = {id} из БД невозможен";
 		}
 
-		public static ErrorViewModel GetErrorInfo(Type modelType, int id, string ? message = "")
+		public ErrorViewModel(Type modelType, string? message = "") : this(modelType, 0, message)
 		{
-			var errorInfo = new ErrorViewModel();
-			errorInfo.ModelTypeCalledError = modelType.ToString();
-			
-			if(message != null) errorInfo.MessageToErrorViewModel = message ?? $"вывод значения сущности с id = {id} из БД невозможен";
-
-			errorInfo.RequestId = id;
-
-			return errorInfo;
-		}
-		public static ErrorViewModel GetErrorInfo(Type modelType, string? message = "")
-		{
-			var errorInfo = new ErrorViewModel();
-			errorInfo.ModelTypeCalledError = modelType.ToString();
-
-			if (message != null) errorInfo.MessageToErrorViewModel = message ?? "вывод значений сущностей из БД невозможен";
-			
-			return errorInfo;
+			if (message != null) MessageToErrorViewModel = message ?? "вывод значений сущностей из БД невозможен";
 		}
 	}
 }
