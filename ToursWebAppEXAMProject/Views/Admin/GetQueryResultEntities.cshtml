@@ -1,9 +1,4 @@
-﻿@model List<New>
-@{
-
-}
-
-@{
+﻿@{
    <div class="adminPage">
         <div class="adminButton">
             <button class="">
@@ -20,14 +15,18 @@
              </button>
         </div>
         <div class="adminHeader">
-            @foreach(var new_ in @Model)
+            @foreach(var item in @Model)
             {
                 <div>
                     <div class="padding_bottom_2">
-                        <h2>@new_.Name</h2>
+                        <h2>@item.Name</h2>
                     </div>
                     <div class="padding_bottom_2">
-                        <h4>@new_.ShortDescription</h4>
+                        @*<h4>@item.ShortDescription</h4>*@
+                    </div>
+                    <div>
+                        <a asp-area="" asp-controller="Admin" asp-action="EditItem" asp-route-id="@item.Id">редактировать</a>	
+                        <a asp-area="" asp-controller="Admin" asp-action="DeleteItem" asp-route-id="">удалить</a>
                     </div>
                 </div>
             }

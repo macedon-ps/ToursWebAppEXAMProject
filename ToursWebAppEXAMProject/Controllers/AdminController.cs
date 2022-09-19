@@ -26,23 +26,55 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult EditMenu()
+		public IActionResult EditMenuNews()
 		{
-			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
+			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuNews.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuNews.cshtml\n");
 			
+			return View();
+		}
+		
+		[HttpGet]
+		public IActionResult EditMenuBlogs()
+		{
+			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuBlogs.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuBlogs.cshtml\n");
+
+			return View();
+		}
+		
+		[HttpGet]
+		public IActionResult EditMenuProducts()
+		{
+			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuProducts.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuProducts.cshtml\n");
+
 			return View();
 		}
 
 		[HttpGet]
-		public IActionResult GetQueryResultNews(bool isFullName, string fullNameOrKeywordOfItem)
+		public IActionResult GetQueryResultEntities(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
-			logger.Trace("Переход по маршруту /Admin/GetQueryResultNews");
-			Console.WriteLine("Переход по маршруту /Admin/GetQueryResultNews");
+			logger.Trace("Переход по маршруту /Admin/GetQueryResultItems");
+			Console.WriteLine("Переход по маршруту /Admin/GetQueryResultItems");
 
-			var news = DataManager.NewBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
+			object items = new object();
+			
+			switch (type)
+			{
+				case "New":
+					items = DataManager.NewBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					break;
+				case "Blog":
+					items = DataManager.BlogBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					break;
+				case "Product":
+					items = DataManager.ProductBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					break;
+			}
 
-			if (news == null)
+			if (items == null)
 			{
 				logger.Warn("Возвращено представление /Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Error.cshtml\n");
@@ -54,9 +86,9 @@ namespace ToursWebAppEXAMProject.Controllers
 				return View("Error", errorInfo);
 			}
 
-			logger.Debug("Возвращено представление /Admin/GetQueryResultNews.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/GetQueryResultNews.cshtml\n");
-			return View(news);
+			logger.Debug("Возвращено представление /Admin/GetQueryResultItems.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/GetQueryResultItems.cshtml\n");
+			return View(items);
 		}
 	}
 }

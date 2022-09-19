@@ -1,0 +1,36 @@
+﻿@model EditMenuViewModel
+
+<div class="adminPage">
+    <div class="adminButton">
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="Index">Администратору сайта</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="">Редактировать новости</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="">Редактировать блоги</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="">Редактировать турпродукты</a>
+        </button>
+    </div>
+    <div class="searchHeader">
+        <h2>Редактирование данных блогов:</h2>
+            
+        <div class="div-box">
+                
+            <h4>Выберите режим ввода:</h4>
+                
+            <form asp-area="" asp-controller="Admin" asp-action="GetQueryResultEntities" method="get">
+                <input type="hidden" asp-for="type" value="Blog"/>
+                <input type = "radio" asp-for="isFullName" value="true"/><span class="spanMarginLR">Полное название</span>
+                <input type = "radio" asp-for="isFullName" value="false"/><span class="spanMarginLR">Ключевое слово</span>
+                <div>
+                    <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово"/>
+                </div>
+                    <input type = "submit" value="Найти"/>
+            </form>
+        </div>
+    </div>
+</div>
