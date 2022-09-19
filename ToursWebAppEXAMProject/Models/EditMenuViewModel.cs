@@ -6,10 +6,13 @@
 
 		public string fullNameOrKeywordOfItem { get; set; }	
 
-		public EditMenuViewModel(string fullNameOrKeywordOfItem, bool isFullName)
+		public string type { get; set; }
+
+		public EditMenuViewModel(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
-			this.fullNameOrKeywordOfItem = fullNameOrKeywordOfItem;
 			this.isFullName = isFullName;
+			this.fullNameOrKeywordOfItem = fullNameOrKeywordOfItem;
+			this.type = type;
 		}
 
 	}
