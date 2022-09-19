@@ -21,18 +21,17 @@
          <div class="homeHeader">
            @foreach(var blog in Model)
            {
-                <p>Данные:</p>
                 <div>
-                    <div class="padding_bottom_2">
+                    <div>
                         <h2>@blog.Name</h2>
                     </div>
-                    <div class="padding_bottom_2">
+                    <div>
                         <h4>@blog.Message</h4>
                     </div>
-                    <div class="padding_bottom_2">
+                    <div>
                         <h4>@blog.DateAdded</h4>
                     </div>
-                    <div>
+                    <div class="margin-bottom">
                         <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
                     </div>
                 </div> 

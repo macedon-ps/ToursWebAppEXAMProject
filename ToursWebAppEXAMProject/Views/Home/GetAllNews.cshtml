@@ -23,16 +23,15 @@
            @foreach(var newItem in Model)
            {
                 <div>
-                    <div class="padding_bottom_2">
+                    <div>
                         <h2>@newItem.Name</h2>
                     </div>
-                    <div class="padding_bottom_2">
+                    <div>
                         <h4>@newItem.ShortDescription</h4>
                     </div>
-                    <div>
+                    <div class="margin-bottom">
                         <a asp-controller="Home" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
                     </div>
-
                 </div> 
            }
         </div>
