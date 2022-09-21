@@ -41,7 +41,7 @@ namespace ToursWebAppEXAMProject.Models
 
 		public ErrorViewModel(Type modelType, int id, string? message = "")
 		{
-			DateTimeError = DateTime.UtcNow;
+			DateTimeError = DateTime.Now;
 			ModelTypeCalledError = modelType.ToString();
 			RequestId = id;
 			if (message != null && id != 0) MessageToErrorViewModel = message ?? $"вывод значения сущности с id = {id} из БД невозможен";

@@ -19,7 +19,6 @@ namespace ToursWebAppEXAMProject.Repositories
 		public IBaseInterface<Blog> BlogBaseInterface { get; set; }
 		public IBaseInterface<New> NewBaseInterface { get; set; }
 
-		public DataManager() { }
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
 							IBaseInterface<Country> countryBaseInterface,
 							IBaseInterface<City> cityBaseInterface,
