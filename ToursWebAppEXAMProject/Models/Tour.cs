@@ -7,7 +7,7 @@ namespace ToursWebAppEXAMProject.Models
     {
         public Tour()
         {
-            Oferta = new HashSet<Offer>();
+            Offer = new HashSet<Offer>();
         }
 
         public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace ToursWebAppEXAMProject.Models
         public virtual Food Food { get; set; } = null!;
         public virtual Location Location { get; set; } = null!;
         public virtual Product Product { get; set; } = null!;
-        public virtual ICollection<Offer> Oferta { get; set; }
+        public virtual ICollection<Offer> Offer { get; set; }
     }
 }

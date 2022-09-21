@@ -7,7 +7,6 @@
                 <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
              </button>
              <button class="">
-                @* TODO:  реализовать поиск тура по id, имени или др. параметрам*@ 
                 <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
              </button>
              <button class="">
@@ -25,7 +24,10 @@
                         <h2>@product.Name</h2>
                     </div>
                     <div class="padding_bottom_2">
-                        <h4>@product.Description</h4>
+                        <h4>@product.ShortDescription</h4>
+                    </div>
+                     <div class="margin-bottom">
+                        <a asp-controller="Search" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
                     </div>
                 </div>
             }

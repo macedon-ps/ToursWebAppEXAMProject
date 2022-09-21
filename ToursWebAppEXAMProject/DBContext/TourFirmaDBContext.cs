@@ -38,19 +38,25 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("Blog");
 
-				entity.Property(e => e.DateAdded).HasColumnType("datetime");
-
-				entity.Property(e => e.FullMessageLine).HasDefaultValueSql("('Полная строка сообщений')");
-
-				entity.Property(e => e.Message)
-					.HasMaxLength(50)
-					.HasDefaultValueSql("('Сообщение участника блога')");
-
 				entity.Property(e => e.Name)
 					.HasMaxLength(50)
 					.HasDefaultValueSql("('Заголовок блога')");
 
+				entity.Property(e => e.Message)
+					.HasMaxLength(200)
+					.HasDefaultValueSql("('Сообщение')");
+
+				entity.Property(e => e.FullMessageLine).HasDefaultValueSql("('Вся строка сообщений')");
+
+				entity.Property(e => e.ShortDescription)
+					.HasMaxLength(100)
+					.HasDefaultValueSql("('Краткое описание темы блога')");
+
+				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание темы блога')");
+
 				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+
+				entity.Property(e => e.DateAdded).HasColumnType("datetime");
 			});
 
 			modelBuilder.Entity<City>(entity =>
@@ -144,19 +150,19 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("New");
 
-				entity.Property(e => e.DateAdded).HasColumnType("datetime");
-
-				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
-
-				entity.Property(e => e.ShortDescription)
-					.HasMaxLength(100)
-					.HasDefaultValueSql("('Краткое орисание новости')");
-
 				entity.Property(e => e.Name)
 					.HasMaxLength(50)
 					.HasDefaultValueSql("('Заголовок новости')");
 
+				entity.Property(e => e.ShortDescription)
+					.HasMaxLength(100)
+					.HasDefaultValueSql("('Краткое описание новости')");
+
+				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
+
 				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+				
+				entity.Property(e => e.DateAdded).HasColumnType("datetime");
 			});
 
 			modelBuilder.Entity<Offer>(entity =>
@@ -164,29 +170,42 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.ToTable("Offer");
 
 				entity.HasOne(d => d.Customer)
-					.WithMany(p => p.Oferta)
+					.WithMany(p => p.Offer)
 					.HasForeignKey(d => d.CustomerId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__Customer__4D94879B");
+					.HasConstraintName("FK__Offer__Customer__4D94879B");
 
 				entity.HasOne(d => d.Saller)
-					.WithMany(p => p.Oferta)
+					.WithMany(p => p.Offer)
 					.HasForeignKey(d => d.SallerId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__SallerId__4E88ABD4");
+					.HasConstraintName("FK__Offer__SallerId__4E88ABD4");
 
 				entity.HasOne(d => d.Tour)
-					.WithMany(p => p.Oferta)
+					.WithMany(p => p.Offer)
 					.HasForeignKey(d => d.TourId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
-					.HasConstraintName("FK__Oferta__TourId__4F7CD00D");
+					.HasConstraintName("FK__Offer__TourId__4F7CD00D");
 			});
 
 			modelBuilder.Entity<Product>(entity =>
 			{
 				entity.ToTable("Product");
 
-				entity.Property(e => e.Name).HasMaxLength(50);
+				entity.Property(e => e.Name)
+					.HasMaxLength(50)
+					.HasDefaultValueSql("('Название туристического продукта')");
+
+				entity.Property(e => e.ShortDescription)
+					.HasMaxLength(100)
+					.HasDefaultValueSql("('Краткое описание туристического продукта')");
+
+				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание туристического продукта')");
+
+				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+
+				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+
 			});
 
 			modelBuilder.Entity<Saller>(entity =>

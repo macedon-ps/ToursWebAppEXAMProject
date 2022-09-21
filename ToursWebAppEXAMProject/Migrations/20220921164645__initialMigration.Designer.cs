@@ -12,8 +12,8 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    [Migration("20220907180822__changedPropsnameFromTitleToName")]
-    partial class _changedPropsnameFromTitleToName
+    [Migration("20220921164645__initialMigration")]
+    partial class _initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,16 +35,24 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("FullMessageLine")
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полная строка сообщений')");
+                        .HasDefaultValueSql("('Полное описание темы блога')");
+
+                    b.Property<string>("FullMessageLine")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("('Вся строка сообщений')");
 
                     b.Property<string>("Message")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValueSql("('Сообщение участника блога')");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValueSql("('Сообщение')");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,6 +60,13 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasDefaultValueSql("('Заголовок блога')");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("('Краткое описание темы блога')");
 
                     b.Property<string>("TitleImagePath")
                         .HasMaxLength(100)
@@ -264,7 +279,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Краткое орисание новости')");
+                        .HasDefaultValueSql("('Краткое описание новости')");
 
                     b.Property<string>("TitleImagePath")
                         .HasMaxLength(100)
@@ -275,7 +290,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.ToTable("New", (string)null);
                 });
 
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Ofertum", b =>
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Offer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,7 +315,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("Oferta");
+                    b.ToTable("Offer", (string)null);
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Product", b =>
@@ -311,13 +326,32 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("DateAdded")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("('Полное описание туристического продукта')");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("('Название туристического продукта')");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("('Краткое описание туристического продукта')");
+
+                    b.Property<string>("TitleImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -441,25 +475,25 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Navigation("Hotel");
                 });
 
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Ofertum", b =>
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Offer", b =>
                 {
                     b.HasOne("ToursWebAppEXAMProject.Models.Customer", "Customer")
-                        .WithMany("Oferta")
+                        .WithMany("Offer")
                         .HasForeignKey("CustomerId")
                         .IsRequired()
-                        .HasConstraintName("FK__Oferta__Customer__4D94879B");
+                        .HasConstraintName("FK__Offer__Customer__4D94879B");
 
                     b.HasOne("ToursWebAppEXAMProject.Models.Saller", "Saller")
-                        .WithMany("Oferta")
+                        .WithMany("Offer")
                         .HasForeignKey("SallerId")
                         .IsRequired()
-                        .HasConstraintName("FK__Oferta__SallerId__4E88ABD4");
+                        .HasConstraintName("FK__Offer__SallerId__4E88ABD4");
 
                     b.HasOne("ToursWebAppEXAMProject.Models.Tour", "Tour")
-                        .WithMany("Oferta")
+                        .WithMany("Offer")
                         .HasForeignKey("TourId")
                         .IsRequired()
-                        .HasConstraintName("FK__Oferta__TourId__4F7CD00D");
+                        .HasConstraintName("FK__Offer__TourId__4F7CD00D");
 
                     b.Navigation("Customer");
 
@@ -519,7 +553,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Customer", b =>
                 {
-                    b.Navigation("Oferta");
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.DateTour", b =>
@@ -549,12 +583,12 @@ namespace ToursWebAppEXAMProject.Migrations
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Saller", b =>
                 {
-                    b.Navigation("Oferta");
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
                 {
-                    b.Navigation("Oferta");
+                    b.Navigation("Offer");
                 });
 #pragma warning restore 612, 618
         }
