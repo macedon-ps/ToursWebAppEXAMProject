@@ -26,30 +26,13 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult EditMenuNews()
+		public IActionResult EditMenu(string type)
 		{
-			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuNews.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuNews.cshtml\n");
+			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
+			var model = new EditMenuViewModel(true, "", type);
 			
-			return View();
-		}
-		
-		[HttpGet]
-		public IActionResult EditMenuBlogs()
-		{
-			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuBlogs.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuBlogs.cshtml\n");
-
-			return View();
-		}
-		
-		[HttpGet]
-		public IActionResult EditMenuProducts()
-		{
-			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuProducts.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenuProducts.cshtml\n");
-
-			return View();
+			return View(model);
 		}
 
 		[HttpGet]

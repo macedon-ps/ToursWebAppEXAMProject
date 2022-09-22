@@ -10,7 +10,7 @@ namespace ToursWebAppEXAMProject.Models
 
         [Required]
         public int Id { get; set; }
-        
+
         [Required]
         [Display(Name = "Заголовок новости")]
         public string Name { get; set; } = "Заголовок новости";
@@ -26,5 +26,6 @@ namespace ToursWebAppEXAMProject.Models
 
         [Display(Name = "Время создания")]
         [DataType(DataType.Time)]
-        public DateTime? DateAdded { get; set; } 
+        public DateTime? DateAdded { get; set; }
+    }
 }
