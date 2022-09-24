@@ -1,4 +1,6 @@
-﻿<div class="adminPage">
+﻿@model Blog
+
+<div class="adminPage">
     <div class="adminButton">
         <button class="">
             <a id="" asp-area="" asp-controller="Admin" asp-action="Index">Администратору сайта</a>
@@ -14,21 +16,25 @@
         </button>
     </div>
     <div class="adminHeader">
-        @foreach(var item in @Model)
-        {
-            var type = item.GetType().ToString();
+        <form method="post" asp-controller="" asp-action="">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" />
+            
             <div>
-                <div class="padding_bottom_2">
-                    <h2>@item.Name</h2>
+                <div class="padding_bottom_2 displayFlex">
+                    <label asp-for="Name"></label>
+                    <input type="text" asp-for="Name" />
                 </div>
-                <div class="padding_bottom_2">
-                    <h4>@item.ShortDescription</h4>
+                <div class="padding_bottom_2 displayFlex">
+                    <label asp-for="ShortDescription"></label>
+                    <input type="text" asp-for="ShortDescription" />
                 </div>
-                <div>
-                    <a asp-area="" asp-controller="Admin" asp-action="EditItem" asp-route-id="@item.Id" asp-route-type="@type">редактировать</a>	
-                    <a asp-area="" asp-controller="Admin" asp-action="DeleteItem" asp-route-id="">удалить</a>
+                <div class="padding_bottom_2 displayFlex">
+                    <label asp-for="TitleImagePath"></label>
+                    <input type="text" asp-for="TitleImagePath" />
                 </div>
+                <input type="submit" value="Сохранить" />
             </div>
-        }
+        </form>
     </div>
 </div>

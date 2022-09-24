@@ -1,4 +1,6 @@
-﻿<div class="adminPage">
+﻿@model ErrorViewModel
+
+<div class="adminPage">
     <div class="adminButton">
         <button class="">
             <a id="" asp-area="" asp-controller="Admin" asp-action="Index">Администратору сайта</a>
@@ -13,22 +15,30 @@
             <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
         </button>
     </div>
+    @{
+        // TODO: переделать модели типов
+    }
     <div class="adminHeader">
-        @foreach(var item in @Model)
-        {
-            var type = item.GetType().ToString();
+        <form method="post" asp-controller="" asp-action="">
+            <input type="hidden" asp-for="RequestId" />
+            <input type="hidden" asp-for="RequestId" />
+            
             <div>
                 <div class="padding_bottom_2">
-                    <h2>@item.Name</h2>
+                    <label asp-for="MessageToErrorViewModel"></label>
+                    <input type="text" asp-for="MessageToErrorViewModel" />
                 </div>
                 <div class="padding_bottom_2">
-                    <h4>@item.ShortDescription</h4>
+                    <label asp-for="ModelTypeCalledError"></label>
+                    <input type="text" asp-for="ModelTypeCalledError" />
                 </div>
                 <div>
-                    <a asp-area="" asp-controller="Admin" asp-action="EditItem" asp-route-id="@item.Id" asp-route-type="@type">редактировать</a>	
-                    <a asp-area="" asp-controller="Admin" asp-action="DeleteItem" asp-route-id="">удалить</a>
+                    <label asp-for="DateTimeError"></label>
+                    <input type="text" asp-for="DateTimeError" />
                 </div>
+                <input type="submit" value="Сохранить" />
             </div>
-        }
+        </form>
     </div>
 </div>
+

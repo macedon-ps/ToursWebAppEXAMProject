@@ -2081,3 +2081,12 @@ h2 {
 .margin-bottom{
 	margin-bottom: 1.5em;
 }
+.displayFlex {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.5em;
+}
+.displayFlex label,
+.displayFlex input{
+	margin: 0.2em 0;
+}

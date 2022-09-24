@@ -21,7 +21,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Admin/Index. Возвращено представление Admin/Index.cshtml\n");
-			
+
 			return View();
 		}
 
@@ -31,7 +31,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Admin/EditMenu. Возвращено представление Admin/EditMenu.cshtml\n");
 			var model = new EditMenuViewModel(true, "", type);
-			
+
 			return View(model);
 		}
 
@@ -43,7 +43,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
 			object items = new object();
-			
+
 			switch (type)
 			{
 				case "New":
@@ -73,5 +73,33 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Возвращено представление /Admin/GetQueryResultItems.cshtml\n");
 			return View(items);
 		}
+
+		[HttpGet]
+		public IActionResult EditItem(string type, int id)
+		{
+			object model = new object();
+			switch (type)
+			{
+				case "ToursWebAppEXAMProject.Models.New":
+					model = DataManager.NewBaseInterface.GetItemById(id);
+					return View("EditItemNew", model);
+				case "ToursWebAppEXAMProject.Models.Blog":
+					model = DataManager.BlogBaseInterface.GetItemById(id);
+					return View("EditItemBlog", model);
+				case "ToursWebAppEXAMProject.Models.Product":
+					model = DataManager.ProductBaseInterface.GetItemById(id);
+					return View("EditItemProduct", model);
+			}
+			var message = "Ошибка обработки метода EditItem()";
+			var errorInfo = new ErrorViewModel(typeof(Object), id, message);
+			return View("Error", errorInfo);
+		}
+
+        [HttpPost]
+		public IActionResult EditItem(Object model)
+        {
+			// TODO: реализоывть сохранение данных формы
+			return View(model);
+        }
 	}
 }

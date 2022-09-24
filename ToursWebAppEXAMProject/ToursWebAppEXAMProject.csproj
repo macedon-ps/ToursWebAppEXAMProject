@@ -39,6 +39,7 @@
   <ItemGroup>
     <Folder Include="Areas\Controllers\" />
     <Folder Include="Areas\Views\" />
+    <Folder Include="Controllers\Новая папка\" />
   </ItemGroup>
 
   <ItemGroup>

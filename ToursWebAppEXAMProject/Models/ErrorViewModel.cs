@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ToursWebAppEXAMProject.Models
 {
 	public class ErrorViewModel
@@ -5,22 +7,26 @@ namespace ToursWebAppEXAMProject.Models
 		/// <summary>
 		/// Передаваемый в GET запросе id какой-то сущности 
 		/// </summary> 
+		[Display(Name = "id сущности, вызвавшей ошибку")]
 		public int? RequestId { get; set; }
 
 		/// <summary>
 		/// Сообщение, передаваемое во вью ошибки
 		/// </summary>
-		
+
+		[Display(Name = "Сообщение об ошибке")]
 		public string? MessageToErrorViewModel { get; set; }
 
 		/// <summary>
 		/// Тип модели, кот. вызывает ошибку
 		/// </summary>
+		[Display(Name = "Тип данных (класс), вызвавший ошибку")]
 		public string ModelTypeCalledError { get; set; } = null!;
 
 		/// <summary>
 		/// Дата и время возникновения ошибки
 		/// </summary>
+		[Display(Name = "Дата и время ошибки")]
 		public DateTime DateTimeError { get; set; }
 
 		/// <summary>
