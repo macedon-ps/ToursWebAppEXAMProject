@@ -17,7 +17,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <summary>
 		/// Универсальный репозиторий даннных БД
 		/// </summary>
-		DbSet<T> dbSetEntityItems;
+		private readonly DbSet<T> dbSetEntityItems;
 
 		/// <summary>
 		/// Статическое сойство для логирования событий
@@ -227,27 +227,27 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// Метод SaveItem(T item), кот. используется для создания новой/изменения существующей сущности по ее объекту
 		/// </summary>
 		/// <param name="item">объект сущности</param>
-		public void SaveItem(T tItem)
+		public void SaveItem(T item)
 		{
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
 			try
 			{
-				var item = dbSetEntityItems.Find(tItem);
-
 				if (item == null)
 				{
 					logger.Trace($"Создание нового(ой) {itemKeyword[1]}");
 					Console.WriteLine($"Создание нового(ой) {itemKeyword[1]}");
-					dbSetEntityItems.Add(tItem);	
+					dbSetEntityItems.Add(item);
+					context.SaveChanges();
 				}
 				else
 				{
 					logger.Trace($"Обновление существующего(ей) {itemKeyword[1]}");
 					Console.WriteLine($"Обновление существующего(ей) {itemKeyword[1]}");
-					context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+					context.Entry(item).State = EntityState.Modified;
+					context.SaveChanges();
+					
 				}
-				context.SaveChanges();
 			}
 			catch (Exception ex)
 			{

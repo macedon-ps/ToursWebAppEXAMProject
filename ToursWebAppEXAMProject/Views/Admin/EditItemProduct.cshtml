@@ -16,10 +16,9 @@
         </button>
     </div>
     <div class="adminHeader">
-        <form method="post" asp-controller="" asp-action="">
+        <form method="post" asp-controller="Admin" asp-action="SaveItemProduct">
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="Id" />
-            
+            <input type="hidden" asp-for="DateAdded" />
             <div>
                 <div class="padding_bottom_2 displayFlex">
                     <label asp-for="Name"></label>
@@ -28,6 +27,10 @@
                 <div class="padding_bottom_2 displayFlex">
                     <label asp-for="ShortDescription"></label>
                     <input type="text" asp-for="ShortDescription" />
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    <label asp-for="FullDescription"></label>
+                    <input type="text" asp-for="FullDescription" />
                 </div>
                 <div class="padding_bottom_2 displayFlex">
                     <label asp-for="TitleImagePath"></label>
