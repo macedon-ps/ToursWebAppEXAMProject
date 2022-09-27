@@ -39,17 +39,17 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.ToTable("Blog");
 
 				entity.Property(e => e.Name)
-					.HasMaxLength(50)
+					.HasMaxLength(200)
 					.HasDefaultValueSql("('Заголовок блога')");
 
 				entity.Property(e => e.Message)
-					.HasMaxLength(200)
+					.HasMaxLength(400)
 					.HasDefaultValueSql("('Сообщение')");
 
 				entity.Property(e => e.FullMessageLine).HasDefaultValueSql("('Вся строка сообщений')");
 
 				entity.Property(e => e.ShortDescription)
-					.HasMaxLength(100)
+					.HasMaxLength(200)
 					.HasDefaultValueSql("('Краткое описание темы блога')");
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание темы блога')");
@@ -114,7 +114,7 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.LevelHotel).HasDefaultValueSql("((2))");
 
-				entity.Property(e => e.Name).HasMaxLength(50);
+				entity.Property(e => e.Name).HasMaxLength(200);
 
 				entity.HasOne(d => d.City)
 					.WithMany(p => p.Hotels)
@@ -151,11 +151,11 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.ToTable("New");
 
 				entity.Property(e => e.Name)
-					.HasMaxLength(50)
+					.HasMaxLength(200)
 					.HasDefaultValueSql("('Заголовок новости')");
 
 				entity.Property(e => e.ShortDescription)
-					.HasMaxLength(100)
+					.HasMaxLength(400)
 					.HasDefaultValueSql("('Краткое описание новости')");
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
@@ -193,11 +193,11 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.ToTable("Product");
 
 				entity.Property(e => e.Name)
-					.HasMaxLength(50)
+					.HasMaxLength(200)
 					.HasDefaultValueSql("('Название туристического продукта')");
 
 				entity.Property(e => e.ShortDescription)
-					.HasMaxLength(100)
+					.HasMaxLength(400)
 					.HasDefaultValueSql("('Краткое описание туристического продукта')");
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание туристического продукта')");
@@ -225,7 +225,7 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("Tour");
 
-				entity.Property(e => e.Name).HasMaxLength(50);
+				entity.Property(e => e.Name).HasMaxLength(200);
 
 				entity.HasOne(d => d.DateTour)
 					.WithMany(p => p.Tours)

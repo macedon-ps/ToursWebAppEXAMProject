@@ -11,21 +11,24 @@ namespace ToursWebAppEXAMProject.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите заголовок новости")]
         [Display(Name = "Заголовок новости")]
+        [StringLength(200, ErrorMessage = "Заголовок новости не должен содержать более 200 символов")]
         public string Name { get; set; } = "Заголовок новости";
 
         [Display(Name = "Краткое описание новости")]
+        [StringLength(400, ErrorMessage = "Краткое описание новости не должно содержать более 400 символов")]
         public string ShortDescription { get; set; } = "Краткое описание новости";
 
         [Display(Name = "Полное описание новости")]
         public string FullDescription { get; set; } = "Полное описание новости";
 
         [Display(Name = "Титульная картинка")]
-        public string? TitleImagePath { get; set; }
+        [StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
+        public string? TitleImagePath { get; set; } = "Нет титульной картинки";
 
         [Display(Name = "Время создания")]
         [DataType(DataType.Time)]
-        public DateTime? DateAdded { get; set; }
+        public DateTime? DateAdded { get; set; } = DateTime.Now;
     }
 }

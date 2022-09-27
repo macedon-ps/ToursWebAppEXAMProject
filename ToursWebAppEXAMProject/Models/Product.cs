@@ -15,22 +15,25 @@ namespace ToursWebAppEXAMProject.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите название туристического продукта")]
         [Display(Name = "Название туристического продукта")]
+        [StringLength(200, ErrorMessage = "Название туристического продукта не должно содержать более 200 символов")]
         public string Name { get; set; } = "Название туристического продукта";
 
         [Display(Name = "Короткое описание туристического продукта")]
+        [StringLength(400, ErrorMessage = "Краткое описание туристического продукта не должно содержать более 400 символов")]
         public string ShortDescription { get; set; } = "Краткое описание туристического продукта";
 
         [Display(Name = "Полное описание туристического продукта")]
         public string FullDescription { get; set; } = "Полное описание туристического продукта";
 
         [Display(Name = "Титульная картинка")]
-        public string? TitleImagePath { get; set; }
+        [StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
+        public string? TitleImagePath { get; set; } = "Нет титульной картинки";
 
         [Display(Name = "Время создания")]
         [DataType(DataType.Time)]
-        public DateTime? DateAdded { get; set; } 
+        public DateTime? DateAdded { get; set; } = DateTime.Now;
 
         public virtual ICollection<Tour> Tours { get; set; } 
     }
