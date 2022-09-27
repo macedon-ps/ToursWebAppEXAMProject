@@ -77,29 +77,101 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpGet]
 		public IActionResult EditItem(string type, int id)
 		{
+			logger.Trace("Переход по маршруту /Admin/EditItem");
+			Console.WriteLine("Переход по маршруту /Admin/EditItem");
+
 			object model = new object();
 			switch (type)
 			{
 				case "ToursWebAppEXAMProject.Models.New":
 					model = DataManager.NewBaseInterface.GetItemById(id);
+					logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
 					return View("EditItemNew", model);
+
 				case "ToursWebAppEXAMProject.Models.Blog":
 					model = DataManager.BlogBaseInterface.GetItemById(id);
+					logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
 					return View("EditItemBlog", model);
+
 				case "ToursWebAppEXAMProject.Models.Product":
 					model = DataManager.ProductBaseInterface.GetItemById(id);
+					logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
 					return View("EditItemProduct", model);
 			}
-			var message = "Ошибка обработки метода EditItem()";
-			var errorInfo = new ErrorViewModel(typeof(Object), id, message);
-			return View("Error", errorInfo);
+
+			logger.Debug("Возвращено представление /Admin/Index.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/Index.cshtml\n");
+			return View("Index");
 		}
 
         [HttpPost]
-		public IActionResult EditItem(Object model)
+		public IActionResult SaveItemNew(New model)
         {
-			// TODO: реализоывть сохранение данных формы
+			if (ModelState.IsValid)
+			{
+				logger.Debug("Модель New model прошла валидацию");
+				Console.WriteLine("Модель New model прошла валидацию");
+				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+				DataManager.NewBaseInterface.SaveItem(model);
+				return View("Success", model);
+			}
+
+			logger.Debug("Модель New model не прошла валидацию");
+			Console.WriteLine("Модель New model не прошла валидацию");
+			logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
+			return View("EditItemNew", model);
+		}
+
+		[HttpPost]
+		public IActionResult SaveItemBlog(Blog model)
+		{
+			if (ModelState.IsValid)
+			{
+				logger.Debug("Модель Blog model прошла валидацию");
+				Console.WriteLine("Модель Blog model прошла валидацию");
+				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+				DataManager.BlogBaseInterface.SaveItem(model);
+				return View("Success", model);
+			}
+
+			logger.Debug("Модель Blog model не прошла валидацию");
+			Console.WriteLine("Модель Blog model не прошла валидацию");
+			logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+			return View("EditItemBlog", model);
+		}
+
+		[HttpPost]
+		public IActionResult SaveItemProduct(Product model)
+		{
+			if (ModelState.IsValid)
+			{
+				logger.Debug("Модель Product model прошла валидацию");
+				Console.WriteLine("Модель Product model прошла валидацию");
+				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+				DataManager.ProductBaseInterface.SaveItem(model);
+				return View("Success", model);
+			}
+			logger.Debug("Модель Product model не прошла валидацию");
+			Console.WriteLine("Модель Product model не прошла валидацию");
+			logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+			return View("EditItemProduct", model);
+		}
+
+		[HttpGet]
+		public IActionResult Success(Object model)
+		{
+			logger.Trace("Переход по маршруту /Admin/Success");
+			Console.WriteLine("Переход по маршруту /Admin/Success");
 			return View(model);
-        }
+		}
 	}
 }
