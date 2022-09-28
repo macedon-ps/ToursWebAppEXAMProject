@@ -18,23 +18,27 @@
     <div class="adminHeader">
         @{
             var word = "";
+            var action = "";
             switch (@Model.type)
             {
                 case "New":
                     word = "новостей";
+                    action = "CreateEntityNew";
                     break;
                 case "Blog":
                     word = "блогов";
+                     action = "CreateEntityBlog";
                     break;
                 case "Product":
                     word = "продуктов";
+                     action = "CreateEntityProduct";
                     break;
             }
         }
         <h2>1. Создание @word:</h2>
             
         <div class="div-box">
-            <form asp-area="" asp-controller="Admin" asp-action="CreateNewEntity" method="get">
+            <form asp-area="" asp-controller="Admin" asp-action="@action" method="get">
                 <input type="hidden" asp-for="type" value="@Model.type"/>
                 <input type = "submit" value="Создать"/>
             </form>

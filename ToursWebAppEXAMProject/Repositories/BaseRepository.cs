@@ -227,7 +227,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// Метод SaveItem(T item), кот. используется для создания новой/изменения существующей сущности по ее объекту
 		/// </summary>
 		/// <param name="item">объект сущности</param>
-		public void SaveItem(T item)
+		public void SaveItem(T item, int id)
 		{
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
@@ -235,18 +235,25 @@ namespace ToursWebAppEXAMProject.Repositories
 			{
 				if (item == null)
 				{
+					logger.Trace($"Модель равна null");
+					Console.WriteLine($"Модель равна null");
+					return;
+				}
+				if(item != null && id==0)
+				{
 					logger.Trace($"Создание нового(ой) {itemKeyword[1]}");
 					Console.WriteLine($"Создание нового(ой) {itemKeyword[1]}");
 					dbSetEntityItems.Add(item);
 					context.SaveChanges();
+					return;
 				}
-				else
+				if(item != null && id != 0)
 				{
 					logger.Trace($"Обновление существующего(ей) {itemKeyword[1]}");
 					Console.WriteLine($"Обновление существующего(ей) {itemKeyword[1]}");
 					context.Entry(item).State = EntityState.Modified;
 					context.SaveChanges();
-					
+					return;
 				}
 			}
 			catch (Exception ex)

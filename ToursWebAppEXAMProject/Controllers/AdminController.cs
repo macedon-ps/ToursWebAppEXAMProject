@@ -116,7 +116,8 @@ namespace ToursWebAppEXAMProject.Controllers
 				Console.WriteLine("Модель New model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				DataManager.NewBaseInterface.SaveItem(model);
+				var id = model.Id;
+				DataManager.NewBaseInterface.SaveItem(model, id);
 				return View("Success", model);
 			}
 
@@ -136,7 +137,8 @@ namespace ToursWebAppEXAMProject.Controllers
 				Console.WriteLine("Модель Blog model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				DataManager.BlogBaseInterface.SaveItem(model);
+				var id = model.Id;
+				DataManager.BlogBaseInterface.SaveItem(model, id);
 				return View("Success", model);
 			}
 
@@ -156,7 +158,8 @@ namespace ToursWebAppEXAMProject.Controllers
 				Console.WriteLine("Модель Product model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				DataManager.ProductBaseInterface.SaveItem(model);
+				var id = model.Id;
+				DataManager.ProductBaseInterface.SaveItem(model, id);
 				return View("Success", model);
 			}
 			logger.Debug("Модель Product model не прошла валидацию");
@@ -172,6 +175,26 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Admin/Success");
 			Console.WriteLine("Переход по маршруту /Admin/Success");
 			return View(model);
+		}
+
+		public IActionResult CreateEntityNew(string type) 
+		{
+			var model = new Object();
+			if (type == "New") model = new New();
+			return View("EditItemNew", model); 
+		}
+
+		public IActionResult CreateEntityBlog(string type)
+		{
+			var model = new Object();
+			if (type == "Blog") model = new Blog();
+			return View("EditItemBlog", model);
+		}
+		public IActionResult CreateEntityProduct(string type)
+		{
+			var model = new Object();
+			if (type == "Product") model = new Product();
+			return View("EditItemProduct", model);
 		}
 	}
 }

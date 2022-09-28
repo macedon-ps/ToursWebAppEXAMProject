@@ -8,7 +8,7 @@
 
 		T GetItemById(int id);
 
-		void SaveItem(T tItem);
+		void SaveItem(T tItem, int id);
 
 		void DeleteItem(T tItem);
 	}
