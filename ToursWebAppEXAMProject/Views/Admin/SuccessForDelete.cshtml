@@ -1,0 +1,39 @@
+﻿<div class="adminPage">
+    <div class="adminButton">
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="Index">Администратору сайта</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="New">Редактировать новости</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Blog">Редактировать блоги</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
+        </button>
+    </div>
+    
+    <div class="adminHeader">
+        
+        <h3>Удаление объекта прошло  успешно!</h3>
+        <h4>Данные удаленного объекта:</h4>
+        <div>
+            <div class="padding_bottom_2 displayFlex">
+                Название: @Model.Name
+            </div>
+            <div class="padding_bottom_2 displayFlex">
+                Краткое описание: @Model.ShortDescription
+            </div>
+            <div class="padding_bottom_2 displayFlex">
+                Полное описание: @Model.FullDescription
+            </div>
+            <div class="padding_bottom_2 displayFlex">
+                Титульная картинка: @Model.TitleImagePath
+            </div>
+            <div class="padding_bottom_2 displayFlex">
+                Время создания: @Model.DateAdded
+            </div>
+        </div>
+     </div>
+</div>

@@ -107,7 +107,39 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("Index");
 		}
 
-        [HttpPost]
+		[HttpGet]
+		public IActionResult DeleteItem(string type, int id)
+		{
+			switch (type)
+			{
+				case "ToursWebAppEXAMProject.Models.New":
+					var modelNew = DataManager.NewBaseInterface.GetItemById(id);
+					DataManager.NewBaseInterface.DeleteItem(modelNew, id);
+					logger.Debug("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					return View("SuccessForDelete", modelNew);
+				
+				case "ToursWebAppEXAMProject.Models.Blog":
+					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
+					DataManager.BlogBaseInterface.DeleteItem(modelBlog, id);
+					logger.Debug("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					return View("SuccessForDelete", modelBlog);
+				
+				case "ToursWebAppEXAMProject.Models.Product":
+					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
+					DataManager.ProductBaseInterface.DeleteItem(modelProduct, id);
+					logger.Debug("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/SuccessForDelete.cshtml\n");
+					return View("SuccessForDelete", modelProduct);
+			}
+
+			logger.Debug("Возвращено представление /Admin/Index.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/Index.cshtml\n");
+			return View("Index");
+		}
+
+		[HttpPost]
 		public IActionResult SaveItemNew(New model)
         {
 			if (ModelState.IsValid)

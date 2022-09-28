@@ -10,6 +10,6 @@
 
 		void SaveItem(T tItem, int id);
 
-		void DeleteItem(T tItem);
+		void DeleteItem(T tItem, int id);
 	}
 }

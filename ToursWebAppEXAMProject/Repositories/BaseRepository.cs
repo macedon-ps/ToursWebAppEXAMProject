@@ -269,13 +269,13 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// Метод DeleteItem(int id), кот. используется для удаления сущности по ее id
 		/// </summary>
 		/// <param name="id">идентификатор сущности</param>
-		public void DeleteItem(T tItem)
+		public void DeleteItem(T tItem, int id)
 		{
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
 			try
 			{
-				if (dbSetEntityItems.Find(tItem)!=null)
+				if (dbSetEntityItems.Find(id)!=null)
 				{
 					logger.Trace($"Удаление {itemKeyword[1]}");
 					Console.WriteLine($"Удаление {itemKeyword[1]}");
