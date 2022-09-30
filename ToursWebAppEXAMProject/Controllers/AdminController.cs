@@ -140,65 +140,83 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemNew(New model)
+		public IActionResult SaveItemNew(IFormCollection formValues, int id)
         {
+			var newItem = new New();
+			newItem.Name = formValues["Name"];
+			newItem.ShortDescription = formValues["ShortDescription"];
+			newItem.FullDescription = formValues["fullInfoAboutNew"];
+			newItem.TitleImagePath = formValues["TitleImagePath"];
+			
 			if (ModelState.IsValid)
 			{
 				logger.Debug("Модель New model прошла валидацию");
 				Console.WriteLine("Модель New model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				var id = model.Id;
-				DataManager.NewBaseInterface.SaveItem(model, id);
-				return View("Success", model);
+				newItem.Id = id;
+				DataManager.NewBaseInterface.SaveItem(newItem, id);
+				return View("Success", newItem);
 			}
 
 			logger.Debug("Модель New model не прошла валидацию");
 			Console.WriteLine("Модель New model не прошла валидацию");
 			logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
 			Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
-			return View("EditItemNew", model);
+			return View("EditItemNew", newItem);
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemBlog(Blog model)
+		public IActionResult SaveItemBlog(IFormCollection formValues, int id)
 		{
+			var blogItem = new Blog();
+			blogItem.Name = formValues["Name"];
+			blogItem.ShortDescription = formValues["ShortDescription"];
+			blogItem.FullDescription = formValues["fullInfoAboutBlog"];
+			blogItem.TitleImagePath = formValues["TitleImagePath"];
+
 			if (ModelState.IsValid)
 			{
 				logger.Debug("Модель Blog model прошла валидацию");
 				Console.WriteLine("Модель Blog model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				var id = model.Id;
-				DataManager.BlogBaseInterface.SaveItem(model, id);
-				return View("Success", model);
+				blogItem.Id = id;
+				DataManager.BlogBaseInterface.SaveItem(blogItem, id);
+				return View("Success", blogItem);
 			}
 
 			logger.Debug("Модель Blog model не прошла валидацию");
 			Console.WriteLine("Модель Blog model не прошла валидацию");
 			logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
 			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-			return View("EditItemBlog", model);
+			return View("EditItemBlog", blogItem);
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemProduct(Product model)
+		public IActionResult SaveItemProduct(IFormCollection formValues, int id)
 		{
+			var productItem = new Product();
+			productItem.Name = formValues["Name"];
+			productItem.ShortDescription = formValues["ShortDescription"];
+			productItem.FullDescription = formValues["fullInfoAboutProduct"];
+			productItem.TitleImagePath = formValues["TitleImagePath"];
+
 			if (ModelState.IsValid)
 			{
 				logger.Debug("Модель Product model прошла валидацию");
 				Console.WriteLine("Модель Product model прошла валидацию");
 				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				var id = model.Id;
-				DataManager.ProductBaseInterface.SaveItem(model, id);
-				return View("Success", model);
+				productItem.Id = id;
+				DataManager.ProductBaseInterface.SaveItem(productItem, id);
+				return View("Success", productItem);
 			}
 			logger.Debug("Модель Product model не прошла валидацию");
 			Console.WriteLine("Модель Product model не прошла валидацию");
 			logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
 			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-			return View("EditItemProduct", model);
+			return View("EditItemProduct", productItem);
 		}
 
 		[HttpGet]
@@ -213,6 +231,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			var model = new Object();
 			if (type == "New") model = new New();
+			logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
 			return View("EditItemNew", model); 
 		}
 
@@ -220,12 +240,16 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			var model = new Object();
 			if (type == "Blog") model = new Blog();
+			logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
 			return View("EditItemBlog", model);
 		}
 		public IActionResult CreateEntityProduct(string type)
 		{
 			var model = new Object();
 			if (type == "Product") model = new Product();
+			logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
 			return View("EditItemProduct", model);
 		}
 	}

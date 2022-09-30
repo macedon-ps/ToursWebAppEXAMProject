@@ -16,6 +16,10 @@
         </button>
     </div>
     <div class="adminHeader">
+        
+        @* для CKEditor 4 *@
+        <script src="~/js/ckeditor4/ckeditor.js"></script>
+
         <form method="post" asp-controller="Admin" asp-action="SaveItemProduct">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
@@ -30,7 +34,9 @@
                 </div>
                 <div class="padding_bottom_2 displayFlex">
                     <label asp-for="FullDescription"></label>
-                    <input type="text" asp-for="FullDescription" />
+                    <textarea id="fullInfoAboutProduct" name="fullInfoAboutProduct" rows="20" cols="100" asp-for="FullDescription" >
+                        Это текстовая область для CKEditor4
+                    </textarea>
                 </div>
                 <div class="padding_bottom_2 displayFlex">
                     <label asp-for="TitleImagePath"></label>
@@ -41,3 +47,7 @@
         </form>
     </div>
 </div>
+<script>
+    var newCKEdit = CKEDITOR.replace('fullInfoAboutProduct');
+    newCKEdit.updateElement();
+</script>

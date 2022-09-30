@@ -24,7 +24,7 @@
             <h2>@Model.Name</h2>
         </div>
         <div class="padding_bottom_2">
-            <h4>@Model.FullDescription</h4>
+            @Html.Raw(Model.FullDescription)
         </div>
         <div class="padding_bottom_2">
             <h4>Id новости: @Model.Id</h4>
