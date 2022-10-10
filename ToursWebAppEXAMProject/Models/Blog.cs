@@ -34,6 +34,6 @@ namespace ToursWebAppEXAMProject.Models
 
 		[Display(Name = "Время создания")]
 		[DataType(DataType.Time)]
-		public DateTime? DateAdded { get; set; } = DateTime.Now;
+		public DateTime? DateAdded { get; set; }
 	}
 }

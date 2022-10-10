@@ -109,29 +109,30 @@ h2 {
 	text-transform: lowercase;
 	font-size: 1.6em;
 	letter-spacing: -1px;
-	margin: 0.5em 0;
+	margin-bottom: 0.8em;
 }
 
 	h3, h4 {
 		color: #283121;
-		margin-bottom: 0.5em;
 	}
 
 	h3 {
 		font-size: 1.2em;
-		margin-bottom: 0.8em;
+		margin-bottom: 0.6em;
 	}
 
 	h4 {
 		font-size: 1em;
+		margin-bottom: 0.5em;
 	}
 
-	p, ul {
+	ul {
 		margin-bottom: 1.25em;
 	}
 
 	p {
-		line-height: 1.8em;
+		line-height: 1.2em;
+		margin-bottom: 0.5em;
 	}
 
 	strong {
@@ -156,9 +157,9 @@ h2 {
 		text-decoration: underline;
 	}
 
-		a:hover {
-			text-decoration: none;
-		}
+	a:hover {
+		text-decoration: none;
+	}
 
 	* > p:last-child {
 		margin-bottom: 0 !important;
@@ -2078,15 +2079,30 @@ h2 {
 .inputWidth-100{
 	width: 345px;
 }
-.margin-bottom{
-	margin-bottom: 1.5em;
-}
-.displayFlex {
+.displayFlexCol {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.5em;
 }
+.displayFlexRow {
+	display: flex;
+	justify-content: space-between;
+	margin: 1em 0;
+}
 .displayFlex label,
 .displayFlex input{
 	margin: 0.2em 0;
+}
+.titleImage img {
+	object-fit: cover;
+	padding: 0 1em 0.5em 0;
+}
+.dateAdded,
+.editDelete{
+	display: flex;
+	margin-bottom: 1.2em;
+}
+.dateAdded a,
+.editDelete a {
+	margin-left: 0.6em;
 }

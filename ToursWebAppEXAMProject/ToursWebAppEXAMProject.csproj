@@ -46,6 +46,8 @@
   <ItemGroup>
     <Folder Include="Areas\Controllers\" />
     <Folder Include="Areas\Views\" />
+    <Folder Include="wwwroot\images\BlogsTitleImages\" />
+    <Folder Include="wwwroot\images\ProductsTitleImages\" />
   </ItemGroup>
 
   <ItemGroup>
