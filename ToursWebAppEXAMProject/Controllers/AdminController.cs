@@ -11,9 +11,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
 		private readonly DataManager DataManager;
 
-		public AdminController(DataManager DataManager)
+		private readonly IWebHostEnvironment hostingEnvironment;
+
+		public AdminController(DataManager DataManager, IWebHostEnvironment hostingEnvironment)
 		{
 			this.DataManager = DataManager;
+			this.hostingEnvironment = hostingEnvironment;
 		}
 
 		[HttpGet]
@@ -80,26 +83,25 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Admin/EditItem");
 			Console.WriteLine("Переход по маршруту /Admin/EditItem");
 
-			object model = new object();
 			switch (type)
 			{
 				case "ToursWebAppEXAMProject.Models.New":
-					model = DataManager.NewBaseInterface.GetItemById(id);
+					var modelNew =	DataManager.NewBaseInterface.GetItemById(id);
 					logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
 					Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
-					return View("EditItemNew", model);
-
+					return View("EditItemNew", modelNew);
+				
 				case "ToursWebAppEXAMProject.Models.Blog":
-					model = DataManager.BlogBaseInterface.GetItemById(id);
+					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
 					logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
 					Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-					return View("EditItemBlog", model);
+					return View("EditItemBlog", modelBlog);
 
 				case "ToursWebAppEXAMProject.Models.Product":
-					model = DataManager.ProductBaseInterface.GetItemById(id);
+					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
 					logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
 					Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-					return View("EditItemProduct", model);
+					return View("EditItemProduct", modelProduct);
 			}
 
 			logger.Debug("Возвращено представление /Admin/Index.cshtml\n");
@@ -140,83 +142,147 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemNew(IFormCollection formValues, int id)
-        {
-			var newItem = new New();
-			newItem.Name = formValues["Name"];
-			newItem.ShortDescription = formValues["ShortDescription"];
-			newItem.FullDescription = formValues["fullInfoAboutNew"];
-			newItem.TitleImagePath = formValues["TitleImagePath"];
+		public async Task<IActionResult> SaveItemNew(New model, IFormCollection formValues, IFormFile titleImagePath)
+       	{
+			logger.Debug("Запущен процесс сохранения новости в БД");
+			Console.WriteLine("Запущен процесс сохранения новости в БД");
 			
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель New model прошла валидацию");
-				Console.WriteLine("Модель New model прошла валидацию");
-				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
-				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				newItem.Id = id;
-				DataManager.NewBaseInterface.SaveItem(newItem, id);
-				return View("Success", newItem);
+				logger.Debug("Модель New успешно прошла валидацию");
+				Console.WriteLine("Модель New успешно прошла валидацию");
+
+				if (titleImagePath != null)
+				{
+					var filePath = $"/images/NewsTitleImages/{titleImagePath.FileName}";
+
+					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+					{
+						await titleImagePath.CopyToAsync(fstream);
+						logger.Debug($"Титульная картинка новости успешно сохранена по пути: {filePath}");
+						Console.WriteLine($"Титульная картинка новости успешно сохранена по пути: {filePath}");
+					}
+					
+					model.FullDescription = formValues["fullInfoAboutNew"];
+					model.TitleImagePath = filePath;
+					
+					DataManager.NewBaseInterface.SaveItem(model, model.Id);
+					logger.Debug("Новость успешно сохранена в БД");
+					Console.WriteLine("Новость успешно сохранена в БД");
+
+					logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+					return View("Success", model);
+				}
+			}
+			logger.Debug("Модель New не прошла валидацию");
+			Console.WriteLine("Модель New не прошла валидацию");
+						
+			if(titleImagePath == null)
+			{
+				model.FullDescription = formValues["fullInfoAboutNew"];
+				logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				return View("EditItemNew", model);
 			}
 
-			logger.Debug("Модель New model не прошла валидацию");
-			Console.WriteLine("Модель New model не прошла валидацию");
-			logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
-			return View("EditItemNew", newItem);
+			return View("EditItemNew", model);
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemBlog(IFormCollection formValues, int id)
+		public async Task<IActionResult> SaveItemBlog(Blog model, IFormCollection formValues, IFormFile titleImagePath)
 		{
-			var blogItem = new Blog();
-			blogItem.Name = formValues["Name"];
-			blogItem.ShortDescription = formValues["ShortDescription"];
-			blogItem.FullDescription = formValues["fullInfoAboutBlog"];
-			blogItem.TitleImagePath = formValues["TitleImagePath"];
+			logger.Debug("Запущен процесс сохранения блога в БД");
+			Console.WriteLine("Запущен процесс сохранения блога в БД");
 
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель Blog model прошла валидацию");
-				Console.WriteLine("Модель Blog model прошла валидацию");
-				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
-				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				blogItem.Id = id;
-				DataManager.BlogBaseInterface.SaveItem(blogItem, id);
-				return View("Success", blogItem);
+				logger.Debug("Модель Blog успешно прошла валидацию");
+				Console.WriteLine("Модель Blog успешно прошла валидацию");
+
+				if (titleImagePath != null)
+				{
+					var filePath = $"/images/BlogsTitleImages/{titleImagePath.FileName}";
+
+					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+					{
+						await titleImagePath.CopyToAsync(fstream);
+						logger.Debug($"Титульная картинка блога успешно сохранена по пути: {filePath}");
+						Console.WriteLine($"Титульная картинка блога успешно сохранена по пути: {filePath}");
+					}
+
+					model.FullDescription = formValues["fullInfoAboutBlog"];
+					model.TitleImagePath = filePath;
+
+					DataManager.BlogBaseInterface.SaveItem(model, model.Id);
+					logger.Debug("Блог успешно сохранен в БД");
+					Console.WriteLine("Блог успешно сохранен в БД");
+
+					logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+					return View("Success", model);
+				}
+			}
+			logger.Debug("Модель Blog не прошла валидацию");
+			Console.WriteLine("Модель Blog не прошла валидацию");
+
+			if (titleImagePath == null)
+			{
+				model.FullDescription = formValues["fullInfoAboutBlog"];
+				logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				return View("EditItemBlog", model);
 			}
 
-			logger.Debug("Модель Blog model не прошла валидацию");
-			Console.WriteLine("Модель Blog model не прошла валидацию");
-			logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-			return View("EditItemBlog", blogItem);
+			return View("EditItemBlog", model);
 		}
 
 		[HttpPost]
-		public IActionResult SaveItemProduct(IFormCollection formValues, int id)
+		public async Task<IActionResult> SaveItemProduct(Product model, IFormCollection formValues, IFormFile titleImagePath)
 		{
-			var productItem = new Product();
-			productItem.Name = formValues["Name"];
-			productItem.ShortDescription = formValues["ShortDescription"];
-			productItem.FullDescription = formValues["fullInfoAboutProduct"];
-			productItem.TitleImagePath = formValues["TitleImagePath"];
+			logger.Debug("Запущен процесс сохранения туристического продукта в БД");
+			Console.WriteLine("Запущен процесс сохранения туристического продукта в БД");
 
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель Product model прошла валидацию");
-				Console.WriteLine("Модель Product model прошла валидацию");
-				logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
-				Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
-				productItem.Id = id;
-				DataManager.ProductBaseInterface.SaveItem(productItem, id);
-				return View("Success", productItem);
+				logger.Debug("Модель Product успешно прошла валидацию");
+				Console.WriteLine("Модель Product успешно прошла валидацию");
+
+				if (titleImagePath != null)
+				{
+					var filePath = $"/images/ProductsTitleImages/{titleImagePath.FileName}";
+
+					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+					{
+						await titleImagePath.CopyToAsync(fstream);
+						logger.Debug($"Титульная картинка туристического продукта успешно сохранена по пути: {filePath}");
+						Console.WriteLine($"Титульная картинка туристического продукта успешно сохранена по пути: {filePath}");
+					}
+
+					model.FullDescription = formValues["fullInfoAboutProduct"];
+					model.TitleImagePath = filePath;
+
+					DataManager.ProductBaseInterface.SaveItem(model, model.Id);
+					logger.Debug("Туристический продукт успешно сохранен в БД");
+					Console.WriteLine("Туристический продукт успешно сохранен в БД");
+
+					logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");
+					return View("Success", model);
+				}
 			}
-			logger.Debug("Модель Product model не прошла валидацию");
-			Console.WriteLine("Модель Product model не прошла валидацию");
-			logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-			return View("EditItemProduct", productItem);
+			logger.Debug("Модель Product не прошла валидацию");
+			Console.WriteLine("Модель Product не прошла валидацию");
+
+			if (titleImagePath == null)
+			{
+				model.FullDescription = formValues["fullInfoAboutProduct"];
+				logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
+				return View("EditItemProduct", model);
+			}
+
+			return View("EditItemProduct", model);
 		}
 
 		[HttpGet]
@@ -244,6 +310,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
 			return View("EditItemBlog", model);
 		}
+
 		public IActionResult CreateEntityProduct(string type)
 		{
 			var model = new Object();
