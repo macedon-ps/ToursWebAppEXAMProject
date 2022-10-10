@@ -20,27 +20,31 @@
         @* для CKEditor 4 *@
         <script src="~/js/ckeditor4/ckeditor.js"></script>
         
-        <form method="post" asp-controller="Admin" asp-action="SaveItemNew">
+        <form asp-controller="Admin" asp-action="SaveItemNew" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
             <div>
-                <div class="padding_bottom_2 displayFlex">
+                <div class="displayFlexCol">
                     <label asp-for="Name"></label>
                     <input type="text" asp-for="Name" />
                 </div>
-                <div class="padding_bottom_2 displayFlex">
+                <div class="displayFlexCol">
                     <label asp-for="ShortDescription"></label>
                     <input type="text" asp-for="ShortDescription" />
                 </div>
-                <div class="padding_bottom_2 displayFlex">
+                <div class="displayFlexCol">
                     <label asp-for="FullDescription"></label>
-                    <textarea name="fullInfoAboutNew" id="fullInfoAboutNew" rows="20" cols="100" asp-for="FullDescription">
+                    <textarea name="fullInfoAboutNew" rows="20" cols="100" asp-for="FullDescription">
                         Это текстовая область для CKEditor4
                     </textarea>
                 </div>
-                <div class="padding_bottom_2 displayFlex">
+                <div class="displayFlexCol">
                     <label asp-for="TitleImagePath"></label>
-                    <input type="text" asp-for="TitleImagePath" />
+                    <h3>@Model.TitleImagePath</h3>
+                    <div class="titleImage">
+                        <img src="@Model.TitleImagePath" alt="Титульная картинка новости" align="left" width="50%"><img>
+                    </div>
+                    <input type="file" name="titleImagePath" asp-for="TitleImagePath"/>
                 </div>
                 <input type="submit" value="Сохранить" />
             </div>

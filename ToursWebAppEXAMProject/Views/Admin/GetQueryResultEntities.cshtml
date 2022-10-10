@@ -19,13 +19,13 @@
         {
             var type = item.GetType().ToString();
             <div>
-                <div class="padding_bottom_2">
+                <div>
                     <h2>@item.Name</h2>
                 </div>
-                <div class="padding_bottom_2">
+                <div>
                     <h4>@item.ShortDescription</h4>
                 </div>
-                <div>
+                <div class="editDelete">
                     <a asp-area="" asp-controller="Admin" asp-action="EditItem" asp-route-id="@item.Id" asp-route-type="@type">редактировать</a>	
                     <a asp-area="" asp-controller="Admin" asp-action="DeleteItem" asp-route-id="@item.Id" asp-route-type="@type">удалить</a>
                 </div>

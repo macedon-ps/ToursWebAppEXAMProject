@@ -22,16 +22,17 @@
            @foreach(var blog in Model)
            {
                 <div>
+                    <div class="titleImage">
+                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
+                    </div>
                     <div>
                         <h2>@blog.Name</h2>
                     </div>
                     <div>
                         <h4>@blog.ShortDescription</h4>
                     </div>
-                    <div>
+                    <div class="dateAdded">
                         <h4>@blog.DateAdded</h4>
-                    </div>
-                    <div class="margin-bottom">
                         <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
                     </div>
                 </div> 
