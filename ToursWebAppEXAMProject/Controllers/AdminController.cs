@@ -319,5 +319,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
 			return View("EditItemProduct", model);
 		}
+
+		public IActionResult TechTaskAdmin()
+		{
+			logger.Trace("Переход по маршруту Admin/TechTaskAdmin. Возвращаено представление Admin/TechTaskAdmin.cshtml\n");
+			Console.WriteLine("Переход по маршруту Admin/TechTaskAdmin. Возвращаено представление Admin/TechTaskAdmin.cshtml\n");
+			return View();
+		}
 	}
 }

@@ -30,5 +30,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			var serviceItem = service;
 			return View("GetSupport", serviceItem);
 		}
+
+		public IActionResult TechTaskSupport()
+		{
+			logger.Trace("Переход по маршруту Support/TechTaskSupport. Возвращаено представление Support/TechTaskSupport.cshtml\n");
+			Console.WriteLine("Переход по маршруту Support/TechTaskSupport. Возвращаено представление Support/TechTaskSupport.cshtml\n");
+			return View();
+		}
 	}
 }

@@ -20,5 +20,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml\n");
 			return View();
 		}
+
+		public IActionResult TechTaskAbout()
+		{
+			logger.Trace("Переход по маршруту About/TechTaskAbout. Возвращаено представление About/TechTaskAbout.cshtml\n");
+			Console.WriteLine("Переход по маршруту About/TechTaskAbout. Возвращаено представление About/TechTaskAbout.cshtml\n");
+			return View();
+		}
 	}
 }

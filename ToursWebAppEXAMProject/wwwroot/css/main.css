@@ -2079,7 +2079,10 @@ h2 {
 .inputWidth-100{
 	width: 345px;
 }
-.displayFlexCol {
+.displayFlex {
+	display: flex;
+}
+	.displayFlexCol {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.5em;

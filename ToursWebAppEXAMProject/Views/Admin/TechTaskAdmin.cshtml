@@ -1,0 +1,45 @@
+﻿<div class="adminPage">
+    <div class="adminButton">
+        <button class="">
+           <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="New">Редактировать новости</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Blog">Редактировать блоги</a>
+        </button>
+        <button class="">
+            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
+        </button>
+        <button class="">
+           <a id="" asp-area="" asp-controller="Admin" asp-action="Index">ТЗ для Admin</a>
+        </button>
+    </div>
+    <div class="adminHeader">
+                 
+        <h1>Страница администратора сайта:</h1>
+        <div>
+            <br/>
+            <p>Тут будут редактироваться новости, блоги, их названия, описания, фото</p>
+            <p>Тут будут редактироваться данные туристических продуктов: их названия, описания, фото и т.д. </p>
+                <ul>
+                    <li>данная <strong>страница содержит ...</strong> (сверху - вниз): <strong>
+                        <br/><strong>блок навигационных кнопок: </strong>
+                        "Администратору сайта", "Редактировать новости", "Редактировать блоги", "Редактировать турпродукты";
+                        <br/><strong>меню ввода полного названия / ключевого слова</strong> из названия сущности;
+                        <br/><strong>блок с результатами выборки</strong> по заданному SQL запросу в БД.
+
+                            ...</strong></li>
+                    <li>1) на странице м. <strong>редактировать ввод информации</strong>, новостей, рейтингов, статистики и т.д.
+                    </li>
+                    <li>2) на этой странице или другой м. <strong>редактировать данные с БД</strong> (создание новых записей;
+                        редактирование или удаление записей)</li>
+                    <li>вход на страницу - только для сотрудников турфирмы, у кот. <strong>логин admim и статус (роль)
+                            admin</strong>
+                        <br/>нужно создать <strong>3 роли и 3 admin с разным доступом: </strong>
+                        <br/>admin с доступом к редактированию БД и новостей,
+                        <br/>admin с доступом только к редактированию БД,
+                        <br/>admin с доступом только к редактированию новостей
+                    </li>
+                </ul>
+        </div>
+    </div>
+</div>

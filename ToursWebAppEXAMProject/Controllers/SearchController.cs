@@ -26,7 +26,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
-			return View();
+			return View(DataManager);
 		}
 
 		/// <summary>
@@ -112,6 +112,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
+		}
+
+		public IActionResult TechTaskSearch()
+		{
+			logger.Trace("Переход по маршруту Search/TechTaskSearch. Возвращаено представление Search/TechTaskSearch.cshtml\n");
+			Console.WriteLine("Переход по маршруту Search/TechTaskSearch. Возвращаено представление Search/TechTaskSearch.cshtml\n");
+			return View();
 		}
 	}
 }
