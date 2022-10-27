@@ -324,7 +324,50 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			logger.Trace("Переход по маршруту Admin/TechTaskAdmin. Возвращаено представление Admin/TechTaskAdmin.cshtml\n");
 			Console.WriteLine("Переход по маршруту Admin/TechTaskAdmin. Возвращаено представление Admin/TechTaskAdmin.cshtml\n");
-			return View();
+
+			var pageName = "Admin";
+			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public IActionResult TechTaskAdmin(TechTaskViewModel model)
+		{
+			logger.Debug("Запущен процесс сохранения показателей выполнения тех. задания в БД");
+			Console.WriteLine("Запущен процесс сохранения показателей выполнения тех. задания в БД");
+
+			if (ModelState.IsValid)
+			{
+				logger.Debug("Модель TechTaskViewModel успешно прошла валидацию");
+				Console.WriteLine("Модель TechTaskViewModel успешно прошла валидацию");
+
+				double TechTasksCount = 6;
+				double TechTasksTrueCount = 0;
+				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
+				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
+				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
+				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
+				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
+				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
+
+				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
+				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
+
+				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
+				logger.Debug("Показатели выполнения тех. задания успешно сохранены в БД");
+				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
+				logger.Debug("Возвращено представление /Admin/TechTaskAdmin.cshtml\n");
+				Console.WriteLine("Возвращено представление /Admin/TechTaskAdmin.cshtml\n");
+				
+				return View(model);
+			}
+			logger.Debug("Модель TechTaskViewModel не прошла валидацию");
+			Console.WriteLine("Модель TechTaskViewModel не прошла валидацию");
+			logger.Debug("Возвращено представление /Admin/TechTaskAdmin.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/TechTaskAdmin.cshtml\n");
+
+			return View(model);
 		}
 	}
 }
