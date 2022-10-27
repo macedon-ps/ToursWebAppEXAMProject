@@ -19,6 +19,9 @@ namespace ToursWebAppEXAMProject.Repositories
 		public IBaseInterface<Blog> BlogBaseInterface { get; set; }
 		public IBaseInterface<New> NewBaseInterface { get; set; }
 
+		public IEditTechTaskInterface TechTaskInterface { get; set; }
+
+
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
 							IBaseInterface<Country> countryBaseInterface,
 							IBaseInterface<City> cityBaseInterface,
@@ -31,7 +34,8 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Saller> sallerBaseInterface,
 							IBaseInterface<Offer> offerBaseInterface,
 							IBaseInterface<Blog> blogBaseInterface,
-							IBaseInterface<New> newBaseInterface
+							IBaseInterface<New> newBaseInterface,
+							IEditTechTaskInterface techTaskInterface
 							)
 		{
 			this.ProductBaseInterface = productBaseInterface;
@@ -47,6 +51,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.OfferBaseInterface = offerBaseInterface;
 			this.BlogBaseInterface = blogBaseInterface;
 			this.NewBaseInterface = newBaseInterface;
+			this.TechTaskInterface = techTaskInterface;
 		}
 	}
 }
