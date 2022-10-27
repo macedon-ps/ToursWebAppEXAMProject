@@ -1,4 +1,6 @@
-﻿<div class="adminPage">
+﻿@model TechTaskViewModel
+
+<div class="adminPage">
     <div class="adminButton">
         <button class="">
            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="New">Редактировать новости</a>
@@ -10,36 +12,56 @@
             <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
         </button>
         <button class="">
-           <a id="" asp-area="" asp-controller="Admin" asp-action="Index">ТЗ для Admin</a>
+           <a id="" asp-area="" asp-controller="Admin" asp-action="TechTaskAdmin">ТЗ для Admin</a>
         </button>
     </div>
     <div class="adminHeader">
                  
-        <h1>Страница администратора сайта:</h1>
-        <div>
-            <br/>
-            <p>Тут будут редактироваться новости, блоги, их названия, описания, фото</p>
-            <p>Тут будут редактироваться данные туристических продуктов: их названия, описания, фото и т.д. </p>
-                <ul>
-                    <li>данная <strong>страница содержит ...</strong> (сверху - вниз): <strong>
-                        <br/><strong>блок навигационных кнопок: </strong>
-                        "Администратору сайта", "Редактировать новости", "Редактировать блоги", "Редактировать турпродукты";
-                        <br/><strong>меню ввода полного названия / ключевого слова</strong> из названия сущности;
-                        <br/><strong>блок с результатами выборки</strong> по заданному SQL запросу в БД.
+        <h1>Страница администратора сайта:</h1><br />
+        
+        <div class="text-center">
 
-                            ...</strong></li>
-                    <li>1) на странице м. <strong>редактировать ввод информации</strong>, новостей, рейтингов, статистики и т.д.
-                    </li>
-                    <li>2) на этой странице или другой м. <strong>редактировать данные с БД</strong> (создание новых записей;
-                        редактирование или удаление записей)</li>
-                    <li>вход на страницу - только для сотрудников турфирмы, у кот. <strong>логин admim и статус (роль)
-                            admin</strong>
-                        <br/>нужно создать <strong>3 роли и 3 admin с разным доступом: </strong>
-                        <br/>admin с доступом к редактированию БД и новостей,
-                        <br/>admin с доступом только к редактированию БД,
-                        <br/>admin с доступом только к редактированию новостей
-                    </li>
-                </ul>
-        </div>
+            <form asp-controller="Admin" asp-action="TechTaskAdmin" method="post">
+
+                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="@Model.PageName" /><br/>    
+                <label for="techTask">Прогресс выполнения технического задания:</label><br/>
+                <progress min="0" max="100" value="@Model.ExecuteTechTasksProgress">
+                </progress><span>@Model.ExecuteTechTasksProgress%</span><br/><br/>
+
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
+                1. Данная страница д. содержать:
+                <br/><strong>блок навигационных кнопок: </strong> "Редактировать новости", "Редактировать блоги", "Редактировать                            турпродукты", "ТЗ для Admin";
+                <br/><strong>общее меню поиска сущностей (новостей/блогов/турпродуктов) по их полному названию / или по ключевому слову
+                </strong> из названия сущности для выборки из БД;
+                <br/><strong>страницу со списком выбранных сущностей</strong>, отвечающих критериям поиска.
+                           
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="false"/>
+                2. Д.б. создана <strong>страница создания, редактирования и удаления новости</strong>, ее названия, краткого и полного                      описания, пути к титульной картинке
+                
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="false"/>
+                3. Д.б. создана <strong>страница создания, редактирования и удаления блога</strong>, его названия, краткого и полного                       описания, пути к титульной картинке
+
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="false"/>
+                4. Д.б. создана <strong>страница создания, редактирования и удаления туристического продукта</strong>, его названия,                        краткого и полного описания, пути к титульной картинке
+               
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="false"/>
+                5. Д.б. организован <strong>доступ для входа на страницу - для редактирования данных БД</strong> - только для сотрудников                   турфирмы, у кот. <strong>логин admim и статус (роль) admin</strong>
+                
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="false"/>
+                6. Дополнительно:
+                <br />М.б. созданы <strong>3 роли с разным доступом: </strong>
+                <br />М.б. организовано <strong>редактирование вводимых картинок</strong> (предварительное или при рендеринге) и                            <strong>сохранение их в проекте</strong> (возможно, в Ресурсах).
+                <br />М.б. организовано <strong>ввод картинок в текст</strong> новостей/блогов/турпродуктов, используя возможности CKEdotor и               Javascript.
+                <br />М.б. организован <strong>поиск картинок в интернете и загрузка в проект</strong>.
+
+            </form>
+         </div>
     </div>
 </div>

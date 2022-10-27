@@ -1,4 +1,6 @@
-﻿<div class="supportPage">
+﻿@model TechTaskViewModel
+
+<div class="supportPage">
     <div class="homeButton">
         <button class="">
             <a class="" asp-area="" asp-controller="Support" asp-action="">Карта</a>
@@ -14,38 +16,59 @@
             </button>
     </div>
     <div class="supportHeader">
-        <h1>Страница поддержки пользователей приложения:</h1>
-        <br/>
+        
+        <h1>Страница поддержки пользователей приложения:</h1><br/>
+        
         <div class="text-center">
-            <p>Тут будут выводиться карты местности по JPS</p>
-            <p>Тут будут переводиться тексты на иностранный язык</p>
-            <p>Тут будет ссылка на загрузку мобильного приложения</p>
-                <ul>
-                    <li>разработка этой страницы и связанного с ней функционала - это для дипломного проекта</li>
-                    <li>данная страница содержит <strong>3 кнопки - "Карта", "Перевод текста", "Мобильное приложение"</strong>,
-                        кот. открывают 2 блока и
-                        ссылку (сверху - вниз):<strong>
-                            <br />блок карты местности Map,
-                            <br />блок перевода текста Translate
-                            <br />и ссылку на скачивание мобильного приложения - мобильной версии вебсайта MobileApp</strong>
-                        <br />по нажатию на кнопку "Карта" - раскрывается область, в кот. появляется карта данной местности
-                        <br />по нажатию на кнопку "Перевод текста" - раскрывается область, в кот. слева - текст, кот.
-                        н.перевести, а справа - перевод на иностр. язык
-                        <br />по нажатию на кнопку "Мобильное приложение" - открывается ссылка на скачивание мобильного
-                        приложения
-                    </li>
-                    <li>д.б. ссылка на <strong>мобильное приложение</strong>, кот. б.
-                        <br />предоставлять <strong>дополнительную информацию</strong> о стране пребывания, о ее законах,
-                        традициях и обычаях местного населения, о достопримечательностях, об объектах сферы гостеприимства
-                        (гостинницы, кафе и т.д.) - это м.б. <strong>мобильная версия вебсайта</strong>
-                        <br />показывать <strong>карту местности по навигатору JPS</strong> (??? м.б. сложно)
-                        <br />предоставить <strong>переводчик для вводимого/выводимого текста</strong> (??? м.б. сложно)
-                        <br />
-                    </li>
-                    <li>м.б. эта ссылка в виде <strong>кнопки или QR-кода</strong></li>
-                    <li>мобильное приложение на анроид</li>
-                    <li></li>
-                </ul>
+            
+            <form asp-controller="Support" asp-action="TechTaskSupport" method="post">
+            
+                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="@Model.PageName" /><br/>    
+                <label for="techTask">Прогресс выполнения технического задания:</label><br/>
+                <progress min="0" max="100" value="@Model.ExecuteTechTasksProgress">
+                </progress><span>@Model.ExecuteTechTasksProgress%</span><br/><br/>
+            
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
+                1. Данная страница д. содержать:
+                <br/><strong>блок навигационных кнопок:</strong> "Карта", "Перевод текста", "Мобильное приложение, "ТЗ для Support";
+                <br /><strong>блок карты местности Map</strong>,
+                <br /><strong>блок перевода текста Translate</strong>
+                <br /><strong>ссылку на скачивание мобильного приложения</strong> - мобильной версии вебсайта MobileApp
+                <br />по нажатию на кнопку <strong>"Карта"</strong> - раскрывается область, в кот. появляется карта данной местности
+                <br />по нажатию на кнопку <strong>"Перевод текста"</strong> - раскрывается область, в кот. слева - текст, кот.
+                н.перевести, а справа - перевод на иностр. язык
+                <br />по нажатию на кнопку <strong>"Мобильное приложение"</strong> - открывается ссылка на скачивание мобильного
+                приложения
+                
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="false"/>
+                2. Д.б. создана страница с информацией о странах, об их географическом положении, политическом устройстве, праве, традициях                 и обычаях местного населения, о достопримечательностях, об объектах сферы гостеприимства (гостинницы, кафе и т.д.)
+                
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="false"/>
+                3. Д.б. создана <strong>страница с выводимой картой местности</strong> (по JPS).
+                <br />Карта д.б. связана с функционалом по поиску тур. продуктов (смотри TechTaskSearch).
+
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="false"/>
+                4. Д.б. создана <strong>страница с возможностью перевода текстов на иностранный язык</strong> (интегрировать API                            существующих приложений для перевода текста)
+
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="false"/>
+                5. Д.б. создано <strong>мобильное приложение</strong> для поддержки туристов
+                <br /> Мобильное приложение д.предоставлять <strong>дополнительную информацию</strong> о стране пребывания, о ее законах,
+                традициях и обычаях местного населения, о достопримечательностях  - это м.б. <strong>мобильная версия вебсайта</strong>
+                <br />м.б. эта ссылка в виде <strong>кнопки или QR-кода</strong>
+                           
+                +<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="true"/>
+                -<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="false"/>
+                6. Дополнительно:
+                <br />М.б. <strong>синхронизована карта местности для мобильного приложения</strong>
+               
+            </form>
+                    
         </div>
     </div>
 </div>
