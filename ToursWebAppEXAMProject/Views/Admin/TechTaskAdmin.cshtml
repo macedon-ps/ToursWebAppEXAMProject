@@ -27,8 +27,9 @@
                 <input type="hidden" asp-for="@Model.PageName" /><br/>    
                 <label for="techTask">Прогресс выполнения технического задания:</label><br/>
                 <progress min="0" max="100" value="@Model.ExecuteTechTasksProgress">
-                </progress><span>@Model.ExecuteTechTasksProgress%</span><br/><br/>
+                </progress><span>@Model.ExecuteTechTasksProgress%</span>
 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
                 1. Данная страница д. содержать:
@@ -36,23 +37,28 @@
                 <br/><strong>общее меню поиска сущностей (новостей/блогов/турпродуктов) по их полному названию / или по ключевому слову
                 </strong> из названия сущности для выборки из БД;
                 <br/><strong>страницу со списком выбранных сущностей</strong>, отвечающих критериям поиска.
-                           
+                
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="false"/>
                 2. Д.б. создана <strong>страница создания, редактирования и удаления новости</strong>, ее названия, краткого и полного                      описания, пути к титульной картинке
                 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="false"/>
                 3. Д.б. создана <strong>страница создания, редактирования и удаления блога</strong>, его названия, краткого и полного                       описания, пути к титульной картинке
 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="false"/>
                 4. Д.б. создана <strong>страница создания, редактирования и удаления туристического продукта</strong>, его названия,                        краткого и полного описания, пути к титульной картинке
-               
+                
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="false"/>
                 5. Д.б. организован <strong>доступ для входа на страницу - для редактирования данных БД</strong> - только для сотрудников                   турфирмы, у кот. <strong>логин admim и статус (роль) admin</strong>
                 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="false"/>
                 6. Дополнительно:
@@ -61,6 +67,8 @@
                 <br />М.б. организовано <strong>ввод картинок в текст</strong> новостей/блогов/турпродуктов, используя возможности CKEdotor и               Javascript.
                 <br />М.б. организован <strong>поиск картинок в интернете и загрузка в проект</strong>.
 
+                <br/><br/>
+                <input type="submit" value="Сохранить" />
             </form>
          </div>
     </div>

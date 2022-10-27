@@ -30,39 +30,47 @@
                 <input type="hidden" asp-for="@Model.PageName" /><br/>    
                 <label for="techTask">Прогресс выполнения технического задания:</label><br/>
                 <progress min="0" max="100" value="@Model.ExecuteTechTasksProgress">
-                </progress><span>@Model.ExecuteTechTasksProgress%</span><br/><br/>
-            
+                </progress><span>@Model.ExecuteTechTasksProgress%</span>
+                
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
                 1. Данная страница д. содержать:
-                <br/><strong>блок навигационных кнопок:</strong> "Наши реквизиты", "Режим работы", "Фотогаллерея", "Обратная связь", "ТЗ для                About"
+                <br/><strong>блок навигационных кнопок:</strong> "Наши реквизиты", "Режим работы", "Фотогаллерея", "Обратная связь", "ТЗ                  для About"
                 <br /><strong>блок рекизитов тур.фирмы</strong>
                 <br /><strong>блок с информацией о режиме работы турфирмы</strong>
                 <br /><strong>блок с фотографиями сотрудников и офиса</strong>
                 <br /><strong>с формой обратной связи с клиентами туристической фирмы</strong>
-            
+                
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="false"/>
                 2. Д.б. <strong>страница с названием и реквизитами турфирмы</strong>
                 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="false"/>
                 3. Д.б. <strong>страница с информацией о режиме работы турфирмы</strong>
                 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="false"/>
                 4. Д.б. <strong>страница с фотографиями сотрудников и офиса</strong>
 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="false"/>
                 5. Д.б. <strong>страница с формой обратной связи с клиентами туристической фирмы</strong>
 
+                <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="false"/>
                 6. Дополнительно:
                 <br />М.б. реализован <strong>функционал звонка</strong> (+ для боковой панели)
                 <br />М.б. реализован <strong>функционал выхода в социальные сети</strong> (+ для боковой панели)
                 
+                <br/><br/>
+                <input type="submit" value="Сохранить" />
             </form>
                 
         </div>
