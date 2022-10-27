@@ -12,7 +12,7 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    [Migration("20220921164645__initialMigration")]
+    [Migration("20221025165020__initialMigration")]
     partial class _initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,25 +50,26 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<string>("Message")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasDefaultValueSql("('Сообщение')");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasDefaultValueSql("('Заголовок блога')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasDefaultValueSql("('Краткое описание темы блога')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -212,8 +213,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -270,18 +271,19 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasDefaultValueSql("('Заголовок новости')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasDefaultValueSql("('Краткое описание новости')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -338,18 +340,19 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasDefaultValueSql("('Название туристического продукта')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
                         .HasDefaultValueSql("('Краткое описание туристического продукта')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -388,6 +391,47 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.ToTable("Saller", (string)null);
                 });
 
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.TechTaskViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double?>("ExecuteTechTasksProgress")
+                        .HasColumnType("float");
+
+                    b.Property<bool?>("IsExecuteTechTask1")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask2")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask3")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask4")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask5")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask6")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PageName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("('страница')");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TechTaskViewModel", (string)null);
+                });
+
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
                 {
                     b.Property<int>("Id")
@@ -407,8 +451,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

@@ -15,12 +15,12 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Заголовок блога')"),
-                    Message = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Сообщение')"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Заголовок блога')"),
+                    Message = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Сообщение')"),
                     FullMessageLine = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Вся строка сообщений')"),
-                    ShortDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Краткое описание темы блога')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Краткое описание темы блога')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание темы блога')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -92,10 +92,10 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Заголовок новости')"),
-                    ShortDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Краткое описание новости')"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Заголовок новости')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание новости')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание новости')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -109,10 +109,10 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Название туристического продукта')"),
-                    ShortDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Краткое описание туристического продукта')"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Название туристического продукта')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание туристического продукта')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание туристического продукта')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -133,6 +133,26 @@ namespace ToursWebAppEXAMProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Saller", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TechTaskViewModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PageName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, defaultValueSql: "('страница')"),
+                    IsExecuteTechTask1 = table.Column<bool>(type: "bit", nullable: true),
+                    IsExecuteTechTask2 = table.Column<bool>(type: "bit", nullable: true),
+                    IsExecuteTechTask3 = table.Column<bool>(type: "bit", nullable: true),
+                    IsExecuteTechTask4 = table.Column<bool>(type: "bit", nullable: true),
+                    IsExecuteTechTask5 = table.Column<bool>(type: "bit", nullable: true),
+                    IsExecuteTechTask6 = table.Column<bool>(type: "bit", nullable: true),
+                    ExecuteTechTasksProgress = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TechTaskViewModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,7 +180,7 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     LevelHotel = table.Column<int>(type: "int", nullable: false, defaultValueSql: "((2))"),
                     CityId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -210,7 +230,7 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     DateTourId = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
@@ -342,6 +362,9 @@ namespace ToursWebAppEXAMProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Offer");
+
+            migrationBuilder.DropTable(
+                name: "TechTaskViewModel");
 
             migrationBuilder.DropTable(
                 name: "Customer");

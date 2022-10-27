@@ -67,6 +67,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValueSql("('Краткое описание темы блога')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -280,6 +281,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValueSql("('Краткое описание новости')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -348,6 +350,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValueSql("('Краткое описание туристического продукта')");
 
                     b.Property<string>("TitleImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -384,6 +387,47 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Saller", (string)null);
+                });
+
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.TechTaskViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double?>("ExecuteTechTasksProgress")
+                        .HasColumnType("float");
+
+                    b.Property<bool?>("IsExecuteTechTask1")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask2")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask3")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask4")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask5")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsExecuteTechTask6")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PageName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("('страница')");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TechTaskViewModel", (string)null);
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
