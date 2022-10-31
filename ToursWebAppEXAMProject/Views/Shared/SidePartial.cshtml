@@ -15,7 +15,15 @@
        </a>
     </div>
     <div>   
-        <a href="mailto:macedon1971@gmail.com"
+        
+        @{
+            // был свой эл.адрес "mailto:macedon1971@gmail.com", проверил, все работает
+            // поменял на электр. адрес из appsettings.json, он вымышленный, проверить не получится
+            // в будущем н.б. вставить реально существующий эл. адрес конкретной компании
+        }
+        @*<a href="mailto:macedon1971@gmail.com"*@
+        <a href="mailto:@ConfigData.CompanyEmail"
+            
             <a asp-controller="Support" asp-action="" asp-route-service="ask">
                 <img src="~/images/SideBar/Question.bmp" alt="Задать вопрос" width="24" height="24">
                 <h4>Задать вопрос</h4>

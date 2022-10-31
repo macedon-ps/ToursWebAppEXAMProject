@@ -22,6 +22,32 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View();
 		}
 
+		public IActionResult FeedBackForm()
+		{
+			var customer = new Customer();
+			return View(customer);
+		}
+
+		[HttpPost]
+		public IActionResult FeedBackForm(Customer customer, IFormCollection textAreaForm)
+		{
+			if (ModelState.IsValid)
+			{
+				logger.Trace($"Все получилось!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
+				Console.WriteLine($"Все получилось!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
+
+				// TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
+				// var textArea = textAreaForm["textArea"];
+				// ??? customer.question = textArea;  // возможно так
+
+				return View(customer);
+			}
+			logger.Trace($"Ничего не вышло!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
+			Console.WriteLine($"Ничего не вышло!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
+			return View(new Customer());
+		}
+
+
 		public IActionResult TechTaskAbout()
 		{
 			logger.Trace("Переход по маршруту About/TechTaskAbout. Возвращаено представление About/TechTaskAbout.cshtml\n");
