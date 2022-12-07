@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu+Condensed");
-
+/* Шрифт подключен автономно */
+/* @import url("https://fonts.googleapis.com/css?family=Ubuntu+Condensed"); */
 /*
 	Minimaxing by HTML5 UP
 	html5up.net | @ajlkn
@@ -87,30 +87,30 @@ input::-moz-focus-inner {
 
 body {
 	font-size: 13.5pt;
-	font-family: sans-serif;
 	/*background-color: #e3e9dc;*/
 	background-image: url(../images/BackGround/tropical-sea.jpg);
-	font-family: 'Ubuntu Condensed', sans-serif;
+	/*font-family: 'Ubuntu Condensed', sans-serif;*/
+	font-family: url(/webfonts/UbuntuCondensed-Regular.ttf);
 	color: #878e83;
 	letter-spacing: -1px;
-	}
+}
 	
 	h1, h2, h3, h4 {
 		color: #007897;
 		font-weight: normal;
 	}
 
-h1 {
-	text-transform: lowercase;
-	font-size: 2.4em;
-}
+	h1 {
+		text-transform: lowercase;
+		font-size: 2.4em;
+	}
 
-h2 {
-	text-transform: lowercase;
-	font-size: 1.6em;
-	letter-spacing: -1px;
-	margin-bottom: 0.8em;
-}
+	h2 {
+		text-transform: lowercase;
+		font-size: 1.6em;
+		letter-spacing: -1px;
+		margin-bottom: 0.8em;
+	}
 
 	h3, h4 {
 		color: #283121;
