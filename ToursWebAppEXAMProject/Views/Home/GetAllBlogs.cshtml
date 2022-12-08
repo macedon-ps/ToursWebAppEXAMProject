@@ -23,17 +23,19 @@
            {
                 <div>
                     <div class="titleImage">
-                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
+                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left">
                     </div>
-                    <div>
-                        <h2>@blog.Name</h2>
-                    </div>
-                    <div>
-                        <h4>@blog.ShortDescription</h4>
-                    </div>
-                    <div class="dateAdded">
-                        <h4>@blog.DateAdded</h4>
-                        <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                    <div class="displayFlexCol">
+                        <div>
+                            <h2>@blog.Name</h2>
+                        </div>
+                        <div>
+                            <h4>@blog.ShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@blog.DateAdded</h4>
+                            <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                        </div>
                     </div>
                 </div> 
            }

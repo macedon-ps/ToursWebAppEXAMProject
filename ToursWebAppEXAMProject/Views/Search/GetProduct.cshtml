@@ -15,16 +15,16 @@
             <a class="" asp-area="" asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
         </button>
      </div>
-     <div class="searchHeader">
-        <div class="titleImage">
-            <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left" width="50%" height="50%">
-            @* Для проверки: 
+     <div class="searchHeaderOne">
+        <div class="titleImage50">
+            <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left">
+            @*<p>Расположение фото: </p>
             <h3>@Model.TitleImagePath</h3>*@
         </div>
-        <div class="">
+        <div>
             <h2>@Model.Name</h2>
         </div>
-        <div class="">
+        <div>
             @Html.Raw(Model.FullDescription)
         </div>
         <div class="displayFlexRow">
