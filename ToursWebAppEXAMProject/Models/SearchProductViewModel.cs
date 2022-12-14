@@ -1,26 +1,38 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Html;
+
+namespace ToursWebAppEXAMProject.Models
 {
 	public class SearchProductViewModel
 	{
-		public string? CountryNameFromSelectList { get; set; } = "Страна";
+		[Display(Name = "Страна:")]
+		public CountriesList? CountryNameFromSelectList { get; set; } 
 
-		public DateTime? DaysInterval { get; set; }
+		[Display(Name = "Даты поездки:")]
+		public DateTime? DaysInterval { get; set; } 
 
-		public NumberOfDays? NumberOfDaysFromSelectList { get; set; } = NumberOfDays.Один;
+		[Display(Name = "Дней поездки:")]
+		public NumberOfDays? NumberOfDaysFromSelectList { get; set; } 
+				
+		[Display(Name = "Взрослых и детей:")]
+		public NumberOfPeople? NumberOfPeopleFromSelectList { get; set; }
 
-		public string? NumberOfPeopleFromSelectList { get; set; } = "Количество взрослых и детей";
+		[Display(Name = "Города:")]
+		public List<string>? CitiesFromSelectList { get; set; } 
 
-		public List<string>? CitiesFromSelectList { get; set; } = new List<string>() { "Список городов"};
+		[Display(Name = "Карта / фотографии:")]
+		public string? MapImagePath { get; set; } 
 
-	public string? MapImagePath { get; set; } = "Расположение карты";
+		[Display(Name = "Информация о стране:")]
+		public string? CountryDescription { get; set; }
 
-		public string? CountryDescription { get; set; } = "Краткое описание страны";
+		[Display(Name = "Информация о городе:")]
+		public string? CityDescrition { get; set; } 
 
-		public string? CityDescrition { get; set; } = "Краткое описание города";
+		[Display(Name = "Достопримечательность:")]
+		public string? LocalDescrition { get; set; } 
 
-		public string? LocalDescrition { get; set; } = "Краткое описание местной достопримечательности";
-
-		public List<string>? PicturesImagePath { get; set; } = new List<string>() { "Расположение картинок"};
+		public List<string>? PicturesImagePath { get; set; } 
 
 	}
 }

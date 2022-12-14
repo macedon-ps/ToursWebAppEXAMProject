@@ -2114,7 +2114,17 @@ body {
 .displayFlex input{
 	margin: 0.2em 0;
 }
-.titleImage {
+.blockWidth20 {
+	min-width: 18%;
+	margin: 0.3em;
+	padding: 0.3em;
+}
+.blockWidth60 {
+	min-width: 58%;
+	margin: 0.3em;
+	padding: 0.3em;
+}
+.titleImage{
 	max-width: 25%;
 }
 .titleImage50 {
@@ -2140,4 +2150,10 @@ body {
 .dateAdded a,
 .editDelete a {
 	margin-left: 0.6em;
+}
+.searchBlock1,
+.searchBlock2{
+	margin: 1em;
+	padding: 1em;
+	background-color: aqua;
 }
