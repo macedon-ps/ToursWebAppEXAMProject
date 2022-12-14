@@ -24,9 +24,15 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult Index()
 		{
+			var searchViewModel = new SearchProductViewModel();
+			searchViewModel.CountryNameFromSelectList = CountriesList.Украина;
+			searchViewModel.DaysInterval = DateTime.UtcNow;
+			searchViewModel.NumberOfDaysFromSelectList = NumberOfDays.Четыре_Пять;
+			searchViewModel.NumberOfPeopleFromSelectList = NumberOfPeople.Два_взрослых;
+
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
-			return View(DataManager);
+			return View(searchViewModel);
 		}
 
 		/// <summary>

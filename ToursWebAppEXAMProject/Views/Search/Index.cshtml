@@ -1,6 +1,7 @@
-﻿@model DataManager
+﻿@model SearchProductViewModel
 @{
     ViewData["Title"] = "Search Page";
+        
 }
 
 <div class="searchPage">
@@ -9,9 +10,9 @@
             <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
         </button>
         <button class="">
-        @{
-        //  TODO:  реализовать поиск тура по id, имени или др. параметрам
-        }
+            @{
+                //  TODO:  реализовать поиск тура по id, имени или др. параметрам
+            }
             <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
         </button>
         <button class="">
@@ -24,23 +25,99 @@
     <div class="searchHeader">
         <h1>Поиск туристических продуктов:</h1>
         <br/>
-        @foreach(var product in @Model.ProductBaseInterface.GetAllItems())
-        {
-            <div>
-                <div class="titleImage">
-                    <img src="@product.TitleImagePath" alt="@product.TitleImagePath" align="left" width="20%" height="20%">
-                </div>    
+        <div class="searchMenu">  
+
+            <form asp-controller="Search" asp-action="" method="post">
+
+                <div class="flexRow searchBlock1">   
+                    @*Список стран (выпадающий список, единственный выбор)
+                        По выбранной стране будет выводиться список городов этой страны*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.CountryNameFromSelectList"></label>
+                        <select asp-for="@Model.CountryNameFromSelectList" asp-items="@Html.GetEnumSelectList<CountriesList>()"></select>
+                    </div>
+                    
+                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до")*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.DaysInterval"></label>
+                        <input asp-for="@Model.DaysInterval" />
+                    </div>
+                    
+                    @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор)*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.NumberOfDaysFromSelectList"></label>
+                        <select asp-for="@Model.NumberOfDaysFromSelectList" asp-items="@Html.GetEnumSelectList<NumberOfDays>()"></select>
+                    </div>
+                
+                    @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор)*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.NumberOfPeopleFromSelectList"></label>
+                        <select asp-for="@Model.NumberOfPeopleFromSelectList" asp-items="@Html.GetEnumSelectList<NumberOfPeople>()"></select>
+                    </div>
+                    
+                    @*Кнопка "Найти тур"*@
+                    <div class="flexColumn blockWidth20">
+                        <input type="submit" value="Найти тур" />
+                    </div>
+                </div> 
+                <div class="flexRow searchBlock2">   
+                    @*Список городов (выпадающий список, множественный выбор)
+                      Список городов выводится по выбранной стране*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.CitiesFromSelectList"></label>
+                        <select asp-for="@Model.CitiesFromSelectList"></select>
+                    </div>
+                    @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото)*@
+                    <div class="flexColumn blockWidth60">
+                        <label asp-for="@Model.MapImagePath"></label>
+                        <img alt="Карта страны / Фото страны, городов, достопримечательностей"/>
+                    </div>
+                    @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности)*@
+                    <div class="flexColumn blockWidth20">
+                        <label asp-for="@Model.CountryDescription"></label>
+                        <p></p>
+                        <label asp-for="@Model.CityDescrition"></label>
+                        <p></p>
+                        <label asp-for="@Model.LocalDescrition"></label>
+                        <p></p>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        @{
+            #region Список турист. продуктов (коллекция всех экземпляров в БД)
+       
+                    @*
+            @foreach(var product in @Model.ProductBaseInterface.GetAllItems())
+            {
                 <div>
-                    <h2>@product.Name</h2>
+                    <div class="titleImage">
+                        <img src="@product.TitleImagePath" alt="@product.TitleImagePath" align="left" width="20%" height="20%">
+                    </div>    
+                    <div>
+                        <h2>@product.Name</h2>
+                    </div>
+                    <div>
+                        <h4>@product.ShortDescription</h4>
+                    </div>
+                        <div class="dateAdded">
+                        <h4>@product.DateAdded</h4>
+                        <a asp-controller="Search" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
+                    </div>
                 </div>
-                <div>
-                    <h4>@product.ShortDescription</h4>
-                </div>
-                    <div class="dateAdded">
-                    <h4>@product.DateAdded</h4>
-                    <a asp-controller="Search" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
-                </div>
-            </div>
-        }
+            }
+            *@
+        #endregion
+         }
     </div>
 </div>
