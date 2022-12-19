@@ -4,6 +4,7 @@ using System.Diagnostics;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -25,14 +26,27 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Index()
 		{
 			var searchViewModel = new SearchProductViewModel();
-			searchViewModel.CountryNameFromSelectList = CountriesList.Украина;
-			searchViewModel.DaysInterval = DateTime.UtcNow;
-			searchViewModel.NumberOfDaysFromSelectList = NumberOfDays.Четыре_Пять;
-			searchViewModel.NumberOfPeopleFromSelectList = NumberOfPeople.Два_взрослых;
-
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			return View(searchViewModel);
+		}
+
+		[HttpPost]
+		public IActionResult Index(SearchProductViewModel searchProductViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				logger.Debug("Модель SearchProductViewModel успешно прошла валидацию");
+				Console.WriteLine("Модель SearchProductViewModel успешно прошла валидацию");
+				logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+				Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+				return View(searchProductViewModel);
+			}
+			logger.Debug("Модель SearchProductViewModel не прошла валидацию");
+			Console.WriteLine("Модель SearchProductViewModel не прошла валидацию");
+			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+			return View();
 		}
 
 		/// <summary>

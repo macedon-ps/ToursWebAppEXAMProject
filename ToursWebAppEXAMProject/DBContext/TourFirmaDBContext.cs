@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Services;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.DBContext
 {

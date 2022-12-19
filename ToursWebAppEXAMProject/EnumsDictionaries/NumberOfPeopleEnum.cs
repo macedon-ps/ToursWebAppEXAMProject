@@ -1,6 +1,8 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿using System.ComponentModel;
+
+namespace ToursWebAppEXAMProject.EnumsDictionaries
 {
-	public enum NumberOfPeople
+	public enum NumberOfPeopleEnum
 	{
 		Один_взрослый,
 		Один_взрослый_Один_ребенок,
@@ -21,6 +23,10 @@
 		Четыре_взрослых_Три_ребенка,
 		Четыре_взрослых_Четыре_ребенка,
 		Четыре_взрослых_Пятеро_детей,
+		[Description("+ Один ребенок")]
+		Один_ребенок,
+		[Description("+ Двое_детей")]
+		Двое_детей,
 		Свой_вариант
 	}
 }

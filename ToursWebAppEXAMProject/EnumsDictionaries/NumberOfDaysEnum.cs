@@ -1,6 +1,6 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿namespace ToursWebAppEXAMProject.EnumsDictionaries
 {
-	public enum NumberOfDays
+	public enum NumberOfDaysEnum
 	{
 		Один,
 		Два_Три,

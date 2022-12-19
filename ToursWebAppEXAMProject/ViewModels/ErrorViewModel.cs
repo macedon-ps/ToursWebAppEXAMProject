@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ToursWebAppEXAMProject.Models
+namespace ToursWebAppEXAMProject.ViewModels
 {
 	public class ErrorViewModel
 	{
@@ -36,10 +36,10 @@ namespace ToursWebAppEXAMProject.Models
 		/// <returns></returns>
 		public bool IsRequestId(int? requestId)
 		{
-			if(requestId == null) return false;
+			if (requestId == null) return false;
 			return true;
 		}
-		
+
 		/// <summary>
 		/// Метод IsErrorMessage, кот. возвращает булевое значение, было ли сообщение об ошибке
 		/// </summary>

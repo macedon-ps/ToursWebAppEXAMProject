@@ -1,10 +1,10 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿namespace ToursWebAppEXAMProject.ViewModels
 {
 	public class EditMenuViewModel
 	{
 		public bool isFullName { get; set; }
 
-		public string fullNameOrKeywordOfItem { get; set; }	
+		public string fullNameOrKeywordOfItem { get; set; }
 
 		public string type { get; set; }
 

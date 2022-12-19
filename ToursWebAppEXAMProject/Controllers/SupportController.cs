@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
-using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {

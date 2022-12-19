@@ -2,7 +2,7 @@
 using NLog;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Repositories
 {

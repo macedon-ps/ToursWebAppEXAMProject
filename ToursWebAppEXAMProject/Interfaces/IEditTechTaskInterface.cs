@@ -1,4 +1,4 @@
-﻿using ToursWebAppEXAMProject.Models;
+﻿using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Interfaces
 {
