@@ -25,8 +25,22 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 		public IActionResult GetSupport(string service)
 		{
-			logger.Trace("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
+			ViewData["service"] = service;
+			if (!(service == "map" | service == "translate" | service == "mobileApp"))
+			{
+				var errorInfo = new ErrorViewModel($"Не передано название сервиса, который должен быть реализован в методе GetSupport(string service) или сервис = \"{service}\" не существует / или не обработан");
+				logger.Trace("Переход по маршруту /Error. Возвращено представление Error.cshtml\n");
+				Console.WriteLine("Переход по маршруту /Error. Возвращено представление Error.cshtml\n");
+
+				return View("Error", errorInfo);
+			}
+			if(service == "translate")
+			{
+				return View("Translate");
+			}
+
+			logger.Trace($"Переход по маршруту /Support/GetSupport?service={service}. Возвращено представление Support/GetSupport.cshtml\n");
+			Console.WriteLine($"Переход по маршруту /Support/GetSupport?service={service}. Возвращено представление Support/GetSupport.cshtml\n");
 
 			var serviceItem = service;
 			return View("GetSupport", serviceItem);

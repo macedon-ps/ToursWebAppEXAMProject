@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "SupportPage";
+    var service = ViewData["service"];
+}  
+
+<div class="supportPage">
+        <div class="supportButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="" asp-action="">Назад</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 2</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 3</a>
+             </button>
+        </div>
+        <div class="supportHeader">
+            <h1>Страница поддержки приложения:</h1><br/>
+            
+            <h3>Приложение:</h3><br/>
+            <p class="">service = @service</p><br/>
+
+            <h3>Дата и время:</h3><br/>
+            <p class="">@DateTime.Now</p> 
+        </div>
+   </div>

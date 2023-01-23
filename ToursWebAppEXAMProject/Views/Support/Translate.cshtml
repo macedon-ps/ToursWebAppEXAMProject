@@ -1,0 +1,89 @@
+﻿<div class="supportPage">
+     <div class="supportButton">
+            <button class="">
+                <a class="" asp-area="" asp-controller="" asp-action="">Назад</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">2</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">3</a>
+             </button>
+             <button class="">
+                 <a class="" asp-area="" asp-controller="" asp-action="">4</a>
+             </button>
+        </div>
+
+     <div class="supportHeader">
+        <p>Как использовать API Google Translate с JavaScript</p>
+        <p>Первоначально опубликовано по адресу <a href=" https://rapidapi.com/blog/google-translate-api-tutorial/ ">https://rapidapi.com/blog/google-translate-api-tutorial/ </a></p>
+
+        <p>Мы вернулись с еще одним <a href=“ https://rapidapi.com/blog/category/tutorial/ ”>руководством</a> по Google Translate API. На этот раз мы собираемся обратиться к функции языковой персонализации в Интернете с помощью этого API.</p>
+
+        <p>Если вы, не являющийся носителем английского языка, сталкиваетесь с веб-формой на английском языке, которую хотите заполнить и отправить, вам может быть сложно интерпретировать значение каждого поля формы. Используя Google Translate API, мы можем создавать функции языковой персонализации для веб-форм, чтобы вы могли выбирать язык при заполнении формы.</p>
+
+        <p>Если это звучит интересно, следуйте этому сообщению в блоге, чтобы создать демонстрационную веб-форму с возможностью языкового перевода на базе RapidAPI. Но сначала очень краткое введение в Google Translate API.</p><br /><br />
+        
+        <h2>Существует ли Google Translate API?</h2>
+        <p><a href=“ https://translate.google.com/ ”>Google Translate</a> не нуждается в представлении. Мы все знаем об этом популярном сервисе от Google, и вы бы использовали его в прошлом через приложение Google Translate. В RapidAPI вы можете работать с Google Translate API для программного вызова этой службы. Посетите <a href=“ https://rapidapi.com/googlecloud/api/google-translate1 ”>консоль API</a>, чтобы узнать больше об API.</p><br />
+
+        <img class="alignnone size-large wp-image-3648" src=" https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-api-console-1024x712.png " alt="консоль Google Translate API" width="1024" height="712" /><br />
+
+        <p>Беглый взгляд на конечные точки API говорит нам, что он поддерживает две конечные точки.</p><br />
+
+        <img class="alignnone size-full wp-image-3666" src=" https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-api-endpoints.png " alt= «google translate API endpoints» width="338" height="275" /><br /><br />
+
+        <h3><span style="color: #6ea3ff;">POST</span> Detect</h3>
+        <p>Конечная точка «POST Detect» возвращает код языка текстовой строки, которая передается в API в качестве входных данных.</p>
+        <h3><span style=“color: #6ea3ff;”>POST</span> Translate</h3>
+        <p>Конечная точка «POST Translate» возвращает переведенный текст для данной входной строки, которая передается API в качестве входных данных. Наряду с входной строкой он также ожидает код языка переведенного языка.</p><br />
+
+        <h2>Является ли Google Translate API бесплатным?</h2>
+        <p>В RapidAPIhttps://rapidapi.com/googlecloud/api/google-translate1/pricing »>бесплатно до 50 запросов в день</a>. Любые дополнительные запросы API стоят 0,05 доллара США за каждый после первых 50 вызовов.</p>
+
+        <center><a id="sidebarCTA" href=“ https://rapidapi.com/googlecloud/api/google-translate1 ”>Подключиться к Google Translate API</a></center>
+        <h2>Как получить доступ к Google Translate Перевести API? Как получить ключ API?</h2>
+        <h3>1. Зарегистрируйтесь для получения бесплатной учетной записи RapidAPI</h3>
+        <img class=“alignnone size-large wp-image-2817” src="https://rapidapi.com/blog/wp-content/uploads/2019/08/signup-for-rapidapi-1024x645.png" alt = "Ключ бесплатного API RapidAPI" width = "1024" height = "645" />
+
+        Чтобы начать использовать Google Translate API, сначала необходимо зарегистрировать бесплатную учетную запись разработчика RapidAPI. С этой учетной записью вы получаете универсальный ключ API для доступа ко всем API, размещенным в RapidAPI.
+
+        RapidAPI — крупнейший в мире рынок API с более чем 10 000 API и сообществом из более чем 1 000 000 разработчиков. Наша цель — помочь разработчикам найти и подключиться к API, чтобы помочь им создавать потрясающие приложения.
+        <h3>2. Подпишитесь на Google Translate API</h3>
+        <img class="alignnone size-full wp-image-3667" src="https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-api-pricing.png" alt = "цена Google Translate API" width = "762" height = "378" />
+
+        После входа войдите в свою учетную запись RapidAPI и получите доступ к консоли API. Перейдите на вкладку <a href=" https://rapidapi.com/googlecloud/api/google-translate1/pricing"> "Цены"</a> и подпишитесь на базовую подписку, которая дает вам 50 бесплатных вызовов API. в Google Translate API в день.
+        <h3>3. Протестируйте свою подписку на API</h3>
+        Давайте проверим вашу подписку на API Google Translate.
+
+        Выберите конечную точку «POST Translate» в консоли API.
+
+        <img class=“alignnone size-full wp-image-3668” src="https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-api-test.png" alt= "Тест Google Translate API" width = "988" height = "496" />
+
+        Значения параметров по умолчанию указывают на то, что мы собираемся переводить текст «Hello, world!» на испанский (с кодом языка «es»).
+
+        Запустите API, и вы должны увидеть переведенный текст в ответе API (<a href="https://rapidapi.com/blog/api-glossary/json/">формат JSON</a>).
+
+        <img class="alignnone size-full wp-image-3669" src="https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-api-json-response-body.png" alt = "тело ответа Google Translate API JSON" width = "358" height = "246" />
+
+        Итак, «Привет, мир!» на испанском языке переводится как «Hola Mundo!».
+
+        Если вы хотите попробовать перевести на другие языки, вы можете проверить коды языков, определенные в соответствии с <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">определениями кодов ISO 639</a>.
+
+        <center><a id="sidebarCTA" href="https://rapidapi.com/googlecloud/api/google-translate1">Подключение к Google Translate API</a></center>
+        <h2>Как использовать Google Translate API с JavaScript: создание веб-формы с функциями перевода</h2>
+        Теперь мы покажем вам, как интегрировать этот API в веб-форму. Будь то форма, размещенная на сайте или в мобильном приложении. Вы можете быстро интегрировать Google Translate в свой интерфейсный код, чтобы обеспечить функции языкового перевода.
+
+        Вот как выглядит простая форма:
+
+        <img class=“alignnone size-full wp-image-3671” src="https://rapidapi.com/blog/wp-content/uploads/2020/01/plain-contact-form.png" alt="plain контактная форма" width = "602" height = "462" />
+
+        С некоторой магией перевода, вот как вы можете добавить к нему немного искры.
+
+        <img class="alignnone size-full wp-image-3670" src="https://rapidapi.com/blog/wp-content/uploads/2020/01/google-translate-form-app.gif" alt= "Приложение формы Google Translate" width = "644" height = "616" />
+
+        Выполните следующие шаги, чтобы создать демонстрационную HTML-страницу, содержащую эту форму с функцией перевода.
+        <h3>1. Создание статического HTML</h3>
+        Начнем с базовой HTML-страницы. Пользовательский интерфейс основан на Bootstrap, и мы добавили немного CSS, чтобы оживить элементы формы.
+    </div>
+</div>
