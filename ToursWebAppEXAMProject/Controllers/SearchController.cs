@@ -31,9 +31,16 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(searchViewModel);
 		}
 
+		/// <summary>
+		/// POST версия метода Index(SearchProductViewModel searchProductViewModel), кот. принимает введенную модель
+		/// </summary>
+		/// <param name="searchProductViewModel"></param>
+		/// <returns></returns>
 		[HttpPost]
-		public IActionResult Index(SearchProductViewModel searchProductViewModel)
+		public IActionResult Index(SearchProductViewModel searchProductViewModel, IFormCollection formValue)
 		{
+			searchProductViewModel.CountryNameSelected = formValue["countriesSelect"];
+			
 			if (ModelState.IsValid)
 			{
 				logger.Debug("Модель SearchProductViewModel успешно прошла валидацию");
@@ -66,10 +73,8 @@ namespace ToursWebAppEXAMProject.Controllers
 				logger.Warn($"Возвращено представление /Error.cshtml\n");
 				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
 
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(Product), id);
+				var errorInfo = new ModelsErrorViewModel(typeof(Product), id);
 				return View("Error", errorInfo);
 			}
 
@@ -94,10 +99,8 @@ namespace ToursWebAppEXAMProject.Controllers
 				logger.Warn("Возвращено представление /Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Error.cshtml\n");
 
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(List<Product>));
+				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 			
@@ -115,17 +118,15 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Search/GetAllProducts");
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
 
-			var products = DataManager.ProductBaseInterface.GetQueryResultItems(keyword, isFullName);
+			var products = DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(keyword, isFullName);
 
 			if (products == null)
 			{
 				logger.Warn("Возвращено представление /Error.cshtml\n");
 				Console.WriteLine("Возвращено представление /Error.cshtml\n");
 
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
 				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(List<Product>));
+				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 

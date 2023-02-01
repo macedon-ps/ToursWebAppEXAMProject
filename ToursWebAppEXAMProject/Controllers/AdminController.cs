@@ -42,8 +42,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpGet]
 		public IActionResult GetQueryResultEntities(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
-			logger.Trace("Переход по маршруту /Admin/GetQueryResultItems");
-			Console.WriteLine("Переход по маршруту /Admin/GetQueryResultItems");
+			logger.Trace("Переход по маршруту /Admin/GetQueryResultItemsAfterFullName");
+			Console.WriteLine("Переход по маршруту /Admin/GetQueryResultItemsAfterFullName");
 
 			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
 			object items = new object();
@@ -51,30 +51,27 @@ namespace ToursWebAppEXAMProject.Controllers
 			switch (type)
 			{
 				case "New":
-					items = DataManager.NewBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					items = DataManager.NewBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
 					break;
 				case "Blog":
-					items = DataManager.BlogBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					items = DataManager.BlogBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
 					break;
 				case "Product":
-					items = DataManager.ProductBaseInterface.GetQueryResultItems(fullNameOrKeywordOfItem, isFullName);
+					items = DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
 					break;
 			}
 
 			if (items == null)
 			{
-				logger.Warn("Возвращено представление /Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Error.cshtml\n");
+				logger.Warn("Возвращено представление /ModelsError.cshtml\n");
+				Console.WriteLine("Возвращено представление /ModelsError.cshtml\n");
 
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
-				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(List<New>));
-				return View("Error", errorInfo);
+				var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
+				return View("ModelsError", errorInfo);
 			}
 
-			logger.Debug("Возвращено представление /Admin/GetQueryResultItems.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/GetQueryResultItems.cshtml\n");
+			logger.Debug("Возвращено представление /Admin/GetQueryResultItemsAfterFullName.cshtml\n");
+			Console.WriteLine("Возвращено представление /Admin/GetQueryResultItemsAfterFullName.cshtml\n");
 			return View(items);
 		}
 

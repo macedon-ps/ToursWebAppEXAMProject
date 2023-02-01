@@ -66,7 +66,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			Console.WriteLine($"Запрашиваются прогресс выполнения тех. заданий для страницы \"{techTasks.PageName}\"");
 
 			TechTasksCount = 6;
-			if(techTasks.IsExecuteTechTask1 == true) TechTasksTrueCount++;
+			if (techTasks.IsExecuteTechTask1 == true) TechTasksTrueCount++;
 			if (techTasks.IsExecuteTechTask2 == true) TechTasksTrueCount++;
 			if (techTasks.IsExecuteTechTask1 == true) TechTasksTrueCount++;
 			if (techTasks.IsExecuteTechTask2 == true) TechTasksTrueCount++;

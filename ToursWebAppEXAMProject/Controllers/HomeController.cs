@@ -45,14 +45,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (news == null) 
 			{
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType - обязательный параметр, message - опционально;
-				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(List<New>));
+				var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
 
-				logger.Warn("Возвращено представление /Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Error.cshtml\n");
-				return View("Error", errorInfo);
+				logger.Warn("Возвращено представление /ModelsError.cshtml\n");
+				Console.WriteLine("Возвращено представление /ModelsError.cshtml\n");
+				return View("ModelsError", errorInfo);
 			}
 			logger.Debug("Возвращено представление /Home/GetAllNews.cshtml\n");
 			Console.WriteLine("Возвращено представление /Home/GetAllNews.cshtml\n");
@@ -73,14 +70,11 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			if (new_.Id == 0) 
 			{
-				logger.Warn($"Возвращено представление /Error.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
+				logger.Warn($"Возвращено представление /ModelsError.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /ModelsError.cshtml\n");
 
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
-				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(New), id);
-				return View("Error", errorInfo);
+				var errorInfo = new ModelsErrorViewModel(typeof(New), id);
+				return View("ModelsError", errorInfo);
 			}
 
 			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
@@ -101,14 +95,11 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			if (blogs == null)
 			{
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType - обязательный параметр, message - опционально;
-				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(List<Blog>));
+				var errorInfo = new ModelsErrorViewModel(typeof(List<Blog>));
 
-				logger.Warn("Возвращено представление /Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Error.cshtml\n");
-				return View("Error", errorInfo);
+				logger.Warn("Возвращено представление /ModelsError.cshtml\n");
+				Console.WriteLine("Возвращено представление /ModelsError.cshtml\n");
+				return View("ModelsError", errorInfo);
 			}
 			logger.Debug("Возвращено представление /Home/GetAllBlogs.cshtml\n");
 			Console.WriteLine("Возвращено представление /Home/GetAllBlogs.cshtml\n");
@@ -132,14 +123,11 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			if (blog.Id == 0) 
 			{
-				// задаем входные параметры для объекта ErrorViewModel
-				// можно передать: modelType, id - обязательные параметры, message - опционально;
-				// message = "";
-				var errorInfo = new ErrorViewModel(typeof(Blog), id);
+				var errorInfo = new ModelsErrorViewModel(typeof(Blog), id);
 
-				logger.Warn($"Возвращено представление /Error.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
-				return View("Error", errorInfo);
+				logger.Warn($"Возвращено представление /ModelsError.cshtml\n");
+				Console.WriteLine($"Возвращеноя представление /ModelsError.cshtml\n");
+				return View("ModelsError", errorInfo);
 			}
 			
 			return View(blog);

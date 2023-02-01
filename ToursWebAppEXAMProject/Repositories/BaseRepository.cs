@@ -163,12 +163,12 @@ namespace ToursWebAppEXAMProject.Repositories
 		}
 
 		/// <summary>
-		/// Метод GetQueryResultItems(string keyword), кот. используется для возврата результатов выборки сущностей из БД по ключевому слову
+		/// Метод GetQueryResultItemsAfterFullName(string keyword), кот. используется для возврата результатов выборки сущностей из БД по ключевому слову
 		/// </summary>
 		/// <param name="keyword">ключевое слово для поиска</param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public IEnumerable<T> GetQueryResultItems(string keyword, bool isFullName)
+		public IEnumerable<T> GetQueryResultItemsAfterFullName(string keyword, bool isFullName)
 		{
 			logger.Debug("Произведено подключение к базе данных");
 			Console.WriteLine("Произведено подключение к базе данных");
@@ -292,5 +292,5 @@ namespace ToursWebAppEXAMProject.Repositories
 				Console.WriteLine($"Код ошибки: {ex.Message}");
 			}
 		}
-    }
+	}
 }
