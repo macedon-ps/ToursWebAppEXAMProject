@@ -1,4 +1,4 @@
-﻿@model ErrorViewModel
+﻿@model ModelsErrorViewModel
 
 <div class="adminPage">
     <div class="adminButton">
@@ -22,8 +22,8 @@
             
             <div>
                 <div class="padding_bottom_2">
-                    <label asp-for="MessageToErrorViewModel"></label>
-                    <input type="text" asp-for="MessageToErrorViewModel" />
+                    <label asp-for="ErrorMessage"></label>
+                    <input type="text" asp-for="ErrorMessage" />
                 </div>
                 <div class="padding_bottom_2">
                     <label asp-for="ModelTypeCalledError"></label>
