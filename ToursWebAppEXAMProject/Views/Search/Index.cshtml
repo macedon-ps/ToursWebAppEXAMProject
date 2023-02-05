@@ -6,13 +6,13 @@
 <div class="searchPage">
     <div class="searchButton">
         <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
-        </button>
-        <button class="">
             <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв</a>
+        </button>
+        <button class="">
+            <a class="" asp-area="" asp-controller="Search" asp-action="" asp-route-id="">Резерв 2</a>
+        </button>
+        <button class="">
+            <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв 3</a>
         </button>
         <button class="">
             <a class="" asp-area="" asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
@@ -23,12 +23,28 @@
         <br/>
         <div class="searchMenu">  
 
-            <form asp-controller="Search" asp-action="" method="post" name="myForm">
+            <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
+                
+                @* не отображается корректно, передать можно, только преобразовав в строковое выражение
+                  <input type="hidden" asp-for="Countries" value="@Model.Countries" />
+                  <input type="hidden" asp-for="CountriesList" value="@Model.CountriesList" />
+                  <input type="hidden" asp-for="Cities" value="@Model.Cities" />
+                  <input type="hidden" asp-for="CitiesList" value="@Model.CitiesList" /> *@
 
+                <input type="hidden" asp-for="CountryId" value="@Model.CountryId" />
+                <input type="hidden" asp-for="CountryNameSelected" value="@Model.CountryNameSelected" />
+                <input type="hidden" asp-for="CountriesOneString" value="@Model.CountriesOneString" />
+                <input type="hidden" asp-for="CountriesListOneString" value="@Model.CountriesListOneString" />
+                <input type="hidden" asp-for="CityNameSelected" value="@Model.CityNameSelected" />
+                <input type="hidden" asp-for="CitiesOneString" value="@Model.CitiesOneString" />
+                <input type="hidden" asp-for="CitiesListOneString" value="@Model.CitiesListOneString" />
+                <input type="hidden" asp-for="CountryDescription" value="@Model.CountryDescription" />
+                <input type="hidden" asp-for="CityDescrition" value="@Model.CityDescrition" />
+                <input type="hidden" asp-for="LocalDescrition" value="@Model.LocalDescrition" />
+                              
                 @* Первый блок элементов: 
                     3 select (список стран, количество дней отдыха, количество отдыхающих), 
-                    календарь и кнопка "Найти тур"
-                *@
+                    календарь и кнопка "Найти тур" *@
 
                 <div class="flexRow searchBlock1">   
                     
@@ -36,35 +52,37 @@
                         По выбранной стране будет выводиться список городов этой страны*@
                     <div class="flexColumn blockWidth20">
                         <div>
-                            <label asp-for="@Model.CountryNameSelected"></label>
-                            <select asp-for="@Model.CountryNameSelected" 
+                            <label asp-for="CountryNameSelected"></label>
+                            <select asp-for="CountryNameSelected" 
                                 asp-items="@Model.CountriesList" name="countriesSelect">
-                                @*asp-items="@Html.GetEnumSelectList<CountriesListEnum>()">*@
-                                @*<option>Выберите одну страну</option>*@
                             </select>
                         </div>
                         <div id="countriesSelectDiv" class="flexColumn blockWidth20"></div>
-                        <div id="countriesSelectDiv2" class="flexColumn blockWidth20"></div>
                     </div>
                     
-                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до")*@
+                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") *@
+                    @{
+                        // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
+                    }
                     <div class="flexColumn blockWidth20">
-                        <label asp-for="@Model.DaysInterval"></label>
-                        <input asp-for="@Model.DaysInterval" />
+                        <label asp-for="DaysInterval"></label>
+                        <input asp-for="DaysInterval" />
                     </div>
                     
                     @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор)*@
                     <div class="flexColumn blockWidth20">
-                        <label asp-for="@Model.NumberOfDaysFromSelectList"></label>
-                        <select asp-for="@Model.NumberOfDaysFromSelectList" 
-                            asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()"></select>
+                        <label asp-for="NumberOfDaysFromSelectList"></label>
+                        <select asp-for="NumberOfDaysFromSelectList" 
+                            asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
+                        </select>
                     </div>
                 
                     @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор)*@
                     <div class="flexColumn blockWidth20">
-                        <label asp-for="@Model.NumberOfPeopleFromSelectList"></label>
-                        <select asp-for="@Model.NumberOfPeopleFromSelectList" 
-                            asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()"></select>
+                        <label asp-for="NumberOfPeopleFromSelectList"></label>
+                        <select asp-for="NumberOfPeopleFromSelectList" 
+                            asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
+                        </select>
                     </div>
                     
                     @*Кнопка "Найти тур"*@
@@ -74,7 +92,7 @@
                 </div> 
 
                 @* Второй блок элементов: 
-                    1 select (список городов), карта и блоки описаний о странах, городах, достопримечательностяъ
+                    1 select (список городов), карта и блоки описаний о странах, городах, достопримечательностъ
                 *@
 
                 <div class="flexRow searchBlock2">   
@@ -82,30 +100,27 @@
                       Список городов выводится по выбранной стране*@
                     <div class="flexColumn blockWidth20">
                         <div>
-                            <label asp-for="@Model.CityNameSelected"></label>
-                            <select  asp-for="@Model.CityNameSelected" 
+                            <label asp-for="CityNameSelected"></label>
+                            <select  asp-for="CityNameSelected" 
                                 asp-items="@Model.CitiesList" name="citiesSelect">
-                                 @*asp-items="@Html.GetEnumSelectList<CitiesListEnum>()">*@
-                                 @*<option>Выберите один город</option>*@
                             </select>
                         </div>    
                         <div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>    
-                       <div id="citiesSelectDiv2" class="flexColumn blockWidth20"></div>     
                     </div>
                         
                     @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото)*@
                     <div class="flexColumn blockWidth60">
-                        <label asp-for="@Model.MapImagePath"></label>
+                        <label asp-for="MapImagePath"></label>
                         <img src="@Model.MapImagePath" alt="Карта страны / Фото страны, городов, достопримечательностей"/>
                     </div>
 
                     @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности)*@
                     <div class="flexColumn blockWidth20">
-                        <label asp-for="@Model.CountryDescription"></label>
+                        <label asp-for="CountryDescription"></label>
                         <p>@Model.CountryDescription</p>
-                        <label asp-for="@Model.CityDescrition"></label>
+                        <label asp-for="CityDescrition"></label>
                         <p>@Model.CityDescrition</p>
-                        <label asp-for="@Model.LocalDescrition"></label>
+                        <label asp-for="LocalDescrition"></label>
                         <p>@Model.LocalDescrition</p>
                     </div>
                 </div>
@@ -113,7 +128,7 @@
                 @* Блок данных информационного характера, на пермод разработки
                    В дальнейшем, будет убран из проекта
                 *@
-
+                @*
                 <div class="flexColumn searchBlock2">
                     <p>Полные данные вью модели:</p><br />
                     <p>Model.CountryId / Id страны: @Model.CountryId</p>
@@ -129,11 +144,11 @@
                     <p>Model.CityDescrition / Описание города: @Model.CityDescrition </p>
                     <p>Model.LocalDescrition / Описание достопримечательности: @Model.LocalDescrition</p>
                     <p>Model.CitiesList / Список городов: </p>
-                    @*
+                    
                     @foreach(var city in Model.CitiesList)
                     {
                         <p>Город: @city.Text value: @city.Value isSelected: @city.Selected</p>
-                    }*@
+                    }
                     <br />
 
                     <p>Model.DaysInterval / Даты: @Model.DaysInterval</p>
@@ -142,13 +157,19 @@
                          
                     <p>Model.MapImagePath / Карта: @Model.MapImagePath</p>
                     <p>Model.PicturesImagePath / Картинки: @Model.PicturesImagePath</p>
-                </div>
+                </div>*@
             </form>
         </div>
      </div>
 </div>
 <script>
-        
+    /* 
+    // Черновик. Скрипт по изменению данных 2-х Html-элементов Select 
+    // (список стран в БД и список городов для выбранной страны из БД) 
+    // по событию изменения значения первого Select (список стран). 
+    // Пока все на стороне клиента (в браузере)
+
+
     // находим select эдементы - список стран и список городов
     var countriesList = document.getElementsByName('countriesSelect')[0];
     var citiesList = document.getElementsByName('citiesSelect')[0];
@@ -158,13 +179,17 @@
     var citiesSelectDivBlock = document.getElementById('citiesSelectDiv');
 
     // первоначальные значения text для Div's 
-    countriesSelectDivBlock.textContent = "Сейчас выбрана страна: ";
-    citiesSelectDivBlock.textContent = "Сейчас выбран город: ";
+    countriesSelectDivBlock.textContent = "Ни одна страна не выбрана";
+    citiesSelectDivBlock.textContent = "Ни один город не выбран";
 
     // чтобы получить выбранную страну, обратимся к select списку стран как к элементу формы
     // найдем значение выбранной страны как value у элемента формы, т.е. elementList[i].value
     var elementList = document.myForm.elements;
-    var selectCountryName = "";
+    var elementCountryList = elementList.countriesSelect;
+	var elementCityList = elementList.citiesSelect;
+    
+	var selectCountryName = "";
+	var selectCityName = "";
 
     // изменение информации о выбранной стране
     // изменение выбранного города и информации о нем
@@ -173,22 +198,49 @@
 
     function changeCountry() {
        
-        for (var i = 0; i < elementList.length; i++) {
-            if (elementList[i].name === "countriesSelect") {
-                selectCountryName = elementList[i].value;
-                continue;
-            }
-        }
+        //for (var i = 0; i < elementList.length; i++) {
+        //     if (elementList[i].name === "countriesSelect") {
+        //        selectCountryName = elementList[i].value;
+        //        continue;
+        //    }
+        //}
+
+        selectCountryName = elementCountryList.value;
 
         if (selectCountryName !== null) {
             countriesSelectDivBlock.textContent = "Сейчас выбрана страна: " + selectCountryName;
-        } else {
-            countriesSelectDivBlock.textContent = "Ни одна страна не выбрана";
         }
+
+        changeCity(selectCountryName);
+				
+		if (selectCityName !== null) {
+            citiesSelectDivBlock.textContent = "Сейчас выбран город: " + selectCityName;
+        } 
     }
 
     @{
-        // TODO: создать алгоритм поиска списка городов для выбранной страны (в браузере, на стороне клиента)
+    // TODO: создать алгоритм поиска списка городов для выбранной страны (в браузере, на стороне клиента)
+    // черновой вариант:
     }
-        
+    function changeCity(selectCountryName) { 
+        switch(selectCountryName){
+			case "Украина":
+			selectCityName = "Киев";
+			break;
+			case "Франция":
+			selectCityName = "Париж";
+			break;
+			case "Италия":
+			selectCityName = "Рим";
+			break;
+			case "Испания":
+			selectCityName = "Мадрид";
+			break;
+			case "Defoult":
+			selectCityName = "Какой то город по умолчанию";
+			break;
+		}
+        elementCityList.value = selectCityName;
+    }
+    */
 </script>
