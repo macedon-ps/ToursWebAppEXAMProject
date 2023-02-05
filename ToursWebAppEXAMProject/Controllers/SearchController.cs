@@ -31,28 +31,21 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			var searchViewModel = new SearchProductViewModel();
 
+			// задаем значение по умолчанию для countryNameSelected, для стартовой страницы Index.cshtml
 			var countryNameSelected = "Турция";
-
+			
 			searchViewModel.CountryId = GetIdOfSelectedCountry(countryNameSelected);
 			searchViewModel.CountryNameSelected = countryNameSelected;
-
 			var allCountries = GetAllCountries();
 			searchViewModel.Countries = allCountries;
-			searchViewModel.CountriesOneString = ParseListOfStringsToString(allCountries);
-
 			searchViewModel.CountriesList = GetAllCountriesSelectList(countryNameSelected);
-			searchViewModel.CountriesListOneString = ParseSelectListToString(allCountries, countryNameSelected);
-
+			
 			var cityNameSelected = GetCityNameSelected(countryNameSelected);
 			searchViewModel.CityNameSelected = cityNameSelected;
-
 			var allCities = GetAllCities(countryNameSelected);
 			searchViewModel.Cities = allCities;
-			searchViewModel.CitiesOneString = ParseListOfStringsToString(allCities);
-
 			searchViewModel.CitiesList = GetAllCitiesSelectList(countryNameSelected);
-			searchViewModel.CitiesListOneString = ParseSelectListToString(allCities, cityNameSelected);
-
+			
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			return View(searchViewModel);
@@ -69,12 +62,15 @@ namespace ToursWebAppEXAMProject.Controllers
 			var countryName = searchViewModel.CountryNameSelected;
 			var cityName = searchViewModel.CityNameSelected;
 
-			var allCountries = searchViewModel.CountriesOneString;
-			var allCities = searchViewModel.CitiesOneString;
-
+			// передаваемые данные через элементы форм в строковом формате
+			var allCountries = formValues["CountriesOneStringFormValue"];
+			var allCities = formValues["CitiesOneStringFormValue"];
+			
+			// преобразование данных из строки в List<string>
 			searchViewModel.Countries = ParseStringToListOfStrings(allCountries);
 			searchViewModel.Cities = ParseStringToListOfStrings(allCities);
-
+			
+			// создание элементов SelectList
 			searchViewModel.CountriesList = ParseStringToSelectList(allCountries, countryName);
 			searchViewModel.CitiesList = ParseStringToSelectList(allCities, cityName);
 
@@ -179,7 +175,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="listOfStrings">коллекция строк</param>
 		/// <returns></returns>
-		public string ParseListOfStringsToString(List<string> allItemsListOfString)
+		private string ParseListOfStringsToString(List<string> allItemsListOfString)
 		{
 			var allItemsOneString = "";
 			allItemsOneString = String.Join(",", allItemsListOfString);
@@ -311,6 +307,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(products);
 		}
 
+		/// <summary>
+		/// Метод TechTaskSearch() для отображения данных о выполнении ТЗ на странице Search
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
 		public IActionResult TechTaskSearch()
 		{
 			logger.Trace("Переход по маршруту Search/TechTaskSearch. Возвращаено представление Search/TechTaskSearch.cshtml\n");
@@ -322,6 +323,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
+		/// <summary>
+		/// Метод TechTaskSearch(TechTaskViewModel model) для редактирования и сохранения данных о выполнении ТЗ на странице Search
+		/// </summary>
+		/// <param name="model">Сохраняемая вью-модель</param>
+		/// <returns></returns>
 		[HttpPost]
 		public IActionResult TechTaskSearch(TechTaskViewModel model)
 		{
