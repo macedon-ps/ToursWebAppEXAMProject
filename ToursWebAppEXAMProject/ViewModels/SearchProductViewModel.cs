@@ -24,14 +24,10 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		public List<string>? Countries { get; set; } = null!;
 
-		//public string? CountriesOneString { get; set; }
-
 		/// <summary>
 		/// Список стран в формате SelectList
 		/// </summary>
 		public SelectList? CountriesList { get; set; } = null!;
-
-		//public string? CountriesListOneString { get; set; }
 
 		/// <summary>
 		/// Событие изменения списка стран
@@ -49,14 +45,10 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		public List<string>? Cities { get; set; } = null!;
 
-		//public string? CitiesOneString { get; set; }
-
 		/// <summary>
 		/// Список городов выбранной страны в формате SelectList
 		/// </summary>
 		public SelectList? CitiesList { get; set; } = null!;
-
-		//public string? CitiesListOneString { get; set; }
 
 		/// <summary>
 		/// Выбранные даты отдыха
