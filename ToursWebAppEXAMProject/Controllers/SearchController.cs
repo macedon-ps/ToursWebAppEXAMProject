@@ -45,7 +45,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			var allCities = GetAllCities(countryNameSelected);
 			searchViewModel.Cities = allCities;
 			searchViewModel.CitiesList = GetAllCitiesSelectList(countryNameSelected);
-			
+
+			searchViewModel.AllCountriesWithCitiesListByOneString = DataManager.CollectionOfCitiesAfterParamsInterface.
+				GetAllCountriesWithCitiesListByOneString();
+
+
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			return View(searchViewModel);

@@ -50,6 +50,8 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		public SelectList? CitiesList { get; set; } = null!;
 
+		public string? AllCountriesWithCitiesListByOneString { get; set; }
+		
 		/// <summary>
 		/// Выбранные даты отдыха
 		/// </summary>
