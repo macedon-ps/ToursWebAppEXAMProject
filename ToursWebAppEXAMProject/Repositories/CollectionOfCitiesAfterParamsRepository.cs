@@ -150,7 +150,7 @@ namespace ToursWebAppEXAMProject.Repositories
 					.ToList();
 
 					// заполняем countriesWithSitiesOneString, citiesOfOneCountryListOneString и allInfo
-					countriesWithSitiesOneString += $"{country.Name}: ";
+					countriesWithSitiesOneString += $"{country.Name}:";
 
 					foreach (City city in cities)
 					{
@@ -165,8 +165,8 @@ namespace ToursWebAppEXAMProject.Repositories
 					countriesWithSitiesOneString = "";
 				}
 
-				// итоговый вариант
-				Console.WriteLine(allInfo);
+				// итоговый вариант // для редактирования
+				// Console.WriteLine(allInfo);
 
 				if (allInfo == null)
 				{

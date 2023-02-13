@@ -40,6 +40,7 @@
                 <input type="hidden" asp-for="CountryDescription" value="@Model.CountryDescription" />
                 <input type="hidden" asp-for="CityDescrition" value="@Model.CityDescrition" />
                 <input type="hidden" asp-for="LocalDescrition" value="@Model.LocalDescrition" />
+                <input type="hidden" asp-for="AllCountriesWithCitiesListByOneString" value="@Model.AllCountriesWithCitiesListByOneString" id="AllCountriesAndCities"/>
                 @*свойства, кот. предварительно преобразуются в строки*@
                 <input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
                 <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />
@@ -101,7 +102,7 @@
                     @*Список городов (выпадающий список, множественный выбор)
                       Список городов выводится по выбранной стране*@
                     <div class="flexColumn blockWidth20">
-                        <div>
+                        <div id="divForChangeCitiesSelectList" >
                             <label asp-for="CityNameSelected"></label>
                             <select  asp-for="CityNameSelected" 
                                 asp-items="@Model.CitiesList" name="citiesSelect">
@@ -165,84 +166,113 @@
      </div>
 </div>
 <script>
-    /* 
-    // Черновик. Скрипт по изменению данных 2-х Html-элементов Select 
-    // (список стран в БД и список городов для выбранной страны из БД) 
-    // по событию изменения значения первого Select (список стран). 
-    // Пока все на стороне клиента (в браузере)
+   
+    // Скрипт по изменению данных 2-х Html-элементов Select (список стран в БД и список городов для выбранной страны из БД) 
+    // по событию изменения значения первого Select (список стран). Изменения происходят без перезагрузки страницы.
+   
+    // 1. Находим все нужные Html элементы
+    // 1.1. Находим select эдементы по аттрибуту "name" - список стран и список городов
+    var countriesListSelectElement = document.getElementsByName('countriesSelect')[0];
+    var citiesListSelectElement = document.getElementsByName('citiesSelect')[0];
 
-
-    // находим select эдементы - список стран и список городов
-    var countriesList = document.getElementsByName('countriesSelect')[0];
-    var citiesList = document.getElementsByName('citiesSelect')[0];
-
-    // находим div's, в кот. будем выводить информацию о выбранных странах и городах // только на стадии разработки
-    var countriesSelectDivBlock = document.getElementById('countriesSelectDiv');
-    var citiesSelectDivBlock = document.getElementById('citiesSelectDiv');
-
-    // первоначальные значения text для Div's 
-    countriesSelectDivBlock.textContent = "Ни одна страна не выбрана";
-    citiesSelectDivBlock.textContent = "Ни один город не выбран";
-
-    // чтобы получить выбранную страну, обратимся к select списку стран как к элементу формы
-    // найдем значение выбранной страны как value у элемента формы, т.е. elementList[i].value
-    var elementList = document.myForm.elements;
-    var elementCountryList = elementList.countriesSelect;
-	var elementCityList = elementList.citiesSelect;
+    // 1.2. находим по id input type="hidden", в кот. хранится информация о всех странах и городах, кот. есть в БД 
+    var allCountriesAndCities = document.getElementById('AllCountriesAndCities');
     
-	var selectCountryName = "";
-	var selectCityName = "";
+    // 2. Сохраним значение строки данных о всех странах и городах из БД
+    var allCountriesWithCitiesByOneString = allCountriesAndCities.value;
+    
+    // 3. Из данной строки сформируем ассоциативный массив, где ключ - название страны, а значение - массив строк - названий городов
+    
+    // 3.1. Создаем сам ассоциативный массив 
+    var countriesWithCitiesAssocArray = GetAllCountriesWithCitiesAssocArray(allCountriesWithCitiesByOneString); 
 
-    // изменение информации о выбранной стране
-    // изменение выбранного города и информации о нем
-    // на событие изменения списка стран подписываем функцию изменения выбранного города, исходя из того, какая страна выбрана
-    countriesList.addEventListener("change", changeCountry);
+    // функция создания ассоциативного массива с парами "ключ" : "значение", 
+    function GetAllCountriesWithCitiesAssocArray(allByOneString) {
+        var assocArray = new Map();
+        var key_AssocArray = "";
+        var value_AssocArray = "";
+        var values_AssocArray = [];
+        // удаляем в строке последние 2 символа - "\r\n", полученную строку разбиваем по разделителю "\r\n"
+        // т.о. убираем последний пустой элемент массива
+        var allArray = allByOneString.slice(0,-2).split("\n");
 
+        // преобразуем обычный массив allArray в ассоциативный массив assocArray
+        for(var i = 0; i < allArray.length; i++){
+            var item = allArray[i];
+            // удаляем последнюю запятую (,)
+            item = item.slice(0, -1);
+            // делим каждый элемент на "ключ" и "значение" 
+            massiv = item.split(":");
+            key_AssocArray = massiv[0];
+            value_AssocArray = massiv[1];
+            if(value_AssocArray.includes(",")){
+                values_AssocArray = value_AssocArray.split(',');
+            } else {
+                values_AssocArray.push(value_AssocArray);
+            }
+            // добавляем новый элемент ассоциативного массива в виде пары "ключ" : "значение"
+            assocArray.set(key_AssocArray, values_AssocArray);
+            // обнуление значения, чтобы очищалось значение списка горордов
+            values_AssocArray = [];
+        }
+        return assocArray;
+    }
+    
+    // 4. Подпишемся на событие изменение списка городов
+    countriesListSelectElement.addEventListener("change", changeCountry);
+
+    // 4.1. Функция, кот. обрабатывает изменение списка городоа
     function changeCountry() {
        
-        //for (var i = 0; i < elementList.length; i++) {
-        //     if (elementList[i].name === "countriesSelect") {
-        //        selectCountryName = elementList[i].value;
-        //        continue;
-        //    }
-        //}
+        // 4.2. Создаем переменную для имени выбранной страны
+        var selectCountryName = "";
+                
+        // найдем значение выбранной страны из списка стран
+        selectCountryName = countriesListSelectElement.options[countriesListSelectElement.selectedIndex].value;
 
-        selectCountryName = elementCountryList.value;
-
-        if (selectCountryName !== null) {
-            countriesSelectDivBlock.textContent = "Сейчас выбрана страна: " + selectCountryName;
+        // если страна не выбрана, выходим из функции без видимых изменений UI
+        if (selectCountryName == null) {
+            return;
         }
+        // вызываем функцию создание нового и замены старого списка городов
+        UpdateCitiesSelectElement(selectCountryName, countriesWithCitiesAssocArray);
+    }
+    
+    // функция создания Html элемента <select></select> для списка городов
+    function UpdateCitiesSelectElement(selectCountryName, assocArray) {
+        
+        // создадим новый список городов
+        var selectList = document.createElement("select");
+        //selectList.name = "citiesSelect";
 
-        changeCity(selectCountryName);
-				
-		if (selectCityName !== null) {
-            citiesSelectDivBlock.textContent = "Сейчас выбран город: " + selectCityName;
-        } 
+        var parentDiv = document.getElementById('divForChangeCitiesSelectList');
+        // замена старого списка городов новым / сначала указывается новый, потом - старый
+        //parentDiv.insertBefore(selectList, citiesListSelectElement)
+        parentDiv.replaceChild(selectList, citiesListSelectElement);
+        // перезаписываем элемент по ссылке на старый элемент
+        citiesListSelectElement = selectList;
+
+        var citiesArray = GetCitiesArray(selectCountryName, assocArray);
+
+        for(var i = 0; i < citiesArray.length; i++){
+            var option = document.createElement("option");
+            option.value = citiesArray[i];
+            option.text = citiesArray[i];
+            selectList.appendChild(option);
+        }
+        selectList.selectedIndex = 0;
+        return selectList;
     }
 
-    @{
-    // TODO: создать алгоритм поиска списка городов для выбранной страны (в браузере, на стороне клиента)
-    // черновой вариант:
+    function GetCitiesArray(countryName, allCountriesAssocArray){
+        
+        var cities = [];
+        allCountriesAssocArray.forEach(function(_value, _key){
+            if(_key === countryName){
+               cities = _value;
+            }
+        });
+        return cities;
     }
-    function changeCity(selectCountryName) { 
-        switch(selectCountryName){
-			case "Украина":
-			selectCityName = "Киев";
-			break;
-			case "Франция":
-			selectCityName = "Париж";
-			break;
-			case "Италия":
-			selectCityName = "Рим";
-			break;
-			case "Испания":
-			selectCityName = "Мадрид";
-			break;
-			case "Defoult":
-			selectCityName = "Какой то город по умолчанию";
-			break;
-		}
-        elementCityList.value = selectCityName;
-    }
-    */
+   
 </script>
