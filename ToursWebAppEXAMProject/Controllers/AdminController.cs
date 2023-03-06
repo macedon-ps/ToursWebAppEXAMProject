@@ -291,31 +291,29 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		public IActionResult CreateEntityNew(string type) 
+		public IActionResult CreateEntity(string type) 
 		{
 			var model = new Object();
-			if (type == "New") model = new New();
-			logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
-			return View("EditItemNew", model); 
-		}
 
-		public IActionResult CreateEntityBlog(string type)
-		{
-			var model = new Object();
-			if (type == "Blog") model = new Blog();
-			logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
-			return View("EditItemBlog", model);
-		}
-
-		public IActionResult CreateEntityProduct(string type)
-		{
-			var model = new Object();
-			if (type == "Product") model = new Product();
-			logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-			Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
-			return View("EditItemProduct", model);
+			switch (type)
+			{
+				case "New":
+					model = new New();
+					logger.Debug("Возвращено представление /Admin/EditItemNew.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemNew.cshtml\n");
+					return View("EditItemNew", model);
+				case "Blog":
+					model = new Blog();
+					logger.Debug("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemBlog.cshtml\n");
+					return View("EditItemBlog", model);
+				case "Product":
+					model = new Product();
+					logger.Debug("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+					Console.WriteLine("Возвращено представление /Admin/EditItemProduct.cshtml\n");
+					return View("EditItemProduct", model);
+			}
+			return RedirectToAction("Index");
 		}
 
 		public IActionResult TechTaskAdmin()
