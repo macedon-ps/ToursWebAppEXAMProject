@@ -6,7 +6,7 @@ using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
-	public class CollectionOfCitiesAfterParamsRepository : ICollectionOfCitiesAfterParams
+	public class CollectionOfCitiesAfterParamsRepository : ICollectionOfCitiesAfterParamsInterface
 	{
 		private readonly TourFirmaDBContext context;
 

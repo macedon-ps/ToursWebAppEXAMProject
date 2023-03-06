@@ -2,7 +2,7 @@
 
 namespace ToursWebAppEXAMProject.Interfaces
 {
-	public interface ICollectionOfCitiesAfterParams
+	public interface ICollectionOfCitiesAfterParamsInterface
 	{
 		IEnumerable<City> GetQueryResultItemsAfterCountryForeignKeyId(int countryForeignKeyId);
 
