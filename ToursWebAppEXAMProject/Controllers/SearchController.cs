@@ -34,7 +34,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 
-			Console.WriteLine();
+			/*Console.WriteLine();
 			Console.WriteLine("It's Get method\n");
 			Console.WriteLine($"searchViewModel.CountryNameSelected = {searchViewModel.CountryNameSelected}\n");
 			Console.WriteLine($"searchViewModel.CountryId = {searchViewModel.CountryId}\n");
@@ -42,7 +42,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine($"searchViewModel.CountriesList = {searchViewModel.CountriesList} \n");
 			Console.WriteLine($"searchViewModel.CityNameSelected = {searchViewModel.CityNameSelected} \n");
 			Console.WriteLine($"searchViewModel.Cities = {searchViewModel.Cities} \n");
-			Console.WriteLine($"searchViewModel.CitiesList = {searchViewModel.CitiesList} \n");
+			Console.WriteLine($"searchViewModel.CitiesList = {searchViewModel.CitiesList} \n");*/
 			
 			return View(searchViewModel);
 		}
@@ -64,7 +64,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 				Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 
-				Console.WriteLine();
+				/*Console.WriteLine();
 				Console.WriteLine("It's Post method\n");
 				Console.WriteLine($"searchViewModel.CountryNameSelected = {searchViewModel.CountryNameSelected}\n");
 				Console.WriteLine($"searchViewModel.CountryId = {searchViewModel.CountryId}\n");
@@ -74,7 +74,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				Console.WriteLine($"searchViewModel.Cities = {searchViewModel.Cities} \n");
 				Console.WriteLine($"searchViewModel.CitiesList = {searchViewModel.CitiesList} \n");
 
-				Console.WriteLine($"formValues[\"countriesSelect\"] = {formValues["countriesSelect"].ToString()}");
+				Console.WriteLine($"formValues[\"countriesSelect\"] = {formValues["countriesSelect"].ToString()}");*/
 
 				return View(searchViewModel);
 			}

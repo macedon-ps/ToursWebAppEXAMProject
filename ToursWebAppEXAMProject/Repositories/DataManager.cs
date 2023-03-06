@@ -21,7 +21,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public IEditTechTaskInterface TechTaskInterface { get; set; }
 
-		public ICollectionOfCitiesAfterParams CollectionOfCitiesAfterParamsInterface { get; set; }
+		public ICollectionOfCitiesAfterParamsInterface CollectionOfCitiesAfterParamsInterface { get; set; }
 
 
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
@@ -38,7 +38,7 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Blog> blogBaseInterface,
 							IBaseInterface<New> newBaseInterface,
 							IEditTechTaskInterface techTaskInterface,
-							ICollectionOfCitiesAfterParams collectionOfCitiesAfterParamsInterface
+							ICollectionOfCitiesAfterParamsInterface collectionOfCitiesAfterParamsInterface
 							)
 		{
 			this.ProductBaseInterface = productBaseInterface;
