@@ -1,20 +1,9 @@
 ﻿@model TechTaskViewModel
 
 <div class="searchPage">
-    <div class="searchButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв"</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
-        </button>
-    </div>
+   
+    @await Html.PartialAsync("SearchButtonMenuPartial")
+
     <div class="searchHeader">
         
         <h1>Поиск туристических продуктов:</h1><br/>

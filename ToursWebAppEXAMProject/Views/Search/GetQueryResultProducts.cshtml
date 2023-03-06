@@ -1,34 +1,22 @@
 ﻿@model List<Product>
 
 @{
-    <div class="homePage">
-            <div class="searchButton">
-                <button class="">
-                    <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
-                 </button>
-                 <button class="">
-                    @* TODO:  реализовать поиск тура по id, имени или др. параметрам*@ 
-                    <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
-                 </button>
-                 <button class="">
-                     <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв"</a>
-                 </button>
-                 <button class="">
-                     <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв 2</a>
-                 </button>
+<div class="homePage">
+            
+    @await Html.PartialAsync("SearchButtonMenuPartial")
+
+    <div class="searchHeader">
+        @foreach(var product in @Model)
+        {
+            <div>
+                <div class="padding_bottom_2">
+                    <h2>@product.Name</h2>
+                </div>
+                <div class="padding_bottom_2">
+                    <h4>@product.ShortDescription</h4>
+                </div>
             </div>
-            <div class="searchHeader">
-                @foreach(var product in @Model)
-                {
-                    <div>
-                        <div class="padding_bottom_2">
-                            <h2>@product.Name</h2>
-                        </div>
-                        <div class="padding_bottom_2">
-                            <h4>@product.ShortDescription</h4>
-                        </div>
-                    </div>
-                }
-            </div>
+        }
     </div>
+</div>
 }

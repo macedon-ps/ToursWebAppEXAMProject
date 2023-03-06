@@ -1,23 +1,9 @@
 ﻿@model TechTaskViewModel
 
 <div class="aboutPage">
-    <div class="homeButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="About" asp-action="">Наши реквизиты</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="About" asp-action="">Режим работы</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="About" asp-action="">Фотогаллерея</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="About" asp-action="">Обратная связь</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="About" asp-action="TechTaskAbout">ТЗ для About</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("AboutButtonMenuPartial")
+
     <div class="aboutHeader">
         
         <h1>Информация о нас:</h1><br/>

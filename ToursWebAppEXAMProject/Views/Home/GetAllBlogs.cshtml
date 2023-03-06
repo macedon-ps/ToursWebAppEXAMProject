@@ -4,40 +4,29 @@
 }
 
 <div class="homePage">
-         <div class="homeButton">
-             <button class="">
-                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
-             </button>
-         </div>
-         <div class="homeHeader">
-           @foreach(var blog in Model)
-           {
-                <div>
-                    <div class="titleImage">
-                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left">
+         
+    @await Html.PartialAsync("HomeButtonMenuPartial")
+
+    <div class="homeHeader">
+        @foreach(var blog in Model)
+        {
+            <div>
+                <div class="titleImage">
+                    <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left">
+                </div>
+                <div class="displayFlexCol">
+                    <div>
+                        <h2>@blog.Name</h2>
                     </div>
-                    <div class="displayFlexCol">
-                        <div>
-                            <h2>@blog.Name</h2>
-                        </div>
-                        <div>
-                            <h4>@blog.ShortDescription</h4>
-                        </div>
-                        <div class="dateAdded">
-                            <h4>@blog.DateAdded</h4>
-                            <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
-                        </div>
+                    <div>
+                        <h4>@blog.ShortDescription</h4>
                     </div>
-                </div> 
-           }
-        </div>
-     </div>
+                    <div class="dateAdded">
+                        <h4>@blog.DateAdded</h4>
+                        <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                    </div>
+                </div>
+            </div> 
+        }
+    </div>
+</div>

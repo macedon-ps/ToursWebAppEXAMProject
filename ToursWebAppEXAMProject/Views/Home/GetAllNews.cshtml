@@ -4,44 +4,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-     <div class="homePage">
-         <div class="homeButton">
-             <button class="">
-                <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
-             </button>
-         </div>
-         <div class="homeHeader">
-           @foreach(var newItem in Model)
-           {
-                <div>
-                    <div class="titleImage">
-                        <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left">
+<div class="homePage">
+    @await Html.PartialAsync("HomeButtonMenuPartial")
+
+    <div class="homeHeader">
+        @foreach(var newItem in Model)
+        {
+            <div>
+                <div class="titleImage">
+                    <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left">
+                </div>
+                <div class="displayFlexCol">
+                    <div>
+                        <h2>@newItem.Name</h2>
                     </div>
-                    <div class="displayFlexCol">
-                        <div>
-                            <h2>@newItem.Name</h2>
-                        </div>
-                        <div>
-                            <h4>@newItem.ShortDescription</h4>
-                        </div>
-                        <div class="dateAdded">
-                            <h4>@newItem.DateAdded</h4>
-                            <a asp-controller="Home" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
-                        </div>
+                    <div>
+                        <h4>@newItem.ShortDescription</h4>
                     </div>
-                </div> 
-           }
-        </div>
-     </div>
+                    <div class="dateAdded">
+                        <h4>@newItem.DateAdded</h4>
+                        <a asp-controller="Home" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
+                    </div>
+                </div>
+            </div> 
+        }
+    </div>
+</div>
  
     
  

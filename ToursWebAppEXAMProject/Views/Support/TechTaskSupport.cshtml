@@ -1,20 +1,9 @@
 ﻿@model TechTaskViewModel
 
 <div class="supportPage">
-    <div class="homeButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="Support" asp-action="">Карта</a>
-            </button>
-            <button class="">
-                <a class="" asp-area="" asp-controller="Support" asp-action="">Перевод текста</a>
-            </button>
-            <button class="">
-                <a class="" asp-area="" asp-controller="Support" asp-action="">Мобильное приложение</a>
-            </button>
-            <button class="">
-                <a class="" asp-area="" asp-controller="Support" asp-action="TechTaskSupport">ТЗ для Support</a>
-            </button>
-    </div>
+    
+    @await Html.PartialAsync("SupportButtonMenuPartial")
+
     <div class="supportHeader">
         
         <h1>Страница поддержки пользователей приложения:</h1><br/>

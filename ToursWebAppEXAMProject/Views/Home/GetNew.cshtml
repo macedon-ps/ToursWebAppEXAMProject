@@ -5,20 +5,9 @@
 }
 
 <div class="homePage">
-    <div class="homeButton">
-        <button class="">
-        <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("HomeButtonMenuPartial")
+
     <div class="homeHeaderOne">
         <div class="titleImage50">
             <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left">

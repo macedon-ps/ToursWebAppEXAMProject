@@ -12,20 +12,9 @@
 }
 
 <div class="searchPage">
-    <div class="searchButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="" asp-route-id="">Резерв 2</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв 3</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("SearchButtonMenuPartial")
+
     <div class="searchHeader">
         <h1>Поиск туристических продуктов:</h1>
         <br/>
@@ -41,10 +30,11 @@
                 <input type="hidden" asp-for="CityDescrition" value="@Model.CityDescrition" />
                 <input type="hidden" asp-for="LocalDescrition" value="@Model.LocalDescrition" />
                 <input type="hidden" asp-for="AllCountriesWithCitiesListByOneString" value="@Model.AllCountriesWithCitiesListByOneString" id="AllCountriesAndCities"/>
+
                 @*свойства, кот. предварительно преобразуются в строки*@
                 <input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
                 <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />
-
+                               
                 @* Первый блок элементов: 
                     3 select (список стран, количество дней отдыха, количество отдыхающих), 
                     календарь и кнопка "Найти тур" *@
@@ -130,8 +120,8 @@
 
                 @* Блок данных информационного характера, на пермод разработки
                    В дальнейшем, будет убран из проекта
-                *@
-                @*
+                
+                
                 <div class="flexColumn searchBlock2">
                     <p>Полные данные вью модели:</p><br />
                     <p>Model.CountryId / Id страны: @Model.CountryId</p>
@@ -160,7 +150,8 @@
                          
                     <p>Model.MapImagePath / Карта: @Model.MapImagePath</p>
                     <p>Model.PicturesImagePath / Картинки: @Model.PicturesImagePath</p>
-                </div>*@
+                </div>
+                *@
             </form>
         </div>
      </div>
@@ -236,6 +227,9 @@
         }
         // вызываем функцию создание нового и замены старого списка городов
         UpdateCitiesSelectElement(selectCountryName, countriesWithCitiesAssocArray);
+
+        countriesListSelectElement.value = selectCountryName;
+
     }
     
     // функция создания Html элемента <select></select> для списка городов
@@ -243,12 +237,12 @@
         
         // создадим новый список городов
         var selectList = document.createElement("select");
-        //selectList.name = "citiesSelect";
-
+        
         var parentDiv = document.getElementById('divForChangeCitiesSelectList');
+        
         // замена старого списка городов новым / сначала указывается новый, потом - старый
-        //parentDiv.insertBefore(selectList, citiesListSelectElement)
         parentDiv.replaceChild(selectList, citiesListSelectElement);
+        
         // перезаписываем элемент по ссылке на старый элемент
         citiesListSelectElement = selectList;
 

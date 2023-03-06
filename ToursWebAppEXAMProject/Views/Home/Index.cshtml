@@ -4,63 +4,52 @@
 }
 
 <div class="homePage">
-    <div class="homeButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="">Резерв</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("HomeButtonMenuPartial")
+
     <div class="homeHeader">
         <h1>Домашняя страница сайта:</h1>
         <br/>
         <div class="displayFlex row">
             <div class="col-6 col-12-medium">
                 @foreach(var newItem in Model.NewBaseInterface.GetAllItems())
-           {
-                <div>
-                    <div class="titleImage">
-                        <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" width="20%" height="20%">
-                    </div>
+                {
                     <div>
-                        <h2>@newItem.Name</h2>
-                    </div>
-                    <div>
-                        <h4>@newItem.ShortDescription</h4>
-                    </div>
-                    <div class="dateAdded">
-                        <h4>@newItem.DateAdded</h4>
-                        <a asp-controller="Home" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
-                    </div>
-                </div> 
-           }
+                        <div class="titleImage">
+                            <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" width="20%" height="20%">
+                        </div>
+                        <div>
+                            <h2>@newItem.Name</h2>
+                        </div>
+                        <div>
+                            <h4>@newItem.ShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@newItem.DateAdded</h4>
+                            <a asp-controller="Home" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
+                        </div>
+                    </div> 
+                }
             </div>
-           <div class="col-6 col-12-medium">
+            <div class="col-6 col-12-medium">
                 @foreach(var blog in Model.BlogBaseInterface.GetAllItems())
-           {
-                <div>
-                    <div class="titleImage">
-                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
-                    </div>
+                {
                     <div>
-                        <h2>@blog.Name</h2>
-                    </div>
-                    <div>
-                        <h4>@blog.ShortDescription</h4>
-                    </div>
-                    <div class="dateAdded">
-                        <h4>@blog.DateAdded</h4>
-                        <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
-                    </div>
-                </div> 
-           }
+                        <div class="titleImage">
+                            <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
+                        </div>
+                        <div>
+                            <h2>@blog.Name</h2>
+                        </div>
+                        <div>
+                            <h4>@blog.ShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@blog.DateAdded</h4>
+                            <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                        </div>
+                    </div> 
+                }
             </div>
         </div>
     </div>

@@ -8,20 +8,9 @@
    // для этого реализовать аутентификацию и авторизацию с помощью фр-ка Entity 
 }
 <div class="adminPage">
-    <div class="adminButton">
-        <button class="">
-           <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="New">Редактировать новости</a>
-        </button>
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Blog">Редактировать блоги</a>
-        </button>
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
-        </button>
-        <button class="">
-           <a id="" asp-area="" asp-controller="Admin" asp-action="TechTaskAdmin">ТЗ для Admin</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("AdminButtonMenuPartial")
+    
     <div class="adminHeader">
                  
         <h1>Страница администратора сайта:</h1>

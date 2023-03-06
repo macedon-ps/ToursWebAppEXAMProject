@@ -1,20 +1,9 @@
 ﻿@model New
 
 <div class="adminPage">
-    <div class="adminButton">
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="New">Редактировать новости</a>
-        </button>
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Blog">Редактировать блоги</a>
-        </button>
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="EditMenu" asp-route-type="Product">Редактировать турпродукты</a>
-        </button>
-        <button class="">
-            <a id="" asp-area="" asp-controller="Admin" asp-action="TechTaskAdmin">ТЗ для Admin</a>
-        </button>
-    </div>
+    
+    @await Html.PartialAsync("AdminButtonMenuPartial")
+
     <div class="adminHeader">
        
         @* для CKEditor 4 *@

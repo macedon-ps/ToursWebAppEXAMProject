@@ -1,20 +1,9 @@
 ﻿@model Product
 
  <div class="homePage">
-     <div class="searchButton">
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetAllProducts">Поиск туров</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="GetProduct" asp-route-id="">Найти тур</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="">Резерв"</a>
-        </button>
-        <button class="">
-            <a class="" asp-area="" asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
-        </button>
-     </div>
+     
+     @await Html.PartialAsync("SearchButtonMenuPartial")
+
      <div class="searchHeaderOne">
         <div class="titleImage50">
             <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left">

@@ -1,18 +1,7 @@
 ﻿<div class="supportPage">
-     <div class="supportButton">
-            <button class="">
-                <a class="" asp-area="" asp-controller="" asp-action="">Назад</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">2</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">3</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">4</a>
-             </button>
-        </div>
+     
+    @await Html.PartialAsync("SupportButtonMenuPartial")
+
 
      <div class="supportHeader">
         <p>Как использовать API Google Translate с JavaScript</p>
