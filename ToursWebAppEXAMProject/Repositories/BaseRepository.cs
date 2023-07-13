@@ -112,9 +112,9 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Выборка не осуществлена");
+				logger.Error($"Выборка {itemKeyword[3]} не осуществлена");
 				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine("Выборка не осуществлена");
+				Console.WriteLine($"Выборка {itemKeyword[3]} не осуществлена");
 				Console.WriteLine($"Код ошибки: {ex.Message}");
 
 				return new List<T>();

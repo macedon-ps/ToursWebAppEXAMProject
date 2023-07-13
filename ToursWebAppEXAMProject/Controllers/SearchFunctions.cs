@@ -8,24 +8,21 @@ namespace ToursWebAppEXAMProject.Controllers
 	public partial class SearchController : Controller
 	{
 		
-		public SearchProductViewModel GetModel()
+		public SearchProductViewModel GetModel(string countryName)
 		{
 			var searchViewModel = new SearchProductViewModel();
 
-			// задаем значение по умолчанию для defoultCountryNameSelected, для стартовой страницы Index.cshtml
-			var defoultCountryNameSelected = "Турция";
-
-			searchViewModel.CountryId = GetIdOfSelectedCountry(defoultCountryNameSelected);
-			searchViewModel.CountryNameSelected = defoultCountryNameSelected;
+			searchViewModel.CountryId = GetIdOfSelectedCountry(countryName);
+			searchViewModel.CountryNameSelected = countryName;
 			var allCountries = GetAllCountries();
 			searchViewModel.Countries = allCountries;
-			searchViewModel.CountriesList = GetAllCountriesSelectList(defoultCountryNameSelected);
+			searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
 
-			var cityNameSelected = GetCityNameSelected(defoultCountryNameSelected);
+			var cityNameSelected = GetCityNameSelected(countryName);
 			searchViewModel.CityNameSelected = cityNameSelected;
-			var allCities = GetAllCities(defoultCountryNameSelected);
+			var allCities = GetAllCities(countryName);
 			searchViewModel.Cities = allCities;
-			searchViewModel.CitiesList = GetAllCitiesSelectList(defoultCountryNameSelected);
+			searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
 
 			searchViewModel.AllCountriesWithCitiesListByOneString = DataManager.CollectionOfCitiesAfterParamsInterface.
 				GetAllCountriesWithCitiesListByOneString();
@@ -38,35 +35,25 @@ namespace ToursWebAppEXAMProject.Controllers
 			var searchViewModel = viewModel as SearchProductViewModel;
 
 			var countryName = formValues["countriesSelect"].ToString();
+            var cityNameSelected = formValues["citiesSelect"].ToString();
 
-			
-				searchViewModel.CountryId = GetIdOfSelectedCountry(countryName);
-				searchViewModel.CountryNameSelected = countryName;
-				// var cityName = formValues["citiesSelect"];
+            searchViewModel.CountryId = GetIdOfSelectedCountry(countryName);
+			searchViewModel.CountryNameSelected = countryName;
 
-				// передаваемые данные через элементы форм в строковом формате
-				searchViewModel.Countries = GetAllCountries();
-				searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
+			// передаваемые данные через элементы форм в строковом формате
+			searchViewModel.Countries = GetAllCountries();
+			searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
 
-				var cityNameSelected = GetCityNameSelected(countryName);
-				searchViewModel.CityNameSelected = cityNameSelected;
-				var allCities = GetAllCities(countryName);
-				searchViewModel.Cities = allCities;
-				searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
-
-				/*var allCities = formValues["CitiesOneStringFormValue"];
-
-				// преобразование данных из строки в List<string>
-				searchViewModel.Countries = ParseStringToListOfStrings(allCountries);
-				searchViewModel.Cities = ParseStringToListOfStrings(allCities);
-
-				// создание элементов SelectList
-				searchViewModel.CountriesList = ParseStringToSelectList(allCountries, countryName);
-				searchViewModel.CitiesList = ParseStringToSelectList(allCities, cityName);*/
-			
-
-
-
+			if (cityNameSelected == null)
+			{
+				cityNameSelected = GetCityNameSelected(countryName);
+			}
+				
+			searchViewModel.CityNameSelected = cityNameSelected;
+			var allCities = GetAllCities(countryName);
+			searchViewModel.Cities = allCities;
+			searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
+		
 			return searchViewModel;
 		}
 

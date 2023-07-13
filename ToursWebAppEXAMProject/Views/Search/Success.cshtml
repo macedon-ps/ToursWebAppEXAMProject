@@ -1,0 +1,39 @@
+﻿@model SearchProductViewModel
+
+<div class="searchPage">
+    
+    @await Html.PartialAsync("SearchButtonMenuPartial")
+
+    
+    <div class="searchHeader">
+        
+        <h4>Данные поиска:</h4>
+        <div>
+            <div class="displayFlexCol">
+                <h4>Страна:</h4> 
+                <p>@Model.CountryNameSelected</p>
+                <h4>Город:</h4> 
+                
+                <p>@Model.CityNameSelected</p>
+            </div>
+            <div class="displayFlexCol">
+                <h4>Дата поездки:</h4> 
+                <p> @Model.DaysInterval</p>
+                <h4>Дней поездки:</h4> 
+                <p>@Model.NumberOfDaysFromSelectList</p>
+                <h4>Взрослых и детей:</h4> 
+                <p>@Model.NumberOfPeopleFromSelectList</p>
+                <h4>Карта страны:</h4> 
+                <p>@Model.MapImagePath</p>
+            </div>
+            <div class="displayFlexCol">
+                <h4>Информация о стране:</h4> 
+                <p>@Model.CountryDescription</p>
+                <h4>Информация о городе:</h4> 
+                <p>@Model.CityDescrition</p>
+                <h4>Информация о достопримечательности:</h4> 
+                <p>@Model.LocalDescrition</p>
+            </div>
+        </div>
+     </div>
+</div>

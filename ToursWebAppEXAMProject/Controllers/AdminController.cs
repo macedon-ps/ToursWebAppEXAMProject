@@ -104,6 +104,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			logger.Debug("Возвращено представление /Admin/Index.cshtml\n");
 			Console.WriteLine("Возвращено представление /Admin/Index.cshtml\n");
+						
 			return View("Index");
 		}
 
@@ -263,6 +264,8 @@ namespace ToursWebAppEXAMProject.Controllers
 					DataManager.ProductBaseInterface.SaveItem(model, model.Id);
 					logger.Debug("Туристический продукт успешно сохранен в БД");
 					Console.WriteLine("Туристический продукт успешно сохранен в БД");
+
+					// TODO: запрос на создание/редактирование/удаление страны и/или города, если да, то вывод нового вью для создания/редактирования/удаления страны и/или города, сохранение изменений в БД
 
 					logger.Debug("Возвращено представление /Admin/Success.cshtml\n");
 					Console.WriteLine("Возвращено представление /Admin/Success.cshtml\n");

@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using NLog;
-using System.Collections;
-using System.Diagnostics;
-using System.Text.Json;
-using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
@@ -26,24 +21,15 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// Метод Index(), кот. выводит дефолтный вид страницы Search
 		/// </summary>
 		/// <returns></returns>
-		[HttpGet]		
+		[HttpGet]
 		public IActionResult Index()
 		{
-			var searchViewModel = GetModel();
+			// задаем дефолтные значения для стартовой страницы
+			var searchViewModel = GetModel("Украина");
 
 			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 
-			/*Console.WriteLine();
-			Console.WriteLine("It's Get method\n");
-			Console.WriteLine($"searchViewModel.CountryNameSelected = {searchViewModel.CountryNameSelected}\n");
-			Console.WriteLine($"searchViewModel.CountryId = {searchViewModel.CountryId}\n");
-			Console.WriteLine($"searchViewModel.Countries = {searchViewModel.Countries}\n");
-			Console.WriteLine($"searchViewModel.CountriesList = {searchViewModel.CountriesList} \n");
-			Console.WriteLine($"searchViewModel.CityNameSelected = {searchViewModel.CityNameSelected} \n");
-			Console.WriteLine($"searchViewModel.Cities = {searchViewModel.Cities} \n");
-			Console.WriteLine($"searchViewModel.CitiesList = {searchViewModel.CitiesList} \n");*/
-			
 			return View(searchViewModel);
 		}
 
@@ -56,7 +42,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Index(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
 			var searchViewModel = GetModel(viewModel, formValues);
-
+			
 			if (ModelState.IsValid)
 			{
 				logger.Debug("Модель SearchProductViewModel успешно прошла валидацию");
@@ -64,19 +50,9 @@ namespace ToursWebAppEXAMProject.Controllers
 				logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 				Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
 
-				/*Console.WriteLine();
-				Console.WriteLine("It's Post method\n");
-				Console.WriteLine($"searchViewModel.CountryNameSelected = {searchViewModel.CountryNameSelected}\n");
-				Console.WriteLine($"searchViewModel.CountryId = {searchViewModel.CountryId}\n");
-				Console.WriteLine($"searchViewModel.Countries = {searchViewModel.Countries}\n");
-				Console.WriteLine($"searchViewModel.CountriesList = {searchViewModel.CountriesList} \n");
-				Console.WriteLine($"searchViewModel.CityNameSelected = {searchViewModel.CityNameSelected} \n");
-				Console.WriteLine($"searchViewModel.Cities = {searchViewModel.Cities} \n");
-				Console.WriteLine($"searchViewModel.CitiesList = {searchViewModel.CitiesList} \n");
+				Console.WriteLine($"formValues[\"countriesSelect\"] = {formValues["countriesSelect"].ToString()}");
 
-				Console.WriteLine($"formValues[\"countriesSelect\"] = {formValues["countriesSelect"].ToString()}");*/
-
-				return View(searchViewModel);
+				return View("success", searchViewModel);
 			}
 			logger.Debug("Модель SearchProductViewModel не прошла валидацию");
 			Console.WriteLine("Модель SearchProductViewModel не прошла валидацию");
@@ -85,7 +61,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View();
 		}
 
-		
+
 		/// <summary>
 		/// Метод GetProduct(), кот. возвращает данные турпродукта по его id
 		/// </summary>
@@ -97,7 +73,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
 
 			var product = DataManager.ProductBaseInterface.GetItemById(id);
-			
+
 			if (product.Id == 0)
 			{
 				logger.Warn($"Возвращено представление /Error.cshtml\n");
@@ -123,7 +99,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
 
 			var products = DataManager.ProductBaseInterface.GetAllItems();
-			
+
 			if (products == null)
 			{
 				logger.Warn("Возвращено представление /Error.cshtml\n");
@@ -133,7 +109,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
-			
+
 			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
 			return View(products);
@@ -214,7 +190,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
 				logger.Debug("Возвращено представление /Search/TechTaskSearch.cshtml\n");
 				Console.WriteLine("Возвращено представление /Search/TechTaskSearch.cshtml\n");
-				
+
 				return View(model);
 			}
 			logger.Debug("Модель TechTaskViewModel не прошла валидацию");

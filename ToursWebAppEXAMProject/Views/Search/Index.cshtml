@@ -24,12 +24,8 @@
                 
                 @*свойства, кот. передаются в  строковом виде или с приведением к строке*@
                 <input type="hidden" asp-for="CountryId" value="@Model.CountryId" />
-                <input type="hidden" asp-for="CountryNameSelected" value="@Model.CountryNameSelected" />
-                <input type="hidden" asp-for="CityNameSelected" value="@Model.CityNameSelected" />
-                <input type="hidden" asp-for="CountryDescription" value="@Model.CountryDescription" />
-                <input type="hidden" asp-for="CityDescrition" value="@Model.CityDescrition" />
-                <input type="hidden" asp-for="LocalDescrition" value="@Model.LocalDescrition" />
                 <input type="hidden" asp-for="AllCountriesWithCitiesListByOneString" value="@Model.AllCountriesWithCitiesListByOneString" id="AllCountriesAndCities"/>
+                <input type="hidden" asp-for="CityNameSelected" />
 
                 @*свойства, кот. предварительно преобразуются в строки*@
                 <input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
@@ -173,7 +169,6 @@
     var allCountriesWithCitiesByOneString = allCountriesAndCities.value;
     
     // 3. Из данной строки сформируем ассоциативный массив, где ключ - название страны, а значение - массив строк - названий городов
-    
     // 3.1. Создаем сам ассоциативный массив 
     var countriesWithCitiesAssocArray = GetAllCountriesWithCitiesAssocArray(allCountriesWithCitiesByOneString); 
 
@@ -183,20 +178,22 @@
         var key_AssocArray = "";
         var value_AssocArray = "";
         var values_AssocArray = [];
-        // удаляем в строке последние 2 символа - "\r\n", полученную строку разбиваем по разделителю "\r\n"
+        // slice(0,-2) - возвращаем копию массива с элементами от 0 до 3-го с конца, т.е. без "\r\n", 
+        // split("\n") - полученную строку разбиваем по разделителю "\r\n"
         // т.о. убираем последний пустой элемент массива
         var allArray = allByOneString.slice(0,-2).split("\n");
 
         // преобразуем обычный массив allArray в ассоциативный массив assocArray
         for(var i = 0; i < allArray.length; i++){
             var item = allArray[i];
-            // удаляем последнюю запятую (,)
+            // возвращаем копию массива с элементами от 0 до 2-го с конца, т.е. без последней запятой (,)
             item = item.slice(0, -1);
             // делим каждый элемент на "ключ" и "значение" 
             massiv = item.split(":");
             key_AssocArray = massiv[0];
             value_AssocArray = massiv[1];
             if(value_AssocArray.includes(",")){
+                // создаем массив values_AssocArray по разделителю ","
                 values_AssocArray = value_AssocArray.split(',');
             } else {
                 values_AssocArray.push(value_AssocArray);
@@ -209,10 +206,10 @@
         return assocArray;
     }
     
-    // 4. Подпишемся на событие изменение списка городов
+    // 4. Подпишемся на событие изменение списка городов в связи с изменением страны
     countriesListSelectElement.addEventListener("change", changeCountry);
 
-    // 4.1. Функция, кот. обрабатывает изменение списка городоа
+    // 4.1. Функция, кот. обрабатывает изменение списка городов
     function changeCountry() {
        
         // 4.2. Создаем переменную для имени выбранной страны
@@ -222,14 +219,16 @@
         selectCountryName = countriesListSelectElement.options[countriesListSelectElement.selectedIndex].value;
 
         // если страна не выбрана, выходим из функции без видимых изменений UI
-        if (selectCountryName == null) {
-            return;
-        }
+        //if (selectCountryName == null) {
+        //    return;
+        //}
+
+        // устанавливаем выбранный элемент для списка стран
+        countriesListSelectElement.value = selectCountryName;
+        console.log(`countriesListSelectElement.value = ${countriesListSelectElement.value}`);
+
         // вызываем функцию создание нового и замены старого списка городов
         UpdateCitiesSelectElement(selectCountryName, countriesWithCitiesAssocArray);
-
-        countriesListSelectElement.value = selectCountryName;
-
     }
     
     // функция создания Html элемента <select></select> для списка городов
@@ -252,12 +251,19 @@
             var option = document.createElement("option");
             option.value = citiesArray[i];
             option.text = citiesArray[i];
-            selectList.appendChild(option);
+            citiesListSelectElement.appendChild(option);   
         }
-        selectList.selectedIndex = 0;
-        return selectList;
+        
+        // 5. Подпишемся на событие изменение города в созданном списке городов
+        citiesListSelectElement.addEventListener("change", changeCity);
+        // если 1 элемент в массиве, то устанавливаем его как выбранный элемент для списка городов
+        if(citiesArray.length === 1){
+            citiesListSelectElement.value = citiesListSelectElement.options[0].value;
+            console.log(`citiesListSelectElement.value = ${citiesListSelectElement.value}`);
+        }
     }
 
+    // из ассоциативного массива выбираем массив значений городов по ключу - названию страны 
     function GetCitiesArray(countryName, allCountriesAssocArray){
         
         var cities = [];
@@ -267,6 +273,24 @@
             }
         });
         return cities;
+    }
+    
+    // Функция, кот. обрабатывает изменение города в списке городов
+    function changeCity(){
+        // 5.2. Создаем переменную для имени выбранной страны
+        var selectCityName = "";
+                
+        // найдем значение выбранной страны из списка стран
+        selectCityName = citiesListSelectElement.options[countriesListSelectElement.selectedIndex].value;
+
+        // если страна не выбрана, выходим из функции без видимых изменений UI
+        //if (selectCityName == null) {
+        //    return;
+        //}
+
+        // устанавливаем выбранный элемент для списка городов
+        citiesListSelectElement.value = selectCityName;
+        console.log(`citiesListSelectElement.value = ${citiesListSelectElement.value}`);
     }
    
 </script>

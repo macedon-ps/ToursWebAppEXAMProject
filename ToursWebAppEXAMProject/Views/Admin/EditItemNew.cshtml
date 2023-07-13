@@ -12,6 +12,7 @@
         <form asp-controller="Admin" asp-action="SaveItemNew" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
+           
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -35,10 +36,10 @@
                     <label asp-for="TitleImagePath"></label>
                     <h3>@Model.TitleImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.TitleImagePath" alt="Титульная картинка новости" align="left" width="50%"><img>
+                        <img src="@Model.TitleImagePath" alt="@Model.Name" align="left" width="50%"><img>
                     </div>
-                    <input type="file" name="titleImagePath" asp-for="TitleImagePath" accept="image/*"/>
-                    <span asp-validation-for="TitleImagePath"></span>
+                        <input type="file" name="titleImagePath" asp-for="TitleImagePath" accept="image/*"/>
+                        <span asp-validation-for="TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
             </div>
