@@ -56,9 +56,11 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание темы блога')");
 
-				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+				entity.Property(e => e.TitleImagePath)
+					.HasMaxLength(100)
+					.HasDefaultValueSql("('Нет титульной картинки')");
 
-				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+                entity.Property(e => e.DateAdded).HasColumnType("datetime");
 			});
 
 			modelBuilder.Entity<City>(entity =>
@@ -162,7 +164,9 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
 
-				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+				entity.Property(e => e.TitleImagePath)
+					.HasMaxLength(100)
+                    .HasDefaultValueSql("('Нет титульной картинки')");
 				
 				entity.Property(e => e.DateAdded).HasColumnType("datetime");
 			});
@@ -204,9 +208,11 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание туристического продукта')");
 
-				entity.Property(e => e.TitleImagePath).HasMaxLength(100);
+				entity.Property(e => e.TitleImagePath)
+					.HasMaxLength(100)
+                    .HasDefaultValueSql("('Нет титульной картинки')");
 
-				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+                entity.Property(e => e.DateAdded).HasColumnType("datetime");
 
 			});
 

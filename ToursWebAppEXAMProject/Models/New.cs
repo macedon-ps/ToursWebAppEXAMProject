@@ -28,7 +28,7 @@ namespace ToursWebAppEXAMProject.Models
         [Required(ErrorMessage = "Выберите титульную картинку новости")]
         [Display(Name = "Титульная картинка")]
         [StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
-        public string? TitleImagePath { get; set; } = "Нет титульной картинки";
+        public string TitleImagePath { get; set; } = "Нет титульной картинки";
 
         [Display(Name = "Время создания")]
         [DataType(DataType.Time)]

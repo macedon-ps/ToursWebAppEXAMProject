@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ToursWebAppEXAMProject.Migrations
 {
-    public partial class _initialMigration : Migration
+    /// <inheritdoc />
+    public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -20,7 +22,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     FullMessageLine = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Вся строка сообщений')"),
                     ShortDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Краткое описание темы блога')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание темы блога')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки')"),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -95,7 +97,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Заголовок новости')"),
                     ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание новости')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание новости')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки')"),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -112,7 +114,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Название туристического продукта')"),
                     ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание туристического продукта')"),
                     FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание туристического продукта')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки')"),
                     DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -352,6 +354,7 @@ namespace ToursWebAppEXAMProject.Migrations
                 column: "ProductId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
