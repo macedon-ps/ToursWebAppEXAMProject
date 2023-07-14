@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLog;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
 	public class SupportController : Controller
 	{
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
 		private readonly DataManager DataManager;
 
 		public SupportController(DataManager DataManager)
@@ -18,39 +17,49 @@ namespace ToursWebAppEXAMProject.Controllers
 
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Support/Index. Возвращено представление Support/Index.cshtml\n");
-			
+			WriteLogs("Переход по маршруту /Support/Index.\n", NLogsModeEnum.Trace);
+						
 			return View();
 		}
 		public IActionResult GetSupport(string service)
 		{
+            // TODO: разработать сервисы "map", "translate", "mobileApp"
+            
 			ViewData["service"] = service;
 			if (!(service == "map" | service == "translate" | service == "mobileApp"))
 			{
 				var errorInfo = new ErrorViewModel($"Не передано название сервиса, который должен быть реализован в методе GetSupport(string service) или сервис = \"{service}\" не существует / или не обработан");
-				logger.Trace("Переход по маршруту /Error. Возвращено представление Error.cshtml\n");
-				Console.WriteLine("Переход по маршруту /Error. Возвращено представление Error.cshtml\n");
 
+                WriteLogs($"Не передано название сервиса, который должен быть реализован в методе GetSupport(string service) или сервис = \"{service}\" не существует / или не обработан", NLogsModeEnum.Warn);
+				WriteLogs("Возвращено Error.cshtml\n", NLogsModeEnum.Trace);
+				
 				return View("Error", errorInfo);
 			}
-			if(service == "translate")
+
+			/*
+            if (service == "map")
+            {
+                return View("Map");
+            }
+            else if (service == "translate")
 			{
 				return View("Translate");
 			}
-
-			logger.Trace($"Переход по маршруту /Support/GetSupport?service={service}. Возвращено представление Support/GetSupport.cshtml\n");
-			Console.WriteLine($"Переход по маршруту /Support/GetSupport?service={service}. Возвращено представление Support/GetSupport.cshtml\n");
-
+            else if (service == "mobileApp")
+            {
+                return View("MobileApp");
+            }
+			*/
+            // WriteLogs($"Переход по маршруту /Support/GetSupport?service={service}.\n");
+            
 			var serviceItem = service;
 			return View("GetSupport", serviceItem);
 		}
 
 		public IActionResult TechTaskSupport()
 		{
-			logger.Trace("Переход по маршруту Support/TechTaskSupport. Возвращаено представление Support/TechTaskSupport.cshtml\n");
-			Console.WriteLine("Переход по маршруту Support/TechTaskSupport. Возвращаено представление Support/TechTaskSupport.cshtml\n");
-
+            WriteLogs("Переход по маршруту Support/TechTaskSupport.\n", NLogsModeEnum.Trace);
+            
 			var pageName = "Support";
 			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
 
@@ -60,14 +69,12 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpPost]
 		public IActionResult TechTaskSupport(TechTaskViewModel model)
 		{
-			logger.Debug("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-			Console.WriteLine("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-
+            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
+            
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель TechTaskViewModel успешно прошла валидацию");
-				Console.WriteLine("Модель TechTaskViewModel успешно прошла валидацию");
-
+                WriteLogs("TechTaskViewModel прошла валидацию", NLogsModeEnum.Debug);
+                
 				double TechTasksCount = 6;
 				double TechTasksTrueCount = 0;
 				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
@@ -81,18 +88,15 @@ namespace ToursWebAppEXAMProject.Controllers
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
 				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
-				logger.Debug("Показатели выполнения тех. задания успешно сохранены в БД");
-				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
-				logger.Debug("Возвращено представление /Support/TechTaskSupport.cshtml\n");
-				Console.WriteLine("Возвращено представление /Support/TechTaskSupport.cshtml\n");
-				
+
+                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Support/TechTaskSupport.cshtml\n", NLogsModeEnum.Trace);
+                				
 				return View(model);
 			}
-			logger.Debug("Модель TechTaskViewModel не прошла валидацию");
-			Console.WriteLine("Модель TechTaskViewModel не прошла валидацию");
-			logger.Debug("Возвращено представление /Support/TechTaskSupport.cshtml\n");
-			Console.WriteLine("Возвращено представление /Support/TechTaskSupport.cshtml\n");
-
+            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
+            WriteLogs("Возвращено /Support/TechTaskSupport.cshtml\n", NLogsModeEnum.Trace);
+            
 			return View(model);
 		}
 	}

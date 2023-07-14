@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLog;
-using System.Collections.Generic;
-using System.Diagnostics;
-using ToursWebAppEXAMProject.DBContext;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
 	public class HomeController : Controller
 	{
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
 		private readonly DataManager DataManager;
 
 		public HomeController(DataManager DataManager)
@@ -26,8 +22,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /. Возвращаено представление Home/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /. Возвращено представление Home/Index.cshtml\n");
+			WriteLogs("Переход по маршруту /.\n", NLogsModeEnum.Trace);
 			
 			return View(DataManager);
 		}
@@ -38,21 +33,20 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetALLNews()
 		{
-			logger.Trace("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Home/GetAllNews. Возвращаено представление Home/GetAllNews.cshtml\n");
-
+			WriteLogs("Переход по маршруту /Home/GetAllNews. ", NLogsModeEnum.Trace);
+			
 			var news = DataManager.NewBaseInterface.GetAllItems();
 			
 			if (news == null) 
 			{
 				var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
 
-				logger.Warn("Возвращено представление /ModelsError.cshtml\n");
-				Console.WriteLine("Возвращено представление /ModelsError.cshtml\n");
+				WriteLogs("Нет новостей. Возвращено /ModelsError.cshtml.\n", NLogsModeEnum.Warn);
+
 				return View("ModelsError", errorInfo);
 			}
-			logger.Debug("Возвращено представление /Home/GetAllNews.cshtml\n");
-			Console.WriteLine("Возвращено представление /Home/GetAllNews.cshtml\n");
+			WriteLogs("Выводятся все новости.\n", NLogsModeEnum.Debug);
+
 			return View(news);
 		}
 
@@ -63,23 +57,22 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetNew(int id)
 		{
-			logger.Trace($"Переход по маршруту /Home/GetNew?id={id}");
-			Console.WriteLine($"Переход по маршруту /Home/GetNew?id={id}");
+			WriteLogs($"Переход по маршруту /Home/GetNew?id={id}. ", NLogsModeEnum.Trace);
 
 			var new_ = DataManager.NewBaseInterface.GetItemById(id);
 
 			if (new_.Id == 0) 
 			{
-				logger.Warn($"Возвращено представление /ModelsError.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /ModelsError.cshtml\n");
-
+                WriteLogs($"Нет новости с id = {id}. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                
 				var errorInfo = new ModelsErrorViewModel(typeof(New), id);
+
 				return View("ModelsError", errorInfo);
 			}
 
-			logger.Debug($"Возвращено представление Home/GetNew.cshtml\n");
-			Console.WriteLine($"Возвращено представление Home/GetNew.cshtml\n");
-			return View(new_);
+			WriteLogs($"Выводится новость с id = {id}.\n", NLogsModeEnum.Debug);
+
+            return View(new_);
 		}
 
 		/// <summary>
@@ -88,8 +81,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetAllBlogs()
 		{
-			logger.Trace("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Home/GetAllBlogs. Возвращаено представление Home/GetAllBlogs.cshtml\n");
+			WriteLogs("Переход по маршруту /Home/GetAllBlogs. ", NLogsModeEnum.Trace);
 
 			var blogs = DataManager.BlogBaseInterface.GetAllItems();
 
@@ -97,13 +89,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
 				var errorInfo = new ModelsErrorViewModel(typeof(List<Blog>));
 
-				logger.Warn("Возвращено представление /ModelsError.cshtml\n");
-				Console.WriteLine("Возвращено представление /ModelsError.cshtml\n");
-				return View("ModelsError", errorInfo);
+                WriteLogs("Нет блогов. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+
+                return View("ModelsError", errorInfo);
 			}
-			logger.Debug("Возвращено представление /Home/GetAllBlogs.cshtml\n");
-			Console.WriteLine("Возвращено представление /Home/GetAllBlogs.cshtml\n");
-			return View(blogs);
+
+            WriteLogs("Выводятся все блоги\n", NLogsModeEnum.Debug);
+
+            return View(blogs);
 		}
 
 		/// <summary>
@@ -113,31 +106,28 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetBlog(int id)
 		{
-			logger.Trace($"Переход по маршруту /Home/GetBlog?id={id}");
-			Console.WriteLine($"Переход по маршруту /Home/GetBlog?id={id}");
-
+            WriteLogs($"Переход по маршруту /Home/GetBlog?id={id}. ", NLogsModeEnum.Trace);
+            
 			var blog = DataManager.BlogBaseInterface.GetItemById(id);
 
-			logger.Debug($"Возвращено представление Home/GetBlog.cshtml\n");
-			Console.WriteLine($"Возвращено представление Home/GetBlog.cshtml\n");
-
-			if (blog.Id == 0) 
+			if (blog.Id == 0)
 			{
 				var errorInfo = new ModelsErrorViewModel(typeof(Blog), id);
 
-				logger.Warn($"Возвращено представление /ModelsError.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /ModelsError.cshtml\n");
-				return View("ModelsError", errorInfo);
+                WriteLogs($"Нет блога с id = {id}. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+
+                return View("ModelsError", errorInfo);
 			}
-			
-			return View(blog);
+
+            WriteLogs($"Выводится блог с id = {id}.\n", NLogsModeEnum.Debug);
+            
+            return View(blog);
 		}
 		
 		public IActionResult TechTaskHome()
 		{
-			logger.Trace("Переход по маршруту Home/TechTaskHome. Возвращаено представление Home/TechTaskHome.cshtml\n");
-			Console.WriteLine("Переход по маршруту Home/TechTaskHome. Возвращаено представление Home/TechTaskHome.cshtml\n");
-
+            WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
+            
 			var pageName = "Home";
 			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
 
@@ -147,14 +137,12 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpPost]
 		public IActionResult TechTaskHome(TechTaskViewModel model)
 		{
-			logger.Debug("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-			Console.WriteLine("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-
+            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
+            
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель TechTaskViewModel успешно прошла валидацию");
-				Console.WriteLine("Модель TechTaskViewModel успешно прошла валидацию");
-
+                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
+                
 				double TechTasksCount = 6;
 				double TechTasksTrueCount = 0;
 				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
@@ -168,18 +156,15 @@ namespace ToursWebAppEXAMProject.Controllers
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
 				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
-				logger.Debug("Показатели выполнения тех. задания успешно сохранены в БД");
-				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
 
-				logger.Debug("Возвращено представление /Home/TechTaskHome.cshtml\n");
-				Console.WriteLine("Возвращено представление /Home/TechTaskHome.cshtml\n");
+                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Home/TechTaskHome.cshtml\n", NLogsModeEnum.Trace);
+                
 				return View(model);
 			}
-			logger.Debug("Модель TechTaskViewModel не прошла валидацию");
-			Console.WriteLine("Модель TechTaskViewModel не прошла валидацию");
-			logger.Debug("Возвращено представление /Home/TechTaskHome.cshtml\n");
-			Console.WriteLine("Возвращено представление /Home/TechTaskHome.cshtml\n");
-
+            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
+            WriteLogs("Возвращено /Home/TechTaskHome.cshtml\n", NLogsModeEnum.Trace);
+            
 			return View(model);
 		}
 	}

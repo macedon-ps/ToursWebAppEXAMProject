@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NLog;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -16,8 +17,6 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		private readonly TourFirmaDBContext context;
 
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
 		public EditTechTasksRepository(TourFirmaDBContext _context)
 		{
 			this.context = _context;
@@ -25,46 +24,37 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public TechTaskViewModel GetTechTasksForPage(string pageName)			
 		{
-			logger.Debug("Произведено подключение к базе данных");
-			Console.WriteLine("Произведено подключение к базе данных");
-			logger.Trace($"Запрашиваются показатели выполнения тех. заданий для страницы \"{pageName}\"");
-			Console.WriteLine($"Запрашиваются показатели выполнения тех. заданий для страницы \"{pageName}\"");
-
+			WriteLogs($"Произведено подключение к БД. Запрашиваются показатели выполнения ТЗ для страницы \"{pageName}\". ", NLogsModeEnum.Debug);
+			
 			try
 			{
 				var techTasksOfPage = context.TechTaskViewModels.FirstOrDefault(p => p.PageName == pageName);
 
 				if (techTasksOfPage == null)
 				{
-					logger.Warn($"Выборка показатели выполнения тех. заданий для страницы \"{pageName}\" не осуществлена");
-					Console.WriteLine($"Выборка показатели выполнения тех. заданий для страницы \"{pageName}\" не осуществлена");
-
+                    WriteLogs($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\n", NLogsModeEnum.Warn);
+                   
 					return new TechTaskViewModel();
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно");
-					Console.WriteLine("Выборка осуществлена успешно");
-
+                    WriteLogs("Выборка осуществлена успешно. \n", NLogsModeEnum.Debug);
+                    
 					return techTasksOfPage;
 				}
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
-
+                WriteLogs($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                
 				return new TechTaskViewModel();
 			}
 		}
 
 		public double GetProgressTechTasks(TechTaskViewModel techTasks)
 		{
-			logger.Trace($"Запрашиваются прогресс выполнения тех. заданий для страницы \"{techTasks.PageName}\"");
-			Console.WriteLine($"Запрашиваются прогресс выполнения тех. заданий для страницы \"{techTasks.PageName}\"");
-
+            WriteLogs($"Запрашиваются прогресс выполнения ТЗ для страницы \"{techTasks.PageName}\". ", NLogsModeEnum.Debug);
+            
 			TechTasksCount = 6;
 			if (techTasks.IsExecuteTechTask1 == true) TechTasksTrueCount++;
 			if (techTasks.IsExecuteTechTask2 == true) TechTasksTrueCount++;
@@ -80,20 +70,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public void SaveProgressTechTasks(TechTaskViewModel techTasks)
 		{
-			logger.Debug("Произведено подключение к базе данных");
-			Console.WriteLine("Произведено подключение к базе данных");
+            WriteLogs("Произведено подключение к БД. ", NLogsModeEnum.Debug);
+            
 			try
 			{
 				if (techTasks == null)
 				{
-					logger.Trace($"Модель равна null");
-					Console.WriteLine($"Модель равна null");
+                    WriteLogs("Модель не существует.\n", NLogsModeEnum.Warn);
+                    
 					return;
 				}
 				else if (techTasks != null)
 				{
-					logger.Trace($"Обновление существующих показателей выполнения тех. заданий для страницы {techTasks.PageName}");
-					Console.WriteLine($"Обновление существующих показателей выполнения тех. заданий для страницы {techTasks.PageName}");
+                    WriteLogs($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName}", NLogsModeEnum.Debug);
+                    
 					context.Entry(techTasks).State = EntityState.Modified;
 					context.SaveChanges();
 					return;
@@ -101,11 +91,8 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-				logger.Error($"Обновление показателей выполнения тех. заданий для страницы {techTasks.PageName} не осуществлено");
-				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine($"Обновление показателей выполнения тех. заданий для страницы {techTasks.PageName} не осуществлено");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
-			}
+                WriteLogs($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName} не осуществлено.\nКод ошибки: {ex.Message}", NLogsModeEnum.Error);
+            }
 		}
 	}
 }

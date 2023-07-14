@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLog;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
 	public partial class SearchController: Controller
 	{
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
 		private readonly DataManager DataManager;
 
 		public SearchController(DataManager DataManager)
@@ -27,10 +26,10 @@ namespace ToursWebAppEXAMProject.Controllers
 			// задаем дефолтные значения для стартовой страницы
 			var searchViewModel = GetModel("Украина");
 
-			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+			WriteLogs("Переход по маршруту /Search/Index. ", NLogsModeEnum.Trace);
+            WriteLogs("Выведено меню поиска турпродуктов.\n", NLogsModeEnum.Debug);
 
-			return View(searchViewModel);
+            return View(searchViewModel);
 		}
 
 		/// <summary>
@@ -45,19 +44,17 @@ namespace ToursWebAppEXAMProject.Controllers
 			
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель SearchProductViewModel успешно прошла валидацию");
-				Console.WriteLine("Модель SearchProductViewModel успешно прошла валидацию");
-				logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
-				Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+				WriteLogs("SearchProductViewModel прошла валидацию.\n", NLogsModeEnum.Debug);
+				
+                // TODO: Организовать вывод результатов поиска туристических продуктов
 
-				Console.WriteLine($"formValues[\"countriesSelect\"] = {formValues["countriesSelect"].ToString()}");
-
-				return View("success", searchViewModel);
+                // WriteLogs("Выведены результаты поиска турпродуктов. Переход по маршруту /Search/Index. \n", NLogsModeEnum.Trace);
+                
+                return View("success", searchViewModel);
 			}
-			logger.Debug("Модель SearchProductViewModel не прошла валидацию");
-			Console.WriteLine("Модель SearchProductViewModel не прошла валидацию");
-			logger.Trace("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /Search/Index. Возвращено представление Search/Index.cshtml\n");
+            WriteLogs("SearchProductViewModel не прошла валидацию. ", NLogsModeEnum.Warn);
+            WriteLogs("Переход по маршруту /Search/Index.\n", NLogsModeEnum.Trace);
+            
 			return View();
 		}
 
@@ -69,23 +66,21 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetProduct(int id)
 		{
-			logger.Trace($"Переход по маршруту /Search/GetProduct?id={id}");
-			Console.WriteLine($"Переход по маршруту /Search/GetProduct?id={id}");
-
+            WriteLogs($"Переход по маршруту /Search/GetProduct?id={id}. ", NLogsModeEnum.Trace);
+            
 			var product = DataManager.ProductBaseInterface.GetItemById(id);
 
 			if (product.Id == 0)
 			{
-				logger.Warn($"Возвращено представление /Error.cshtml\n");
-				Console.WriteLine($"Возвращеноя представление /Error.cshtml\n");
-
+                WriteLogs($"Нет турпродукта с id={id}. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
+                
 				// message = "";
 				var errorInfo = new ModelsErrorViewModel(typeof(Product), id);
 				return View("Error", errorInfo);
 			}
 
-			logger.Debug($"Возвращено представление /Search/GetProduct.cshtml\n");
-			Console.WriteLine($"Возвращено представление /Search/GetProduct.cshtml\n");
+            WriteLogs($"Выводится турпродукт с id={id}.\n", NLogsModeEnum.Debug);
+            
 			return View(product);
 		}
 
@@ -95,23 +90,21 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetAllProducts()
 		{
-			logger.Trace("Переход по маршруту /Search/GetAllProducts");
-			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
-
+            WriteLogs("Переход по маршруту /Search/GetAllProducts. ", NLogsModeEnum.Trace);
+            
 			var products = DataManager.ProductBaseInterface.GetAllItems();
 
 			if (products == null)
 			{
-				logger.Warn("Возвращено представление /Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Error.cshtml\n");
-
+                WriteLogs("Нет турпродуктов. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
+                
 				// message = "";
 				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 
-			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
-			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
+            WriteLogs("Выводятся все турпродукты\n", NLogsModeEnum.Debug);
+            
 			return View(products);
 		}
 
@@ -121,23 +114,21 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public IActionResult GetQueryResultProducts(string keyword, bool isFullName)
 		{
-			logger.Trace("Переход по маршруту /Search/GetAllProducts");
-			Console.WriteLine("Переход по маршруту /Search/GetAllProducts");
-
+            WriteLogs("Переход по маршруту /Search/GetAllProducts. ", NLogsModeEnum.Trace);
+            
 			var products = DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(keyword, isFullName);
 
 			if (products == null)
 			{
-				logger.Warn("Возвращено представление /Error.cshtml\n");
-				Console.WriteLine("Возвращено представление /Error.cshtml\n");
-
+                WriteLogs("Нет турпродуктов по запросу. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
+                
 				// message = "";
 				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 				return View("Error", errorInfo);
 			}
 
-			logger.Debug("Возвращено представление /Search/GetAllProducts.cshtml\n");
-			Console.WriteLine("Возвращено представление /Search/GetAllProducts.cshtml\n");
+            WriteLogs("Выводятся все турпродукты по запросу\n", NLogsModeEnum.Debug);
+            
 			return View(products);
 		}
 
@@ -148,9 +139,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpGet]
 		public IActionResult TechTaskSearch()
 		{
-			logger.Trace("Переход по маршруту Search/TechTaskSearch. Возвращаено представление Search/TechTaskSearch.cshtml\n");
-			Console.WriteLine("Переход по маршруту Search/TechTaskSearch. Возвращаено представление Search/TechTaskSearch.cshtml\n");
-
+            WriteLogs("Переход по маршруту Search/TechTaskSearch.\n", NLogsModeEnum.Trace);
+           
 			var pageName = "Search";
 			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
 
@@ -165,14 +155,12 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpPost]
 		public IActionResult TechTaskSearch(TechTaskViewModel model)
 		{
-			logger.Debug("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-			Console.WriteLine("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-
+            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
+            
 			if (ModelState.IsValid)
 			{
-				logger.Debug("Модель TechTaskViewModel успешно прошла валидацию");
-				Console.WriteLine("Модель TechTaskViewModel успешно прошла валидацию");
-
+                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
+                
 				double TechTasksCount = 6;
 				double TechTasksTrueCount = 0;
 				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
@@ -186,18 +174,15 @@ namespace ToursWebAppEXAMProject.Controllers
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
 				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
-				logger.Debug("Показатели выполнения тех. задания успешно сохранены в БД");
-				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
-				logger.Debug("Возвращено представление /Search/TechTaskSearch.cshtml\n");
-				Console.WriteLine("Возвращено представление /Search/TechTaskSearch.cshtml\n");
 
+                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
+                
 				return View(model);
 			}
-			logger.Debug("Модель TechTaskViewModel не прошла валидацию");
-			Console.WriteLine("Модель TechTaskViewModel не прошла валидацию");
-			logger.Debug("Возвращено представление /Search/TechTaskSearch.cshtml\n");
-			Console.WriteLine("Возвращено представление /Search/TechTaskSearch.cshtml\n");
-
+            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
+            WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
+            
 			return View(model);
 		}
 	}

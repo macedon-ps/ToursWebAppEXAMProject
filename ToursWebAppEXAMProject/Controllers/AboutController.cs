@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NLog;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
 	public class AboutController : Controller
 	{
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
 		private readonly DataManager DataManager;
 
 		public AboutController(DataManager DataManager)
@@ -18,14 +17,16 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 		public IActionResult Index()
 		{
-			logger.Trace("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml\n");
-			Console.WriteLine("Переход по маршруту /About/Index. Возвращено представление About/Index.cshtml\n");
+			WriteLogs("Переход по маршруту /About/Index.\n", NLogsModeEnum.Trace);
+
 			return View();
 		}
 
 		public IActionResult FeedBackForm()
 		{
-			var customer = new Customer();
+            WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
+
+            var customer = new Customer();
 			return View(customer);
 		}
 
@@ -34,26 +35,27 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				logger.Trace($"Все получилось!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
-				Console.WriteLine($"Все получилось!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
+                WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
+				WriteLogs($"Получены данные: Имя: {customer.Name}  Фамилия: {customer.Surname}  Возраст: {customer.Age}  Пол: {customer.Gender}  Вопрос: {textAreaForm["textArea"]}\n", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
 
-				// TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
-				// var textArea = textAreaForm["textArea"];
-				// ??? customer.question = textArea;  // возможно так
+                // TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
+                // var textArea = textAreaForm["textArea"];
+                // ??? customer.question = textArea;  // возможно так
 
-				return View(customer);
+                return View(customer);
 			}
-			logger.Trace($"Ничего не вышло!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
-			Console.WriteLine($"Ничего не вышло!\nИмя: {customer.Name}\nФамилия: {customer.Surname}\nВозраст: {customer.Age}\nПол: {customer.Gender}\nВопрос: {textAreaForm["textArea"]}\n");
-			return View(new Customer());
+            WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
+            WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
+
+            return View(new Customer());
 		}
 
 
 		public IActionResult TechTaskAbout()
 		{
-			logger.Trace("Переход по маршруту About/TechTaskAbout. Возвращаено представление About/TechTaskAbout.cshtml\n");
-			Console.WriteLine("Переход по маршруту About/TechTaskAbout. Возвращаено представление About/TechTaskAbout.cshtml\n");
-
+            WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
+            
 			var pageName = "About";
 			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
 
@@ -63,14 +65,12 @@ namespace ToursWebAppEXAMProject.Controllers
 		[HttpPost]
 		public IActionResult TechTaskAbout(TechTaskViewModel model)
 		{
-			logger.Debug("Запущен процесс сохранения показателей выполнения тех. задания в БД");
-			Console.WriteLine("Запущен процесс сохранения показателей выполнения тех. задания в БД");
+            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
 
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
 			{
-				logger.Debug("Модель TechTaskViewModel успешно прошла валидацию");
-				Console.WriteLine("Модель TechTaskViewModel успешно прошла валидацию");
-
+                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
+                
 				double TechTasksCount = 6;
 				double TechTasksTrueCount = 0;
 				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
@@ -84,19 +84,16 @@ namespace ToursWebAppEXAMProject.Controllers
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
 				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
-				logger.Debug("Показатели выполнения тех. задания успешно сохранены в БД");
-				Console.WriteLine("Показатели выполнения тех. задания успешно сохранены в БД");
-				logger.Debug("Возвращено представление /About/TechTaskAbout.cshtml\n");
-				Console.WriteLine("Возвращено представление /About/TechTaskAbout.cshtml\n");
 
+                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);
+                
 				return View(model);
 			}
-			logger.Debug("Модель TechTaskViewModel не прошла валидацию");
-			Console.WriteLine("Модель TechTaskViewModel не прошла валидацию");
-			logger.Debug("Возвращено представление /About/TechTaskAbout.cshtml\n");
-			Console.WriteLine("Возвращено представление /About/TechTaskAbout.cshtml\n");
+            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
+            WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);
 
-			return View(model);
+            return View(model);
 		}
 	}
 }

@@ -1,19 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NLog;
+using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
 	public class CollectionOfCitiesAfterParamsRepository : ICollectionOfCitiesAfterParamsInterface
 	{
 		private readonly TourFirmaDBContext context;
-
-		/// <summary>
-		/// Статическое сойство для логирования событий
-		/// </summary>
-		private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
 		public string[] itemKeyword = new string[4];
 		
@@ -40,11 +36,8 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public IEnumerable<City> GetQueryResultItemsAfterCountryForeignKeyId(int foreignKeyId)
 		{
-			logger.Debug("Произведено подключение к базе данных");
-			Console.WriteLine("Произведено подключение к базе данных");
-			logger.Trace($"Запрашиваются {itemKeyword[2]} по внешнему ключу Id = {foreignKeyId}");
-			Console.WriteLine($"Запрашиваются {itemKeyword[2]} по внешнему ключу Id = {foreignKeyId}");
-
+			WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по Id = {foreignKeyId}. ", NLogsModeEnum.Debug);
+			
 			try
 			{
 				var items = new List<City>();
@@ -56,37 +49,29 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-					logger.Warn($"Выборка {itemKeyword[3]} по внешнему ключу Id = {foreignKeyId} не осуществлена.");
-					Console.WriteLine($"Выборка {itemKeyword[3]} по внешнему ключу Id = {foreignKeyId} не осуществлена.");
-
+                    WriteLogs($"Выборка {itemKeyword[3]} по Id = {foreignKeyId} не осуществлена.\n", NLogsModeEnum.Warn);
+                    
 					return new List<City>();
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно");
-					Console.WriteLine("Выборка осуществлена успешно");
-
+                    WriteLogs("Выборка осуществлена успешно.\n", NLogsModeEnum.Debug);
+                    
 					return items;
 				}
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
-
+                WriteLogs($"Выборка {itemKeyword[3]} по Id = {foreignKeyId} не осуществлена.\n Код ошибки: {ex.Message}\n");
+               
 				return new List<City>();
 			}
 		}
 
 		public IEnumerable<City> GetQueryResultItemsAfterCountryName(string countryName)
 		{
-			logger.Debug("Произведено подключение к базе данных");
-			Console.WriteLine("Произведено подключение к базе данных");
-			logger.Trace($"Запрашиваются {itemKeyword[2]} по названию Country.Name = {countryName}");
-			Console.WriteLine($"Запрашиваются {itemKeyword[2]} по названию Country.Name = {countryName}");
-
+            WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по названию = {countryName}. ", NLogsModeEnum.Debug);
+            
 			try
 			{
 				var items = new List<City>();
@@ -98,37 +83,29 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-					logger.Warn($"Выборка {itemKeyword[3]} по названию Country.Name = {countryName} не осуществлена.");
-					Console.WriteLine($"Выборка {itemKeyword[3]} по названию Country.Name = {countryName} не осуществлена.");
-
+                    WriteLogs($"В БД отсутствует {itemKeyword[3]} по названию = {countryName}.\n", NLogsModeEnum.Warn);
+                    
 					return new List<City>();
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно");
-					Console.WriteLine("Выборка осуществлена успешно");
-
+                    WriteLogs("Выборка осуществлена успешно", NLogsModeEnum.Debug);
+                    
 					return items;
 				}
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
-
+                WriteLogs($"Выборка {itemKeyword[3]} по названию = {countryName} не осуществлена.\nКод ошибки: {ex.Message}", NLogsModeEnum.Error);
+                
 				return new List<City>();
 			}
 		}
 
 		public string GetAllCountriesWithCitiesListByOneString()
 		{
-			logger.Debug("Произведено подключение к базе данных");
-			Console.WriteLine("Произведено подключение к базе данных");
-			logger.Trace("Запрашиваются список всех сторан и городов одной строкой");
-			Console.WriteLine("Запрашиваются список всех сторан и городов одной строкой");
-
+            WriteLogs("Произведено подключение к БД. Запрашивается список всех сторан и городов одной строкой. ", NLogsModeEnum.Debug);
+            
 			try
 			{
 				// объявляем и инициализируем переменные
@@ -170,26 +147,21 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (allInfo == null)
 				{
-					logger.Warn("Выборка списка всех сторан и городов одной строкой не осуществлена.");
-					Console.WriteLine("Выборка списка всех сторан и городов одной строкой не осуществлена.");
-
+                    WriteLogs("Выборка списка всех сторан и городов одной строкой не осуществлена.\n", NLogsModeEnum.Warn);
+                    
 					return "В БД нет записей о странах и городах";
 				}
 				else
 				{
-					logger.Debug("Выборка осуществлена успешно");
-					Console.WriteLine("Выборка осуществлена успешно");
-
+                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+                    
 					return allInfo;
 				}
 			}
 			catch (Exception ex)
 			{
-				logger.Error("Выборка не осуществлена");
-				logger.Error($"Код ошибки: {ex.Message}");
-				Console.WriteLine("Выборка не осуществлена");
-				Console.WriteLine($"Код ошибки: {ex.Message}");
-
+                WriteLogs($"Выборка списка всех сторан и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                
 				return $"Вызвано исключение: {ex.Message}";
 			}
 		}
