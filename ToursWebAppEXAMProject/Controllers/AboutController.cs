@@ -15,13 +15,22 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			this.DataManager = DataManager;
 		}
-		public IActionResult Index()
+
+        /// <summary>
+        /// Метод вывода стартовой страницы About
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /About/Index.\n", NLogsModeEnum.Trace);
 
 			return View();
 		}
 
+		/// <summary>
+		/// Метод вывода формы обратной связи с пользователями сайта
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult FeedBackForm()
 		{
             WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
@@ -30,7 +39,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(customer);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод вывода формы обратной связи с данными, введенными пользователями сайта
+        /// </summary>
+        /// <param name="customer">Модель пользователя сайта</param>
+        /// <param name="textAreaForm">Данные формы ввода типа IFormCollection</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult FeedBackForm(Customer customer, IFormCollection textAreaForm)
 		{
 			if (ModelState.IsValid)
@@ -51,8 +66,11 @@ namespace ToursWebAppEXAMProject.Controllers
             return View(new Customer());
 		}
 
-
-		public IActionResult TechTaskAbout()
+        /// <summary>
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы About
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult TechTaskAbout()
 		{
             WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
             
@@ -62,7 +80,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы About
+        /// </summary>
+        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнени</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult TechTaskAbout(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);

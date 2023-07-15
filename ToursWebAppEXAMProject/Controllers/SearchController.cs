@@ -16,11 +16,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			this.DataManager = DataManager;
 		}
 
-		/// <summary>
-		/// Метод Index(), кот. выводит дефолтный вид страницы Search
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
+        /// <summary>
+        /// Метод вывода стартовой страницы Search
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult Index()
 		{
 			// задаем дефолтные значения для стартовой страницы
@@ -32,12 +32,13 @@ namespace ToursWebAppEXAMProject.Controllers
             return View(searchViewModel);
 		}
 
-		/// <summary>
-		/// POST версия метода Index(SearchProductViewModel searchProductViewModel), кот. принимает введенную модель
-		/// </summary>
-		/// <param name="searchProductViewModel"></param>
-		/// <returns></returns>
-		[HttpPost]
+        /// <summary>
+        /// POST версия метода вывода страницы Search с данными поиска, введенными пользователем
+        /// </summary>
+        /// <param name="viewModel">Данные вью-модели</param>
+		/// /// <param name="formValues">Данные формы ввода</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult Index(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
 			var searchViewModel = GetModel(viewModel, formValues);
@@ -60,7 +61,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 
 		/// <summary>
-		/// Метод GetProduct(), кот. возвращает данные турпродукта по его id
+		/// Метод вывода турпродукта по его id
 		/// </summary>
 		/// <param name="id">уникальный идентификатор турпродукта</param>
 		/// <returns></returns>
@@ -85,7 +86,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllProducts(), кот. возвращает данные всех туристических продуктов из БД
+		/// Метод вывода всех туристических продуктов
 		/// </summary>
 		/// <returns></returns>
 		public IActionResult GetAllProducts()
@@ -108,11 +109,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(products);
 		}
 
-		/// <summary>
-		/// Метод GetQueryResultProducts(), кот. возвращает данные некоторых туристических продуктов из БД по имени / ключевому слову
-		/// </summary>
-		/// <returns></returns>
-		public IActionResult GetQueryResultProducts(string keyword, bool isFullName)
+        /// <summary>
+        /// Метод вывода турпродуктов по полному названию или по ключевому слову (букве)
+        /// </summary>
+        /// <param name="keyword">текст для поиска</param>
+		/// /// <param name="isFullName">полное название - true или ключевое слово (буква) - false</param>
+        /// <returns></returns>
+        public IActionResult GetQueryResultProducts(string keyword, bool isFullName)
 		{
             WriteLogs("Переход по маршруту /Search/GetAllProducts. ", NLogsModeEnum.Trace);
             
@@ -132,11 +135,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(products);
 		}
 
-		/// <summary>
-		/// Метод TechTaskSearch() для отображения данных о выполнении ТЗ на странице Search
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
+        /// <summary>
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult TechTaskSearch()
 		{
             WriteLogs("Переход по маршруту Search/TechTaskSearch.\n", NLogsModeEnum.Trace);
@@ -147,12 +150,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		/// <summary>
-		/// Метод TechTaskSearch(TechTaskViewModel model) для редактирования и сохранения данных о выполнении ТЗ на странице Search
-		/// </summary>
-		/// <param name="model">Сохраняемая вью-модель</param>
-		/// <returns></returns>
-		[HttpPost]
+        /// <summary>
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Search
+        /// </summary>
+        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult TechTaskSearch(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);

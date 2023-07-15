@@ -19,7 +19,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			this.hostingEnvironment = hostingEnvironment;
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// Метод вывода стартовой страницы Admin
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /Admin/Index.\n", NLogsModeEnum.Trace);
@@ -27,6 +31,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View();
 		}
 
+		/// <summary>
+		/// Метод вывода меню создания / редактирования / удаления для новостей / блогов / турпродуктов
+		/// </summary>
+		/// <param name="type">Тип модели (новость, блог или турпродукт)</param>
+		/// <returns></returns>
 		[HttpGet]
 		public IActionResult EditMenu(string type)
 		{
@@ -37,7 +46,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// Метод вывода результатов выборки по тексту для поиска, по тому, что ищем - полное название или ключевое слово (букву), пр типу данных (новости, блоги или турпродукты)
+        /// </summary>
+        /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
+        /// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
+        /// <param name="type">тип данных - новость, блог или турпродукт</param>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult GetQueryResultEntities(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
             WriteLogs("Переход по маршруту /Admin/GetQueryResultItemsAfterFullName. ", NLogsModeEnum.Trace);
@@ -71,7 +87,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(items);
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// Метод редактирования отдельной сущности (новости, блога или турпродукта) по ее id
+        /// </summary>
+        /// <param name="type">тип данных (новость, блог или турпродукт)</param>
+        /// <param name="id">универсальный идентификатор сущности (новости, блога или турпродукта)</param>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult EditItem(string type, int id)
 		{
             WriteLogs("Переход по маршруту /Admin/EditItem. ", NLogsModeEnum.Trace);
@@ -105,7 +127,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("Index");
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// Метод удаления отдельной сущности (новости, блога или турпродукта) по ее id
+        /// </summary>
+        /// <param name="type">тип данных (новость, блог или турпродукт)</param>
+        /// <param name="id">универсальный идентификатор сущности (новости, блога или турпродукта)</param>
+        /// <returns></returns>
+        [HttpGet]
 		public IActionResult DeleteItem(string type, int id)
 		{
 			switch (type)
@@ -140,7 +168,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("Index");
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод сохранения новости с данными, введенными пользователем
+        /// </summary>
+        /// <param name="model">Модель новости</param>
+        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <returns></returns>
+        [HttpPost]
 		public async Task<IActionResult> SaveItemNew(New model, IFormCollection formValues, IFormFile titleImagePath)
        	{
             WriteLogs("Запущен процесс сохранения новости в БД. ", NLogsModeEnum.Debug);
@@ -189,7 +224,14 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("EditItemNew", model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод сохранения блога с данными, введенными пользователем
+        /// </summary>
+        /// <param name="model">Модель блога</param>
+        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <returns></returns>
+        [HttpPost]
 		public async Task<IActionResult> SaveItemBlog(Blog model, IFormCollection formValues, IFormFile titleImagePath)
 		{
 			WriteLogs("Запущен процесс сохранения блога в БД. ", NLogsModeEnum.Debug);
@@ -238,7 +280,14 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("EditItemBlog", model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод сохранения турпродукта с данными, введенными пользователем
+        /// </summary>
+        /// <param name="model">Модель турпродукта</param>
+        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <returns></returns>
+        [HttpPost]
 		public async Task<IActionResult> SaveItemProduct(Product model, IFormCollection formValues, IFormFile titleImagePath)
 		{
 
@@ -291,6 +340,11 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("EditItemProduct", model);
 		}
 
+		/// <summary>
+		/// Метод вывода страницы с полным описанием введенных пользователем и успешно сохраненых данных
+		/// </summary>
+		/// <param name="model">Модель сущности (новости, блога или турпродукта)</param>
+		/// <returns></returns>
 		[HttpGet]
 		public IActionResult Success(Object model)
 		{
@@ -300,6 +354,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
+		/// <summary>
+		/// Метод создания сущности (новости, блога или турпродукта)
+		/// </summary>
+		/// <param name="type">Тип данных (новость, блог или турпродукт)</param>
+		/// <returns></returns>
 		public IActionResult CreateEntity(string type) 
 		{
 			var model = new Object();
@@ -330,7 +389,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult TechTaskAdmin()
+        /// <summary>
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы Admin
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult TechTaskAdmin()
 		{
             WriteLogs("Переход по маршруту Admin/TechTaskAdmin.\n", NLogsModeEnum.Trace);
             
@@ -340,7 +403,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Admin
+        /// </summary>
+        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult TechTaskAdmin(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);

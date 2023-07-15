@@ -7,7 +7,11 @@ namespace ToursWebAppEXAMProject.Controllers
 {
 	public partial class SearchController : Controller
 	{
-		
+		/// <summary>
+		/// Метод создания вью-модели для стартовой страницы поиска турпродуктов
+		/// </summary>
+		/// <param name="countryName">Название страны</param>
+		/// <returns></returns>
 		public SearchProductViewModel GetModel(string countryName)
 		{
 			var searchViewModel = new SearchProductViewModel();
@@ -30,7 +34,13 @@ namespace ToursWebAppEXAMProject.Controllers
 			return searchViewModel;
 		}
 
-		public SearchProductViewModel GetModel(SearchProductViewModel viewModel, IFormCollection formValues)
+        /// <summary>
+        /// Метод создания вью-модели для вывода результатов поиска турпродуктов с данными, введенными пользователями
+        /// </summary>
+        /// <param name="viewModel">Вью-модель для поиска турпродуктов</param>
+        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
+        /// <returns></returns>
+        public SearchProductViewModel GetModel(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
 			var searchViewModel = viewModel as SearchProductViewModel;
 
@@ -60,7 +70,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 
 		/// <summary>
-		/// Метод GetAllCountriesSelectList(string defoultCountryNameSelected) для создания списка стран в формате SelectList
+		/// Метод создания списка стран в формате SelectList
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
@@ -70,7 +80,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllCountries() для создания списка стран в формате List<string>
+		/// Метод создания списка стран в формате List<string>
 		/// </summary>
 		/// <returns></returns>
 		private List<string> GetAllCountries()
@@ -87,7 +97,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetIdOfSelectedCountry(string defoultCountryNameSelected) для определения Id выбранной страны
+		/// Метод определения Id выбранной страны
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
@@ -100,7 +110,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetCityNameSelected(string defoultCountryNameSelected) для поиска первого из городов страны по ее названию
+		/// Метод поиска первого из городов страны по ее названию
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
@@ -112,7 +122,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllCitiesSelectList(string defoultCountryNameSelected) для создания списка городов выбранной страны в формате SelectList
+		/// Метод создания списка городов выбранной страны в формате SelectList
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
@@ -122,7 +132,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllCities(string defoultCountryNameSelected) для создания списка городов выбранной страны в формате List<string>
+		/// Метод создания списка городов выбранной страны в формате List<string>
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
@@ -140,7 +150,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод ParseListOfStringsToString(List<string> listOfStrinfs) для пробразования List<string> в строку
+		/// Метод преобразования List<string> в строку
 		/// </summary>
 		/// <param name="listOfStrings">коллекция строк</param>
 		/// <returns></returns>
@@ -153,7 +163,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод ParseSelectListToString(List<string> listOfStrinfs, string countryName) для пробразования SelectList в строку по названию страны
+		/// Метод преобразования SelectList в строку по названию страны
 		/// </summary>
 		/// <param name="listOfStrings">Коллекция строк</param>
 		/// <param name="countryName">Выбранная страна</param>
@@ -168,7 +178,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод ParseStringToListOfStrings(string? allItems) для пробразования строки в List<string>
+		/// Метод преобразования строки в List<string>
 		/// </summary>
 		/// <param name="allItems">Все страны/города</param>
 		/// <returns></returns>
@@ -182,7 +192,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод ParseStringToSelectList(string? allCountries, string? countryName) для пробразования строки в SelectList
+		/// Метод преобразования строки в SelectList
 		/// </summary>
 		/// <param name="allItems">Все страны/города</param>
 		/// <param name="selectedItemName">Название выбранной страны/города</param>

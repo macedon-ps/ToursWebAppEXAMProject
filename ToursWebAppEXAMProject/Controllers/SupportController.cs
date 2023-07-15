@@ -15,12 +15,22 @@ namespace ToursWebAppEXAMProject.Controllers
 			this.DataManager = DataManager;
 		}
 
-		public IActionResult Index()
+        /// <summary>
+        /// Метод вывода стартовой страницы Support
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /Support/Index.\n", NLogsModeEnum.Trace);
 						
 			return View();
 		}
+
+		/// <summary>
+		/// Метод предоставления услуги поддержки
+		/// </summary>
+		/// <param name="service">Услуга поддержки</param>
+		/// <returns></returns>
 		public IActionResult GetSupport(string service)
 		{
             // TODO: разработать сервисы "map", "translate", "mobileApp"
@@ -56,7 +66,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("GetSupport", serviceItem);
 		}
 
-		public IActionResult TechTaskSupport()
+        /// <summary>
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы Support
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult TechTaskSupport()
 		{
             WriteLogs("Переход по маршруту Support/TechTaskSupport.\n", NLogsModeEnum.Trace);
             
@@ -66,7 +80,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Support
+        /// </summary>
+        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнени</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult TechTaskSupport(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);

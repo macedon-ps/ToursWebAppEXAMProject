@@ -9,12 +9,24 @@ namespace ToursWebAppEXAMProject.Repositories
 {
 	public class EditTechTasksRepository : IEditTechTaskInterface
 	{
+		/// <summary>
+		/// Количество показателей технического задания
+		/// </summary>
 		double TechTasksCount { get; set; }
 
-		double TechTasksTrueCount { get; set; }
+        /// <summary>
+        /// Количество выполненных показателей технического задания
+        /// </summary>
+        double TechTasksTrueCount { get; set; }
 
+		/// <summary>
+		/// Прогресс выполнения технического задания, в %
+		/// </summary>
 		double TechTasksProgress { get; set; }
 
+		/// <summary>
+		/// Контекс БД
+		/// </summary>
 		private readonly TourFirmaDBContext context;
 
 		public EditTechTasksRepository(TourFirmaDBContext _context)
@@ -22,6 +34,11 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.context = _context;
 		}
 
+		/// <summary>
+		/// Метод вывода показателей технического задания и прогресса его выполнения
+		/// </summary>
+		/// <param name="pageName">Название страницы сайта (и контроллера)</param>
+		/// <returns></returns>
 		public TechTaskViewModel GetTechTasksForPage(string pageName)			
 		{
 			WriteLogs($"Произведено подключение к БД. Запрашиваются показатели выполнения ТЗ для страницы \"{pageName}\". ", NLogsModeEnum.Debug);
@@ -51,6 +68,11 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 		}
 
+		/// <summary>
+		/// Метод расчета прогресса выполнения технического задания
+		/// </summary>
+		/// <param name="techTasks">Данные из БД о состоянии выполнения ТЗ</param>
+		/// <returns></returns>
 		public double GetProgressTechTasks(TechTaskViewModel techTasks)
 		{
             WriteLogs($"Запрашиваются прогресс выполнения ТЗ для страницы \"{techTasks.PageName}\". ", NLogsModeEnum.Debug);

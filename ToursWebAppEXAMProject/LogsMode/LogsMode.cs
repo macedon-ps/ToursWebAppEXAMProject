@@ -9,6 +9,13 @@ namespace ToursWebAppEXAMProject.LogsMode
 
         public LogsMode() { }
 
+        /// <summary>
+        /// Метод создания пользовательских сообщений (логов)
+        /// </summary>
+        /// <param name="message">текстовое сообщение</param>
+        /// <param name="LoggerMode">режим создания логов в NLog</param>
+        /// <param name="isNLogUsed">создавать ли журнал логов с помощью NLog</param>
+        /// <param name="isConsoleUsed">выводить ли сообщения (логи) в консоли</param>
         public static void WriteLogs(string? message, NLogsModeEnum? LoggerMode = NLogsModeEnum.Info, bool? isNLogUsed = true, bool? isConsoleUsed = true)
         {
             if (message == null) 

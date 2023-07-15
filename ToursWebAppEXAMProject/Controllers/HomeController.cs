@@ -17,7 +17,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод Index() для стартовой страницы Home
+		/// Метод вывода стартовой страницы Home
 		/// </summary>
 		/// <returns></returns>
 		public IActionResult Index()
@@ -28,7 +28,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllNews(), кот. возвращает все новости
+		/// Метод вывода всех новостей
 		/// </summary>
 		/// <returns></returns>
 		public IActionResult GetALLNews()
@@ -51,9 +51,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetNew(int id), кот. возвращает одну новость
+		/// Метод вывода новости по ее id
 		/// </summary>
-		/// <param name="id">id новости</param>
+		/// <param name="id">уникальный идентификатор новости</param>
 		/// <returns></returns>
 		public IActionResult GetNew(int id)
 		{
@@ -76,7 +76,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetAllBlogs(), кот. возвращает все блоги
+		/// Метод вывода всех блогов
 		/// </summary>
 		/// <returns></returns>
 		public IActionResult GetAllBlogs()
@@ -100,9 +100,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		}
 
 		/// <summary>
-		/// Метод GetBlog(int id), кот. возвращает один блог
+		/// Метод вывода блога по его id
 		/// </summary>
-		/// <param name="id">id блога</param>
+		/// <param name="id">уникальный идентификатор блога</param>
 		/// <returns></returns>
 		public IActionResult GetBlog(int id)
 		{
@@ -124,6 +124,10 @@ namespace ToursWebAppEXAMProject.Controllers
             return View(blog);
 		}
 		
+		/// <summary>
+		/// Метод вывода ТЗ и прогресса его выполнения для страницы Home
+		/// </summary>
+		/// <returns></returns>
 		public IActionResult TechTaskHome()
 		{
             WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
@@ -134,7 +138,12 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		[HttpPost]
+        /// <summary>
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Home
+        /// </summary>
+        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
+        /// <returns></returns>
+        [HttpPost]
 		public IActionResult TechTaskHome(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
