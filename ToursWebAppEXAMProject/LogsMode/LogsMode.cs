@@ -9,7 +9,7 @@ namespace ToursWebAppEXAMProject.LogsMode
 
         public LogsMode() { }
 
-        public static void WriteLogs(string? message, NLogsModeEnum? LoggerMode = NLogsModeEnum.Info, bool? ConsoleMode = true)
+        public static void WriteLogs(string? message, NLogsModeEnum? LoggerMode = NLogsModeEnum.Info, bool? isNLogUsed = true, bool? isConsoleUsed = true)
         {
             if (message == null) 
             {
@@ -18,14 +18,14 @@ namespace ToursWebAppEXAMProject.LogsMode
                 return;
             }
 
-            else if (LoggerMode == 0 && ConsoleMode == false) 
+            else if (isNLogUsed == false && isConsoleUsed == false) 
             {
-                logger.Warn("Не выбран режим отображения логов");
-                Console.WriteLine("Не выбран режим отображения логов");
+                logger.Warn("Логгирование с помощью NLog отключено");
+                Console.WriteLine("Логгирование в консоли отключено");
                 return; 
             }
             
-            else if (LoggerMode == 0 && ConsoleMode == true)
+            else if (isNLogUsed == false && isConsoleUsed == true)
             {
                 Console.WriteLine(message);
                 return;
@@ -50,7 +50,7 @@ namespace ToursWebAppEXAMProject.LogsMode
                     logger.Error(message);      
                     break;
             }
-            if(ConsoleMode == true)
+            if(isConsoleUsed == true)
             {
                 Console.Write(message);
             }
