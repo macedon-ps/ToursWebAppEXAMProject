@@ -1,7 +1,6 @@
 ﻿@model EditMenuViewModel
 @{
     ViewData["Title"] = "Admin Page";
-    // страница AdminController/Index.cshtml по умолчанию принимает тип New
 }
 
 @{ // TODO:  необходимо сделать переход на asp-area="Admin"
@@ -16,24 +15,38 @@
         <h1>Страница администратора сайта:</h1>
         <br/>
         <div>
-        
-            <h2>1. Создание новостей:</h2>
+            @{
+                var keyWord = "";
+                switch (@Model.type)
+                {
+                    case "New":
+                        keyWord = "новостей";
+                        break;
+                    case "Blog":
+                        keyWord = "блогов";
+                        break;
+                    case "Product":
+                        keyWord = "турпродуктов";
+                        break;
+                }
+            }
+            <h2>1. Создание @keyWord:</h2>
             
             <div class="div-box">
                 <form asp-area="" asp-controller="Admin" asp-action="CreateEntity" method="get">
-                    <input type="hidden" asp-for="type" value="New"/>
+                    <input type="hidden" asp-for="type" value="@Model.type"/>
                     <input type = "submit" value="Создать"/>
                 </form>
             </div>
         
-            <h2>2. Редактирование/удаление новостей:</h2>
+            <h2>2. Редактирование/удаление @keyWord:</h2>
             
             <div class="div-box">
                 
                 <h4>Выберите режим ввода:</h4>
                 
                 <form asp-area="" asp-controller="Admin" asp-action="GetQueryResultEntities" method="get">
-                    <input type="hidden" asp-for="type" value="New"/>
+                    <input type="hidden" asp-for="type" value="@Model.type"/>
                     <input type = "radio" asp-for="isFullName" value="true"/><span class="spanMarginLR">Полное название</span>
                     <input type = "radio" asp-for="isFullName" value="false"/><span class="spanMarginLR">Ключевое слово</span>
                     <div>

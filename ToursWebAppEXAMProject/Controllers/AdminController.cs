@@ -24,29 +24,17 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(string type = "New")
 		{
 			WriteLogs("Переход по маршруту /Admin/Index.\n", NLogsModeEnum.Trace);
-			
-			return View();
-		}
 
-		/// <summary>
-		/// Метод вывода меню создания / редактирования / удаления для новостей / блогов / турпродуктов
-		/// </summary>
-		/// <param name="type">Тип модели (новость, блог или турпродукт)</param>
-		/// <returns></returns>
-		[HttpGet]
-		public IActionResult EditMenu(string type)
-		{
-            WriteLogs("Переход по маршруту /Admin/EditMenu.\n", NLogsModeEnum.Trace);
-            
-			var model = new EditMenuViewModel(true, "", type);
+            // страница Index.cshtml по умолчанию принимает тип New, по нажатию на кнопки - др.типы (New, Blog, Product)
+            var model = new EditMenuViewModel(false, "", type);
 
 			return View(model);
 		}
 
-        /// <summary>
+		/// <summary>
         /// Метод вывода результатов выборки по тексту для поиска, по тому, что ищем - полное название или ключевое слово (букву), пр типу данных (новости, блоги или турпродукты)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
@@ -57,32 +45,47 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult GetQueryResultEntities(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
             WriteLogs("Переход по маршруту /Admin/GetQueryResultItemsAfterFullName. ", NLogsModeEnum.Trace);
-            
+
 			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
-			object items = new object();
+			var items = new Object();
+			var news = new List<New>();
+			var blogs = new List<Blog>();
+			var products = new List<Product>();
+			var numberItems = 0;
+			var keyWord = new string[2];
 
 			switch (type)
 			{
 				case "New":
-					items = DataManager.NewBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+                    news = (List<New>)DataManager.NewBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+                    numberItems = news.Count;
+					keyWord[0] = "новостей"; keyWord[1] = "новости";
+					items = news;
 					break;
 				case "Blog":
-					items = DataManager.BlogBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+					blogs = (List<Blog>)DataManager.BlogBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+					numberItems = blogs.Count;
+                    keyWord[0] = "блогов"; keyWord[1] = "блоги";
+					items = blogs;
 					break;
 				case "Product":
-					items = DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+					products = (List<Product>)DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+                    numberItems = products.Count;	
+					keyWord[0] = "турподуктов"; keyWord[1] = "турпродукты";
+					items = products;
 					break;
 			}
-
-			if (items == null)
+			if (numberItems == 0)
 			{
-                WriteLogs("Нет сущностей (новостей, блогов или турпродуктов). Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+				var message = $"Нет {keyWord[0]} по запросу \"{fullNameOrKeywordOfItem}\". Возвращено /Nothing.cshtml\n";
+
+                WriteLogs(message, NLogsModeEnum.Warn);
                 
-				var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
-				return View("ModelsError", errorInfo);
+				var nothingInfo = new ErrorViewModel(message);
+				return View("Nothing", nothingInfo);
 			}
 
-            WriteLogs("Выводятся все сущности (новости, блоги или турпродукты).\n", NLogsModeEnum.Debug);
+            WriteLogs($"Выводятся все {keyWord[1]} по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
            
 			return View(items);
 		}
@@ -317,6 +320,7 @@ namespace ToursWebAppEXAMProject.Controllers
 					WriteLogs("Турпродукт сохранен в БД. ", NLogsModeEnum.Debug);
                     
                     // TODO: запрос на создание/редактирование/удаление страны и/или города, если да, то вывод нового вью для создания/редактирования/удаления страны и/или города, сохранение изменений в БД
+
 
                     WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
                     

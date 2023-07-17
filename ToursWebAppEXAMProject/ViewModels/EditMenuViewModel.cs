@@ -11,22 +11,22 @@
 		public bool isFullName { get; set; }
 
 		/// <summary>
-		/// свойство fullNameOrKeywordOfItem, содержит полное название или ключевое слово
+		/// свойство fullNameOrKeywordOfItem, содержит полное название или ключевое слово (символ)
 		/// </summary>
 		public string fullNameOrKeywordOfItem { get; set; }
 
 		/// <summary>
-		/// тип данных
+		/// тип данных (новость, блог или турпродукт)
 		/// </summary>
 		public string type { get; set; }
 
 		/// <summary>
-		/// конструктор класса EditMenuViewModel(), кот. задает параметры для отображения меню создания/редактирования/удаления новости/блога/турпродукта
+		/// конструктор класса задает параметры для отображения меню создания/редактирования/удаления новости/блога/турпродукта
 		/// </summary>
-		/// <param name="isFullName">свойство, кот. указывает, что вводится - полное название (true) или ключевое слово (false)</param>
-		/// <param name="fullNameOrKeywordOfItem">ввод для поиска полного названия или ключевого слова</param>
-		/// <param name="type">тип данных</param>
-		public EditMenuViewModel(bool isFullName, string fullNameOrKeywordOfItem, string type)
+		/// <param name="isFullName">свойство, кот. указывает, что вводится - полное название (true) или ключевое слово (символ) (false)</param>
+		/// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
+		/// <param name="type">тип данных (новость, блог или турпродукт)</param>
+		public EditMenuViewModel(bool isFullName = false, string fullNameOrKeywordOfItem = "", string type = "")
 		{
 			this.isFullName = isFullName;
 			this.fullNameOrKeywordOfItem = fullNameOrKeywordOfItem;

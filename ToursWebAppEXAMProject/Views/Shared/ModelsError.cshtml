@@ -1,4 +1,4 @@
-﻿@model ModelsErrorViewModel
+﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "ModelsError";
 }  
@@ -19,28 +19,14 @@
              </button>
         </div>
         <div class="errorHeader">
-            <h1>Страница вывода ошибок:</h1><br/>
+            <h2>Упс, вы допустили ошибку:</h2><br/>
             
-            <h3>Сообщение об ошибке:</h3><br/>
+            <h3>Содержание ошибки:</h3><br/>
             <p class="text-danger">@Model.ErrorMessage</p><br/>
             
-            <h3>Тип данных, вызвавший ошибку: </h3><br/>
-            <p class="text-danger">@Model.ModelTypeCalledError</p><br/>
-            
-            @{
-                var requestId = Model.RequestId ?? null;
-                if (Model.IsRequestId(requestId))
-                {
-                     <p class="text-danger">Возможно, объект с указанным id = @requestId отсутствует в БД</p>
-                }
-                else
-                {
-                     <p class="text-danger">Возможно, указанный объект отсутствует в БД</p>
-                }
-                    <h3>Время появления ошибки: </h3><br/>
-                    <p class="text-danger">@Model.DateTimeError</p>
-            }
-         </div>
+            <h3>Время ошибки: </h3><br/>
+            <p class="text-danger">@Model.DateTimeError</p>
+        </div>
    </div>
 
 
