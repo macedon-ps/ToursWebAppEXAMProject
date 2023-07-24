@@ -7,7 +7,7 @@ namespace ToursWebAppEXAMProject.Models
     {
         public Hotel()
         {
-            Locations = new HashSet<Location>();
+            Tours = new HashSet<Tour>();
         }
 
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace ToursWebAppEXAMProject.Models
         public int CityId { get; set; }
 
         public virtual City City { get; set; } = null!;
-        public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<Tour> Tours { get; set; }
     }
 }

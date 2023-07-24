@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ToursWebAppEXAMProject.Models
 {
@@ -8,15 +7,41 @@ namespace ToursWebAppEXAMProject.Models
         public City()
         {
             Hotels = new HashSet<Hotel>();
-            Locations = new HashSet<Location>();
+
+            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+
+        // во вью н.б. скрывать, скорее всего
         public int CountryId { get; set; }
+
+        [Required(ErrorMessage = "Введите название города")]
+        [Display(Name = "Название города")]
+        [StringLength(50, ErrorMessage = "Название города не должно содержать более 50 символов")]
+        public string Name { get; set; } = "Название города";
+
+        [Required(ErrorMessage = "Введите краткое описание города")]
+        [Display(Name = "Краткое описание города")]
+        [StringLength(400, ErrorMessage = "Краткое описание города не должно содержать более 400 символов")]
+        public string ShortDescription { get; set; } = "Краткое описание города";
+
+        [Required(ErrorMessage = "Введите полное описание города")]
+        [Display(Name = "Полное описание города")]
+        public string FullDescription { get; set; } = "Полное описание города";
+
+        [Required(ErrorMessage = "Укажите, является ли город солицей страны")]
+        [Display(Name = "Является ли столицы страны ?")]
+        public bool isCapital { get; set; } = false;
+
+        [Required(ErrorMessage = "Выберите титульную картинку города")]
+        [Display(Name = "Титульная картинка города")]
+        [StringLength(100, ErrorMessage = "Путь к титульной картинке города не должен содержать более 100 символов")]
+        public string TitleImagePath { get; set; } = "Нет титульной картинки города";
 
         public virtual Country Country { get; set; } = null!;
         public virtual ICollection<Hotel> Hotels { get; set; }
-        public virtual ICollection<Location> Locations { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

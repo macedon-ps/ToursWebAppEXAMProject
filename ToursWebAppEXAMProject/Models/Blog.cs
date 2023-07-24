@@ -30,10 +30,10 @@ namespace ToursWebAppEXAMProject.Models
 		[Display(Name = "Полное описание темы блога")]
 		public string FullDescription { get; set; } = "Полное описание темы блога";
 
-		[Required(ErrorMessage = "Выберите титульную картинку блога")]
+		//[Required(ErrorMessage = "Выберите титульную картинку блога")]
 		[Display(Name = "Титульная картинка")]
 		[StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
-		public string TitleImagePath { get; set; } = "Нет титульной картинки";
+		public string? TitleImagePath { get; set; } = "Нет титульной картинки";
 
 		[Display(Name = "Время создания")]
 		[DataType(DataType.Time)]

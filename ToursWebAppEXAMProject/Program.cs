@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -17,7 +14,6 @@ builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>(
 builder.Services.AddTransient<IBaseInterface<Country>, BaseRepository<Country>>();
 builder.Services.AddTransient<IBaseInterface<City>, BaseRepository<City>>();
 builder.Services.AddTransient<IBaseInterface<Hotel>, BaseRepository<Hotel>>();
-builder.Services.AddTransient<IBaseInterface<Location>, BaseRepository<Location>>();
 builder.Services.AddTransient<IBaseInterface<DateTour>, BaseRepository<DateTour>>();
 builder.Services.AddTransient<IBaseInterface<Food>, BaseRepository<Food>>();
 builder.Services.AddTransient<IBaseInterface<Tour>, BaseRepository<Tour>>();

@@ -9,7 +9,6 @@ namespace ToursWebAppEXAMProject.Repositories
 		public IBaseInterface<Country> CountryBaseInterface { get; set; }
 		public IBaseInterface<City> CityBaseInterface { get; set; }
 		public IBaseInterface<Hotel> HotelBaseInterface { get; set; }
-		public IBaseInterface<Location> LocationBaseInterface { get; set; }
 		public IBaseInterface<DateTour> DatetourBaseInterface { get; set; }
 		public IBaseInterface<Food> FoodBaseInterface { get; set; }
 		public IBaseInterface<Tour> TourBaseInterface { get; set; }
@@ -28,7 +27,6 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Country> countryBaseInterface,
 							IBaseInterface<City> cityBaseInterface,
 							IBaseInterface<Hotel> hotelBaseInterface,
-							IBaseInterface<Location> locationBaseInterface,
 							IBaseInterface<DateTour> datetourBaseInterface,
 							IBaseInterface<Food> foodBaseInterface,
 							IBaseInterface<Tour> tourBaseInterface,
@@ -45,7 +43,6 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.CountryBaseInterface = countryBaseInterface;
 			this.CityBaseInterface = cityBaseInterface;
 			this.HotelBaseInterface = hotelBaseInterface;
-			this.LocationBaseInterface = locationBaseInterface;
 			this.DatetourBaseInterface = datetourBaseInterface;
 			this.FoodBaseInterface = foodBaseInterface;
 			this.TourBaseInterface = tourBaseInterface;

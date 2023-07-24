@@ -78,7 +78,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// для городов
 				items = context.Cities
-				.FromSqlRaw($"select City.Id, City.Name, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
+				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
 				.ToList();
 
 				if (items == null)
@@ -104,7 +104,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public string GetAllCountriesWithCitiesListByOneString()
 		{
-            WriteLogs("Произведено подключение к БД. Запрашивается список всех сторан и городов одной строкой. ", NLogsModeEnum.Debug);
+            WriteLogs("Произведено подключение к БД. Запрашивается список всех стран и городов одной строкой. ", NLogsModeEnum.Debug);
             
 			try
 			{
@@ -116,14 +116,14 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// запрос к БД дать список стран в формате List<Country>, страны не повторяются
 				var countries = context.Countries
-				.FromSqlRaw($"select distinct Country.Id, Country.Name from Country, City where Country.Id = City.CountryId")
+				.FromSqlRaw($"Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
 				.ToList();
 
 				// для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
 				foreach (Country country in countries)
 				{
 					cities = context.Cities
-					.FromSqlRaw($"select distinct City.Id, City.Name, City.CountryId from City where City.CountryId = {country.Id}")
+					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.CountryId from City where City.CountryId = {country.Id}")
 					.ToList();
 
 					// заполняем countriesWithSitiesOneString, citiesOfOneCountryListOneString и allInfo
@@ -160,7 +160,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка списка всех сторан и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                WriteLogs($"Выборка списка всех стран и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
                 
 				return $"Вызвано исключение: {ex.Message}";
 			}

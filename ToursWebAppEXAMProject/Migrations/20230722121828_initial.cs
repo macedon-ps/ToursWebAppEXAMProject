@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToursWebAppEXAMProject.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,12 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('страна')")
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Название страны')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание страны')"),
+                    FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание страны')"),
+                    Capital = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Столица страны')"),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки страны')"),
+                    CountryMapPath = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Нет ссылки на карту страны в GoogleMaps')")
                 },
                 constraints: table =>
                 {
@@ -106,23 +111,6 @@ namespace ToursWebAppEXAMProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Название туристического продукта')"),
-                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание туристического продукта')"),
-                    FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание туристического продукта')"),
-                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки')"),
-                    DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Saller",
                 columns: table => new
                 {
@@ -163,8 +151,12 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: false)
+                    CountryId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, defaultValueSql: "('Название города')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание города')"),
+                    FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание города')"),
+                    isCapital = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "(0)"),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки города')")
                 },
                 constraints: table =>
                 {
@@ -197,32 +189,31 @@ namespace ToursWebAppEXAMProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CountryId = table.Column<int>(type: "int", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
-                    HotelId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "('Название туристического продукта')"),
+                    ShortDescription = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false, defaultValueSql: "('Краткое описание туристического продукта')"),
+                    FullDescription = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValueSql: "('Полное описание туристического продукта')"),
+                    TitleImagePath = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "('Нет титульной картинки')"),
+                    DateAdded = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__Location__CityId__35BCFE0A",
+                        name: "FK__Products__CityId__34C8D9D1",
                         column: x => x.CityId,
                         principalTable: "City",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK__Location__Countr__34C8D9D1",
+                        name: "FK__Products__CountryId__35BCFE0A",
                         column: x => x.CountryId,
                         principalTable: "Country",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK__Location__HotelI__36B12243",
-                        column: x => x.HotelId,
-                        principalTable: "Hotel",
                         principalColumn: "Id");
                 });
 
@@ -233,10 +224,10 @@ namespace ToursWebAppEXAMProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
                     DateTourId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    FoodId = table.Column<int>(type: "int", nullable: false)
+                    HotelId = table.Column<int>(type: "int", nullable: false),
+                    FoodId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,9 +243,9 @@ namespace ToursWebAppEXAMProject.Migrations
                         principalTable: "Food",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK__Tour__LocationId__412EB0B6",
-                        column: x => x.LocationId,
-                        principalTable: "Location",
+                        name: "FK__Tour__HotelId__412EB0B6",
+                        column: x => x.HotelId,
+                        principalTable: "Hotel",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK__Tour__ProductId__3F466844",
@@ -304,21 +295,6 @@ namespace ToursWebAppEXAMProject.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Location_CityId",
-                table: "Location",
-                column: "CityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Location_CountryId",
-                table: "Location",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Location_HotelId",
-                table: "Location",
-                column: "HotelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Offer_CustomerId",
                 table: "Offer",
                 column: "CustomerId");
@@ -334,6 +310,16 @@ namespace ToursWebAppEXAMProject.Migrations
                 column: "TourId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_CityId",
+                table: "Product",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_CountryId",
+                table: "Product",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tour_DateTourId",
                 table: "Tour",
                 column: "DateTourId");
@@ -344,9 +330,9 @@ namespace ToursWebAppEXAMProject.Migrations
                 column: "FoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tour_LocationId",
+                name: "IX_Tour_HotelId",
                 table: "Tour",
-                column: "LocationId");
+                column: "HotelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tour_ProductId",
@@ -385,13 +371,10 @@ namespace ToursWebAppEXAMProject.Migrations
                 name: "Food");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Hotel");
 
             migrationBuilder.DropTable(
                 name: "Product");
-
-            migrationBuilder.DropTable(
-                name: "Hotel");
 
             migrationBuilder.DropTable(
                 name: "City");

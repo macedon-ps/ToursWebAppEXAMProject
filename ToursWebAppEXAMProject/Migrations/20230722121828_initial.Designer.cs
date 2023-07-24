@@ -12,8 +12,8 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    [Migration("20230710132557_Initial")]
-    partial class Initial
+    [Migration("20230722121828_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,10 +92,37 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("('Полное описание города')");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("('Название города')");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasDefaultValueSql("('Краткое описание города')");
+
+                    b.Property<string>("TitleImagePath")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("('Нет титульной картинки города')");
+
+                    b.Property<bool>("isCapital")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("(0)");
 
                     b.HasKey("Id");
 
@@ -112,12 +139,46 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Capital")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("('Столица страны')");
+
+                    b.Property<string>("CountryMapPath")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValueSql("('Нет ссылки на карту страны в GoogleMaps')");
+
+                    b.Property<string>("FullDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("('Полное описание страны')");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasDefaultValueSql("('страна')");
+                        .HasDefaultValueSql("('Название страны')");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasDefaultValueSql("('Краткое описание страны')");
+
+                    b.Property<string>("TitleImagePath")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("('Нет титульной картинки страны')");
 
                     b.HasKey("Id");
 
@@ -226,34 +287,6 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.ToTable("Hotel", (string)null);
                 });
 
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("HotelId");
-
-                    b.ToTable("Location", (string)null);
-                });
-
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.New", b =>
                 {
                     b.Property<int>("Id")
@@ -333,6 +366,12 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DateAdded")
                         .HasColumnType("datetime");
 
@@ -364,6 +403,10 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValueSql("('Нет титульной картинки')");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Product", (string)null);
                 });
@@ -412,7 +455,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<int>("FoodId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("HotelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -429,7 +472,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasIndex("FoodId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("HotelId");
 
                     b.HasIndex("ProductId");
 
@@ -499,33 +542,6 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Location", b =>
-                {
-                    b.HasOne("ToursWebAppEXAMProject.Models.City", "City")
-                        .WithMany("Locations")
-                        .HasForeignKey("CityId")
-                        .IsRequired()
-                        .HasConstraintName("FK__Location__CityId__35BCFE0A");
-
-                    b.HasOne("ToursWebAppEXAMProject.Models.Country", "Country")
-                        .WithMany("Locations")
-                        .HasForeignKey("CountryId")
-                        .IsRequired()
-                        .HasConstraintName("FK__Location__Countr__34C8D9D1");
-
-                    b.HasOne("ToursWebAppEXAMProject.Models.Hotel", "Hotel")
-                        .WithMany("Locations")
-                        .HasForeignKey("HotelId")
-                        .IsRequired()
-                        .HasConstraintName("FK__Location__HotelI__36B12243");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("Hotel");
-                });
-
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Offer", b =>
                 {
                     b.HasOne("ToursWebAppEXAMProject.Models.Customer", "Customer")
@@ -553,6 +569,25 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Navigation("Tour");
                 });
 
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Product", b =>
+                {
+                    b.HasOne("ToursWebAppEXAMProject.Models.City", "City")
+                        .WithMany("Products")
+                        .HasForeignKey("CityId")
+                        .IsRequired()
+                        .HasConstraintName("FK__Products__CityId__34C8D9D1");
+
+                    b.HasOne("ToursWebAppEXAMProject.Models.Country", "Country")
+                        .WithMany("Products")
+                        .HasForeignKey("CountryId")
+                        .IsRequired()
+                        .HasConstraintName("FK__Products__CountryId__35BCFE0A");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
                 {
                     b.HasOne("ToursWebAppEXAMProject.Models.DateTour", "DateTour")
@@ -567,11 +602,11 @@ namespace ToursWebAppEXAMProject.Migrations
                         .IsRequired()
                         .HasConstraintName("FK__Tour__FoodId__4222D4EF");
 
-                    b.HasOne("ToursWebAppEXAMProject.Models.Location", "Location")
+                    b.HasOne("ToursWebAppEXAMProject.Models.Hotel", "Hotel")
                         .WithMany("Tours")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("HotelId")
                         .IsRequired()
-                        .HasConstraintName("FK__Tour__LocationId__412EB0B6");
+                        .HasConstraintName("FK__Tour__HotelId__412EB0B6");
 
                     b.HasOne("ToursWebAppEXAMProject.Models.Product", "Product")
                         .WithMany("Tours")
@@ -583,7 +618,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Navigation("Food");
 
-                    b.Navigation("Location");
+                    b.Navigation("Hotel");
 
                     b.Navigation("Product");
                 });
@@ -592,14 +627,14 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Navigation("Hotels");
 
-                    b.Navigation("Locations");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Country", b =>
                 {
                     b.Navigation("Cities");
 
-                    b.Navigation("Locations");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Customer", b =>
@@ -618,11 +653,6 @@ namespace ToursWebAppEXAMProject.Migrations
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Hotel", b =>
-                {
-                    b.Navigation("Locations");
-                });
-
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Location", b =>
                 {
                     b.Navigation("Tours");
                 });
