@@ -6,7 +6,9 @@
         
         @foreach(var item in @Model)
         {
-            var type = item.GetType().ToString();
+            var typeString = item.GetType().ToString();
+
+            var type = typeString.Remove(0, 30);
             <div>
                 <div>
                     <h2>@item.Name</h2>

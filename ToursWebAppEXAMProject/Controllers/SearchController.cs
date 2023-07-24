@@ -21,10 +21,10 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-		public IActionResult Index()
+		public IActionResult Index(string countryName = "Украина")
 		{
-			// задаем дефолтные значения для стартовой страницы
-			var searchViewModel = GetModel("Украина");
+            // дефолтное значение countryName для стартовой страницы - "Украина"
+            var searchViewModel = GetModel(countryName);
 
 			WriteLogs("Переход по маршруту /Search/Index. ", NLogsModeEnum.Trace);
             WriteLogs("Выведено меню поиска турпродуктов.\n", NLogsModeEnum.Debug);

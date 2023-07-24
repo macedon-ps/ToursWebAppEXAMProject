@@ -48,28 +48,25 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
 			var items = new Object();
-			var news = new List<New>();
-			var blogs = new List<Blog>();
-			var products = new List<Product>();
 			var numberItems = 0;
 			var keyWord = new string[2];
 
 			switch (type)
 			{
 				case "New":
-                    news = (List<New>)DataManager.NewBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+                    var news = (List<New>)DataManager.NewBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
                     numberItems = news.Count;
 					keyWord[0] = "новостей"; keyWord[1] = "новости";
 					items = news;
 					break;
 				case "Blog":
-					blogs = (List<Blog>)DataManager.BlogBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+					var blogs = (List<Blog>)DataManager.BlogBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
 					numberItems = blogs.Count;
                     keyWord[0] = "блогов"; keyWord[1] = "блоги";
 					items = blogs;
 					break;
 				case "Product":
-					products = (List<Product>)DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+					var products = (List<Product>)DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
                     numberItems = products.Count;	
 					keyWord[0] = "турподуктов"; keyWord[1] = "турпродукты";
 					items = products;
@@ -99,35 +96,42 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult EditItem(string type, int id)
 		{
+            // TODO: сократить типы с "ToursWebAppEXAMProject.Models.New" до "New" и т.д.
             WriteLogs("Переход по маршруту /Admin/EditItem. ", NLogsModeEnum.Trace);
             
+			var model = new object();
+			var view = "";
+
 			switch (type)
 			{
-				case "ToursWebAppEXAMProject.Models.New":
+				case "New":
 					var modelNew =	DataManager.NewBaseInterface.GetItemById(id);
-                   
-					WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("EditItemNew", modelNew);
-				
-				case "ToursWebAppEXAMProject.Models.Blog":
+					modelNew.DateAdded  = DateTime.Now;
+
+                    model = modelNew;
+					view = "EditItemNew";
+					break;
+                    												
+				case "Blog":
 					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
+					modelBlog.DateAdded = DateTime.Now;
 
-                    WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("EditItemBlog", modelBlog);
+                    model = modelBlog;
+                    view = "EditItemBlog";
+                    break;
 
-				case "ToursWebAppEXAMProject.Models.Product":
+                case "Product":
 					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
-
-                    WriteLogs("Возвращено /Admin/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("EditItemProduct", modelProduct);
+					modelProduct.DateAdded = DateTime.Now;
+					
+                    model = modelProduct;
+                    view = "EditItemProduct";
+                    break;
 			}
 
-            WriteLogs("Возвращено представление /Admin/Index.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs($"Возвращено представление /Admin/{view}.cshtml\n", NLogsModeEnum.Trace);
             						
-			return View("Index");
+			return View(view, model);
 		}
 
         /// <summary>

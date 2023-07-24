@@ -2124,6 +2124,11 @@ body {
 	margin: 0.3em;
 	padding: 0.3em;
 }
+.blockWidth100 {
+	min-width: 98%;
+	margin: 0.3em;
+	padding: 0.3em;
+}
 .titleImage{
 	max-width: 25%;
 }

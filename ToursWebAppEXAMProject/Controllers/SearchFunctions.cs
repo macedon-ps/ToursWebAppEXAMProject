@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
+using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
+using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -14,22 +17,50 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		public SearchProductViewModel GetModel(string countryName)
 		{
-			var searchViewModel = new SearchProductViewModel();
+            var searchViewModel = new SearchProductViewModel();
 
-			searchViewModel.CountryId = GetIdOfSelectedCountry(countryName);
-			searchViewModel.CountryNameSelected = countryName;
-			var allCountries = GetAllCountries();
-			searchViewModel.Countries = allCountries;
-			searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
+            try
+			{
+                var country = GetCountryBySelectedName(countryName);
+                var city = GetCityByCountrySelectedName(countryName);
 
-			var cityNameSelected = GetCityNameSelected(countryName);
-			searchViewModel.CityNameSelected = cityNameSelected;
-			var allCities = GetAllCities(countryName);
-			searchViewModel.Cities = allCities;
-			searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
+                if (country != null && country.Name == countryName)
+                {
+                    searchViewModel.CountryId = country.Id;
+                    searchViewModel.CountryNameSelected = country.Name;
+                    searchViewModel.MapImagePath = country.CountryMapPath;
+                    searchViewModel.CountryDescription = country.ShortDescription;
 
-			searchViewModel.AllCountriesWithCitiesListByOneString = DataManager.CollectionOfCitiesAfterParamsInterface.
-				GetAllCountriesWithCitiesListByOneString();
+                    var allCountries = GetAllCountries();
+                    searchViewModel.Countries = allCountries;
+                    searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
+                }
+                else
+                {
+                    WriteLogs($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ", NLogsModeEnum.Warn);
+                }
+
+                if (city != null)
+                {
+                    searchViewModel.CityNameSelected = city.Name;
+                    searchViewModel.CityDescrition = city.ShortDescription;
+
+                    var allCities = GetAllCities(countryName);
+                    searchViewModel.Cities = allCities;
+                    searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
+                }
+                else
+                {
+                    WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
+                }
+
+                searchViewModel.AllCountriesWithCitiesListByOneString = DataManager.CollectionOfCitiesAfterParamsInterface.
+                    GetAllCountriesWithCitiesListByOneString();
+            }
+			catch (Exception error)
+			{
+				WriteLogs($"Ошибка создания SearchProductViewModel: {error.Message}", NLogsModeEnum.Error);
+			}
 
 			return searchViewModel;
 		}
@@ -47,16 +78,22 @@ namespace ToursWebAppEXAMProject.Controllers
 			var countryName = formValues["countriesSelect"].ToString();
             var cityNameSelected = formValues["citiesSelect"].ToString();
 
-            searchViewModel.CountryId = GetIdOfSelectedCountry(countryName);
-			searchViewModel.CountryNameSelected = countryName;
+            var country = GetCountryBySelectedName(countryName);
+			var city = cityNameSelected ?? GetCityByCountrySelectedName(countryName).Name;
 
+            searchViewModel.CountryId = country.Id;
+			searchViewModel.CountryNameSelected = countryName;
+            searchViewModel.MapImagePath = country.CountryMapPath;
+            searchViewModel.CountryDescription = country.ShortDescription;
+			//searchViewModel.CityDescrition = city.ShortDescription;
+			
 			// передаваемые данные через элементы форм в строковом формате
 			searchViewModel.Countries = GetAllCountries();
 			searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
 
 			if (cityNameSelected == null)
 			{
-				cityNameSelected = GetCityNameSelected(countryName);
+				//cityNameSelected = GetCityByCountrySelectedName(countryName);
 			}
 				
 			searchViewModel.CityNameSelected = cityNameSelected;
@@ -101,12 +138,17 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
-		private int GetIdOfSelectedCountry(string countryNameSelected)
+		private Country GetCountryBySelectedName(string countryNameSelected)
 		{
-			var countryId = DataManager.CountryBaseInterface.GetAllItems()
-				.FirstOrDefault(c => c.Name == countryNameSelected).Id;
+			var country = DataManager.CountryBaseInterface.GetAllItems()
+				.FirstOrDefault(c => c.Name == countryNameSelected);
+			
+			if (country == null)
+			{
+				country = new Country();
+			}
 
-			return countryId;
+			return country;
 		}
 
 		/// <summary>
@@ -114,11 +156,16 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="countryNameSelected">Выбранная страна</param>
 		/// <returns></returns>
-		private string? GetCityNameSelected(string countryNameSelected)
+		private City GetCityByCountrySelectedName(string countryNameSelected)
 		{
-			var cityNameSelected = DataManager.CollectionOfCitiesAfterParamsInterface.GetQueryResultItemsAfterCountryName(countryNameSelected).First().Name;
+			var city = DataManager.CollectionOfCitiesAfterParamsInterface.GetQueryResultItemsAfterCountryName(countryNameSelected).First();
 
-			return cityNameSelected;
+			if(city == null)
+			{
+				city = new City();
+			}
+
+			return city;
 		}
 
 		/// <summary>
