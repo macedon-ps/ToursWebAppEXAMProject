@@ -30,7 +30,11 @@
                 @*свойства, кот. предварительно преобразуются в строки*@
                 <input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
                 <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />
-                               
+                
+                @*свойства для данных страны и города при возврате на предыдущую страницу*@
+                <input type="hidden" id="backCountry" value="" />
+                <input type="hidden" id="backCity" value="" />
+
                 @* Первый блок элементов: 
                     3 select (список стран, количество дней отдыха, количество отдыхающих), 
                     календарь и кнопка "Найти тур" *@
@@ -38,44 +42,45 @@
                 <div class="flexRow searchBlock1">   
                     
                     @*Список стран (выпадающий список, единственный выбор)
-                        По выбранной стране будет выводиться список городов этой страны*@
-                    <div class="flexColumn blockWidth20">
+                    По выбранной стране будет выводиться список городов этой страны class="flexColumn blockWidth20"*@
+                    <div >
                         <div>
                             <label asp-for="CountryNameSelected"></label>
                             <select asp-for="CountryNameSelected" 
-                                asp-items="@Model.CountriesList" name="countriesSelect">
+                                asp-items="@Model.CountriesList" id="countriesSelect">
                             </select>
                         </div>
                         <div id="countriesSelectDiv" class="flexColumn blockWidth20"></div>
                     </div>
                     
-                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") *@
+                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
                     @{
                         // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
                     }
-                    <div class="flexColumn blockWidth20">
-                        <label asp-for="DaysInterval"></label>
-                        <input asp-for="DaysInterval" />
+                    <div >
+                        <label asp-for="DateFrom"></label>
+                        <input asp-for="DateFrom" />
+                        <input asp-for="DateTo" />
                     </div>
                     
-                    @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор)*@
-                    <div class="flexColumn blockWidth20">
+                    @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
+                    <div >
                         <label asp-for="NumberOfDaysFromSelectList"></label>
                         <select asp-for="NumberOfDaysFromSelectList" 
                             asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
                         </select>
                     </div>
                 
-                    @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор)*@
-                    <div class="flexColumn blockWidth20">
+                    @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
+                    <div >
                         <label asp-for="NumberOfPeopleFromSelectList"></label>
                         <select asp-for="NumberOfPeopleFromSelectList" 
                             asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
                         </select>
                     </div>
                     
-                    @*Кнопка "Найти тур"*@
-                    <div class="flexColumn blockWidth20">
+                    @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
+                    <div >
                         <input type="submit" value="Найти тур" />
                     </div>
                 </div> 
@@ -86,27 +91,27 @@
 
                 <div class="flexRow searchBlock2">   
                     @*Список городов (выпадающий список, множественный выбор)
-                      Список городов выводится по выбранной стране*@
-                    <div class="flexColumn blockWidth20">
+                    Список городов выводится по выбранной стране class="flexColumn blockWidth20"*@
+                    <div >
                         <div id="divForChangeCitiesSelectList" >
                             <label asp-for="CityNameSelected"></label>
                             <select  asp-for="CityNameSelected" 
-                                asp-items="@Model.CitiesList" name="citiesSelect">
+                                asp-items="@Model.CitiesList" id="citiesSelect">
                             </select>
                         </div>    
                         <div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>    
                     </div>
                         
-                    @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото)*@
-                    <div class="flexColumn blockWidth60">
+                    @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото) class="flexColumn blockWidth60"*@
+                    <div >
                         <label asp-for="MapImagePath"></label>
                         <div class="">
                             @Html.Raw(Model.MapImagePath);
                         </div>
                     </div>
 
-                    @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности)*@
-                    <div class="flexColumn blockWidth20">
+                    @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности) class="flexColumn blockWidth20"*@
+                    <div >
                         <label asp-for="CountryDescription"></label>
                         <p>@Model.CountryDescription</p>
                         <label asp-for="CityDescrition"></label>
@@ -115,8 +120,7 @@
                         <p>@Model.LocalDescrition</p>
                     </div>
                 </div>
-
-                @* Блок данных информационного характера, на пермод разработки
+                <div>@* Блок данных информационного характера, на пермод разработки
                    В дальнейшем, будет убран из проекта
                 
                 
@@ -150,149 +154,12 @@
                     <p>Model.PicturesImagePath / Картинки: @Model.PicturesImagePath</p>
                 </div>
                 *@
+                </div>
             </form>
         </div>
      </div>
 </div>
-<script>
+<script type="module" src="~/js/search.js">
    
-    // Скрипт по изменению данных 2-х Html-элементов Select (список стран в БД и список городов для выбранной страны из БД) 
-    // по событию изменения значения первого Select (список стран). Изменения происходят без перезагрузки страницы.
-   
-    // 1. Находим все нужные Html элементы
-    // 1.1. Находим select эдементы по аттрибуту "name" - список стран и список городов
-    var countriesListSelectElement = document.getElementsByName('countriesSelect')[0];
-    var citiesListSelectElement = document.getElementsByName('citiesSelect')[0];
-
-    // 1.2. находим по id input type="hidden", в кот. хранится информация о всех странах и городах, кот. есть в БД 
-    var allCountriesAndCities = document.getElementById('AllCountriesAndCities');
     
-    // 2. Сохраним значение строки данных о всех странах и городах из БД
-    var allCountriesWithCitiesByOneString = allCountriesAndCities.value;
-    
-    // 3. Из данной строки сформируем ассоциативный массив, где ключ - название страны, а значение - массив строк - названий городов
-    // 3.1. Создаем сам ассоциативный массив 
-    var countriesWithCitiesAssocArray = GetAllCountriesWithCitiesAssocArray(allCountriesWithCitiesByOneString); 
-
-    // функция создания ассоциативного массива с парами "ключ" : "значение", 
-    function GetAllCountriesWithCitiesAssocArray(allByOneString) {
-        var assocArray = new Map();
-        var key_AssocArray = "";
-        var value_AssocArray = "";
-        var values_AssocArray = [];
-        // slice(0,-2) - возвращаем копию массива с элементами от 0 до 3-го с конца, т.е. без "\r\n", 
-        // split("\n") - полученную строку разбиваем по разделителю "\r\n"
-        // т.о. убираем последний пустой элемент массива
-        var allArray = allByOneString.slice(0,-2).split("\n");
-
-        // преобразуем обычный массив allArray в ассоциативный массив assocArray
-        for(var i = 0; i < allArray.length; i++){
-            var item = allArray[i];
-            // возвращаем копию массива с элементами от 0 до 2-го с конца, т.е. без последней запятой (,)
-            item = item.slice(0, -1);
-            // делим каждый элемент на "ключ" и "значение" 
-            massiv = item.split(":");
-            key_AssocArray = massiv[0];
-            value_AssocArray = massiv[1];
-            if(value_AssocArray.includes(",")){
-                // создаем массив values_AssocArray по разделителю ","
-                values_AssocArray = value_AssocArray.split(',');
-            } else {
-                values_AssocArray.push(value_AssocArray);
-            }
-            // добавляем новый элемент ассоциативного массива в виде пары "ключ" : "значение"
-            assocArray.set(key_AssocArray, values_AssocArray);
-            // обнуление значения, чтобы очищалось значение списка горордов
-            values_AssocArray = [];
-        }
-        return assocArray;
-    }
-    
-    // 4. Подпишемся на событие изменение списка городов в связи с изменением страны
-    countriesListSelectElement.addEventListener("change", changeCountry);
-
-    // 4.1. Функция, кот. обрабатывает изменение списка городов
-    function changeCountry() {
-       
-        // 4.2. Создаем переменную для имени выбранной страны
-        var selectCountryName = "";
-                
-        // найдем значение выбранной страны из списка стран
-        selectCountryName = countriesListSelectElement.options[countriesListSelectElement.selectedIndex].value;
-
-        // если страна не выбрана, выходим из функции без видимых изменений UI
-        //if (selectCountryName == null) {
-        //    return;
-        //}
-
-        // устанавливаем выбранный элемент для списка стран
-        countriesListSelectElement.value = selectCountryName;
-        console.log(`countriesListSelectElement.value = ${countriesListSelectElement.value}`);
-
-        // вызываем функцию создание нового и замены старого списка городов
-        UpdateCitiesSelectElement(selectCountryName, countriesWithCitiesAssocArray);
-    }
-    
-    // функция создания Html элемента <select></select> для списка городов
-    function UpdateCitiesSelectElement(selectCountryName, assocArray) {
-        
-        // создадим новый список городов
-        var selectList = document.createElement("select");
-        
-        var parentDiv = document.getElementById('divForChangeCitiesSelectList');
-        
-        // замена старого списка городов новым / сначала указывается новый, потом - старый
-        parentDiv.replaceChild(selectList, citiesListSelectElement);
-        
-        // перезаписываем элемент по ссылке на старый элемент
-        citiesListSelectElement = selectList;
-
-        var citiesArray = GetCitiesArray(selectCountryName, assocArray);
-
-        for(var i = 0; i < citiesArray.length; i++){
-            var option = document.createElement("option");
-            option.value = citiesArray[i];
-            option.text = citiesArray[i];
-            citiesListSelectElement.appendChild(option);   
-        }
-        
-        // 5. Подпишемся на событие изменение города в созданном списке городов
-        citiesListSelectElement.addEventListener("change", changeCity);
-        // если 1 элемент в массиве, то устанавливаем его как выбранный элемент для списка городов
-        if(citiesArray.length === 1){
-            citiesListSelectElement.value = citiesListSelectElement.options[0].value;
-            console.log(`citiesListSelectElement.value = ${citiesListSelectElement.value}`);
-        }
-    }
-
-    // из ассоциативного массива выбираем массив значений городов по ключу - названию страны 
-    function GetCitiesArray(countryName, allCountriesAssocArray){
-        
-        var cities = [];
-        allCountriesAssocArray.forEach(function(_value, _key){
-            if(_key === countryName){
-               cities = _value;
-            }
-        });
-        return cities;
-    }
-    
-    // Функция, кот. обрабатывает изменение города в списке городов
-    function changeCity(){
-        // 5.2. Создаем переменную для имени выбранной страны
-        var selectCityName = "";
-                
-        // найдем значение выбранной страны из списка стран
-        selectCityName = citiesListSelectElement.options[countriesListSelectElement.selectedIndex].value;
-
-        // если страна не выбрана, выходим из функции без видимых изменений UI
-        //if (selectCityName == null) {
-        //    return;
-        //}
-
-        // устанавливаем выбранный элемент для списка городов
-        citiesListSelectElement.value = selectCityName;
-        console.log(`citiesListSelectElement.value = ${citiesListSelectElement.value}`);
-    }
-   
 </script>
