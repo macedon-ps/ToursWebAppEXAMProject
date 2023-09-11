@@ -24,12 +24,13 @@
                 
                 @*свойства, кот. передаются в  строковом виде или с приведением к строке*@
                 <input type="hidden" asp-for="CountryId" value="@Model.CountryId" />
-                <input type="hidden" asp-for="AllCountriesWithCitiesListByOneString" value="@Model.AllCountriesWithCitiesListByOneString" id="AllCountriesAndCities"/>
-                <input type="hidden" asp-for="CityNameSelected" />
+                <input type="hidden" asp-for="AllCountriesAndCitiesByString" value="@Model.AllCountriesAndCitiesByString" id="AllCountriesAndCities" />
+                <input type="hidden" asp-for="AllCountriesAndMapsByString" value="@Model.AllCountriesAndMapsByString" id="AllCountriesAndMaps" />
+                @*<input type="hidden" asp-for="CityNameSelected" />*@
 
                 @*свойства, кот. предварительно преобразуются в строки*@
-                <input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
-                <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />
+                @*<input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
+                <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />*@
                 
                 @*свойства для данных страны и города при возврате на предыдущую страницу*@
                 <input type="hidden" id="backCountry" value="" />
@@ -38,7 +39,7 @@
                 @* Первый блок элементов: 
                     3 select (список стран, количество дней отдыха, количество отдыхающих), 
                     календарь и кнопка "Найти тур" *@
-
+                
                 <div class="flexRow searchBlock1">   
                     
                     @*Список стран (выпадающий список, единственный выбор)
@@ -50,7 +51,7 @@
                                 asp-items="@Model.CountriesList" id="countriesSelect">
                             </select>
                         </div>
-                        <div id="countriesSelectDiv" class="flexColumn blockWidth20"></div>
+                        @*<div id="countriesSelectDiv" class="flexColumn blockWidth20"></div>*@
                     </div>
                     
                     @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
@@ -99,13 +100,13 @@
                                 asp-items="@Model.CitiesList" id="citiesSelect">
                             </select>
                         </div>    
-                        <div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>    
+                        @*<div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>*@
                     </div>
                         
                     @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото) class="flexColumn blockWidth60"*@
                     <div >
                         <label asp-for="MapImagePath"></label>
-                        <div class="">
+                        <div id="countryMap" class="">
                             @Html.Raw(Model.MapImagePath);
                         </div>
                     </div>
@@ -113,11 +114,11 @@
                     @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности) class="flexColumn blockWidth20"*@
                     <div >
                         <label asp-for="CountryDescription"></label>
-                        <p>@Model.CountryDescription</p>
+                        <p id="countryDesc">@Model.CountryDescription</p>
                         <label asp-for="CityDescrition"></label>
-                        <p>@Model.CityDescrition</p>
+                        <p id="cityDesc">@Model.CityDescrition</p>
                         <label asp-for="LocalDescrition"></label>
-                        <p>@Model.LocalDescrition</p>
+                        <p id="localDesc">@Model.LocalDescrition</p>
                     </div>
                 </div>
                 <div>@* Блок данных информационного характера, на пермод разработки
@@ -159,7 +160,9 @@
         </div>
      </div>
 </div>
-<script type="module" src="~/js/search.js">
-   
-    
-</script>
+@* подключение Vue.js, попытка
+<script src="https://unpkg.com/vue@next"></script>
+<script src="~/vue/main.js"></script>*@
+
+@* нативный javascript на стороне клиента*@
+<script type="module" src="~/js/search.js"></script>

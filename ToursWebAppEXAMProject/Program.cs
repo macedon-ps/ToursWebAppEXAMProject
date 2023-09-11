@@ -23,7 +23,7 @@ builder.Services.AddTransient<IBaseInterface<Offer>, BaseRepository<Offer>>();
 builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
-builder.Services.AddTransient<ICollectionOfCitiesAfterParamsInterface, CollectionOfCitiesAfterParamsRepository>();
+builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<DataManager>();
 
 // подключение сервиса использования MS SQL Server и БД

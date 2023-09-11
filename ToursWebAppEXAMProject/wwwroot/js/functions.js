@@ -1,14 +1,14 @@
 ﻿// экспортируемые во вне функции и ссылка на HTML элемент
-export { GetAllCountriesWithCitiesAssocArray, changeCountry, changeCity, UpdateCitiesSelectElement }
+export { GetCountriesCitiesAssocArray, GetCountriesMapsAssocArray, changeCountry, changeCity, UpdateCitiesSelectElement }
 export { citiesListSelectElement }
 // export { backCountryValueElement, backCityValueElement }
 
 // импортируемые ссылки на HTML элементы и импортируемый ассоциативный массив
-import { countriesListSelectElement, citiesListSelectElement, backCountryValueElement, backCityValueElement } from './search.js'
-import { countriesWithCitiesAssocArray } from './search.js'
+import { countriesListSelectElement, citiesListSelectElement, countryMapElement, countryDescElement, cityDescElement, localDescElement, backCountryValueElement, backCityValueElement } from './search.js'
+import { countriesCitiesAssocArray, countriesMapsAssocArray } from './search.js'
 
 // 3.1. Функция создания ассоциативного массива из строки стран и городов
-function GetAllCountriesWithCitiesAssocArray(allByOneString) {
+function GetCountriesCitiesAssocArray(allByOneString) {
     let assocArray = new Map();
     let key_AssocArray = "";
     let value_AssocArray = "";
@@ -41,6 +41,33 @@ function GetAllCountriesWithCitiesAssocArray(allByOneString) {
     return assocArray;
 }    
 
+// 3.2. Функция создания ассоциативного массива из строки стран и карт
+function GetCountriesMapsAssocArray(allByOneString) {
+    let assocArray = new Map();
+    let key_AssocArray = "";
+    let value_AssocArray = "";
+    // slice(0,-1) - возвращаем копию массива с элементами от 0 до 3-го с конца, т.е. без последней "\n" ("\r\n"")
+    // т.о. убираем последний пустой элемент массива
+    // split("\n") - полученную строку разбиваем по разделителю "\n"
+    var allArray = allByOneString.slice(0, -2).split("\n");
+
+    // преобразуем обычный массив allArray в ассоциативный массив assocArray
+    for (var i = 0; i < allArray.length; i++) {
+
+        let item = allArray[i];
+        // делим каждый элемент на "ключ" и "значение" по символу "#" (м.исп-ть др. спец. символы как разделители, 
+        // но ":" есть в адресе)
+        let massiv = item.split("#");
+        key_AssocArray = massiv[0];
+        value_AssocArray = massiv[1];
+        
+        // добавляем новый элемент ассоциативного массива в виде пары "ключ" : "значение"
+        assocArray.set(key_AssocArray, value_AssocArray);
+    }
+    return assocArray;
+}
+
+
 // 4.1. Функция, кот. обрабатывает изменение списка стран
 function changeCountry() {
 
@@ -60,10 +87,17 @@ function changeCountry() {
     // 4.3. Устанавим выбранный элемент для страницы возврата
     backCountryValueElement.value = selectCountryName;                                 
     console.log(`4.3. Установим backCountryValueElement.value = ${backCountryValueElement.value}`);
+
+    // 4.4. Меняем карту страны
+    console.log(`4.4. Изменим карту страны`);
+    let countryMap = GetMapPath(selectCountryName);
+    countryMapElement.innerHTML = countryMap;
+
+    console.log(`countryMapElement.innerHTML:  ${countryMapElement.innerHTML}`);
     console.log("---------------------------------------------");
 
     // 5. Вызовем функцию создания нового и замены старого списка городов
-    UpdateCitiesSelectElement(selectCountryName, countriesWithCitiesAssocArray);
+    UpdateCitiesSelectElement(selectCountryName, countriesCitiesAssocArray);
 }
 
 // 5.1. Функция, кот. обрабатывает изменение списка городов
@@ -153,7 +187,7 @@ function UpdateCitiesSelectElement(selectCountryName, assocArray) {
     console.log("---------------------------------------------");
 }
 
-// Функция выбора из ассоциативного массива - массива значений городов по ключу - названию страны 
+// 5.5.1. Функция выбора из ассоциативного массива - массива значений городов по ключу - названию страны 
 function GetCitiesArray(countryName, allCountriesAssocArray) {
 
     console.log("5.5.1. Вытянем из ассоц. массива новый список городов");
@@ -165,4 +199,16 @@ function GetCitiesArray(countryName, allCountriesAssocArray) {
         }
     });
     return cities;
+}
+
+// 5.5.2. Функция для вывода пути к карте страны по ее названию
+function GetMapPath(countryName) {
+    // TODO: сделать вывод карты из ассоц. массива для "страна" : "путь к карте страны"
+    let mapPath = "";
+    countriesMapsAssocArray.forEach(function (_value, _key) {
+        if (_key === countryName) {
+            mapPath = _value;
+        }
+    });
+    return mapPath;
 }

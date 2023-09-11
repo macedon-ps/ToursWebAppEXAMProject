@@ -2062,6 +2062,9 @@ body {
 	padding: 1em;
 	border-bottom: 2px solid white;
 }
+.searchButtonSubmit {
+	padding-top: 1em;
+}
 .asidePage {
 	min-height: 560px;
 	background-color: #7dced8;

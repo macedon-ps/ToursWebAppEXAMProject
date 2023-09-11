@@ -20,7 +20,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public IEditTechTaskInterface TechTaskInterface { get; set; }
 
-		public ICollectionOfCitiesAfterParamsInterface CollectionOfCitiesAfterParamsInterface { get; set; }
+		public IQueryResultInterface QueryResultInterface { get; set; }
 
 
 		public DataManager(	IBaseInterface<Product> productBaseInterface,
@@ -36,7 +36,7 @@ namespace ToursWebAppEXAMProject.Repositories
 							IBaseInterface<Blog> blogBaseInterface,
 							IBaseInterface<New> newBaseInterface,
 							IEditTechTaskInterface techTaskInterface,
-							ICollectionOfCitiesAfterParamsInterface collectionOfCitiesAfterParamsInterface
+							IQueryResultInterface queryResultInterface
 							)
 		{
 			this.ProductBaseInterface = productBaseInterface;
@@ -52,7 +52,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			this.BlogBaseInterface = blogBaseInterface;
 			this.NewBaseInterface = newBaseInterface;
 			this.TechTaskInterface = techTaskInterface;
-			this.CollectionOfCitiesAfterParamsInterface = collectionOfCitiesAfterParamsInterface;
+			this.QueryResultInterface = queryResultInterface;
 		}
 	}
 }

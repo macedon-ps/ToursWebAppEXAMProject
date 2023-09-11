@@ -7,7 +7,7 @@ using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
-	public class CollectionOfCitiesAfterParamsRepository : ICollectionOfCitiesAfterParamsInterface
+	public class QueryResultRepository : IQueryResultInterface
 	{
 		private readonly TourFirmaDBContext context;
 
@@ -17,7 +17,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
 		/// <param name="_context">контекст подключения к БД</param>
-		public CollectionOfCitiesAfterParamsRepository(TourFirmaDBContext _context)
+		public QueryResultRepository(TourFirmaDBContext _context)
 		{
 			context = _context;
 			
@@ -29,12 +29,11 @@ namespace ToursWebAppEXAMProject.Repositories
 
 
 		/// <summary>
-		/// Метод GetQueryResultItemsAfterCountryForeignKeyId(int foreignKeyId), кот. используется для возврата результатов выборки сущностей из БД по внешнему ключу Id
+		/// Метод вывода списка городов по внешнему ключу Id страны
 		/// </summary>
-		/// <param name="foreignKeyId">внешний ключ - Id другой сущности </param>
+		/// <param name="foreignKeyId">внешний ключ - Id страны</param>
 		/// <returns></returns>
-
-		public IEnumerable<City> GetQueryResultItemsAfterCountryForeignKeyId(int foreignKeyId)
+		public IEnumerable<City> GetCitiesByCountryForeignKeyId(int foreignKeyId)
 		{
 			WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по Id = {foreignKeyId}. ", NLogsModeEnum.Debug);
 			
@@ -68,7 +67,12 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 		}
 
-		public IEnumerable<City> GetQueryResultItemsAfterCountryName(string countryName)
+        /// <summary>
+        /// Метод вывода списка городов по названию страны
+        /// </summary>
+        /// <param name="countryName">название страны</param>
+        /// <returns></returns>
+        public IEnumerable<City> GetCitiesByCountryName(string countryName)
 		{
             WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по названию = {countryName}. ", NLogsModeEnum.Debug);
             
@@ -102,7 +106,22 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 		}
 
-		public string GetAllCountriesWithCitiesListByOneString()
+        /// <summary>
+        /// Метод вывода списка турпродуктов по названию страны
+        /// </summary>
+        /// <param name="countryName">название страны</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public IEnumerable<Product> GetProductsByCountryName(string countryName)
+        {
+            throw new NotImplementedException();
+        }
+
+		/// <summary>
+		/// Метод выборки из БД и преобразования в строку всех стран  городов
+		/// </summary>
+		/// <returns></returns>
+        public string GetAllCountriesAndCitiesByString()
 		{
             WriteLogs("Произведено подключение к БД. Запрашивается список всех стран и городов одной строкой. ", NLogsModeEnum.Debug);
             
@@ -116,7 +135,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// запрос к БД дать список стран в формате List<Country>, страны не повторяются
 				var countries = context.Countries
-				.FromSqlRaw($"Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
+				.FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
 				.ToList();
 
 				// для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
@@ -165,5 +184,73 @@ namespace ToursWebAppEXAMProject.Repositories
 				return $"Вызвано исключение: {ex.Message}";
 			}
 		}
-	}
+
+
+        /// <summary>
+        /// Метод выборки из БД и преобразования в строку всех стран и их описаний
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string GetAllCountryShortDescriptionsByString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Метод выборки из БД и преобразования в строку всех городов и их описаний
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string GetAllCityShortDescriptionsByString()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Метод выборки из БД и преобразования в строку всех стран и их карт
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string GetAllCountryMapsByString()
+        {
+            WriteLogs("Произведено подключение к БД. Запрашивается список всех стран и их карт одной строкой. ", NLogsModeEnum.Debug);
+
+            try
+            {
+                // объявляем и инициализируем переменные
+                var countries = new List<Country>();
+                string countriesAndMapsString = "";
+                
+                // запрос к БД дать список стран в формате List<Country>, страны не повторяются
+                countries = context.Countries
+                .FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
+                .ToList();
+
+                // для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
+                foreach (Country country in countries)
+                {
+                   countriesAndMapsString += $"{country.Name}#{country.CountryMapPath}\n";
+				}
+
+                if (countriesAndMapsString == null)
+                {
+                    WriteLogs("Выборка списка всех сторан и их карт одной строкой не осуществлена.\n", NLogsModeEnum.Warn);
+
+                    return "В БД нет записей о странах и городах";
+                }
+                else
+                {
+                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+
+                    return countriesAndMapsString;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLogs($"Выборка списка всех стран и их карт одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+
+                return $"Вызвано исключение: {ex.Message}";
+            }
+        }
+    }
 }

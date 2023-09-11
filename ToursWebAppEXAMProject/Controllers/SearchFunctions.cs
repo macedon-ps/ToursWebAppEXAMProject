@@ -48,16 +48,22 @@ namespace ToursWebAppEXAMProject.Controllers
                     var allCities = GetAllCities(countryName);
                     searchViewModel.Cities = allCities;
                     searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
+                    
+					// TODO: определить данные для LocalDescrition
+                    //searchViewModel.LocalDescrition = 
                 }
                 else
                 {
                     WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
                 }
 
-                searchViewModel.AllCountriesWithCitiesListByOneString = DataManager.CollectionOfCitiesAfterParamsInterface.
-                    GetAllCountriesWithCitiesListByOneString();
+                searchViewModel.AllCountriesAndCitiesByString = DataManager.QueryResultInterface
+					.GetAllCountriesAndCitiesByString();
+                searchViewModel.AllCountriesAndMapsByString = DataManager.QueryResultInterface
+					.GetAllCountryMapsByString();
+
             }
-			catch (Exception error)
+            catch (Exception error)
 			{
 				WriteLogs($"Ошибка создания SearchProductViewModel: {error.Message}", NLogsModeEnum.Error);
 			}
@@ -75,35 +81,60 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			var searchViewModel = viewModel as SearchProductViewModel;
 
-			var countryName = formValues["countriesSelect"].ToString();
-            var cityNameSelected = formValues["citiesSelect"].ToString();
-
-            var country = GetCountryBySelectedName(countryName);
-			var city = cityNameSelected ?? GetCityByCountrySelectedName(countryName).Name;
-
-            searchViewModel.CountryId = country.Id;
-			searchViewModel.CountryNameSelected = countryName;
-            searchViewModel.MapImagePath = country.CountryMapPath;
-            searchViewModel.CountryDescription = country.ShortDescription;
-			//searchViewModel.CityDescrition = city.ShortDescription;
-			
-			// передаваемые данные через элементы форм в строковом формате
-			searchViewModel.Countries = GetAllCountries();
-			searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
-
-			if (cityNameSelected == null)
+			try
 			{
-				//cityNameSelected = GetCityByCountrySelectedName(countryName);
-			}
-				
-			searchViewModel.CityNameSelected = cityNameSelected;
-			var allCities = GetAllCities(countryName);
-			searchViewModel.Cities = allCities;
-			searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
-		
+                var countryName = formValues["CountryNameSelected"].ToString();
+                var cityName = formValues["CityNameSelected"].ToString();
+
+                var country = GetCountryBySelectedName(countryName);
+                var city = GetCityByCitySelectedName(countryName, cityName);
+
+				if (country != null && country.Name == countryName)
+                {
+                    searchViewModel.CountryId = country.Id;
+                    searchViewModel.CountryNameSelected = country.Name;
+                    searchViewModel.MapImagePath = country.CountryMapPath;
+                    searchViewModel.CountryDescription = country.ShortDescription;
+
+                    // передаваемые данные через элементы форм в строковом формате
+                    searchViewModel.Countries = GetAllCountries();
+                    searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
+				}
+                else
+                {
+                    WriteLogs($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ", NLogsModeEnum.Warn);
+                }
+
+                if (city != null)
+                {
+                    searchViewModel.CityNameSelected = city.Name;
+                    searchViewModel.CityDescrition = city.ShortDescription;
+
+                    var allCities = GetAllCities(countryName);
+                    searchViewModel.Cities = allCities;
+                    searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
+
+                    // TODO: определить данные для LocalDescrition
+                    //searchViewModel.LocalDescrition = 
+                }
+                else
+                {
+                    WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
+                }
+
+                searchViewModel.AllCountriesAndCitiesByString = DataManager.QueryResultInterface
+					.GetAllCountriesAndCitiesByString();
+                searchViewModel.AllCountriesAndMapsByString = DataManager.QueryResultInterface
+					.GetAllCountryMapsByString();
+
+            }
+            catch (Exception error)
+            {
+                WriteLogs($"Ошибка создания SearchProductViewModel: {error.Message}", NLogsModeEnum.Error);
+            }
+
 			return searchViewModel;
 		}
-
 
 
 		/// <summary>
@@ -158,7 +189,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		private City GetCityByCountrySelectedName(string countryNameSelected)
 		{
-			var city = DataManager.CollectionOfCitiesAfterParamsInterface.GetQueryResultItemsAfterCountryName(countryNameSelected).First();
+			var city = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected).First();
 
 			if(city == null)
 			{
@@ -168,12 +199,31 @@ namespace ToursWebAppEXAMProject.Controllers
 			return city;
 		}
 
-		/// <summary>
-		/// Метод создания списка городов выбранной страны в формате SelectList
-		/// </summary>
-		/// <param name="countryNameSelected">Выбранная страна</param>
-		/// <returns></returns>
-		private SelectList? GetAllCitiesSelectList(string countryNameSelected)
+        /// <summary>
+        /// Метод возврата экземпляра города по его названию
+        /// </summary>
+        /// <param name="countryNameSelected">Выбранная страна</param>
+		/// <param name="cityNameSelected">Выбранный город</param>
+        /// <returns></returns>
+        private City GetCityByCitySelectedName(string countryNameSelected, string cityNameSelected)
+        {
+            var city = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected).FirstOrDefault
+				(n => n.Name == cityNameSelected);
+
+            if (city == null)
+            {
+                city = new City();
+            }
+
+            return city;
+        }
+
+        /// <summary>
+        /// Метод создания списка городов выбранной страны в формате SelectList
+        /// </summary>
+        /// <param name="countryNameSelected">Выбранная страна</param>
+        /// <returns></returns>
+        private SelectList? GetAllCitiesSelectList(string countryNameSelected)
 		{
 			return new SelectList(GetAllCities(countryNameSelected), countryNameSelected);
 		}
@@ -186,7 +236,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		private List<string> GetAllCities(string countryNameSelected)
 		{
 			var citiesList = new List<string>();
-			var citiesFromDB = DataManager.CollectionOfCitiesAfterParamsInterface.GetQueryResultItemsAfterCountryName(countryNameSelected);
+			var citiesFromDB = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected);
 
 			foreach (var city in citiesFromDB)
 			{

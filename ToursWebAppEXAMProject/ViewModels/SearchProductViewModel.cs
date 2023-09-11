@@ -50,19 +50,23 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		public SelectList? CitiesList { get; set; } = null!;
 
-		public string? AllCountriesWithCitiesListByOneString { get; set; }
-		
-		/// <summary>
-		/// Выбранные даты отдыха
-		/// </summary>
-		[Display(Name = "Даты поездки:")]
-		// TODO: нужно доработать данный параметр DaysInterval / возможно это только дата начала ???
-		public DateTime DaysInterval { get; set; } = DateTime.Now;
+		public string? AllCountriesAndCitiesByString { get; set; }
 
-		/// <summary>
-		/// Количество дней отдыха
-		/// </summary>
-		[Display(Name = "Дней поездки:")]
+        public string? AllCountriesAndMapsByString { get; set; }
+
+        /// <summary>
+        /// Выбранные даты отдыха
+        /// </summary>
+        [Display(Name = "Даты поездки:")]
+		// TODO: нужно доработать данный параметр DaysInterval / возможно это только дата начала ???
+		public DateTime DateFrom { get; set; } = Convert.ToDateTime((DateTime.Now).ToShortDateString());
+
+        public DateTime DateTo { get; set; } = Convert.ToDateTime((DateTime.Now).ToShortDateString());
+
+        /// <summary>
+        /// Количество дней отдыха
+        /// </summary>
+        [Display(Name = "Дней поездки:")]
 		public NumberOfDaysEnum NumberOfDaysFromSelectList { get; set; } = NumberOfDaysEnum.Шесть_Восемь;
 
 		/// <summary>
