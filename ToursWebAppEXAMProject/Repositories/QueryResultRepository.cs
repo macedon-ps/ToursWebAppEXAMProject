@@ -4,6 +4,7 @@ using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -105,6 +106,46 @@ namespace ToursWebAppEXAMProject.Repositories
 				return new List<City>();
 			}
 		}
+
+        /// <summary>
+        /// Метод вывода списка турпродуктов по названию страны и города
+        /// </summary>
+        /// <param name="countryName">название страны</param>
+        /// <param name="cityName">название города</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public IEnumerable<Product> GetProductsByCountryNameAndCityName(string countryName, string cityName)
+        {
+            WriteLogs($"Произведено подключение к БД. Запрашиваются турпродукты для страны \"{countryName}\" и для города \"{cityName}\". ", NLogsModeEnum.Debug);
+
+            try
+            {
+                var products = new List<Product>();
+
+                products = context.Products
+                .FromSqlRaw($"select distinct Product.Name, Product.ShortDescription, Product.FullDescription, Product.TitleImagePath, Product.DateAdded, Product.Id, Product.CountryId, Product.CityId from Product, Country, City where Product.CountryId = Country.Id AND Country.Name = '{countryName}' AND Product.CityId = City.Id AND City.Name = '{cityName}';")
+                .ToList();
+               
+                if (products == null)
+                {
+                    WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена.\n", NLogsModeEnum.Warn);
+
+                    return new List<Product>();
+                }
+                else
+                {
+                    WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" осуществлена успешно.\n", NLogsModeEnum.Debug);
+
+                    return products;
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена. \nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+
+                return new List<Product>();
+            }
+        }
 
         /// <summary>
         /// Метод вывода списка турпродуктов по названию страны
@@ -252,5 +293,5 @@ namespace ToursWebAppEXAMProject.Repositories
                 return $"Вызвано исключение: {ex.Message}";
             }
         }
-    }
+	}
 }

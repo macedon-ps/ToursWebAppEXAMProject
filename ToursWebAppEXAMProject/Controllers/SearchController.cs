@@ -51,7 +51,23 @@ namespace ToursWebAppEXAMProject.Controllers
 
                 // WriteLogs("Выведены результаты поиска турпродуктов. Переход по маршруту /Search/Index. \n", NLogsModeEnum.Trace);
                 
-                return View("success", searchViewModel);
+				// успешный вывод проверочных данных, кот. формируются на клиенте в браузере
+                // return View("success", searchViewModel);
+
+				// вывод результатов запроса пользователя
+				var products = new List<Product>();
+
+				var countryName = searchViewModel.CountryNameSelected;
+				var cityName = searchViewModel.CityNameSelected;
+
+				if(countryName!="" && cityName != "")
+				{
+                    products = (List<Product>)DataManager.QueryResultInterface.GetProductsByCountryNameAndCityName(countryName, cityName);
+                }
+				
+				return View("GetAllProducts", products);
+
+
 			}
             WriteLogs("SearchProductViewModel не прошла валидацию. ", NLogsModeEnum.Warn);
             WriteLogs("Переход по маршруту /Search/Index.\n", NLogsModeEnum.Trace);
@@ -133,6 +149,13 @@ namespace ToursWebAppEXAMProject.Controllers
             WriteLogs("Выводятся все турпродукты по запросу\n", NLogsModeEnum.Debug);
             
 			return View(products);
+		}
+
+		public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
+		{
+			var products = DataManager.QueryResultInterface.GetProductsByCountryNameAndCityName(countryName, cityName);
+
+			return View("GetAllProducts", products);
 		}
 
         /// <summary>

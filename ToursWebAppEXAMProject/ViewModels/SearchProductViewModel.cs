@@ -61,7 +61,8 @@ namespace ToursWebAppEXAMProject.ViewModels
 		// TODO: нужно доработать данный параметр DaysInterval / возможно это только дата начала ???
 		public DateTime DateFrom { get; set; } = Convert.ToDateTime((DateTime.Now).ToShortDateString());
 
-        public DateTime DateTo { get; set; } = Convert.ToDateTime((DateTime.Now).ToShortDateString());
+		// по умолчанию - интервал в 5 дней
+        public DateTime DateTo { get; set; } = Convert.ToDateTime((DateTime.Now.AddDays(5)).ToShortDateString());
 
         /// <summary>
         /// Количество дней отдыха

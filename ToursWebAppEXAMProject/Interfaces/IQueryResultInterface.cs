@@ -10,6 +10,8 @@ namespace ToursWebAppEXAMProject.Interfaces
 
         IEnumerable<Product> GetProductsByCountryName(string countryName);
 
+		IEnumerable<Product> GetProductsByCountryNameAndCityName(string countryName, string cityName);
+
         string GetAllCountriesAndCitiesByString();
 
 		string GetAllCountryShortDescriptionsByString();
