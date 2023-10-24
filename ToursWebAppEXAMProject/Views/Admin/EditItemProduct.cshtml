@@ -12,6 +12,8 @@
         <form asp-controller="Admin" asp-action="SaveItemProduct" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
+            <input type="hidden" asp-for="Country" />
+            <input type="hidden" asp-for="City" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
