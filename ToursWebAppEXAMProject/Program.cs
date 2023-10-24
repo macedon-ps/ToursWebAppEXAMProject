@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.DBContext;
+using ToursWebAppEXAMProject.Hubs;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // подключение сервиса, кот. добавляет контроллеры и представления
 builder.Services.AddControllersWithViews();
+
+// подключение SignalR
+builder.Services.AddSignalR();
+
 // подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
 builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
 builder.Services.AddTransient<IBaseInterface<Country>, BaseRepository<Country>>();
@@ -49,6 +54,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapHub<ChatHub>("/chatHub");
+	
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");

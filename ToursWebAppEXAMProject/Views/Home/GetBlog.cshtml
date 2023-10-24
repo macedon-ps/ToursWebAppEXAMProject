@@ -23,5 +23,18 @@
             <h4>Id блога: @Model.Id</h4>
             <h4>Дата: @Model.DateAdded</h4>
         </div>
+        <div class="add-messages">
+            <h3>Пользователь: </h3>
+            <input type="text" id="textUser" />
+            <h3>Сообщение: </h3>
+            <textarea rows="10" cols="50" id="textMessage"></textarea>
+            <button type="submit" class="" id="btnSend">Отправить</button>
+        </div>
+        <div>
+            <h3>Все сообщения: </h3>
+            <ul class="" id="list-message"></ul>
+        </div>
     </div>
 </div>
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script src="~/js/sendmessage.js"></script>
