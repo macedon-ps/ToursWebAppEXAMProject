@@ -172,14 +172,19 @@ body {
 	section:last-child, article:last-child {
 		margin-bottom: 0;
 	}
-
-/* Container */
-
-	.container {
-		margin: 0 auto;
-		max-width: 100%;
-		width: 1200px;
+	.new-foto,
+	.blog-foto,
+	.product-foto{
+		width: 100%;
+		aspect-ratio: 3/2;
+		object-fit: cover;
 	}
+/* Container */
+.container {
+	margin: 0 auto;
+	max-width: 100%;
+	width: 1200px;
+}
 
 		@media screen and (max-width: 1680px) {
 
