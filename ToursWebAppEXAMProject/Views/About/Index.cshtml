@@ -7,8 +7,9 @@
     @await Html.PartialAsync("AboutButtonMenuPartial")
 
     <div class="aboutHeader">
-        <h1>Информация о нас:</h1>
-        <br/>
+        <h1 class="title">Информация о нас:</h1>
+        <hr class="horizontal-line" />
+        <br />
         <div class="text-center">
             <h3>Название компании:</h3>
             <p>@ConfigData.CompanyName</p>

@@ -94,7 +94,15 @@ body {
 	color: #878e83;
 	letter-spacing: -1px;
 }
-	
+	.title{
+		text-align: center;
+		margin-bottom: 0.3em;
+	}
+	.horizontal-line {
+		width: 100%;
+		margin-bottom: 2em;
+		border-bottom: 2px solid white;
+	}
 	h1, h2, h3, h4 {
 		color: #007897;
 		font-weight: normal;
@@ -157,7 +165,12 @@ body {
 		text-decoration: underline;
 	}
 
-	a:hover {
+	/*a:hover {
+		text-decoration: none;
+	}*/
+
+	.button a {
+		color: white;
 		text-decoration: none;
 	}
 
@@ -1497,13 +1510,12 @@ body {
 		background-image: -ms-linear-gradient(top, #008dad, #007b9d);
 		background-image: linear-gradient(top, #008dad, #007b9d);
 		display: inline-block;
-		padding: 15px 25px 15px 25px;
+		padding: 5px 20px;
 		background-color: #007b9d;
 		border-radius: 10px;
 		text-transform: lowercase;
-		text-decoration: none;
 		color: #fff;
-		font-size: 1.2em;
+		font-size: 1em;
 		letter-spacing: -1px;
 		border: solid 1px #006e8b;
 		box-shadow: inset 0px 0px 0px 1px #18a8c8;
@@ -2062,12 +2074,18 @@ body {
 }
 .homeButton, .searchButton, .adminButton,
 .supportButton, .aboutButton, .errorButton {
+	display: flex;
+	justify-content:space-between;
 	background-color: #7dced8;
 	margin-top: 1em;
 	padding: 1em;
 	border-bottom: 2px solid white;
 }
-.searchButtonSubmit {
+	.homeButton button, .searchButton button, .adminButton button,
+	.supportButton button, .aboutButton button, .errorButton button {
+		min-width: 18%;
+	}
+	.searchButtonSubmit {
 	padding-top: 1em;
 }
 .asidePage {

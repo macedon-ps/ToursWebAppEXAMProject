@@ -16,8 +16,9 @@
     @await Html.PartialAsync("SearchButtonMenuPartial")
 
     <div class="searchHeader">
-        <h1>Поиск туристических продуктов:</h1>
-        <br/>
+        <h1 class="title">Поиск туристических продуктов:</h1>
+        <<hr class="horizontal-line" />
+        <br />
         <div class="searchMenu">  
 
             <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
