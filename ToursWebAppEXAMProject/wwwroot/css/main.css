@@ -169,11 +169,27 @@ body {
 		text-decoration: none;
 	}*/
 
-	.button a {
+	.homeButton a, .searchButton a, .adminButton a,
+	.supportButton a, .aboutButton a, .errorButton a{
+		display: inline-block;
+		padding: 10px 25px;
 		color: white;
+		background-color: #008dab;
 		text-decoration: none;
+		min-width: 18%;
+		border-radius: 10px;
+		text-align: center;
 	}
-
+	.blog-user,.blog-message,
+	.list-blog-messages {
+		padding: 10px 25px 15px 30px;
+		border-radius: 10px;
+		background-color: #bfe8ed;
+	}
+	.list-blog-messages li {
+		/*background-color: white;*/
+		margin: 5px 0 10px 0;
+	}
 	* > p:last-child {
 		margin-bottom: 0 !important;
 	}
@@ -2081,19 +2097,15 @@ body {
 	padding: 1em;
 	border-bottom: 2px solid white;
 }
-	.homeButton button, .searchButton button, .adminButton button,
-	.supportButton button, .aboutButton button, .errorButton button {
-		min-width: 18%;
-	}
 	.searchButtonSubmit {
 	padding-top: 1em;
-}
-.asidePage {
-	min-height: 560px;
-	background-color: #7dced8;
-	margin: 1em 0 0 1em;
-	padding: 1em;
-}
+	}
+	.asidePage {
+		min-height: 560px;
+		background-color: #7dced8;
+		margin: 1em 0 0 1em;
+		padding: 1em;
+	}
 .asidePage > div{
 	display: flex;
 	margin-bottom: 0.5em;
