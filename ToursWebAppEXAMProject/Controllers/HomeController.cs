@@ -123,12 +123,38 @@ namespace ToursWebAppEXAMProject.Controllers
             
             return View(blog);
 		}
-		
+
+		[HttpPost]
+		public IActionResult SaveBlogMessage(int blogId, string textUser, string textMessage)
+		{
+            var blog = DataManager.BlogBaseInterface.GetItemById(blogId);
+            var timeMessage = $"{DateTime.Now.ToString("HH:mm:ss")}";
+            var allMessageText = $"<p>{timeMessage}: <b>{textUser}:</b><br/> {textMessage}</p><br/>";
+            
+			// если чат пустой, т.е. с дефолтной строкой, то заменяем дефолтную строку пустой строкой и сохраняем
+			if (blog.FullMessageLine == "Вся строка сообщений")
+			{
+				blog.FullMessageLine = "";
+                DataManager.BlogBaseInterface.SaveItem(blog, blogId);
+            }
+            
+			blog.Message = $"В {timeMessage} пользователь {textUser} прислал сообщение";
+            blog.FullMessageLine += allMessageText;
+
+			// сохраняем сообщения чата в БД
+            DataManager.BlogBaseInterface.SaveItem(blog, blogId);
+
+			// логгируем сообщения чата в NLog
+            //WriteLogs($"Пользователь {textUser} отправил сообщение в чат. Оно успешно сохраненено в БД", NLogsModeEnum.Debug);
+
+			return RedirectToAction("GetBlog", new {id = blogId });	
+		}
+
 		/// <summary>
-		/// Метод вывода ТЗ и прогресса его выполнения для страницы Home
-		/// </summary>
-		/// <returns></returns>
-		public IActionResult TechTaskHome()
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы Home
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult TechTaskHome()
 		{
             WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
             

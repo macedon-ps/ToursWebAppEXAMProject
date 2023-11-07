@@ -23,17 +23,22 @@
             <h4>Id блога: @Model.Id</h4>
             <h4>Дата: @Model.DateAdded</h4>
         </div>
-        <div class="add-messages">
-            <h3>Пользователь: </h3>
-            <input type="text" id="textUser" value="Пользователь" placeholder="Ваше имя" class="blog-user" />
-            <h3>Сообщение: </h3>
-            <textarea rows="5" cols="50" id="textMessage" placeholder="Ваше сообщение" class="blog-message"></textarea>
-            <button type="submit" class="" id="btnSend">Отправить</button>
-        </div>
         <div>
             <h3>Все сообщения: </h3>
-            <ul class="list-blog-messages" id="list-message"></ul>
+            <div class="list-blog-messages">
+                @Html.Raw(@Model.FullMessageLine)
+            </div>
         </div>
+        <form asp-controller="Home" asp-action="SaveBlogMessage" method="post">
+            <div class="add-messages">
+                <input type="hidden" name="blogId" value="@Model.Id" />
+                <h3>Пользователь: </h3>
+                <input type="text" name="textUser" placeholder="Имя пользователя" class="blog-user" />
+                <h3>Сообщение: </h3>
+                <textarea rows="5" cols="50" name="textMessage" placeholder="Текст сообщения" class="blog-message"></textarea>
+                <button type="submit" class="" id="btnSend">Отправить</button>
+            </div>
+        </form>
     </div>
 </div>
 <script src="~/lib/microsoft-signalr/signalr.js"></script>

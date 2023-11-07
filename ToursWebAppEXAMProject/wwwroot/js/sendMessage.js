@@ -21,6 +21,7 @@ connection.on("ReceiveMessage", function (fromUser, message) {
 
     // вставляем в конец списка
     listMessages.appendChild(li);
+
 });
 
 connection.start();
@@ -30,7 +31,7 @@ sendMsg.addEventListener("click", function () {
     // получаем введенное имя пользователя и его сообщение
     let userConnect = user.value;
     let messageConnect = message.value;
-
+    
     // отправляем сообщение
     connection.invoke("SendMessage", userConnect, messageConnect);
 });
