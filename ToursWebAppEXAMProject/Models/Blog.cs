@@ -19,7 +19,7 @@ namespace ToursWebAppEXAMProject.Models
 		public string Message { get; set; } = "Сообщение";
 
 		[Display(Name = "Вся строка сообщений")]
-		public string FullMessageLine { get; set; } = "Вся строка сообщений";
+		public string? FullMessageLine { get; set; } = "Вся строка сообщений";
 
 		[Required(ErrorMessage = "Введите краткое описание темы блога")]
 		[Display(Name = "Краткое описание темы блога")]
@@ -30,7 +30,6 @@ namespace ToursWebAppEXAMProject.Models
 		[Display(Name = "Полное описание темы блога")]
 		public string FullDescription { get; set; } = "Полное описание темы блога";
 
-		//[Required(ErrorMessage = "Выберите титульную картинку блога")]
 		[Display(Name = "Титульная картинка")]
 		[StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
 		public string? TitleImagePath { get; set; } = "Нет титульной картинки";

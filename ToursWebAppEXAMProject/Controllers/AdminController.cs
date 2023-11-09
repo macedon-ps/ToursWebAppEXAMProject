@@ -239,7 +239,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [HttpPost]
-		public async Task<IActionResult> SaveItemBlog(Blog model, IFormCollection formValues, IFormFile titleImagePath)
+		public async Task<IActionResult> SaveItemBlog(Blog model, IFormCollection formValues, IFormFile? changeTitleImagePath)
 		{
 			WriteLogs("Запущен процесс сохранения блога в БД. ", NLogsModeEnum.Debug);
             
@@ -247,45 +247,42 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
                 WriteLogs("Blog прошла валидацию. ", NLogsModeEnum.Debug);
                 
-				if (titleImagePath != null)
+				// если мы хотим поменять картинку
+				if (changeTitleImagePath != null)
 				{
-					var filePath = $"/images/BlogsTitleImages/{titleImagePath.FileName}";
+					var filePath = $"/images/BlogsTitleImages/{changeTitleImagePath.FileName}";
 
 					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-					{
-						await titleImagePath.CopyToAsync(fstream);
+                    {
+                        await changeTitleImagePath.CopyToAsync(fstream);
 
-                        WriteLogs($"Титульная картинка блога сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                        WriteLogs($"Новая титульная картинка блога сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
                     }
-
-					model.FullDescription = formValues["fullInfoAboutBlog"];
-					model.TitleImagePath = filePath;
-					model.DateAdded = DateTime.Now;
-
-					DataManager.BlogBaseInterface.SaveItem(model, model.Id);
-
-                    WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                    WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("Success", model);
-				}
-			}
-
-            WriteLogs("Модель Blog не прошла валидацию. ", NLogsModeEnum.Warn);
-            
-			if (titleImagePath == null)
-			{
+                    model.TitleImagePath = filePath;
+                }
+					
 				model.FullDescription = formValues["fullInfoAboutBlog"];
+				model.FullMessageLine = formValues["fullMessageLine"];
+				model.DateAdded = DateTime.Now;
 
-                WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
-                
-				return View("EditItemBlog", model);
+				DataManager.BlogBaseInterface.SaveItem(model, model.Id);
+
+                WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
+                    
+				return View("Success", model);
+				
 			}
+			else
+			{
+                WriteLogs("Модель Blog не прошла валидацию. ", NLogsModeEnum.Warn);
+                WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
 
-            WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
+                model.FullDescription = formValues["fullInfoAboutBlog"];
 
-            return View("EditItemBlog", model);
-		}
+                return View("EditItemBlog", model);
+            }
+        }
 
         /// <summary>
         /// Метод сохранения турпродукта с данными, введенными пользователем
