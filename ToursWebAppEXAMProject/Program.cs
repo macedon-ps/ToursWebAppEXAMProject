@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Hubs;
 using ToursWebAppEXAMProject.Interfaces;
@@ -13,6 +16,12 @@ builder.Services.AddControllersWithViews();
 
 // подключение SignalR
 builder.Services.AddSignalR();
+
+// подключение аутентификации и авторизации
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+	.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config => config.LoginPath = "/Admin/Login");
+	
+builder.Services.AddAuthorization();
 
 // подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
 builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
@@ -52,10 +61,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<ChatHub>("/chatHub");
-	
+
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
