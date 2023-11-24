@@ -14,6 +14,7 @@ namespace ToursWebAppEXAMProject.ViewModels
         /// Пароль
         /// </summary>
         [Required]
+        [MinLength(8, ErrorMessage = "Недостаточное количество знаков, меньше 8")]
         public string Password { get; set; }
 
         /// <summary>

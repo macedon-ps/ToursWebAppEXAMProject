@@ -229,53 +229,48 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [HttpPost]
-		public async Task<IActionResult> SaveItemNew(New model, IFormCollection formValues, IFormFile titleImagePath)
+		public async Task<IActionResult> SaveItemNew(New model, IFormCollection formValues, IFormFile? changeTitleImagePath)
        	{
             WriteLogs("Запущен процесс сохранения новости в БД. ", NLogsModeEnum.Debug);
             			
 			if (ModelState.IsValid)
 			{
-                WriteLogs("New прошла валидацию. ", NLogsModeEnum.Debug);
-                
-				if (titleImagePath != null)
-				{
-					var filePath = $"/images/NewsTitleImages/{titleImagePath.FileName}";
+                WriteLogs("Модель New прошла валидацию. ", NLogsModeEnum.Debug);
 
-					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-					{
-						await titleImagePath.CopyToAsync(fstream);
+                // если мы хотим поменять картинку
+                if (changeTitleImagePath != null)
+                {
+                    var filePath = $"/images/NewsTitleImages/{changeTitleImagePath.FileName}";
 
-                        WriteLogs($"Титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                    using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+                    {
+                        await changeTitleImagePath.CopyToAsync(fstream);
+
+                        WriteLogs($"Новая титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
                     }
-					
-					model.FullDescription = formValues["fullInfoAboutNew"];
-					model.TitleImagePath = filePath;
-					model.DateAdded = DateTime.Now;
-										
-					DataManager.NewBaseInterface.SaveItem(model, model.Id);
+                    model.TitleImagePath = filePath;
+                }
 
-                    WriteLogs($"Новость с id = {model.Id} сохранена в БД. ", NLogsModeEnum.Debug);
-                    WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("Success", model);
-				}
-			}
+                model.FullDescription = formValues["fullInfoAboutNew"];
+                model.DateAdded = DateTime.Now;
 
-            WriteLogs("New не прошла валидацию. ", NLogsModeEnum.Warn);
-            						
-			if(titleImagePath == null)
-			{
-				model.FullDescription = formValues["fullInfoAboutNew"];
+                DataManager.NewBaseInterface.SaveItem(model, model.Id);
 
+                WriteLogs("Новость успешно сохранена в БД. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
+
+                return View("Success", model);
+            }
+            else
+            {
+                WriteLogs("Модель New не прошла валидацию. ", NLogsModeEnum.Warn);
                 WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
-                
-				return View("EditItemNew", model);
-			}
 
-            WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
+                model.FullDescription = formValues["fullInfoAboutNew"];
 
-            return View("EditItemNew", model);
-		}
+                return View("EditItemNew", model);
+            }
+        }
 
         /// <summary>
         /// Метод сохранения блога с данными, введенными пользователем
@@ -291,7 +286,7 @@ namespace ToursWebAppEXAMProject.Controllers
             
 			if (ModelState.IsValid)
 			{
-                WriteLogs("Blog прошла валидацию. ", NLogsModeEnum.Debug);
+                WriteLogs("Модель Blog прошла валидацию. ", NLogsModeEnum.Debug);
                 
 				// если мы хотим поменять картинку
 				if (changeTitleImagePath != null)
@@ -316,7 +311,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
                     
-				return View("Success", model);
+				return View("SuccessBlog", model);
 				
 			}
 			else
@@ -338,57 +333,51 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [HttpPost]
-		public async Task<IActionResult> SaveItemProduct(Product model, IFormCollection formValues, IFormFile titleImagePath)
+		public async Task<IActionResult> SaveItemProduct(Product model, IFormCollection formValues, IFormFile? changeTitleImagePath)
 		{
 
-            WriteLogs("Сохранение турпродукта в БД. ", NLogsModeEnum.Debug);
-            
-			if (ModelState.IsValid)
-			{
-                WriteLogs("Product прошла валидацию. ", NLogsModeEnum.Debug);
-                
-				if (titleImagePath != null)
-				{
-					var filePath = $"/images/ProductsTitleImages/{titleImagePath.FileName}";
+            WriteLogs("Запущен процесс сохранения блога в БД. ", NLogsModeEnum.Debug);
 
-					using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-					{
-						await titleImagePath.CopyToAsync(fstream);
-                       
-						WriteLogs($"Титульная картинка турпродукта сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+            if (ModelState.IsValid)
+            {
+                WriteLogs("Модель Product прошла валидацию. ", NLogsModeEnum.Debug);
+
+                // если мы хотим поменять картинку
+                if (changeTitleImagePath != null)
+                {
+                    var filePath = $"/images/ProductsTitleImages/{changeTitleImagePath.FileName}";
+
+                    using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+                    {
+                        await changeTitleImagePath.CopyToAsync(fstream);
+
+                        WriteLogs($"Новая титульная картинка турпродукта сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
                     }
+                    model.TitleImagePath = filePath;
+                }
 
-					model.FullDescription = formValues["fullInfoAboutProduct"];
-					model.TitleImagePath = filePath;
-					model.DateAdded = DateTime.Now;
+                model.FullDescription = formValues["fullInfoAboutProduct"];
+                model.DateAdded = DateTime.Now;
 
-					DataManager.ProductBaseInterface.SaveItem(model, model.Id);
-                    
-					WriteLogs("Турпродукт сохранен в БД. ", NLogsModeEnum.Debug);
-                    
-                    // TODO: запрос на создание/редактирование/удаление страны и/или города, если да, то вывод нового вью для создания/редактирования/удаления страны и/или города, сохранение изменений в БД
+                DataManager.ProductBaseInterface.SaveItem(model, model.Id);
 
+                // TODO: запрос на создание/редактирование/удаление страны и/или города, если да, то вывод нового вью для создания/редактирования/удаления страны и/или города, сохранение изменений в БД
 
-                    WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
-                    
-					return View("Success", model);
-				}
-			}
+                WriteLogs("Турпродукт успешно сохранен в БД. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
 
-            WriteLogs("Product не прошла валидацию. ", NLogsModeEnum.Warn);
-           
-			if (titleImagePath == null)
-			{
-				model.FullDescription = formValues["fullInfoAboutProduct"];
+                return View("Success", model);
 
-                WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
-                
-				return View("EditItemProduct", model);
-			}
+            }
+            else
+            {
+                WriteLogs("Модель Product не прошла валидацию. ", NLogsModeEnum.Warn);
+                WriteLogs("Возвращено /Admin/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
 
-            WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
+                model.FullDescription = formValues["fullInfoAboutProduct"];
 
-            return View("EditItemProduct", model);
+                return View("EditItemProduct", model);
+            }
 		}
 
 		/// <summary>

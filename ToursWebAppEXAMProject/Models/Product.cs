@@ -34,7 +34,6 @@ namespace ToursWebAppEXAMProject.Models
         [Display(Name = "Полное описание туристического продукта")]
         public string FullDescription { get; set; } = "Полное описание туристического продукта";
 
-        //[Required(ErrorMessage = "Выберите титульную картинку туристического продукта")]
         [Display(Name = "Титульная картинка")]
         [StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
         public string? TitleImagePath { get; set; } = "Нет титульной картинки";
@@ -43,9 +42,9 @@ namespace ToursWebAppEXAMProject.Models
         [DataType(DataType.Time)]
         public DateTime? DateAdded { get; set; }
 
-        public virtual Country? Country { get; set; }
+        public virtual Country? Country { get; set; } = new Country();
 
-        public virtual City? City { get; set; } = null!;
+        public virtual City? City { get; set; } = new City();
 
         public virtual ICollection<Tour> Tours { get; set; }
     }
