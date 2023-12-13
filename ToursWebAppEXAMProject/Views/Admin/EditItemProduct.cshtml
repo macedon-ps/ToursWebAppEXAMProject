@@ -50,7 +50,7 @@
                     <div class="titleImage">
                         <img src="@Model.TitleImagePath" alt="Титульная картинка туристического продукта" align="left" width="50%"><img>
                     </div>
-                    <input type="file" name="titleImagePath" asp-for="TitleImagePath" accept="image/*"/>
+                    <input type="file" name="changeTitleImagePath" asp-for="TitleImagePath" accept="image/*" />
                     <span asp-validation-for="TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />

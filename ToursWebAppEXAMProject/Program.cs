@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Hubs;
 using ToursWebAppEXAMProject.Interfaces;
