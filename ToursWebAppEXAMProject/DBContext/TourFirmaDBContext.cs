@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Services;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.DBContext
 {
-	public partial class TourFirmaDBContext : DbContext
+	public partial class TourFirmaDBContext : IdentityDbContext<User>
 	{
 		public TourFirmaDBContext() { }
 
@@ -35,6 +36,9 @@ namespace ToursWebAppEXAMProject.DBContext
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+            // устранение ошибки определения первичного ключа для IdentityUsersLogins
+			base.OnModelCreating(modelBuilder);
+
 			modelBuilder.Entity<Blog>(entity =>
 			{
 				entity.ToTable("Blog");

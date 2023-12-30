@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Hubs;
@@ -16,10 +17,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 // подключение аутентификации и авторизации
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+/*builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config => config.LoginPath = "/Admin/Login");
 	
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();*/
 
 // подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
 builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
@@ -37,6 +38,19 @@ builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<DataManager>();
+
+// регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
+builder.Services.AddIdentity<User, IdentityRole>(opts => {
+    opts.SignIn.RequireConfirmedEmail = true;   // требуется подтверждение через email
+    opts.Password.RequiredLength = 5;   // минимальная длина
+    opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+    opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+    opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
+    opts.Password.RequireDigit = false; // требуются ли цифры
+})
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<TourFirmaDBContext>();
+
 
 // подключение сервиса использования MS SQL Server и БД
 builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
