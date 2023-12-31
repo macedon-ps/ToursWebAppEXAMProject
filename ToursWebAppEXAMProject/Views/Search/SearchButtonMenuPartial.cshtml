@@ -2,5 +2,8 @@
     <a asp-controller="Search" asp-action="Index">Поиск туров</a>
     <a asp-controller="Search" asp-action="GetAllProducts">Все турпродукты</a>
     <a asp-controller="Search" asp-action="">Резерв 3</a>
-    <a asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+    {
+        <a asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
+    }
 </div>

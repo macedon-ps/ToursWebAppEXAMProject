@@ -2,5 +2,8 @@
     <a asp-controller="Support" asp-action="">Карта</a>
     <a asp-controller="Support" asp-action="">Перевод текста</a>
     <a asp-controller="Support" asp-action="">Мобильное приложение</a>
-    <a asp-controller="Support" asp-action="TechTaskSupport">ТЗ для Support</a>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+    {
+        <a asp-controller="Support" asp-action="TechTaskSupport">ТЗ для Support</a>
+    }
 </div>
