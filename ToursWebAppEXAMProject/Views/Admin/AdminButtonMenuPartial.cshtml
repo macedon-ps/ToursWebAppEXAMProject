@@ -1,9 +1,7 @@
-﻿@*
-    // кнопки для меню на странице Admin
-*@
-<div class="adminButton">
-    <a id="" asp-area="" asp-controller="Admin" asp-action="Index" asp-route-type="New">Create / Edit / Delete новости</a>
-    <a id="" asp-area="" asp-controller="Admin" asp-action="Index" asp-route-type="Blog">Create / Edit / Delete блоги</a>
-    <a id="" asp-area="" asp-controller="Admin" asp-action="Index" asp-route-type="Product">Create / Edit / Delete турпродукты</a>
-    <a id="" asp-area="" asp-controller="Admin" asp-action="TechTaskAdmin">ТЗ для Admin</a>
+﻿<div class="adminButton">
+    <a asp-controller="Admin" asp-action="Index" asp-route-type="New">Create / Edit / Delete новости</a>
+    <a asp-controller="Admin" asp-action="Index" asp-route-type="Blog">Create / Edit / Delete блоги</a>
+    <a asp-controller="Admin" asp-action="Index" asp-route-type="Product">Create / Edit / Delete турпродукты</a>
+    <a asp-controller="Admin" asp-action="TechTaskAdmin">ТЗ для Admin</a>
 </div>
+

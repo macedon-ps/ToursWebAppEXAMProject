@@ -170,7 +170,7 @@ body {
 	}*/
 
 	.homeButton a, .searchButton a, .adminButton a,
-	.supportButton a, .aboutButton a, .errorButton a{
+	.supportButton a, .aboutButton a, .accountButton a, .errorButton a{
 		display: inline-block;
 		padding: 10px 25px;
 		color: white;
@@ -179,6 +179,7 @@ body {
 		min-width: 18%;
 		border-radius: 10px;
 		text-align: center;
+		margin-right: 0.5em;
 	}
 	.blog-user,.blog-message,
 	.list-blog-messages {
@@ -2058,12 +2059,12 @@ body {
 	*/
 
 .homePage, .searchPage, .adminPage,
-.supportPage, .aboutPage, .errorPage {
+.supportPage, .aboutPage, .accountPage, .errorPage {
 	position: relative;
 	height: 550px;
 }
 .homeHeader, .searchHeader, .adminHeader,
-.supportHeader, .aboutHeader, .errorHeader {
+.supportHeader, .aboutHeader, .accountHeader, .errorHeader {
 	height: 500px;
 	background-color: #7dced8;
 	padding: 1em;
@@ -2072,8 +2073,19 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+.accountHeader {
+	margin-top: 1em;
+	text-align: center;
+}
+.accountInput {
+	min-width: 300px;
+	height: 35px;
+	border-radius: 10px;
+	margin: 0.5em 0;
+	padding: 0 0 0 1em;
+}
 .homeHeaderOne, .searchHeaderOne, .adminHeaderOne,
-.supportHeaderOne, .aboutHeaderOne, .errorHeaderOne {
+.supportHeaderOne, .aboutHeaderOne, .accountHeaderOne, .errorHeaderOne {
 	height: 500px;
 	background-color: #7dced8;
 	padding: 1em;
@@ -2089,23 +2101,34 @@ body {
 	flex-direction: column;
 }
 .homeButton, .searchButton, .adminButton,
-.supportButton, .aboutButton, .errorButton {
+.supportButton, .aboutButton, .accountButton, .errorButton {
 	display: flex;
-	justify-content:space-between;
+	justify-content: space-between;
 	background-color: #7dced8;
 	margin-top: 1em;
 	padding: 1em;
 	border-bottom: 2px solid white;
 }
-	.searchButtonSubmit {
-	padding-top: 1em;
-	}
-	.asidePage {
-		min-height: 560px;
-		background-color: #7dced8;
-		margin: 1em 0 0 1em;
-		padding: 1em;
-	}
+.accountButton {
+	justify-content: center;
+}
+.searchButtonSubmit {
+padding-top: 1em;
+}
+.submitButton {
+	background-color: #008dab;
+	text-transform: uppercase;
+	min-width: 200px;
+	border-radius: 6px;
+	margin-top: 1em;
+	padding: 1em 0;
+}
+.asidePage {
+	min-height: 560px;
+	background-color: #7dced8;
+	margin: 1em 0 0 1em;
+	padding: 1em;
+}
 .asidePage > div{
 	display: flex;
 	margin-bottom: 0.5em;

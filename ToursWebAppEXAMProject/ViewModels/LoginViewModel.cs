@@ -4,23 +4,18 @@ namespace ToursWebAppEXAMProject.ViewModels
 {
     public class LoginViewModel
     {
-        /// <summary>
-        /// Имя пользователя
-        /// </summary>
         [Required]
-        public string LoginName { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
-        /// <summary>
-        /// Пароль
-        /// </summary>
         [Required]
-        [MinLength(8, ErrorMessage = "Недостаточное количество знаков, меньше 8")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        /// <summary>
-        /// Url страницы, на которую нужно вернуться после авторизации
-        /// </summary>
-        [Required]
-        public string ReturnUrl { get; set; }
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
+
+        public string? ReturnUrl { get; set; }
     }
 }

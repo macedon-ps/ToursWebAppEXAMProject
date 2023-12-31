@@ -1,8 +1,4 @@
-﻿@*
-    Заголовок. В заголовке - меню
-*@
-
-<div id="header-wrapper" >
+﻿<div id="header-wrapper" >
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -10,14 +6,17 @@
 				<header id="header">
 					<h1><a asp-controller="Home" asp-action="Index" id="logo">@ConfigData.CompanyName.ToString()</a></h1>
 					<nav id="nav">
-						<a class="" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        <a class="" asp-area="" asp-controller="Search" asp-action="Index">Поиск туров</a>
-                        <a class="" asp-area="" asp-controller="Admin" asp-action="Index">Администратору</a>
-                        <a class="" asp-area="" asp-controller="Support" asp-action="Index">Поддержка</a>
-                        <a class="" asp-area="" asp-controller="About" asp-action="Index">О нас</a>
-                   	</nav>
+						<a asp-controller="Home" asp-action="Index">Главная</a>
+                        <a asp-controller="Search" asp-action="Index">Поиск туров</a>
+						@if (User.Identity.IsAuthenticated && User.IsInRole("Admin,SuperAdmin"))
+						{
+							<a asp-controller="Admin" asp-action="Index">Администратору</a>
+						}
+						<a asp-controller="Support" asp-action="Index">Поддержка</a>
+                        <a asp-controller="About" asp-action="Index">О нас</a>
+						<a asp-controller="Account" asp-action="Index">Log/Reg</a>
+				   	</nav>
 				</header>
-
 			</div>
 		</div>
 	</div>

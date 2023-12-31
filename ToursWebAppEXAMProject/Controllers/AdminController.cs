@@ -24,47 +24,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			this.hostingEnvironment = hostingEnvironment;
 		}
 
-        /// <summary>
-        /// Метод входа на страницу аутентификации и авторизации
-        /// </summary>
-        /// <param name="returnUrl">Url страницы, на которую нужно вернуться после авторизации</param>
-        /// <returns></returns>
-        [AllowAnonymous]
-		public IActionResult Login(string returnUrl)
-		{
-			return View();
-		}
-
-		/// <summary>
-		/// Метод обработки данных форм для аутинтификации и авторизации
-		/// </summary>
-		/// <param name="loginModel">вью-модель для данных формы аутинтификации и авторизации</param>
-		/// <returns></returns>
-        [AllowAnonymous]
-		[HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginModel)
-        {
-			if (!ModelState.IsValid)
-			{
-				// не прошел авторизацию, возврат
-				return View(loginModel);
-			}
-
-			// создаем клайм с введенным именем пользователя (логином) и создаем куки
-			var claims = new List<Claim>
-			{
-                new Claim(ClaimTypes.Name, loginModel.LoginName)
-            };
-			var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-			var principal = new ClaimsPrincipal(claimsIdentity);
-			
-			// даем допуск по куки к авторизации пользователя
-			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-			// перенаправляем на /Admin пользователя, прошедшего авторизацию
-			return Redirect(loginModel.ReturnUrl);
-        }
-
+     
         /// <summary>
         /// Метод вывода стартовой страницы Admin
         /// </summary>
