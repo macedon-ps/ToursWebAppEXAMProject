@@ -2,7 +2,7 @@
     <a asp-controller="Search" asp-action="Index">Поиск туров</a>
     <a asp-controller="Search" asp-action="GetAllProducts">Все турпродукты</a>
     <a asp-controller="Search" asp-action="">Резерв 3</a>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
     }

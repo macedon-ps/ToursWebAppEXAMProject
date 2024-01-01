@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
@@ -12,13 +9,13 @@ using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 namespace ToursWebAppEXAMProject.Controllers
 {
     [Authorize]
-    public class AdminController : Controller
+    public class EditController : Controller
 	{
 		private readonly DataManager DataManager;
 
 		private readonly IWebHostEnvironment hostingEnvironment;
 
-		public AdminController(DataManager DataManager, IWebHostEnvironment hostingEnvironment)
+		public EditController(DataManager DataManager, IWebHostEnvironment hostingEnvironment)
 		{
 			this.DataManager = DataManager;
 			this.hostingEnvironment = hostingEnvironment;
@@ -26,13 +23,13 @@ namespace ToursWebAppEXAMProject.Controllers
 
      
         /// <summary>
-        /// Метод вывода стартовой страницы Admin
+        /// Метод вывода стартовой страницы Edit
         /// </summary>
         /// <returns></returns>
         [HttpGet]
 		public IActionResult Index(string type = "New")
 		{
-			WriteLogs("Переход по маршруту /Admin/Index.\n", NLogsModeEnum.Trace);
+			WriteLogs("Переход по маршруту /Edit/Index.\n", NLogsModeEnum.Trace);
 
             // страница Index.cshtml по умолчанию принимает тип New, по нажатию на кнопки - др.типы (New, Blog, Product)
             var model = new EditMenuViewModel(false, "", type);
@@ -40,7 +37,8 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(model);
 		}
 
-		/// <summary>
+        [Authorize(Roles = "superadmin,editor")]
+        /// <summary>
         /// Метод вывода результатов выборки по тексту для поиска, по тому, что ищем - полное название или ключевое слово (букву), пр типу данных (новости, блоги или турпродукты)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
@@ -50,7 +48,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult GetQueryResultEntities(bool isFullName, string fullNameOrKeywordOfItem, string type)
 		{
-            WriteLogs("Переход по маршруту /Admin/GetQueryResultItemsAfterFullName. ", NLogsModeEnum.Trace);
+            WriteLogs("Переход по маршруту /Edit/GetQueryResultItemsAfterFullName. ", NLogsModeEnum.Trace);
 
 			// реализовано switch(type) для выборки items по типам (New, Blog, Product)
 			var items = new Object();
@@ -93,6 +91,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(items);
 		}
 
+        [Authorize(Roles = "superadmin,editor")]
         /// <summary>
         /// Метод редактирования отдельной сущности (новости, блога или турпродукта) по ее id
         /// </summary>
@@ -103,7 +102,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult EditItem(string type, int id)
 		{
             // TODO: сократить типы с "ToursWebAppEXAMProject.Models.New" до "New" и т.д.
-            WriteLogs("Переход по маршруту /Admin/EditItem. ", NLogsModeEnum.Trace);
+            WriteLogs("Переход по маршруту /Edit/EditItem. ", NLogsModeEnum.Trace);
             
 			var model = new object();
 			var view = "";
@@ -135,11 +134,12 @@ namespace ToursWebAppEXAMProject.Controllers
                     break;
 			}
 
-            WriteLogs($"Возвращено представление /Admin/{view}.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs($"Возвращено представление /Edit/{view}.cshtml\n", NLogsModeEnum.Trace);
             						
 			return View(view, model);
 		}
 
+        [Authorize(Roles = "superadmin,editor")]
         /// <summary>
         /// Метод удаления отдельной сущности (новости, блога или турпродукта) по ее id
         /// </summary>
@@ -155,7 +155,7 @@ namespace ToursWebAppEXAMProject.Controllers
 					var modelNew = DataManager.NewBaseInterface.GetItemById(id);
 					DataManager.NewBaseInterface.DeleteItem(modelNew, id);
 
-                    WriteLogs("Возвращено /Admin/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("SuccessForDelete", modelNew);
 				
@@ -163,7 +163,7 @@ namespace ToursWebAppEXAMProject.Controllers
 					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
 					DataManager.BlogBaseInterface.DeleteItem(modelBlog, id);
 
-                    WriteLogs("Возвращено /Admin/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("SuccessForDelete", modelBlog);
 				
@@ -171,16 +171,17 @@ namespace ToursWebAppEXAMProject.Controllers
 					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
 					DataManager.ProductBaseInterface.DeleteItem(modelProduct, id);
 
-                    WriteLogs("Возвращено /Admin/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("SuccessForDelete", modelProduct);
 			}
 
-            WriteLogs("Возвращено /Admin/Index.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено /Edit/Index.cshtml\n", NLogsModeEnum.Trace);
             
 			return View("Index");
 		}
 
+        [Authorize(Roles = "superadmin,editor")]
         /// <summary>
         /// Метод сохранения новости с данными, введенными пользователем
         /// </summary>
@@ -217,14 +218,14 @@ namespace ToursWebAppEXAMProject.Controllers
                 DataManager.NewBaseInterface.SaveItem(model, model.Id);
 
                 WriteLogs("Новость успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
 
                 return View("Success", model);
             }
             else
             {
                 WriteLogs("Модель New не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
 
                 model.FullDescription = formValues["fullInfoAboutNew"];
 
@@ -232,6 +233,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+        [Authorize(Roles = "superadmin,editor")]
         /// <summary>
         /// Метод сохранения блога с данными, введенными пользователем
         /// </summary>
@@ -269,7 +271,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				DataManager.BlogBaseInterface.SaveItem(model, model.Id);
 
                 WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
                     
 				return View("SuccessBlog", model);
 				
@@ -277,7 +279,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			else
 			{
                 WriteLogs("Модель Blog не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
 
                 model.FullDescription = formValues["fullInfoAboutBlog"];
 
@@ -285,6 +287,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+        [Authorize(Roles = "superadmin,editor")]
         /// <summary>
         /// Метод сохранения турпродукта с данными, введенными пользователем
         /// </summary>
@@ -324,7 +327,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 // TODO: запрос на создание/редактирование/удаление страны и/или города, если да, то вывод нового вью для создания/редактирования/удаления страны и/или города, сохранение изменений в БД
 
                 WriteLogs("Турпродукт успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Admin/Success.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
 
                 return View("Success", model);
 
@@ -332,7 +335,7 @@ namespace ToursWebAppEXAMProject.Controllers
             else
             {
                 WriteLogs("Модель Product не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Admin/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
 
                 model.FullDescription = formValues["fullInfoAboutProduct"];
 
@@ -349,17 +352,18 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Success(Object model)
 		{
 
-            WriteLogs("Переход по маршруту /Admin/Success.\n", NLogsModeEnum.Trace);
+            WriteLogs("Переход по маршруту /Edit/Success.\n", NLogsModeEnum.Trace);
             
 			return View(model);
 		}
 
-		/// <summary>
-		/// Метод создания сущности (новости, блога или турпродукта)
-		/// </summary>
-		/// <param name="type">Тип данных (новость, блог или турпродукт)</param>
-		/// <returns></returns>
-		public IActionResult CreateEntity(string type) 
+        [Authorize(Roles = "superadmin,editor")]
+        /// <summary>
+        /// Метод создания сущности (новости, блога или турпродукта)
+        /// </summary>
+        /// <param name="type">Тип данных (новость, блог или турпродукт)</param>
+        /// <returns></returns>
+        public IActionResult CreateEntity(string type) 
 		{
 			var model = new Object();
 
@@ -368,48 +372,50 @@ namespace ToursWebAppEXAMProject.Controllers
 				case "New":
 					model = new New();
 
-                    WriteLogs("Возвращено /Admin/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("EditItemNew", model);
 
 				case "Blog":
 					model = new Blog();
 
-                    WriteLogs("Возвращено /Admin/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/EditItemBlog.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("EditItemBlog", model);
 
 				case "Product":
 					model = new Product();
 
-                    WriteLogs("Возвращено /Admin/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
+                    WriteLogs("Возвращено /Edit/EditItemProduct.cshtml\n", NLogsModeEnum.Trace);
                     
 					return View("EditItemProduct", model);
 			}
 			return RedirectToAction("Index");
 		}
 
+        [Authorize(Roles = "superadmin,admin")]
         /// <summary>
-        /// Метод вывода ТЗ и прогресса его выполнения для страницы Admin
+        /// Метод вывода ТЗ и прогресса его выполнения для страницы Edit
         /// </summary>
         /// <returns></returns>
-        public IActionResult TechTaskAdmin()
+        public IActionResult TechTaskEdit()
 		{
-            WriteLogs("Переход по маршруту Admin/TechTaskAdmin.\n", NLogsModeEnum.Trace);
+            WriteLogs("Переход по маршруту Edit/TechTaskEdit.\n", NLogsModeEnum.Trace);
             
-			var pageName = "Admin";
+			var pageName = "Edit";
 			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
 
 			return View(model);
 		}
 
+        [Authorize(Roles = "superadmin,admin")]
         /// <summary>
-        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Admin
+        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Edit
         /// </summary>
         /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult TechTaskAdmin(TechTaskViewModel model)
+		public IActionResult TechTaskEdit(TechTaskViewModel model)
 		{
             WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
             
@@ -432,13 +438,13 @@ namespace ToursWebAppEXAMProject.Controllers
 				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Admin/TechTaskAdmin.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Edit/TechTaskEdit.cshtml\n", NLogsModeEnum.Trace);
                 				
 				return View(model);
 			}
 
             WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
-            WriteLogs("Возвращено /Admin/TechTaskAdmin.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено /Edit/TechTaskEdit.cshtml\n", NLogsModeEnum.Trace);
             
 			return View(model);
 		}

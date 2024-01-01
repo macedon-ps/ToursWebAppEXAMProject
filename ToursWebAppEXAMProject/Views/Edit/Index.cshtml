@@ -1,18 +1,18 @@
 ﻿@model EditMenuViewModel
 @{
-    ViewData["Title"] = "Admin Page";
+    ViewData["Title"] = "Edit Page";
 }
 
-@{ // TODO:  необходимо сделать переход на asp-area="Admin"
+@{ // TODO:  необходимо сделать переход на asp-area="Edit"
    // для этого реализовать аутентификацию и авторизацию с помощью фр-ка Entity 
 }
-<div class="adminPage">
+<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
     
-    <div class="adminHeader">
+    <div class="editHeader">
                  
-        <h1 class="title">Страница администратора сайта:</h1>
+        <h1 class="title">Страница редактора сайта:</h1>
         <hr class="horizontal-line" />
         <br />
         <div>
@@ -34,7 +34,7 @@
             <h2>1. Создание @keyWord:</h2>
             
             <div class="div-box">
-                <form asp-area="" asp-controller="Admin" asp-action="CreateEntity" method="get">
+                <form asp-area="" asp-controller="Edit" asp-action="CreateEntity" method="get">
                     <input type="hidden" asp-for="type" value="@Model.type"/>
                     <input type = "submit" value="Создать"/>
                 </form>
@@ -46,7 +46,7 @@
                 
                 <h4>Выберите режим ввода:</h4>
                 
-                <form asp-area="" asp-controller="Admin" asp-action="GetQueryResultEntities" method="get">
+                <form asp-area="" asp-controller="Edit" asp-action="GetQueryResultEntities" method="get">
                     <input type="hidden" asp-for="type" value="@Model.type"/>
                     <input type = "radio" asp-for="isFullName" value="true"/><span class="spanMarginLR">Полное название</span>
                     <input type = "radio" asp-for="isFullName" value="false"/><span class="spanMarginLR">Ключевое слово</span>

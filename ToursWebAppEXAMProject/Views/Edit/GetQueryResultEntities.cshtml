@@ -1,8 +1,8 @@
-﻿<div class="adminPage">
+﻿<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
 
-    <div class="adminHeader">
+    <div class="editHeader">
         
         @foreach(var item in @Model)
         {
@@ -17,8 +17,8 @@
                     <h4>@item.ShortDescription</h4>
                 </div>
                 <div class="editDelete">
-                    <a asp-area="" asp-controller="Admin" asp-action="EditItem" asp-route-id="@item.Id" asp-route-type="@type">редактировать</a>	
-                    <a asp-area="" asp-controller="Admin" asp-action="DeleteItem" asp-route-id="@item.Id" asp-route-type="@type">удалить</a>
+                    <a asp-area="" asp-controller="Edit" asp-action="EditItem" asp-route-id="@item.Id" asp-route-type="@type">редактировать</a>	
+                    <a asp-area="" asp-controller="Edit" asp-action="DeleteItem" asp-route-id="@item.Id" asp-route-type="@type">удалить</a>
                 </div>
             </div>
         }

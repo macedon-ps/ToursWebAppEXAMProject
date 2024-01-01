@@ -169,7 +169,7 @@ body {
 		text-decoration: none;
 	}*/
 
-	.homeButton a, .searchButton a, .adminButton a,
+	.homeButton a, .searchButton a, .editButton a,
 	.supportButton a, .aboutButton a, .accountButton a, .errorButton a{
 		display: inline-block;
 		padding: 10px 25px;
@@ -2058,12 +2058,12 @@ body {
 	}
 	*/
 
-.homePage, .searchPage, .adminPage,
+.homePage, .searchPage, .editPage,
 .supportPage, .aboutPage, .accountPage, .errorPage {
 	position: relative;
 	height: 550px;
 }
-.homeHeader, .searchHeader, .adminHeader,
+.homeHeader, .searchHeader, .editHeader,
 .supportHeader, .aboutHeader, .accountHeader, .errorHeader {
 	height: 500px;
 	background-color: #7dced8;
@@ -2084,7 +2084,7 @@ body {
 	margin: 0.5em 0;
 	padding: 0 0 0 1em;
 }
-.homeHeaderOne, .searchHeaderOne, .adminHeaderOne,
+.homeHeaderOne, .searchHeaderOne, .editHeaderOne,
 .supportHeaderOne, .aboutHeaderOne, .accountHeaderOne, .errorHeaderOne {
 	height: 500px;
 	background-color: #7dced8;
@@ -2100,7 +2100,7 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-.homeButton, .searchButton, .adminButton,
+.homeButton, .searchButton, .editButton,
 .supportButton, .aboutButton, .accountButton, .errorButton {
 	display: flex;
 	justify-content: space-between;

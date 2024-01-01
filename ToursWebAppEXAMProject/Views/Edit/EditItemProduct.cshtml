@@ -1,15 +1,15 @@
 ﻿@model Product
 
-<div class="adminPage">
+<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
 
-    <div class="adminHeader">
+    <div class="editHeader">
         
         @* для CKEditor 4 *@
         <script src="~/js/ckeditor4/ckeditor.js"></script>
 
-        <form asp-controller="Admin" asp-action="SaveItemProduct" method="post" enctype="multipart/form-data">
+        <form asp-controller="Edit" asp-action="SaveItemProduct" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
             <input type="hidden" asp-for="Country" />

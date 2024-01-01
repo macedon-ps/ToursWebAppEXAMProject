@@ -3,7 +3,7 @@
     <a asp-controller="About" asp-action="">Режим работы</a>
     <a asp-controller="About" asp-action="">Фотогаллерея</a>
     <a asp-controller="About" asp-action="FeedBackForm">Обратная связь</a>
-    @if(User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="About" asp-action="TechTaskAbout">ТЗ для About</a>
     }

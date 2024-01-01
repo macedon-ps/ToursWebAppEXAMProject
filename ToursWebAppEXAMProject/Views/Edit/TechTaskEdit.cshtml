@@ -1,17 +1,17 @@
 ﻿@model TechTaskViewModel
 
-<div class="adminPage">
+<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
 
-    <div class="adminHeader">
+    <div class="editHeader">
                  
         <h1 class="title">Техзадание для для страницы администратора сайта:</h1><br />
         <hr class="horizontal-line" />
         <br />
         <div class="text-center">
 
-            <form asp-controller="Admin" asp-action="TechTaskAdmin" method="post">
+            <form asp-controller="Edit" asp-action="TechTaskEdit" method="post">
 
                 <input type="hidden" asp-for="@Model.Id" />
                 <input type="hidden" asp-for="@Model.PageName" /><br/>    
@@ -23,7 +23,7 @@
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
                 1. Данная страница д. содержать:
-                <br/><strong>блок навигационных кнопок: </strong> "Редактировать новости", "Редактировать блоги", "Редактировать                            турпродукты", "ТЗ для Admin";
+                <br/><strong>блок навигационных кнопок: </strong> "Редактировать новости", "Редактировать блоги", "Редактировать                            турпродукты", "ТЗ для Edit";
                 <br/><strong>общее меню поиска сущностей (новостей/блогов/турпродуктов) по их полному названию / или по ключевому слову
                 </strong> из названия сущности для выборки из БД;
                 <br/><strong>страницу со списком выбранных сущностей</strong>, отвечающих критериям поиска.

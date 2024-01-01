@@ -1,11 +1,11 @@
 ﻿@model ModelsErrorViewModel
 
-<div class="adminPage">
+<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
 
-    <div class="adminHeader">
-        <form method="post" asp-controller="" asp-action="">
+    <div class="editHeader">
+        <form method="post">
             <input type="hidden" asp-for="RequestId" />
                         
             <div>

@@ -1,0 +1,10 @@
+﻿<div class="editButton">
+    <a asp-controller="Edit" asp-action="Index" asp-route-type="New">Create / Edit / Delete новости</a>
+    <a asp-controller="Edit" asp-action="Index" asp-route-type="Blog">Create / Edit / Delete блоги</a>
+    <a asp-controller="Edit" asp-action="Index" asp-route-type="Product">Create / Edit / Delete турпродукты</a>
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
+    {
+        <a asp-controller="Edit" asp-action="TechTaskEdit">ТЗ для Edit</a>
+    }
+</div>
+

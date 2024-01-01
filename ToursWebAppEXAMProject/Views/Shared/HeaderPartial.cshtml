@@ -8,9 +8,9 @@
 					<nav id="nav">
 						<a asp-controller="Home" asp-action="Index">Главная</a>
                         <a asp-controller="Search" asp-action="Index">Поиск туров</a>
-						@if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
+						@if (User.Identity.IsAuthenticated)
 						{
-							<a asp-controller="Admin" asp-action="Index">Admin</a>
+							<a asp-controller="Edit" asp-action="Index">Edit</a>
 						}
 						<a asp-controller="Support" asp-action="Index">Поддержка</a>
                         <a asp-controller="About" asp-action="Index">О нас</a>

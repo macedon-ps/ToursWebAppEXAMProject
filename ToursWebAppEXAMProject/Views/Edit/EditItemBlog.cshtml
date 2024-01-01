@@ -1,18 +1,19 @@
-﻿@model New
+﻿@model Blog
 
-<div class="adminPage">
+<div class="editPage">
     
-    @await Html.PartialAsync("AdminButtonMenuPartial")
+    @await Html.PartialAsync("EditButtonMenuPartial")
 
-    <div class="adminHeader">
-       
+    <div class="editHeader">
+        
         @* для CKEditor 4 *@
         <script src="~/js/ckeditor4/ckeditor.js"></script>
-        
-        <form asp-controller="Admin" asp-action="SaveItemNew" method="post" enctype="multipart/form-data">
+
+        <form asp-controller="Edit" asp-action="SaveItemBlog" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
-            <input type="hidden" asp-for="TitleImagePath" />        
+            <input type="hidden" asp-for="Message" />
+            <input type="hidden" asp-for="TitleImagePath" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -27,27 +28,35 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="FullDescription"></label>
-                    <textarea name="fullInfoAboutNew" rows="20" cols="100" asp-for="FullDescription">
+                    <textarea name="fullInfoAboutBlog" rows="20" cols="100" asp-for="FullDescription" >
                         Это текстовая область для CKEditor4
                     </textarea>
                     <span asp-validation-for="FullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
+                    <label asp-for="FullMessageLine"></label>
+                    <textarea name="fullMessageLine" rows="20" cols="100" asp-for="FullMessageLine">
+                        Это текстовая область для CKEditor4
+                    </textarea>
+                    <span asp-validation-for="FullMessageLine"></span>
+                </div>
+                <div class="displayFlexCol">
                     <label asp-for="TitleImagePath"></label>
                     <h3>@Model.TitleImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.TitleImagePath" alt="@Model.Name" align="left" width="50%"><img>
+                        <img src="@Model.TitleImagePath" alt="Титульная картинка блога" align="left" width="50%"><img>
                     </div>
-                    <input type="file" name="changeTitleImagePath" asp-for="TitleImagePath" accept="image/*" />
-                        <span asp-validation-for="TitleImagePath"></span>
+                    <input type="file" name="changeTitleImagePath" value="" accept="image/*"/>
+                    <span asp-validation-for="TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
             </div>
         </form>
     </div>
 </div>
-
 <script>
-    var newCKEdit = CKEDITOR.replace('fullInfoAboutNew');
+    var newCKEdit = CKEDITOR.replace('fullInfoAboutBlog');
     newCKEdit.updateElement();
+    var newCKEdit2 = CKEDITOR.replace('fullMessageLine');
+    newCKEdit2.updateElement();
 </script>

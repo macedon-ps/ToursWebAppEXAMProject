@@ -2,7 +2,7 @@
     <a asp-controller="Home" asp-action="GetAllNews">Новости со всего мира</a>
     <a asp-controller="Home" asp-action="GetAllBlogs">Блоги о туризме</a>
     <a asp-controller="Home" asp-action="">Резерв</a>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
     }
