@@ -4,11 +4,10 @@ using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
-	public class QueryResultRepository : IQueryResultInterface
+    public class QueryResultRepository : IQueryResultInterface
 	{
 		private readonly TourFirmaDBContext context;
 

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.DBContext;
@@ -15,12 +14,6 @@ builder.Services.AddControllersWithViews();
 
 // подключение SignalR
 builder.Services.AddSignalR();
-
-// подключение аутентификации и авторизации
-/*builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-	.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config => config.LoginPath = "/Admin/Login");
-	
-builder.Services.AddAuthorization();*/
 
 // подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
 builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
@@ -39,6 +32,7 @@ builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>()
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<DataManager>();
 
+// подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
 builder.Services.AddIdentity<User, IdentityRole>(opts => {
     opts.SignIn.RequireConfirmedEmail = true;   // требуется подтверждение через email
@@ -50,7 +44,6 @@ builder.Services.AddIdentity<User, IdentityRole>(opts => {
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<TourFirmaDBContext>();
-
 
 // подключение сервиса использования MS SQL Server и БД
 builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));

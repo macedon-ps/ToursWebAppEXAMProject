@@ -1,8 +1,6 @@
-﻿using ToursWebAppEXAMProject.Repositories;
-
-namespace ToursWebAppEXAMProject.ViewModels
+﻿namespace ToursWebAppEXAMProject.ViewModels
 {
-	public class TechTaskViewModel
+    public class TechTaskViewModel
 	{
 		public int Id { get; set; }
 

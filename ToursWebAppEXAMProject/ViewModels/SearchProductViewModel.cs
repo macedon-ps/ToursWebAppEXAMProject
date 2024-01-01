@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ToursWebAppEXAMProject.Controllers;
 using ToursWebAppEXAMProject.EnumsDictionaries;
-using ToursWebAppEXAMProject.Repositories;
 
 namespace ToursWebAppEXAMProject.ViewModels
 {
-	public class SearchProductViewModel
+    public class SearchProductViewModel
 	{
 		/// <summary>
 		/// Id страны
