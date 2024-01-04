@@ -237,6 +237,20 @@ body {
 	margin: 1em 0 1em 2em;
 	padding: 0.2em 0;
 }
+.form-group{
+	margin: 0.5em 0.2em;
+	display: flex;
+}
+.form-group-list {
+	margin: 0.5em 0.2em;
+}
+.form-group label {
+	display: block;
+	width: 140px;
+}
+.control-label{
+	font-weight: 600;
+}
 /* Container */
 .container {
 	margin: 0 auto;

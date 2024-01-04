@@ -1,6 +1,5 @@
 ﻿using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +21,12 @@ namespace IdentityAuthN_AuthZ.ConfirmEmail.Controllers
         /// </summary>
         /// <returns></returns>
         public IActionResult Index() => View(_roleManager.Roles.ToList());
+
+        /// <summary>
+        /// Метод вывода списка всех пользователей с возможностью устанавливать им роли
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult UsersRolesList() => View(_userManager.Users.ToList());
 
         /// <summary>
         /// Метод создания новой роли, Get метод
@@ -70,12 +75,6 @@ namespace IdentityAuthN_AuthZ.ConfirmEmail.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        /// <summary>
-        /// Метод вывода списка всех пользователей с возможностью устанавливать им роли
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult UserList() => View(_userManager.Users.ToList());
 
         /// <summary>
         /// Метод установки ролей для пользователей, Get метод
@@ -130,7 +129,7 @@ namespace IdentityAuthN_AuthZ.ConfirmEmail.Controllers
 
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
-                return RedirectToAction("UserList");
+                return RedirectToAction("UsersRolesList");
             }
 
             return NotFound();

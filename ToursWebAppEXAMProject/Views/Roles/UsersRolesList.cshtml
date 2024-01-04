@@ -3,14 +3,14 @@
 <div class="rolesPage">
     <div class="rolesHeader">
 
-        <h2>Список пользователей</h2>
+        <h2 class="title">Список пользователей и их уровни доступа</h2>
         <table class="table">
             @foreach (var user in Model)
             {
                 <tr>
                     <td>@user.Email</td>
                     <td>
-                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Права доступа</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-userid="@user.Id">Уровень доступа</a>
                     </td>
                 </tr>
             }
