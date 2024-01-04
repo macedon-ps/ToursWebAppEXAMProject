@@ -169,18 +169,19 @@ body {
 		text-decoration: none;
 	}*/
 
-	.homeButton a, .searchButton a, .editButton a,
-	.supportButton a, .aboutButton a, .accountButton a, .errorButton a{
-		display: inline-block;
-		padding: 10px 25px;
-		color: white;
-		background-color: #008dab;
-		text-decoration: none;
-		min-width: 18%;
-		border-radius: 10px;
-		text-align: center;
-		margin-right: 0.5em;
-	}
+.homeButton a, .searchButton a, .editButton a,
+.supportButton a, .aboutButton a, .accountButton a,
+.usersButton a, .rolesButton a, .errorButton a {
+	display: inline-block;
+	padding: 10px 25px;
+	color: white;
+	background-color: #008dab;
+	text-decoration: none;
+	min-width: 18%;
+	border-radius: 10px;
+	text-align: center;
+	margin-right: 0.5em;
+}
 	.blog-user,.blog-message,
 	.list-blog-messages {
 		padding: 10px 25px 15px 30px;
@@ -199,6 +200,13 @@ body {
 		margin: 0 0 60px 0;
 	}
 
+	.descriptionBlock{
+		padding-left: 1em;
+	}
+	.form label{
+		padding: 0.5em 1em;
+		font-weight: 600;
+	}
 	section:last-child, article:last-child {
 		margin-bottom: 0;
 	}
@@ -209,6 +217,26 @@ body {
 		aspect-ratio: 3/2;
 		object-fit: cover;
 	}
+	.table{
+		
+	}
+	.table th{
+		padding-left: 3em;
+		text-align:left;
+		font-weight: 600;
+	}
+	.table td{
+		max-width: 33%;
+		padding: 0.5em 0.5em 0.5em 3em;
+	}
+	.table td a,
+	.table td button{
+		margin-right: 0.8em;
+	}
+.linkDesign{
+	margin: 1em 0 1em 2em;
+	padding: 0.2em 0;
+}
 /* Container */
 .container {
 	margin: 0 auto;
@@ -2059,12 +2087,14 @@ body {
 	*/
 
 .homePage, .searchPage, .editPage,
-.supportPage, .aboutPage, .accountPage, .errorPage {
+.supportPage, .aboutPage, .accountPage, 
+.usersPage, .rolesPage, .errorPage {
 	position: relative;
 	height: 550px;
 }
 .homeHeader, .searchHeader, .editHeader,
-.supportHeader, .aboutHeader, .accountHeader, .errorHeader {
+.supportHeader, .aboutHeader, .accountHeader,
+.usersHeader, .rolesHeader, .errorHeader {
 	height: 500px;
 	background-color: #7dced8;
 	padding: 1em;
@@ -2101,7 +2131,8 @@ body {
 	flex-direction: column;
 }
 .homeButton, .searchButton, .editButton,
-.supportButton, .aboutButton, .accountButton, .errorButton {
+.supportButton, .aboutButton, .accountButton,
+.usersButton, .rolesButton, .errorButton {
 	display: flex;
 	justify-content: space-between;
 	background-color: #7dced8;

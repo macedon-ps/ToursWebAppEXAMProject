@@ -6,5 +6,16 @@
             <a asp-controller="Account" asp-action="Register">Register</a>
             <a asp-controller="Account" asp-action="Login">LogIn</a>
         </div>
+        <div class="accountButton">
+        @if(User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
+        {
+            <a asp-controller="Users" asp-action="Index">Список пользователей</a>
+            <a asp-controller="Roles" asp-action="Index">Список ролей</a>
+        }
+        @if(User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-controller="Users" asp-action="UsersList">Список пользователей</a>
+        }
+        </div>
     </div>
 </div>

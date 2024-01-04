@@ -21,7 +21,7 @@
         <br />
         <div class="searchMenu">  
 
-            <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
+            <form class="form" asp-controller="Search" asp-action="Index" method="post" name="myForm">
                 
                 @*свойства, кот. передаются в  строковом виде или с приведением к строке*@
                 <input type="hidden" asp-for="CountryId" value="@Model.CountryId" />
@@ -113,7 +113,7 @@
                     </div>
 
                     @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности) class="flexColumn blockWidth20"*@
-                    <div >
+                    <div class="descriptionBlock">
                         <label asp-for="CountryDescription"></label>
                         <p id="countryDesc">@Model.CountryDescription</p>
                         <label asp-for="CityDescrition"></label>
