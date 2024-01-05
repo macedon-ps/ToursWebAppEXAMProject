@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
@@ -60,9 +61,9 @@ namespace ToursWebAppEXAMProject.Controllers
                         protocol: HttpContext.Request.Scheme);
 
                     // отправка сообщения на эл.почту для подтверждения регистрации
-                    /*EmailService emailService = new EmailService();
+                    EmailService emailService = new EmailService();
                     await emailService.SendEmailAsync(model.Email, "Confirm the registration of a new user",
-                        $"Подтвердите регистрацию нового пользователя в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration</a>");*/
+                        $"Подтвердите регистрацию нового пользователя в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration</a>");
 
                     //вывод на экран сообщения о письме на эл. почту для подтвержения регистрации нового пользователя
                     return Content("Для завершения регистрации нового пользователя приложения, проверьте электронную почту и перейдите по ссылке, указанной в письме");
