@@ -10,12 +10,13 @@
         <br />
 
         <table class="table">
-            <tr><th>Email</th><th>Год</th><th></th></tr>
+            <tr><th>Email</th><th>Год</th><th>Регистрация подтверждена</th></tr>
             @foreach (var user in Model)
             {
                 <tr>
                     <td>@user.Email</td>
                     <td>@user.BirthYear</td>
+                    <td>@user.EmailConfirmed</td>
                 </tr>
             }
         </table>

@@ -151,7 +151,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			switch (type)
 			{
-				case "ToursWebAppEXAMProject.Models.New":
+				case "New":
 					var modelNew = DataManager.NewBaseInterface.GetItemById(id);
 					DataManager.NewBaseInterface.DeleteItem(modelNew, id);
 
@@ -159,7 +159,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     
 					return View("SuccessForDelete", modelNew);
 				
-				case "ToursWebAppEXAMProject.Models.Blog":
+				case "Blog":
 					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
 					DataManager.BlogBaseInterface.DeleteItem(modelBlog, id);
 
@@ -167,7 +167,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     
 					return View("SuccessForDelete", modelBlog);
 				
-				case "ToursWebAppEXAMProject.Models.Product":
+				case "Product":
 					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
 					DataManager.ProductBaseInterface.DeleteItem(modelProduct, id);
 

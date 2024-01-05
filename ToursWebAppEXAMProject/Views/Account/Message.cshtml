@@ -1,0 +1,14 @@
+﻿@model string
+<div class="accountPage">
+    <div class="accountHeader">
+        <div class="accountButton">
+            <a asp-controller="Account" asp-action="Register">Register</a>
+            <a asp-controller="Account" asp-action="Login">LogIn</a>
+        </div>
+        <div class="marginTop1">
+            <h2 class="title">Подтверждение регистрирации</h2>
+            <br />
+            <p>@Model</p>
+        </div>
+    </div>
+</div>

@@ -217,8 +217,8 @@ body {
 		aspect-ratio: 3/2;
 		object-fit: cover;
 	}
-	.table{
-		
+	.marginTop1{
+		margin-top: 1em;
 	}
 	.table th{
 		padding-left: 3em;
@@ -2156,6 +2156,9 @@ body {
 }
 .accountButton {
 	justify-content: center;
+}
+.accountButton h2{
+	margin-top: 1em;
 }
 .searchButtonSubmit {
 padding-top: 1em;
