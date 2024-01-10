@@ -101,7 +101,6 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult EditItem(string type, int id)
 		{
-            // TODO: сократить типы с "ToursWebAppEXAMProject.Models.New" до "New" и т.д.
             WriteLogs("Переход по маршруту /Edit/EditItem. ", NLogsModeEnum.Trace);
             
 			var model = new object();

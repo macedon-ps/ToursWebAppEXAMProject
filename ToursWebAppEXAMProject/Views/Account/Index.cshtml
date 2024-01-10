@@ -1,22 +1,31 @@
 ﻿<div class="accountPage">
     <div class="accountHeader">
         <h2>Зарегистрируйтесь / Войдите в учетную запись</h2>
-        <br />
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("superadmin") || User.IsInRole("admin")))
+        {
+            <h3 class="title">Вход ограничен ролями "admin" и "superadmin"</h3>
+        }
+        <hr class="horizontal-line" />
+
         <div class="accountButton">
             <a asp-controller="Account" asp-action="Register">Register</a>
             <a asp-controller="Account" asp-action="Login">LogIn</a>
         </div>
-        <div class="accountButton">
+        
         @if(User.Identity.IsAuthenticated && User.IsInRole("superadmin"))
         {
-            <a asp-controller="Users" asp-action="Index">Список пользователей</a>
-            <a asp-controller="Roles" asp-action="Index">Список ролей</a>
-            <a asp-controller="Roles" asp-action="UsersRolesList">Назначение ролей пользователям</a>
+            <div class="accountButton">
+                <a asp-controller="Users" asp-action="Index">Список пользователей</a>
+                <a asp-controller="Roles" asp-action="Index">Список ролей</a>
+                <a asp-controller="Roles" asp-action="UsersRolesList">Назначение ролей пользователям</a>
+            </div>
         }
         @if(User.Identity.IsAuthenticated && User.IsInRole("admin"))
         {
-            <a asp-controller="Users" asp-action="UsersList">Список пользователей</a>
+            <div class="accountButton">
+                <a asp-controller="Users" asp-action="UsersList">Список пользователей</a>
+            </div>
         }
-        </div>
+        
     </div>
 </div>

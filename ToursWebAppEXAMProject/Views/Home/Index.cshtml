@@ -8,9 +8,9 @@
     @await Html.PartialAsync("HomeButtonMenuPartial")
 
     <div class="homeHeader">
-        <h1 class="title">Домашняя страница сайта:</h1>
-        <hr class="horizontal-line"/>
-        <br/>
+        <h1 class="title">Домашняя страница сайта:</h1><br />
+        <hr class="horizontal-line"/><br/>
+
         <div class="displayFlex row">
             <div class="col-6 col-12-medium">
                 @foreach(var newItem in Model.NewBaseInterface.GetAllItems())

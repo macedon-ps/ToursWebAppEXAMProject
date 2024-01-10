@@ -4,6 +4,9 @@
 
     <div class="editHeader">
         
+        <h3 class="title">Вход ограничен ролями "editor" и "superadmin"</h3><br />
+        <hr class="horizontal-line" />
+
         @foreach(var item in @Model)
         {
             var typeString = item.GetType().ToString();

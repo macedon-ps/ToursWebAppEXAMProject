@@ -3,9 +3,6 @@
     ViewData["Title"] = "Edit Page";
 }
 
-@{ // TODO:  необходимо сделать переход на asp-area="Edit"
-   // для этого реализовать аутентификацию и авторизацию с помощью фр-ка Entity 
-}
 <div class="editPage">
     
     @await Html.PartialAsync("EditButtonMenuPartial")
@@ -13,6 +10,7 @@
     <div class="editHeader">
                  
         <h1 class="title">Страница редактора сайта:</h1>
+        <h3 class="title">Вход ограничен ролями "editor" и "superadmin"</h3><br />
         <hr class="horizontal-line" />
         <br />
         <div>

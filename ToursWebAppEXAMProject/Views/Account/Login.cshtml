@@ -1,7 +1,10 @@
 ﻿@model LoginViewModel
 <div class="accountPage">
     <div class="accountHeader"> 
+        
         <h2>Вход в приложение</h2>
+        <hr class="horizontal-line" /><br />
+
         <form method="post" asp-controller="Account" asp-action="Login"
               asp-route-returnUrl="@Model.ReturnUrl">
             <div asp-validation-summary="ModelOnly"></div>

@@ -21,7 +21,9 @@
             }
         }
         <h2>1. Создание @word:</h2>
-            
+        <h3 class="title">Вход ограничен ролями "editor" и "superadmin"</h3><br />
+        <hr class="horizontal-line" />
+
         <div class="div-box">
             <form asp-area="" asp-controller="Edit" asp-action="CreateEntity" method="get">
                 <input type="hidden" asp-for="type" value="@Model.type"/>
