@@ -46,7 +46,10 @@ builder.Services.AddIdentity<User, IdentityRole>(opts => {
     .AddEntityFrameworkStores<TourFirmaDBContext>();
 
 // подключение сервиса использования MS SQL Server и БД
-builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
+//builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
+
+builder.Services.AddDbContext<TourFirmaDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
