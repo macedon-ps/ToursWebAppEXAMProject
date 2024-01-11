@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public class HomeController : Controller
+    public class HomeController : Controller
 	{
-		private readonly DataManager DataManager;
+		private readonly IBaseInterface<Blog> _AllBlogs;
+		private readonly IBaseInterface<New> _AllNews;
+		private readonly IEditTechTaskInterface _AllTechTask;
 
-		public HomeController(DataManager DataManager)
+		public HomeController(IBaseInterface<Blog> Blogs, IBaseInterface<New> News, IEditTechTaskInterface Tasks)
 		{
-			this.DataManager = DataManager;
+			this._AllBlogs = Blogs;
+			this._AllNews = News;
+			this._AllTechTask = Tasks;
 		}
 
 		/// <summary>
@@ -23,8 +27,11 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /.\n", NLogsModeEnum.Trace);
-			
-			return View(DataManager);
+			var viewModel = new NewsAndBlogsViewModel();
+			viewModel.AllBlogs = _AllBlogs.GetAllItems();
+			viewModel.AllNews = _AllNews.GetAllItems();	
+
+			return View(viewModel);
 		}
 
 		/// <summary>
@@ -36,7 +43,7 @@ namespace ToursWebAppEXAMProject.Controllers
             WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
             
 			var pageName = "Home";
-			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
+			var model = _AllTechTask.GetTechTasksForPage(pageName);
 
 			return View(model);
 		}
@@ -67,7 +74,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
-				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
+				_AllTechTask.SaveProgressTechTasks(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Home/TechTaskHome.cshtml\n", NLogsModeEnum.Trace);

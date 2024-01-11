@@ -1,4 +1,4 @@
-﻿@model DataManager
+﻿@model NewsAndBlogsViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,7 +13,7 @@
 
         <div class="displayFlex row">
             <div class="col-6 col-12-medium">
-                @foreach(var newItem in Model.NewBaseInterface.GetAllItems())
+                @foreach(var newItem in Model.AllNews)
                 {
                     <div>
                         <div class="titleImage">
@@ -33,7 +33,7 @@
                 }
             </div>
             <div class="col-6 col-12-medium">
-                @foreach(var blog in Model.BlogBaseInterface.GetAllItems())
+                @foreach(var blog in Model.AllBlogs)
                 {
                     <div>
                         <div class="titleImage">
