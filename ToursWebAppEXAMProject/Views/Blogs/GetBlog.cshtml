@@ -5,7 +5,7 @@
 
 <div class="homePage">
     
-    @await Html.PartialAsync("HomeButtonMenuPartial")
+    @await Html.PartialAsync("../Home/HomeButtonMenuPartial")
 
     <div class="homeHeaderOne">
         <div class="titleImage50">
@@ -29,7 +29,7 @@
                 @Html.Raw(@Model.FullMessageLine)
             </div>
         </div>
-        <form asp-controller="Home" asp-action="SaveBlogMessage" method="post">
+        <form asp-controller="Blogs" asp-action="SaveBlogMessage" method="post">
             <div class="add-messages">
                 <input type="hidden" name="blogId" value="@Model.Id" />
                 <h3>Пользователь: </h3>

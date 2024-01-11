@@ -5,7 +5,7 @@
 
 <div class="homePage">
          
-    @await Html.PartialAsync("HomeButtonMenuPartial")
+    @await Html.PartialAsync("../Home/HomeButtonMenuPartial")
 
     <div class="homeHeader">
         @foreach(var blog in Model)
@@ -23,7 +23,7 @@
                     </div>
                     <div class="dateAdded">
                         <h4>@blog.DateAdded</h4>
-                        <a asp-controller="Home" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                        <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
                     </div>
                 </div>
             </div> 
