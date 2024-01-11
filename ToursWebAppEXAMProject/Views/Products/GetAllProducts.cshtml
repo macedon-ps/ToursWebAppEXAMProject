@@ -1,9 +1,9 @@
-﻿@model List<Product>
+﻿@model IEnumerable<Product>
 
 @{
 <div class="searchPage">
         
-    @await Html.PartialAsync("SearchButtonMenuPartial")
+    @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
 
     <div class="searchHeader">
         @foreach(var product in @Model)
@@ -21,7 +21,7 @@
                     </div>
                         <div class="dateAdded">
                         <h4>@product.DateAdded</h4>
-                        <a asp-controller="Search" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
+                        <a asp-controller="Products" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
                     </div>
                 </div>
             </div>

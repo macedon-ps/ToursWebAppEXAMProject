@@ -27,7 +27,7 @@
                         </div>
                         <div class="dateAdded">
                             <h4>@newItem.DateAdded</h4>
-                            <a asp-controller="News" asp-action="GetNew" asp-route-id="@newItem.Id">Подробнее ...</a>
+                            <a asp-controller="News" asp-action="GetNews" asp-route-id="@newItem.Id">Подробнее ...</a>
                         </div>
                     </div> 
                 }
@@ -47,7 +47,7 @@
                         </div>
                         <div class="dateAdded">
                             <h4>@blog.DateAdded</h4>
-                            <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                            <a asp-controller="Blogs" asp-action="GetBlogs" asp-route-id="@blog.Id">Подробнее ...</a>
                         </div>
                     </div>
                 }

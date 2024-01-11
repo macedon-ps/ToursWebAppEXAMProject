@@ -2255,12 +2255,14 @@ padding-top: 1em;
 	padding: 0 1em 0.5em 0;
 }
 .dateAdded,
-.editDelete{
+.editDelete,
+.searchDelete{
 	display: flex;
 	margin-bottom: 1.2em;
 }
 .dateAdded a,
-.editDelete a {
+.editDelete a,
+.searchDelete a{
 	margin-left: 0.6em;
 }
 .searchBlock1,

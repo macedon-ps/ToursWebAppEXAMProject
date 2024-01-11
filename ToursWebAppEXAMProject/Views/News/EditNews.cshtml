@@ -2,14 +2,14 @@
 
 <div class="editPage">
     
-    @await Html.PartialAsync("EditButtonMenuPartial")
+    @await Html.PartialAsync("../Edit/EditButtonMenuPartial")
 
     <div class="editHeader">
        
         @* для CKEditor 4 *@
         <script src="~/js/ckeditor4/ckeditor.js"></script>
         
-        <form asp-controller="Edit" asp-action="SaveItemNew" method="post" enctype="multipart/form-data">
+        <form asp-controller="News" asp-action="SaveNews" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
             <input type="hidden" asp-for="TitleImagePath" />        

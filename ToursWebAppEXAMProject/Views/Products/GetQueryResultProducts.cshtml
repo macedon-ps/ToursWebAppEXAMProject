@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Product>
+<div class="searchPage">
+
+    @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
+
+    <div class="searchHeader">
+
+        <h3 class="title">Вход ограничен ролями "editor" и "superadmin"</h3><br />
+        <hr class="horizontal-line" />
+
+        @foreach (var item in Model)
+        {
+            <div>
+                <div>
+                    <h2>@item.Name</h2>
+                </div>
+                <div>
+                    <h4>@item.ShortDescription</h4>
+                </div>
+                <div class="searchDelete">
+                    <a asp-controller="Products" asp-action="EditProduct" asp-route-id="@item.Id">редактировать</a>
+                    <a asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@item.Id">удалить</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

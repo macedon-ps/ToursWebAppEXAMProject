@@ -180,57 +180,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("Index");
 		}
 
-        [Authorize(Roles = "superadmin,editor")]
-        /// <summary>
-        /// Метод сохранения новости с данными, введенными пользователем
-        /// </summary>
-        /// <param name="model">Модель новости</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
-        /// <returns></returns>
-        [HttpPost]
-		public async Task<IActionResult> SaveItemNew(New model, IFormCollection formValues, IFormFile? changeTitleImagePath)
-       	{
-            WriteLogs("Запущен процесс сохранения новости в БД. ", NLogsModeEnum.Debug);
-            			
-			if (ModelState.IsValid)
-			{
-                WriteLogs("Модель New прошла валидацию. ", NLogsModeEnum.Debug);
-
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
-                {
-                    var filePath = $"/images/NewsTitleImages/{changeTitleImagePath.FileName}";
-
-                    using (var fstream = new FileStream(hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
-
-                        WriteLogs($"Новая титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    model.TitleImagePath = filePath;
-                }
-
-                model.FullDescription = formValues["fullInfoAboutNew"];
-                model.DateAdded = DateTime.Now;
-
-                DataManager.NewBaseInterface.SaveItem(model, model.Id);
-
-                WriteLogs("Новость успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
-
-                return View("Success", model);
-            }
-            else
-            {
-                WriteLogs("Модель New не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Edit/EditItemNew.cshtml\n", NLogsModeEnum.Trace);
-
-                model.FullDescription = formValues["fullInfoAboutNew"];
-
-                return View("EditItemNew", model);
-            }
-        }
+       
 
         [Authorize(Roles = "superadmin,editor")]
         /// <summary>
