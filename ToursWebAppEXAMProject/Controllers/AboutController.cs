@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
@@ -9,12 +10,12 @@ namespace ToursWebAppEXAMProject.Controllers
 {
 	public class AboutController : Controller
 	{
-		private readonly DataManager DataManager;
+        private readonly IEditTechTaskInterface _AllTasks;
 
-		public AboutController(DataManager DataManager)
+        public AboutController(IEditTechTaskInterface Tasks)
 		{
-			this.DataManager = DataManager;
-		}
+            this._AllTasks = Tasks;
+        }
 
         /// <summary>
         /// Метод вывода стартовой страницы About
@@ -75,7 +76,7 @@ namespace ToursWebAppEXAMProject.Controllers
             WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
             
 			var pageName = "About";
-			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
+			var model = _AllTasks.GetTechTasksForPage(pageName);
 
 			return View(model);
 		}
@@ -106,7 +107,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
-				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
+				_AllTasks.SaveProgressTechTasks(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);

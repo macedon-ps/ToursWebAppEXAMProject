@@ -215,6 +215,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 }
 
                 blog.FullDescription = formValues["fullInfoAboutBlog"];
+                blog.FullMessageLine = formValues["fullMessageLine"];
                 blog.DateAdded = DateTime.Now;
 
                 _AllBlogs.SaveItem(blog, blog.Id);

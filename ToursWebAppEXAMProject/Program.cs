@@ -30,7 +30,6 @@ builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
-builder.Services.AddTransient<DataManager>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации

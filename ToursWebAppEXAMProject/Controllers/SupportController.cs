@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
-using ToursWebAppEXAMProject.Repositories;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public class SupportController : Controller
+    public class SupportController : Controller
 	{
-		private readonly DataManager DataManager;
+        private readonly IEditTechTaskInterface _AllTasks;
 
-		public SupportController(DataManager DataManager)
+        public SupportController(IEditTechTaskInterface Tasks)
 		{
-			this.DataManager = DataManager;
-		}
+            this._AllTasks = Tasks;
+        }
 
         /// <summary>
         /// Метод вывода стартовой страницы Support
@@ -75,7 +75,7 @@ namespace ToursWebAppEXAMProject.Controllers
             WriteLogs("Переход по маршруту Support/TechTaskSupport.\n", NLogsModeEnum.Trace);
             
 			var pageName = "Support";
-			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
+			var model = _AllTasks.GetTechTasksForPage(pageName);
 
 			return View(model);
 		}
@@ -106,7 +106,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
-				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
+				_AllTasks.SaveProgressTechTasks(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Support/TechTaskSupport.cshtml\n", NLogsModeEnum.Trace);
