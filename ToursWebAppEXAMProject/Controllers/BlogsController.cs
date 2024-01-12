@@ -33,9 +33,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var errorInfo = new ModelsErrorViewModel(typeof(List<Blog>));
 
-                WriteLogs("Нет блогов. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs("Нет блогов. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
 
             WriteLogs("Выводятся все блоги\n", NLogsModeEnum.Debug);
@@ -58,9 +58,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var errorInfo = new ModelsErrorViewModel(typeof(Blog), id);
 
-                WriteLogs($"Нет блога с id = {id}. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"Нет блога с id = {id}. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
 
             WriteLogs($"Выводится блог с id = {id}.\n", NLogsModeEnum.Debug);
@@ -108,6 +108,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateBlog()
         {
+            WriteLogs("Выполняется действие /Blogs/CreateBlog. ", NLogsModeEnum.Trace);
+
             var blog = new Blog();
 
             WriteLogs("Возвращено /Blogs/EditBlog.cshtml\n", NLogsModeEnum.Trace);
@@ -129,8 +131,6 @@ namespace ToursWebAppEXAMProject.Controllers
             var blog = _AllBlogs.GetItemById(id);
             blog.DateAdded = DateTime.Now;
 
-            WriteLogs($"Возвращено представление /Blogs/EditBlog.cshtml\n", NLogsModeEnum.Trace);
-
             return View(blog);
         }
 
@@ -151,12 +151,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (numberBlogs == 0)
             {
-                var message = $"Нет блогов по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Edit/Nothing.cshtml\n";
+                var message = $"Нет блогов по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
 
                 WriteLogs(message, NLogsModeEnum.Warn);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Edit/Nothing", nothingInfo);
+                return View("../Shared/Nothing", nothingInfo);
             }
 
             WriteLogs($"Выводятся все блоги по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
@@ -176,9 +176,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var blog = _AllBlogs.GetItemById(id);
             _AllBlogs.DeleteItem(blog, id);
 
-            WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
 
-            return View("../Edit/SuccessForDelete", blog);
+            return View("../Shared/SuccessForDelete", blog);
         }
 
         /// <summary>
@@ -218,20 +218,19 @@ namespace ToursWebAppEXAMProject.Controllers
                 _AllBlogs.SaveItem(blog, blog.Id);
 
                 WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено ../Shared/SuccessBlog.cshtml\n", NLogsModeEnum.Trace);
 
-                return View("../Edit/Success", blog);
+                return View("../Shared/SuccessBlog", blog);
             }
             else
             {
                 WriteLogs("Модель Blog не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Edit/EditBlog.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Blogs/EditBlog.cshtml\n", NLogsModeEnum.Trace);
 
                 blog.FullDescription = formValues["fullInfoAboutBlog"];
 
                 return View("EditBlog", blog);
             }
         }
-
     }
 }

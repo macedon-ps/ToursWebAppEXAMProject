@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
@@ -34,9 +33,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
 
-                WriteLogs("Нет новостей. Возвращено /ModelsError.cshtml.\n", NLogsModeEnum.Warn);
+                WriteLogs("Нет новостей. Возвращено ../Shared/ModelsError.cshtml.\n", NLogsModeEnum.Warn);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
             WriteLogs("Выводятся все новости.\n", NLogsModeEnum.Debug);
 
@@ -56,11 +55,11 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (newsItem.Id == 0)
             {
-                WriteLogs($"Нет новости с id = {id}. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"Нет новости с id = {id}. Возвращено ../Shared//ModelsError.cshtml\n", NLogsModeEnum.Warn);
 
                 var errorInfo = new ModelsErrorViewModel(typeof(New), id);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
 
             WriteLogs($"Выводится новость с id = {id}.\n", NLogsModeEnum.Debug);
@@ -75,6 +74,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateNews()
         {
+            WriteLogs("Выполняется действие /News/CreateNews. ", NLogsModeEnum.Trace);
+
             var newsItem = new New();
 
             WriteLogs("Возвращено /News/EditNews.cshtml\n", NLogsModeEnum.Trace);
@@ -96,9 +97,7 @@ namespace ToursWebAppEXAMProject.Controllers
             var newsItem = _AllNews.GetItemById(id);
             newsItem.DateAdded = DateTime.Now;
                         
-            WriteLogs($"Возвращено представление /News/EditNews.cshtml\n", NLogsModeEnum.Trace);
-
-            return View(newsItem);
+           return View(newsItem);
         }
 
         /// <summary>
@@ -118,12 +117,12 @@ namespace ToursWebAppEXAMProject.Controllers
          
             if (numberNews == 0)
             {
-                var message = $"Нет новостей по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Edit/Nothing.cshtml\n";
+                var message = $"Нет новостей по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
 
                 WriteLogs(message, NLogsModeEnum.Warn);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Edit/Nothing", nothingInfo);
+                return View("../Shared/Nothing", nothingInfo);
             }
 
             WriteLogs($"Выводятся все новости по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
@@ -143,9 +142,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var newsItem = _AllNews.GetItemById(id);
             _AllNews.DeleteItem(newsItem, id);
 
-            WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
 
-            return View("../Edit/SuccessForDelete", newsItem);
+            return View("../Shared/SuccessForDelete", newsItem);
         }
 
         /// <summary>
@@ -185,14 +184,14 @@ namespace ToursWebAppEXAMProject.Controllers
                 _AllNews.SaveItem(newsItem, newsItem.Id);
 
                 WriteLogs("Новость успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
 
-                return View("../Edit/Success", newsItem);
+                return View("../Shared/Success", newsItem);
             }
             else
             {
                 WriteLogs("Модель New не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Edit/EditNews.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /News/EditNews.cshtml\n", NLogsModeEnum.Trace);
 
                 newsItem.FullDescription = formValues["fullInfoAboutNew"];
 

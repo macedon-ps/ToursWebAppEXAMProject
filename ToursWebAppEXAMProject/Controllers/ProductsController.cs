@@ -33,9 +33,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
 
-                WriteLogs("Нет турпродуктов. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs("Нет турпродуктов. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
 
             WriteLogs("Выводятся все турпродукты\n", NLogsModeEnum.Debug);
@@ -50,7 +50,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetProduct(int id)
         {
-            WriteLogs($"Переход по маршруту /Product/GetProduct?id={id}. ", NLogsModeEnum.Trace);
+            WriteLogs($"Переход по маршруту /Products/GetProduct?id={id}. ", NLogsModeEnum.Trace);
 
             var product = _AllProducts.GetItemById(id);
 
@@ -58,9 +58,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var errorInfo = new ModelsErrorViewModel(typeof(Product), id);
 
-                WriteLogs($"Нет турпродукта с id = {id}. Возвращено /ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"Нет турпродукта с id = {id}. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("ModelsError", errorInfo);
+                return View("../Shared/ModelsError", errorInfo);
             }
 
             WriteLogs($"Выводится турпродукт с id = {id}.\n", NLogsModeEnum.Debug);
@@ -75,6 +75,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateProduct()
         {
+            WriteLogs("Выполняется действие /Products/CreateProduct. ", NLogsModeEnum.Trace);
+
             var product = new Product();
 
             WriteLogs("Возвращено /Products/EditProduct.cshtml\n", NLogsModeEnum.Trace);
@@ -95,8 +97,6 @@ namespace ToursWebAppEXAMProject.Controllers
 
             var product = _AllProducts.GetItemById(id);
             product.DateAdded = DateTime.Now;
-
-            WriteLogs($"Возвращено представление /Products/EditProduct.cshtml\n", NLogsModeEnum.Trace);
 
             return View(product);
         }
@@ -143,9 +143,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var product = _AllProducts.GetItemById(id);
             _AllProducts.DeleteItem(product, id);
 
-            WriteLogs("Возвращено /Edit/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
 
-            return View("../Edit/SuccessForDelete", product);
+            return View("../Shared/SuccessForDelete", product);
         }
 
         /// <summary>
@@ -159,40 +159,50 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveProduct(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
+            // TODO: продумать способ создания страны и города с их id до создания продукта с его CountryId и CityId
+            // отобразить UI создания страны и города
+            
             WriteLogs("Запущен процесс сохранения турпродукта в БД. ", NLogsModeEnum.Debug);
 
             if (ModelState.IsValid)
             {
-                WriteLogs("Модель Product прошла валидацию. ", NLogsModeEnum.Debug);
-
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
+                try
                 {
-                    var filePath = $"/images/ProductsTitleImages/{changeTitleImagePath.FileName}";
+                    WriteLogs("Модель Product прошла валидацию. ", NLogsModeEnum.Debug);
 
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+                    // если мы хотим поменять картинку
+                    if (changeTitleImagePath != null)
                     {
-                        await changeTitleImagePath.CopyToAsync(fstream);
+                        var filePath = $"/images/ProductsTitleImages/{changeTitleImagePath.FileName}";
 
-                        WriteLogs($"Новая титульная картинка турпродукта сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                        using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+                        {
+                            await changeTitleImagePath.CopyToAsync(fstream);
+
+                            WriteLogs($"Новая титульная картинка турпродукта сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                        }
+                        product.TitleImagePath = filePath;
                     }
-                    product.TitleImagePath = filePath;
+
+                    product.FullDescription = formValues["fullInfoAboutProduct"];
+                    product.DateAdded = DateTime.Now;
+
+                    _AllProducts.SaveItem(product, product.Id);
+
+                    WriteLogs("Турпродукт успешно сохранен в БД. ", NLogsModeEnum.Debug);
+                    WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+
+                    return View("../Shared/Success", product);
                 }
-
-                product.FullDescription = formValues["fullInfoAboutProduct"];
-                product.DateAdded = DateTime.Now;
-
-                _AllProducts.SaveItem(product, product.Id);
-
-                WriteLogs("Турпродукт успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Edit/Success.cshtml\n", NLogsModeEnum.Trace);
-
-                return View("../Edit/Success", product);
+                catch (Exception error)
+                {
+                    return View("../Shared/ModelsError", error.Message);
+                }
             }
             else
             {
                 WriteLogs("Модель Product не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Edit/EditProduct.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /Products/EditProduct.cshtml\n", NLogsModeEnum.Trace);
 
                 product.FullDescription = formValues["fullInfoAboutProduct"];
 
