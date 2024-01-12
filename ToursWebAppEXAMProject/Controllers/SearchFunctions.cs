@@ -57,9 +57,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
                 }
 
-                searchViewModel.AllCountriesAndCitiesByString = DataManager.QueryResultInterface
+                searchViewModel.AllCountriesAndCitiesByString = _QueryResult
 					.GetAllCountriesAndCitiesByString();
-                searchViewModel.AllCountriesAndMapsByString = DataManager.QueryResultInterface
+                searchViewModel.AllCountriesAndMapsByString = _QueryResult
 					.GetAllCountryMapsByString();
 
             }
@@ -122,9 +122,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
                 }
 
-                searchViewModel.AllCountriesAndCitiesByString = DataManager.QueryResultInterface
+                searchViewModel.AllCountriesAndCitiesByString = _QueryResult
 					.GetAllCountriesAndCitiesByString();
-                searchViewModel.AllCountriesAndMapsByString = DataManager.QueryResultInterface
+                searchViewModel.AllCountriesAndMapsByString = _QueryResult
 					.GetAllCountryMapsByString();
 
             }
@@ -154,7 +154,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		private List<string> GetAllCountries()
 		{
 			var countriesList = new List<string>();
-			var countriesFromDB = DataManager.CountryBaseInterface.GetAllItems();
+			var countriesFromDB = _AllCountries.GetAllItems();
 
 			foreach (var country in countriesFromDB)
 			{
@@ -171,7 +171,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		private Country GetCountryBySelectedName(string countryNameSelected)
 		{
-			var country = DataManager.CountryBaseInterface.GetAllItems()
+			var country = _AllCountries.GetAllItems()
 				.FirstOrDefault(c => c.Name == countryNameSelected);
 			
 			if (country == null)
@@ -189,7 +189,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// <returns></returns>
 		private City GetCityByCountrySelectedName(string countryNameSelected)
 		{
-			var city = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected).First();
+			var city = _QueryResult.GetCitiesByCountryName(countryNameSelected).First();
 
 			if(city == null)
 			{
@@ -207,7 +207,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         private City GetCityByCitySelectedName(string countryNameSelected, string cityNameSelected)
         {
-            var city = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected).FirstOrDefault
+            var city = _QueryResult.GetCitiesByCountryName(countryNameSelected).FirstOrDefault
 				(n => n.Name == cityNameSelected);
 
             if (city == null)
@@ -236,7 +236,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		private List<string> GetAllCities(string countryNameSelected)
 		{
 			var citiesList = new List<string>();
-			var citiesFromDB = DataManager.QueryResultInterface.GetCitiesByCountryName(countryNameSelected);
+			var citiesFromDB = _QueryResult.GetCitiesByCountryName(countryNameSelected);
 
 			foreach (var city in citiesFromDB)
 			{
@@ -245,13 +245,19 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			return citiesList;
 		}
+        public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
+        {
+            var products = _QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
 
-		/// <summary>
-		/// Метод преобразования List<string> в строку
-		/// </summary>
-		/// <param name="listOfStrings">коллекция строк</param>
-		/// <returns></returns>
-		private string ParseListOfStringsToString(List<string> allItemsListOfString)
+            return View("GetAllProducts", products);
+        }
+
+        /// <summary>
+        /// Метод преобразования List<string> в строку
+        /// </summary>
+        /// <param name="listOfStrings">коллекция строк</param>
+        /// <returns></returns>
+        private string ParseListOfStringsToString(List<string> allItemsListOfString)
 		{
 			var allItemsOneString = "";
 			allItemsOneString = String.Join(",", allItemsListOfString);

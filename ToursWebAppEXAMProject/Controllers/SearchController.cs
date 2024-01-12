@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
@@ -9,11 +10,15 @@ namespace ToursWebAppEXAMProject.Controllers
 {
 	public partial class SearchController: Controller
 	{
-		private readonly DataManager DataManager;
+		private readonly IQueryResultInterface _QueryResult;
+		private readonly IBaseInterface<Country> _AllCountries;
+		private readonly IEditTechTaskInterface _AllTasks;
 
-		public SearchController(DataManager DataManager)
+		public SearchController(IQueryResultInterface QueryResult, IBaseInterface<Country> Countries, IEditTechTaskInterface Tasks)
 		{
-			this.DataManager = DataManager;
+			this._QueryResult = QueryResult;
+			this._AllCountries = Countries;
+			this._AllTasks = Tasks;
 		}
 
         /// <summary>
@@ -62,10 +67,10 @@ namespace ToursWebAppEXAMProject.Controllers
 
 				if(countryName!="" && cityName != "")
 				{
-                    products = (List<Product>)DataManager.QueryResultInterface.GetProductsByCountryNameAndCityName(countryName, cityName);
+                    products = (List<Product>)_QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
                 }
 				
-				return View("GetAllProducts", products);
+				return View("../Products/GetAllProducts", products);
 
 
 			}
@@ -74,89 +79,7 @@ namespace ToursWebAppEXAMProject.Controllers
             
 			return View();
 		}
-
-
-		/// <summary>
-		/// Метод вывода турпродукта по его id
-		/// </summary>
-		/// <param name="id">уникальный идентификатор турпродукта</param>
-		/// <returns></returns>
-		public IActionResult GetProduct(int id)
-		{
-            WriteLogs($"Переход по маршруту /Search/GetProduct?id={id}. ", NLogsModeEnum.Trace);
-            
-			var product = DataManager.ProductBaseInterface.GetItemById(id);
-
-			if (product.Id == 0)
-			{
-                WriteLogs($"Нет турпродукта с id={id}. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
-                
-				// message = "";
-				var errorInfo = new ModelsErrorViewModel(typeof(Product), id);
-				return View("Error", errorInfo);
-			}
-
-            WriteLogs($"Выводится турпродукт с id={id}.\n", NLogsModeEnum.Debug);
-            
-			return View(product);
-		}
-
-		/// <summary>
-		/// Метод вывода всех туристических продуктов
-		/// </summary>
-		/// <returns></returns>
-		public IActionResult GetAllProducts()
-		{
-            WriteLogs("Переход по маршруту /Search/GetAllProducts. ", NLogsModeEnum.Trace);
-            
-			var products = DataManager.ProductBaseInterface.GetAllItems();
-
-			if (products == null)
-			{
-                WriteLogs("Нет турпродуктов. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
-                
-				// message = "";
-				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
-				return View("Error", errorInfo);
-			}
-
-            WriteLogs("Выводятся все турпродукты\n", NLogsModeEnum.Debug);
-            
-			return View(products);
-		}
-
-        /// <summary>
-        /// Метод вывода турпродуктов по полному названию или по ключевому слову (букве)
-        /// </summary>
-        /// <param name="keyword">текст для поиска</param>
-		/// /// <param name="isFullName">полное название - true или ключевое слово (буква) - false</param>
-        /// <returns></returns>
-        public IActionResult GetQueryResultProducts(string keyword, bool isFullName)
-		{
-            WriteLogs("Переход по маршруту /Search/GetAllProducts. ", NLogsModeEnum.Trace);
-            
-			var products = DataManager.ProductBaseInterface.GetQueryResultItemsAfterFullName(keyword, isFullName);
-
-			if (products == null)
-			{
-                WriteLogs("Нет турпродуктов по запросу. Возвращено /Error.cshtml\n", NLogsModeEnum.Warn);
-                
-				// message = "";
-				var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
-				return View("Error", errorInfo);
-			}
-
-            WriteLogs("Выводятся все турпродукты по запросу\n", NLogsModeEnum.Debug);
-            
-			return View(products);
-		}
-
-		public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
-		{
-			var products = DataManager.QueryResultInterface.GetProductsByCountryNameAndCityName(countryName, cityName);
-
-			return View("GetAllProducts", products);
-		}
+		
 
         /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
@@ -168,7 +91,7 @@ namespace ToursWebAppEXAMProject.Controllers
             WriteLogs("Переход по маршруту Search/TechTaskSearch.\n", NLogsModeEnum.Trace);
            
 			var pageName = "Search";
-			var model = DataManager.TechTaskInterface.GetTechTasksForPage(pageName);
+			var model = _AllTasks.GetTechTasksForPage(pageName);
 
 			return View(model);
 		}
@@ -199,7 +122,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
 				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
 
-				DataManager.TechTaskInterface.SaveProgressTechTasks(model);
+				_AllTasks.SaveProgressTechTasks(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
