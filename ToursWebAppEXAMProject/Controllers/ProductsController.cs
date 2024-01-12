@@ -31,11 +31,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (products == null)
             {
-                var errorInfo = new ModelsErrorViewModel(typeof(List<Product>));
+                var errorMessage = "В БД нет ни одного турпродукта";
+                var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs("Нет турпродуктов. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
 
             WriteLogs("Выводятся все турпродукты\n", NLogsModeEnum.Debug);
@@ -56,11 +57,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (product.Id == 0)
             {
-                var errorInfo = new ModelsErrorViewModel(typeof(Product), id);
+                var errorMessage = $"В БД нет турпродукта с id = {id}";
+                var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"Нет турпродукта с id = {id}. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
 
             WriteLogs($"Выводится турпродукт с id = {id}.\n", NLogsModeEnum.Debug);
@@ -196,7 +198,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 }
                 catch (Exception error)
                 {
-                    return View("../Shared/ModelsError", error.Message);
+                    return View("../Shared/Error", error.Message);
                 }
             }
             else

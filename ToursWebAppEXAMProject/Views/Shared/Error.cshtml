@@ -1,8 +1,10 @@
 ﻿@model ErrorViewModel
 @{
-    ViewData["Title"] = "ModelsError";
+    ViewData["Title"] = "ErrorPage";
 }  
-
+@{
+    //TODO: переработать кнопки ErrorViewModel и протестировать
+}
 <div class="errorPage">
         <div class="errorButton">
             <button class="">
@@ -19,12 +21,16 @@
              </button>
         </div>
         <div class="errorHeader">
-            <h1>Страница вывода ошибок:</h1><br/>
+            <h2>Упс, вы допустили ошибку:</h2><br/>
             
-            <h3>Сообщение об ошибке:</h3><br/>
+            <h3>Содержание ошибки:</h3><br/>
             <p class="text-danger">@Model.ErrorMessage</p><br/>
-
-            <h3>Дата и время ошибки:</h3><br/>
-            <p class="text-danger">@Model.DateTimeError</p> 
+            
+            <h3>Время ошибки: </h3><br/>
+            <p class="text-danger">@Model.DateTimeError</p>
         </div>
    </div>
+
+
+
+

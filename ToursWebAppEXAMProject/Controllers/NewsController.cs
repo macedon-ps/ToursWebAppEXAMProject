@@ -31,12 +31,14 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (newsItems == null)
             {
-                var errorInfo = new ModelsErrorViewModel(typeof(List<New>));
+                var errorMessage = "В БД нет ни одной новости";
+                var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs("Нет новостей. Возвращено ../Shared/ModelsError.cshtml.\n", NLogsModeEnum.Warn);
+                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml.\n", NLogsModeEnum.Warn);
 
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
+
             WriteLogs("Выводятся все новости.\n", NLogsModeEnum.Debug);
 
             return View(newsItems);
@@ -55,11 +57,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (newsItem.Id == 0)
             {
-                WriteLogs($"Нет новости с id = {id}. Возвращено ../Shared//ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                var errorMessage = $"В БД нет новости с id = {id}";
+                var errorInfo = new ErrorViewModel(errorMessage);
 
-                var errorInfo = new ModelsErrorViewModel(typeof(New), id);
+                WriteLogs($"{errorMessage}. Возвращено ../Shared//Error.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
 
             WriteLogs($"Выводится новость с id = {id}.\n", NLogsModeEnum.Debug);

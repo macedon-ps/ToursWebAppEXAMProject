@@ -93,53 +93,6 @@ namespace ToursWebAppEXAMProject.Controllers
 
         [Authorize(Roles = "superadmin,editor")]
         /// <summary>
-        /// Метод редактирования отдельной сущности (новости, блога или турпродукта) по ее id
-        /// </summary>
-        /// <param name="type">тип данных (новость, блог или турпродукт)</param>
-        /// <param name="id">универсальный идентификатор сущности (новости, блога или турпродукта)</param>
-        /// <returns></returns>
-        [HttpGet]
-		public IActionResult EditItem(string type, int id)
-		{
-            WriteLogs("Переход по маршруту /Edit/EditItem. ", NLogsModeEnum.Trace);
-            
-			var model = new object();
-			var view = "";
-
-			switch (type)
-			{
-				case "New":
-					var modelNew =	DataManager.NewBaseInterface.GetItemById(id);
-					modelNew.DateAdded  = DateTime.Now;
-
-                    model = modelNew;
-					view = "EditItemNew";
-					break;
-                    												
-				case "Blog":
-					var modelBlog = DataManager.BlogBaseInterface.GetItemById(id);
-					modelBlog.DateAdded = DateTime.Now;
-
-                    model = modelBlog;
-                    view = "EditItemBlog";
-                    break;
-
-                case "Product":
-					var modelProduct = DataManager.ProductBaseInterface.GetItemById(id);
-					modelProduct.DateAdded = DateTime.Now;
-					
-                    model = modelProduct;
-                    view = "EditItemProduct";
-                    break;
-			}
-
-            WriteLogs($"Возвращено представление /Edit/{view}.cshtml\n", NLogsModeEnum.Trace);
-            						
-			return View(view, model);
-		}
-
-        [Authorize(Roles = "superadmin,editor")]
-        /// <summary>
         /// Метод удаления отдельной сущности (новости, блога или турпродукта) по ее id
         /// </summary>
         /// <param name="type">тип данных (новость, блог или турпродукт)</param>

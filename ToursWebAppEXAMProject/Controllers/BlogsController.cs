@@ -31,11 +31,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (blogs == null)
             {
-                var errorInfo = new ModelsErrorViewModel(typeof(List<Blog>));
+                var errorMessage = "В БД нет ни одного блога";
+                var errorInfo = new ErrorViewModel(errorMessage);
+                
+                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
 
-                WriteLogs("Нет блогов. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
-
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
 
             WriteLogs("Выводятся все блоги\n", NLogsModeEnum.Debug);
@@ -56,11 +57,12 @@ namespace ToursWebAppEXAMProject.Controllers
 
             if (blog.Id == 0)
             {
-                var errorInfo = new ModelsErrorViewModel(typeof(Blog), id);
+                var errorMessage = $"В БД нет блога с id = {id}";
+                var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"Нет блога с id = {id}. Возвращено ../Shared/ModelsError.cshtml\n", NLogsModeEnum.Warn);
+                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
 
-                return View("../Shared/ModelsError", errorInfo);
+                return View("../Shared/Error", errorInfo);
             }
 
             WriteLogs($"Выводится блог с id = {id}.\n", NLogsModeEnum.Debug);
