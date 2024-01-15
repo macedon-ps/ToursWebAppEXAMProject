@@ -82,7 +82,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// для городов
 				items = context.Cities
-				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
+				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
 				.ToList();
 
 				if (items == null)
@@ -175,14 +175,14 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// запрос к БД дать список стран в формате List<Country>, страны не повторяются
 				var countries = context.Countries
-				.FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
+				.FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath, Country.DateAdded from Country, City where Country.Id = City.CountryId")
 				.ToList();
 
 				// для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
 				foreach (Country country in countries)
 				{
 					cities = context.Cities
-					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.CountryId from City where City.CountryId = {country.Id}")
+					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City where City.CountryId = {country.Id}")
 					.ToList();
 
 					// заполняем countriesWithSitiesOneString, citiesOfOneCountryListOneString и allInfo
@@ -263,7 +263,7 @@ namespace ToursWebAppEXAMProject.Repositories
                 
                 // запрос к БД дать список стран в формате List<Country>, страны не повторяются
                 countries = context.Countries
-                .FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath from Country, City where Country.Id = City.CountryId")
+                .FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath, Country.DateAdded from Country, City where Country.Id = City.CountryId")
                 .ToList();
 
                 // для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
