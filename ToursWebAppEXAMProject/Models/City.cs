@@ -7,8 +7,8 @@ namespace ToursWebAppEXAMProject.Models
         public City()
         {
             Hotels = new HashSet<Hotel>();
-
             Products = new HashSet<Product>();
+            DateAdded = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -39,9 +39,10 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(100, ErrorMessage = "Путь к титульной картинке города не должен содержать более 100 символов")]
         public string TitleImagePath { get; set; } = "Нет титульной картинки города";
 
+        public DateTime? DateAdded { get; set; }
         public virtual Country? Country { get; set; } 
-        public virtual ICollection<Hotel> Hotels { get; set; }
+        public virtual IEnumerable<Hotel> Hotels { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }

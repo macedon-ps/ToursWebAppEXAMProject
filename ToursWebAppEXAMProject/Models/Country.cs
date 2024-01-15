@@ -7,8 +7,8 @@ namespace ToursWebAppEXAMProject.Models
         public Country()
         {
             Cities = new HashSet<City>();
-
             Products = new HashSet<Product>();
+            DateAdded = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -42,8 +42,9 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(200, ErrorMessage = "Ссылка на карту страны в GoogleMaps не должна содержать более 200 символов")]
         public string CountryMapPath { get; set; } = "Нет ссылки на карту страны в GoogleMaps";
 
-        public virtual ICollection<City> Cities { get; set; }
+        public DateTime? DateAdded { get; set; }
+        public virtual IEnumerable<City> Cities { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
