@@ -1,7 +1,8 @@
 ﻿<div class="searchButton">
     <a asp-controller="Search" asp-action="Index">Поиск туров</a>
     <a asp-controller="Products" asp-action="GetAllProducts">Все турпродукты</a>
-    <a asp-controller="Search" asp-action="">Резерв 3</a>
+    <a asp-controller="Countries" asp-action="GetAllCountries">Все страны</a>
+    <a asp-controller="Cities" asp-action="GetAllCities">Все города</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>

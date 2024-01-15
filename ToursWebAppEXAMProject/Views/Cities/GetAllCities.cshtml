@@ -1,0 +1,37 @@
+﻿@model IEnumerable<City>
+
+@{
+<div class="searchPage">
+        
+    @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
+
+    <div class="searchHeader">
+        @foreach(var city in @Model)
+        {
+            <div>
+                <div class="titleImage">
+                    <img src="@city.TitleImagePath" alt="@city.TitleImagePath" align="left" class="product-foto">
+                </div>    
+                <div class="displayFlexCol">
+                    <div>
+                        <h2>@city.Name</h2>
+                    </div>
+                    <div>
+                        <h4>@city.ShortDescription</h4>
+                    </div>
+                        <div class="dateAdded">
+                        <h4>@city.DateAdded</h4>
+                        <a asp-controller="Cities" asp-action="GetCity" asp-route-id="@city.Id">Подробнее ...</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+}
+
+
+
+
+
+

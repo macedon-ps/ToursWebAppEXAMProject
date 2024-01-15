@@ -1,0 +1,23 @@
+﻿@model City
+
+ <div class="searchPage">
+     
+     @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
+
+     <div class="searchHeaderOne">
+        <div class="titleImage50">
+            <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left">
+        </div>
+        <div>
+            <h2>@Model.Name</h2>
+        </div>
+        <div>
+            @Html.Raw(Model.FullDescription)
+        </div>
+        <div class="displayFlexRow">
+            <h4>Id города: @Model.Id</h4>
+            <h4>Дата: @Model.DateAdded</h4>
+        </div>
+    </div>
+</div>
+

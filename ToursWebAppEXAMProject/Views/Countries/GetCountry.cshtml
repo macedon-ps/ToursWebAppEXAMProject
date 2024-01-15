@@ -1,0 +1,43 @@
+﻿@model Country
+
+ <div class="searchPage">
+     
+     @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
+
+     <div class="searchHeaderOne">
+        
+        <div class="titleImage50">
+            <img src="@Model.TitleImagePath" alt="@Model.TitleImagePath" align="left">
+        </div>
+        <div>
+            <h2 class="title">@Model.Name</h2>
+        </div>
+        <div>
+            <h2 class="title">Столица: @Model.Capital</h2>
+        </div>
+        <div class="flexRow">
+            <div class="citiesList">
+                @if (Model.Cities != null)
+                {
+                    <h3>Города:</h3>
+                    <ul>
+                        @foreach (var city in Model.Cities)
+                        {
+                            <li>@city.Name </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+        <div>
+            @Html.Raw(Model.FullDescription)
+        </div>
+        <div class="displayFlexRow">
+            <h4>Id страны: @Model.Id</h4>
+            <h4>Дата: @Model.DateAdded</h4>
+        </div>
+     </div>
+        
+    
+</div>
+

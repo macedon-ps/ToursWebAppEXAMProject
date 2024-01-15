@@ -22,7 +22,9 @@ section, summary, time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;}
+	vertical-align: baseline;
+
+}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -32,9 +34,9 @@ body {
 	line-height: 1;
 }
 
-ol, ul {
+/*ol, ul {
 	list-style: none;
-}
+}*/
 
 blockquote, q {
 	quotes: none;
@@ -155,7 +157,6 @@ body {
 	img.top {
 		margin: 4px 0 2.25em 0;
 	}
-
 	ul {
 		padding: 0.25em 0 0 0;
 	}
@@ -171,23 +172,31 @@ body {
 
 .homeButton a, .searchButton a, .editButton a,
 .supportButton a, .aboutButton a, .accountButton a,
-.usersButton a, .rolesButton a, .errorButton a {
+.usersButton a, .rolesButton a, .errorButton a, 
+.addCityButton a {
 	display: inline-block;
 	padding: 10px 25px;
 	color: white;
 	background-color: #008dab;
 	text-decoration: none;
-	min-width: 18%;
+	min-width: 15%;
 	border-radius: 10px;
 	text-align: center;
 	margin-right: 0.5em;
 }
-	.blog-user,.blog-message,
-	.list-blog-messages {
-		padding: 10px 25px 15px 30px;
-		border-radius: 10px;
-		background-color: #bfe8ed;
-	}
+.citiesList {
+	padding-left: 1em;
+	width: 50%;
+}
+.cities {
+	padding-left: 1em;
+}
+.blog-user, .blog-message,
+.list-blog-messages {
+	padding: 10px 25px 15px 30px;
+	border-radius: 10px;
+	background-color: #bfe8ed;
+}
 	.list-blog-messages li {
 		/*background-color: white;*/
 		margin: 5px 0 10px 0;
@@ -2168,6 +2177,11 @@ padding-top: 1em;
 	border-radius: 6px;
 	margin-top: 1em;
 	padding: 1em 0;
+}
+.addCityButton {
+	background-color: #7dced8;
+	margin-top: 1em;
+	padding: 1em;
 }
 .asidePage {
 	min-height: 560px;

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Country>
+
+@{
+<div class="searchPage">
+        
+    @await Html.PartialAsync("../Search/SearchButtonMenuPartial")
+
+    <div class="searchHeader">
+        @foreach(var country in @Model)
+        {
+            <div>
+                <div class="titleImage">
+                     <img src="@country.TitleImagePath" alt="@country.TitleImagePath" align="left" class="product-foto">
+                </div>    
+                <div class="displayFlexCol">
+                    <div>
+                            <h2>@country.Name</h2>
+                    </div>
+                    <div>
+                            <h4>@country.ShortDescription</h4>
+                    </div>
+                        <div class="dateAdded">
+                        <a asp-controller="Countries" asp-action="GetCountry" asp-route-id="@country.Id">Подробнее ...</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+}
+
+
+
+
+
+
