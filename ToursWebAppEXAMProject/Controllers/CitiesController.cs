@@ -11,11 +11,13 @@ namespace ToursWebAppEXAMProject.Controllers
     public class CitiesController : Controller
     {
         IBaseInterface<City> _AllCities;
+        IBaseInterface<Country> _AllCountries;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public CitiesController(IBaseInterface<City> Cities, IWebHostEnvironment hostingEnvironment)
+        public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries, IWebHostEnvironment hostingEnvironment)
         {
             this._AllCities = Cities;
+            this._AllCountries = Countries;
             this._hostingEnvironment = hostingEnvironment;
         }
 
@@ -79,13 +81,15 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             WriteLogs("Выполняется действие /Cities/CreateCity. ", NLogsModeEnum.Trace);
 
+            var cityViewModel = new CreateCityViewModel();
             var city = new City();
-
-            // TODO: вставить индекс страны при создании
+            var countries = _AllCountries.GetAllItems();
+            cityViewModel.City = city;
+            cityViewModel.Countries = countries;
 
             WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
 
-            return View("EditCity", city);
+            return View("EditCity", cityViewModel);
         }
 
         /// <summary>
@@ -186,6 +190,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     city.TitleImagePath = filePath;
                 }
 
+                city.CountryId = Int32.Parse(formValues["CountryId"]);
                 city.FullDescription = formValues["fullInfoAboutCity"];
                 city.DateAdded = DateTime.Now;
 

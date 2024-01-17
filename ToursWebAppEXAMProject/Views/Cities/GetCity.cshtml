@@ -12,6 +12,10 @@
             <h2>@Model.Name</h2>
         </div>
         <div>
+            <label asp-for="isCapital"></label>
+            <input type="checkbox" checked="@Model.isCapital" />
+        </div>
+        <div>
             @Html.Raw(Model.FullDescription)
         </div>
         <div class="displayFlexRow">

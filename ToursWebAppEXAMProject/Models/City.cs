@@ -31,7 +31,7 @@ namespace ToursWebAppEXAMProject.Models
         public string FullDescription { get; set; } = "Полное описание города";
 
         [Required(ErrorMessage = "Укажите, является ли город солицей страны")]
-        [Display(Name = "Является ли столицы страны ?")]
+        [Display(Name = "Является ли столицей страны ?")]
         public bool isCapital { get; set; } = false;
 
         [Required(ErrorMessage = "Выберите титульную картинку города")]
