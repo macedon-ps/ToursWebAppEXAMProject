@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\BlogsTitleImages\" />
+    <Folder Include="wwwroot\images\CitiesTitleImages\" />
     <Folder Include="wwwroot\images\ProductsTitleImages\" />
   </ItemGroup>
 

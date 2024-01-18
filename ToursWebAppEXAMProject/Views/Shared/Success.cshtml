@@ -14,6 +14,12 @@
                 <h4>Название:</h4> 
                 <p>@Model.Name</p>
             </div>
+            @if (Model.ToString().Contains("City")){
+                <div class="displayFlexCol">
+                    <h4>Является ли столицей:</h4>
+                    <p>@Model.isCapital</p>
+                </div>
+            }
             <div class="displayFlexCol">
                 <h4>Краткое описание:</h4> 
                 <p>@Model.ShortDescription</p>
@@ -22,12 +28,19 @@
                 <h4>Полное описание:</h4> 
                 <p>@Model.FullDescription</p>
             </div>
+            @if (Model.ToString().Contains("Blog")){
+                <div class="displayFlexCol">
+                    <h4>Все сообщения:</h4>
+                    <p>@Model.FullMessageLine</p>
+                </div>
+            }
             <div class="displayFlexCol">
                 <h4>Титульная картинка:</h4> 
                 <p>@Model.TitleImagePath</p>
             </div>
             <div class="displayFlexCol">
                 <h4>Время создания:</h4>
+                <p>@Model.DateAdded</p>
             </div>
         </div>
      </div>

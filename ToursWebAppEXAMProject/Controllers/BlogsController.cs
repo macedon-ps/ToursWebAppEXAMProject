@@ -221,9 +221,9 @@ namespace ToursWebAppEXAMProject.Controllers
                 _AllBlogs.SaveItem(blog, blog.Id);
 
                 WriteLogs("Блог успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено ../Shared/SuccessBlog.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
 
-                return View("../Shared/SuccessBlog", blog);
+                return View("../Shared/Success", blog);
             }
             else
             {

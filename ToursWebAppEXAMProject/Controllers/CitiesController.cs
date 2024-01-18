@@ -89,7 +89,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
             WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
 
-            return View("EditCity", cityViewModel);
+            return View(cityViewModel);
         }
 
         /// <summary>
@@ -189,7 +189,11 @@ namespace ToursWebAppEXAMProject.Controllers
                     }
                     city.TitleImagePath = filePath;
                 }
-
+                if(formValues["checkIsCapital"] == "on")
+                {
+                    city.isCapital = true;
+                }
+                
                 city.CountryId = Int32.Parse(formValues["CountryId"]);
                 city.FullDescription = formValues["fullInfoAboutCity"];
                 city.DateAdded = DateTime.Now;

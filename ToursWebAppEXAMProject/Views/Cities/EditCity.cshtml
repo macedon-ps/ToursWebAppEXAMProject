@@ -1,4 +1,4 @@
-﻿@model CreateCityViewModel
+﻿@model City
 
 <div class="editPage">
     
@@ -10,49 +10,41 @@
         <script src="~/js/ckeditor4/ckeditor.js"></script>
 
         <form asp-controller="Cities" asp-action="SaveCity" method="post" enctype="multipart/form-data">
-            <input type="hidden" asp-for="City.Id" />
-            <input type="hidden" asp-for="City.CountryId" />
-            <input type="hidden" asp-for="City.DateAdded" />
-            <input type="hidden" asp-for="City.TitleImagePath" />
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CountryId" />
+            <input type="hidden" asp-for="DateAdded" />
+            <input type="hidden" asp-for="TitleImagePath" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
-                    <label asp-for="City.Name"></label>
-                    <input type="text" asp-for="City.Name" />
-                    <span asp-validation-for="City.Name"></span>
+                    <label asp-for="Name"></label>
+                    <input type="text" asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
                 </div>
                 <div>
-                    <label asp-for="City.isCapital"></label>
-                    <input type="checkbox" checked="@Model.City.isCapital"/>
-                </div>
-                <div>
-                    <h3>Выберите страну</h3>
-                    @foreach (var country in Model.Countries)
-                    {
-                        <p>@country.Name</p>
-                        <input name="CountryId" type="checkbox" value="@country.Id"  />
-                    }
+                    <label asp-for="isCapital"></label>
+                    <input type="checkbox" checked="@Model.isCapital"/>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="City.ShortDescription"></label>
-                    <input type="text" asp-for="City.ShortDescription" />
-                    <span asp-validation-for="City.ShortDescription"></span>
+                    <label asp-for="ShortDescription"></label>
+                    <input type="text" asp-for="ShortDescription" />
+                    <span asp-validation-for="ShortDescription"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="City.FullDescription"></label>
-                    <textarea name="fullInfoAboutCity" rows="20" cols="100" asp-for="City.FullDescription" >
+                    <label asp-for="FullDescription"></label>
+                    <textarea name="fullInfoAboutCity" rows="20" cols="100" asp-for="FullDescription" >
                         Это текстовая область для CKEditor4
                     </textarea>
-                    <span asp-validation-for="City.FullDescription"></span>
+                    <span asp-validation-for="FullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="City.TitleImagePath"></label>
-                    <h3>@Model.City.TitleImagePath</h3>
+                    <label asp-for="TitleImagePath"></label>
+                    <h3>@Model.TitleImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.City.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%"><img>
+                        <img src="@Model.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%"><img>
                     </div>
-                    <input type="file" name="changeTitleImagePath" asp-for="City.TitleImagePath" accept="image/*" />
-                    <span asp-validation-for="City.TitleImagePath"></span>
+                    <input type="file" name="changeTitleImagePath" asp-for="TitleImagePath" accept="image/*" />
+                    <span asp-validation-for="TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
             </div>
