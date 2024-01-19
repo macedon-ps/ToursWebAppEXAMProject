@@ -260,6 +260,9 @@ body {
 .control-label{
 	font-weight: 600;
 }
+.check-isCapital{
+	margin-bottom: 1.2em;
+}
 /* Container */
 .container {
 	margin: 0 auto;

@@ -21,7 +21,7 @@
                     <input type="text" asp-for="City.Name" />
                     <span asp-validation-for="City.Name"></span>
                 </div>
-                <div>
+                <div class="check-isCapital">
                     <label asp-for="City.isCapital"></label>
                     <input name="checkIsCapital" type="checkbox" checked="@Model.City.isCapital" />
                 </div>

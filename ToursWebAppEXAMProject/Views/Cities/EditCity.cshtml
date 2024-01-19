@@ -21,9 +21,9 @@
                     <input type="text" asp-for="Name" />
                     <span asp-validation-for="Name"></span>
                 </div>
-                <div>
+                <div class="check-isCapital">
                     <label asp-for="isCapital"></label>
-                    <input type="checkbox" checked="@Model.isCapital"/>
+                    <input name="checkIsCapital" type="checkbox" checked="@Model.isCapital" />
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="ShortDescription"></label>
