@@ -11,6 +11,8 @@
 
         <form asp-controller="Products" asp-action="SaveProduct" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CountryId" />
+            <input type="hidden" asp-for="CityId" />
             <input type="hidden" asp-for="DateAdded" />
             <input type="hidden" asp-for="Country" />
             <input type="hidden" asp-for="City" />
@@ -21,16 +23,6 @@
                     <label asp-for="Name"></label>
                     <input type="text" asp-for="Name" />
                     <span asp-validation-for="Name"></span>
-                </div>
-                <div class="displayFlexCol">
-                    <label asp-for="CountryId"></label>
-                    <input type="text" asp-for="CountryId" />
-                    <span asp-validation-for="CountryId"></span>
-                </div>
-                <div class="displayFlexCol">
-                    <label asp-for="CityId"></label>
-                    <input type="text" asp-for="CityId" />
-                    <span asp-validation-for="CityId"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="ShortDescription"></label>

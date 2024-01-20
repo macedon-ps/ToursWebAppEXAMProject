@@ -11,11 +11,15 @@ namespace ToursWebAppEXAMProject.Controllers
     public class ProductsController : Controller
     {
         private readonly IBaseInterface<Product> _AllProducts;
+        private readonly IBaseInterface<Country> _AllCountries;
+        private readonly IBaseInterface<City> _AllCities;
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ProductsController(IBaseInterface<Product> Products, IWebHostEnvironment hostingEnvironment)
+        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IWebHostEnvironment hostingEnvironment)
         {
             this._AllProducts = Products;
+            this._AllCountries = Countries;
+            this._AllCities = Cities;
             this._hostingEnvironment = hostingEnvironment;
         }
 
@@ -77,13 +81,17 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateProduct()
         {
-            WriteLogs("Выполняется действие /Products/CreateProduct. ", NLogsModeEnum.Trace);
-
+            var productViewModel = new CreateProductViewModel();
             var product = new Product();
+            var countries = _AllCountries.GetAllItems();
+            var cities = _AllCities.GetAllItems();
+            productViewModel.Product = product;
+            productViewModel.Countries = countries;
+            productViewModel.Cities = cities;
+           
+            WriteLogs("Возвращено /Products/CreateProduct.cshtml\n", NLogsModeEnum.Trace);
 
-            WriteLogs("Возвращено /Products/EditProduct.cshtml\n", NLogsModeEnum.Trace);
-
-            return View("EditProduct", product);
+            return View(productViewModel);
         }
 
         /// <summary>
@@ -186,6 +194,8 @@ namespace ToursWebAppEXAMProject.Controllers
                         product.TitleImagePath = filePath;
                     }
 
+                    product.CountryId = Int32.Parse(formValues["CountryId"]);
+                    product.CityId = Int32.Parse(formValues["CityId"]);
                     product.FullDescription = formValues["fullInfoAboutProduct"];
                     product.DateAdded = DateTime.Now;
 

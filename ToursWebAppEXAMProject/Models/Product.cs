@@ -40,9 +40,9 @@ namespace ToursWebAppEXAMProject.Models
         [DataType(DataType.Time)]
         public DateTime? DateAdded { get; set; }
 
-        public virtual Country? Country { get; set; } = new Country();
+        public virtual Country? Country { get; set; } 
 
-        public virtual City? City { get; set; } = new City();
+        public virtual City? City { get; set; } 
 
         public virtual ICollection<Tour> Tours { get; set; }
     }

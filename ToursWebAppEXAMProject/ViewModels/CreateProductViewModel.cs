@@ -2,7 +2,7 @@
 
 namespace ToursWebAppEXAMProject.ViewModels
 {
-    public class CreateCityViewModel
+    public class CreateProductViewModel
     {
         /// <summary>
         /// Коллекция стран в БД
@@ -10,9 +10,13 @@ namespace ToursWebAppEXAMProject.ViewModels
         public IEnumerable<Country> Countries { get; set; } = null!;
 
         /// <summary>
-        /// Экземпляр города
+        /// Коллекция городов в БД
         /// </summary>
-        public City City { get; set; } = null!;
+        public IEnumerable<City> Cities { get; set; } = null!;
 
+        /// <summary>
+        /// Экземпляр турпродукта
+        /// </summary>
+        public Product Product { get; set; } = null!;
     }
 }

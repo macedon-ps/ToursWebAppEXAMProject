@@ -87,7 +87,7 @@ namespace ToursWebAppEXAMProject.Controllers
             cityViewModel.City = city;
             cityViewModel.Countries = countries;
 
-            WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
+            WriteLogs("Возвращено /Cities/CreateCity.cshtml\n", NLogsModeEnum.Trace);
 
             return View(cityViewModel);
         }

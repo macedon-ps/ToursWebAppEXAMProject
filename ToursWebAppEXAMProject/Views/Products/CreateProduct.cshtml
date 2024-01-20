@@ -1,0 +1,70 @@
+﻿@model CreateProductViewModel
+
+<div class="editPage">
+
+    @await Html.PartialAsync("../Edit/EditButtonMenuPartial")
+
+    <div class="editHeader">
+
+        @* для CKEditor 4 *@
+        <script src="~/js/ckeditor4/ckeditor.js"></script>
+
+        <form asp-controller="Products" asp-action="SaveProduct" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Product.Id" />
+            <input type="hidden" asp-for="Product.CountryId" />
+            <input type="hidden" asp-for="Product.CityId" />
+            <input type="hidden" asp-for="Product.DateAdded" />
+            <input type="hidden" asp-for="Product.TitleImagePath" />
+            <div>
+                <div asp-validation-summary="All"></div>
+                <div class="displayFlexCol">
+                    <label asp-for="Product.Name"></label>
+                    <input type="text" asp-for="Product.Name" />
+                    <span asp-validation-for="Product.Name"></span>
+                </div>
+                <div>
+                    <h3>Выберите страну</h3>
+                    @foreach (var country in Model.Countries)
+                    {
+                        <p>@country.Name</p>
+                        <input name="CountryId" type="checkbox" value="@country.Id" />
+                    }
+                </div>
+                <div>
+                    <h3>Выберите город</h3>
+                    @foreach (var city in Model.Cities)
+                    {
+                        <p>@city.Name</p>
+                        <input name="CityId" type="checkbox" value="@city.Id" />
+                    }
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="Product.ShortDescription"></label>
+                    <input type="text" asp-for="Product.ShortDescription" />
+                    <span asp-validation-for="Product.ShortDescription"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="Product.FullDescription"></label>
+                    <textarea name="fullInfoAboutProduct" rows="20" cols="100" asp-for="Product.FullDescription">
+                        Это текстовая область для CKEditor4
+                    </textarea>
+                    <span asp-validation-for="Product.FullDescription"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="Product.TitleImagePath"></label>
+                    <h3>@Model.Product.TitleImagePath</h3>
+                    <div class="titleImage">
+                        <img src="@Model.Product.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%"><img>
+                    </div>
+                    <input type="file" name="changeTitleImagePath" asp-for="Product.TitleImagePath" accept="image/*" />
+                    <span asp-validation-for="Product.TitleImagePath"></span>
+                </div>
+                <input type="submit" value="Сохранить" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var newCKEdit = CKEDITOR.replace('fullInfoAboutProduct');
+    newCKEdit.updateElement();
+</script>
