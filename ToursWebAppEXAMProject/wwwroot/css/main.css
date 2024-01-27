@@ -191,12 +191,26 @@ body {
 .cities {
 	padding-left: 1em;
 }
-.blog-user, .blog-message,
-.list-blog-messages {
-	padding: 10px 25px 15px 30px;
-	border-radius: 10px;
-	background-color: #bfe8ed;
+.area {
+	display: flex;
 }
+
+.area-origin, .area-translate {
+	min-width: 50%;
+	min-height: 95%;
+	margin: 0.5em;
+	padding: 0.5em 1em;
+	border: 1px solid black;
+}
+.area-origin textarea, .area-translate textarea{
+	width: 100%;
+}
+	.blog-user, .blog-message,
+	.list-blog-messages {
+		padding: 10px 25px 15px 30px;
+		border-radius: 10px;
+		background-color: #bfe8ed;
+	}
 	.list-blog-messages li {
 		/*background-color: white;*/
 		margin: 5px 0 10px 0;

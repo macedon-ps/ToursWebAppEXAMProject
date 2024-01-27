@@ -1,6 +1,6 @@
-﻿<div class="homeButton">
+﻿<div class="supportButton">
     <a asp-controller="Support" asp-action="">Карта</a>
-    <a asp-controller="Support" asp-action="">Перевод текста</a>
+    <a asp-controller="Support" asp-action="Translate">Перевод текста</a>
     <a asp-controller="Support" asp-action="">Мобильное приложение</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {

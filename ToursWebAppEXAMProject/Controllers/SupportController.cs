@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.GoogleApiClients;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
@@ -26,12 +27,52 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View();
 		}
 
-		/// <summary>
-		/// Метод предоставления услуги поддержки
-		/// </summary>
-		/// <param name="service">Услуга поддержки</param>
-		/// <returns></returns>
-		public IActionResult GetSupport(string service)
+        [HttpGet]
+        /// <summary>
+        /// Метод вывода страницы для перевода текста
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Translate()
+		{
+            var viewModel = new TranslateTextViewModel();
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// Метод вывода страницы для перевода текста с данными перевода
+        /// </summary>
+        /// <param name="viewModel">вью-модель перевода текста</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Translate(TranslateTextViewModel viewModel)
+        {
+            try
+            {
+                if (viewModel.TextOrigin != null)
+                {
+                    viewModel.LanguageFrom = "en";
+                    viewModel.LanguageTo = "ru";
+                    var translateText = ClientGoogleTranslate.TranslateText(viewModel.TextOrigin, viewModel.LanguageTo, viewModel.LanguageFrom);
+                    if (translateText != null)
+                    {
+                        viewModel.TextTranslated = translateText;
+                    }
+                }
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorViewModel(ex.Message);
+                return View("Error", error);
+            }
+        }
+
+        /// <summary>
+        /// Метод предоставления услуги поддержки
+        /// </summary>
+        /// <param name="service">Услуга поддержки</param>
+        /// <returns></returns>
+        public IActionResult GetSupport(string service)
 		{
             // TODO: разработать сервисы "map", "translate", "mobileApp"
             
