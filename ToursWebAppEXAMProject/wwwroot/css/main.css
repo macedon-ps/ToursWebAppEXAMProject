@@ -202,8 +202,11 @@ body {
 	padding: 0.5em 1em;
 	border: 1px solid black;
 }
-.area-origin textarea, .area-translate textarea{
+.area-origin textarea, .area-translate textarea {
 	width: 100%;
+	padding: 0.5em 1em;
+	font-family: 'Times New Roman', 'Times', 'serif';
+	font-size: 1.2em;
 }
 	.blog-user, .blog-message,
 	.list-blog-messages {
