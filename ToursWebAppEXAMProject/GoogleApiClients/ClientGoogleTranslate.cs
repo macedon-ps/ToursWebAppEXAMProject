@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Translation.V2;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ToursWebAppEXAMProject.GoogleApiClients
 {
@@ -21,6 +22,16 @@ namespace ToursWebAppEXAMProject.GoogleApiClients
             // вывод переведенного текста
             return response.TranslatedText;
         }
-    }
 
+        public static SelectList GetAllLanguages()
+        {
+            var client = TranslationClient.Create();
+            var languages = client.ListLanguages(LanguageCodes.Russian);
+            
+            var languagerList = new SelectList(languages, "Code", "Name");
+
+            // вывод списка языков
+            return languagerList;
+        }
+    }
 }

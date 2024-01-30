@@ -1,4 +1,6 @@
-﻿namespace ToursWebAppEXAMProject.ViewModels
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ToursWebAppEXAMProject.ViewModels
 {
     public class TranslateTextViewModel
     {
@@ -9,5 +11,7 @@
         public string LanguageFrom { get; set; } = "en";
 
         public string LanguageTo { get; set; } = "ru";
+
+        public SelectList LanguagesList { get; set; } = null!;
     }
 }

@@ -35,6 +35,8 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult Translate()
 		{
             var viewModel = new TranslateTextViewModel();
+            // TODO: уменьшить число запросов. Возможно, кешировать данные
+            viewModel.LanguagesList = ClientGoogleTranslate.GetAllLanguages();
             return View(viewModel);
         }
 
@@ -44,14 +46,17 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="viewModel">вью-модель перевода текста</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Translate(TranslateTextViewModel viewModel)
+        public IActionResult Translate(TranslateTextViewModel viewModel, IFormCollection formValues)
         {
             try
             {
                 if (viewModel.TextOrigin != null)
                 {
-                    viewModel.LanguageFrom = "en";
-                    viewModel.LanguageTo = "ru";
+                    viewModel.LanguageFrom = formValues["langFromSelect"];
+                    viewModel.LanguageTo = formValues["langToSelect"];
+                    // TODO: уменьшить число запросов. Возможно, кешировать данные
+                    viewModel.LanguagesList = ClientGoogleTranslate.GetAllLanguages();
+
                     var translateText = ClientGoogleTranslate.TranslateText(viewModel.TextOrigin, viewModel.LanguageTo, viewModel.LanguageFrom);
                     if (translateText != null)
                     {
