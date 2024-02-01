@@ -9,9 +9,9 @@
      <div class="supportHeader">
        
         <form method="post" asp-controller="Support" asp-action="Translate">
-            <input asp-for="LanguageFrom" type="hidden" />
-            <input asp-for="LanguageTo" type="hidden" />
+            <input asp-for="Languages" type="hidden" />
             <input asp-for="LanguagesList" type="hidden" />
+            <input asp-for="LanguagesListJson" type="hidden" />
             <div class="container">
                 <h1 class="display-4 text-center">Translate text</h1>
                 
@@ -19,7 +19,7 @@
                     <div>
                         <label asp-for="LanguageFrom"></label>
                         <select asp-for="LanguageFrom"
-                                asp-items="@Model.LanguagesList" name="langFromSelect">
+                            asp-items="@Model.LanguagesList" name="langFromSelect">
                         </select>
                     </div>
                 </div>
@@ -27,14 +27,11 @@
                     <div>
                         <label asp-for="LanguageTo"></label>
                         <select asp-for="LanguageTo"
-                                asp-items="@Model.LanguagesList" name="langToSelect">
+                            asp-items="@Model.LanguagesList" name="langToSelect">   
                         </select>
                     </div>
                 </div>
 
-                <p>Translate from: @Model.LanguageFrom</p>
-                <p>Translate to: @Model.LanguageTo</p>
-                
                 <div class="area">
                     <div class="area-origin">
                         <h3 class="title">Оригинальный текст:</h3>

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Cloud.Translation.V2;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Caching.Memory;
+using System.Text.Json;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.GoogleApiClients;
 using ToursWebAppEXAMProject.Interfaces;
@@ -8,12 +12,14 @@ using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SupportController : Controller
-	{
+	{ 
         private readonly IEditTechTaskInterface _AllTasks;
+        private readonly IMemoryCache _memoryCache;
 
-        public SupportController(IEditTechTaskInterface Tasks)
+        public SupportController(IEditTechTaskInterface Tasks, IMemoryCache Cashe)
 		{
             this._AllTasks = Tasks;
+            this._memoryCache = Cashe;
         }
 
         /// <summary>
@@ -23,8 +29,8 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /Support/Index.\n", NLogsModeEnum.Trace);
-						
-			return View();
+
+            return View();
 		}
 
         [HttpGet]
@@ -34,10 +40,36 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult Translate()
 		{
-            var viewModel = new TranslateTextViewModel();
-            // TODO: уменьшить число запросов. Возможно, кешировать данные
-            viewModel.LanguagesList = ClientGoogleTranslate.GetAllLanguages();
-            return View(viewModel);
+            try
+            {
+                var viewModel = new TranslateTextViewModel();
+                // TODO: уменьшить число запросов. Возможно, кешировать данные
+
+                // проверка, использование и создание кешированных данных
+                _memoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
+
+                if (languages == null)
+                {
+                    // вывод поддерживаемых языков для перевода через Google Translate API
+                    languages = ClientGoogleTranslate.GetAllLanguages();
+
+                    if (languages != null)
+                    {
+                        _memoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
+                    }
+                }
+                
+                viewModel.LanguagesList = new SelectList(languages, "Code", "Name");
+                viewModel.LanguagesListJson = JsonSerializer.Serialize(languages);
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorViewModel(ex.Message);
+                return View("Error", error);
+            }
+            
         }
 
         /// <summary>
@@ -54,9 +86,31 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     viewModel.LanguageFrom = formValues["langFromSelect"];
                     viewModel.LanguageTo = formValues["langToSelect"];
+                                       
+                    viewModel.Languages = JsonSerializer.Deserialize<IList<Language>>(viewModel.LanguagesListJson);
+                    viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
+                    
                     // TODO: уменьшить число запросов. Возможно, кешировать данные
-                    viewModel.LanguagesList = ClientGoogleTranslate.GetAllLanguages();
 
+                    // проверка, использование и создание кешированных данных
+                    if (viewModel.LanguagesList == null)
+                    {
+                        _memoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
+
+                        if (languages == null)
+                        {
+                            // вывод поддерживаемых языков для перевода через Google Translate API
+                            languages = ClientGoogleTranslate.GetAllLanguages();
+
+                            if (languages != null)
+                            {
+                                _memoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
+                            }
+                        }
+                        viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
+                    }
+                    
+                    // перевод текста через Google Translate API
                     var translateText = ClientGoogleTranslate.TranslateText(viewModel.TextOrigin, viewModel.LanguageTo, viewModel.LanguageFrom);
                     if (translateText != null)
                     {

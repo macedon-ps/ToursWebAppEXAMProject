@@ -15,6 +15,9 @@ builder.Services.AddControllersWithViews();
 // подключение SignalR
 builder.Services.AddSignalR();
 
+// подключение кэширования данных  
+builder.Services.AddMemoryCache();
+
 // подключение сервисов, кот. связывают интерфейсы и классы, кот. их реализует
 builder.Services.AddTransient<IBaseInterface<Product>, BaseRepository<Product>>();
 builder.Services.AddTransient<IBaseInterface<Country>, BaseRepository<Country>>();

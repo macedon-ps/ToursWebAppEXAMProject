@@ -23,15 +23,13 @@ namespace ToursWebAppEXAMProject.GoogleApiClients
             return response.TranslatedText;
         }
 
-        public static SelectList GetAllLanguages()
+        public static IList<Language> GetAllLanguages()
         {
             var client = TranslationClient.Create();
             var languages = client.ListLanguages(LanguageCodes.Russian);
             
-            var languagerList = new SelectList(languages, "Code", "Name");
-
             // вывод списка языков
-            return languagerList;
+            return languages;
         }
     }
 }
