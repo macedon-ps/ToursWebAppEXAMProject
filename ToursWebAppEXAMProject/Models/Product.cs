@@ -12,10 +12,8 @@ namespace ToursWebAppEXAMProject.Models
 
         public int Id { get; set; }
 
-        // устанавливается "под капотом", во вью - скрыто
         public int CountryId { get; set; }
 
-        // устанавливается "под капотом", во вью - скрыто
         public int CityId { get; set; }
 
         [Required(ErrorMessage = "Введите название туристического продукта")]

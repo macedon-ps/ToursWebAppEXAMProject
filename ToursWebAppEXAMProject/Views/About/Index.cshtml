@@ -1,6 +1,4 @@
-﻿@{
-    ViewData["Title"] = "About Page";
-}
+﻿@model EditAboutPageViewModel
 
 <div class="aboutPage">
     
@@ -11,12 +9,29 @@
         <hr class="horizontal-line" />
         <br />
         <div class="text-center">
-            <h3>Название компании:</h3>
-            <p>@ConfigData.CompanyName</p>
-            <h3>Электронная почта:</h3>
-            <p>@ConfigData.CompanyEmail</p>
-            <h3>Контактный телефон:</h3>
-            <p>@ConfigData.CompanyPhone</p>
+
+            @if(Model == null)
+            {
+                <h2>Информация о туристической компании</h2>
+                <h3>Извините, но на данный момент страница с информацией о нашей компании находится в разработке.</h3>
+                
+                <h2>Реквизиты компании:</h2>
+                <h3>Название компании:</h3>
+                <p>@ConfigData.CompanyName</p>
+                <h3>Электронная почта:</h3>
+                <p>@ConfigData.CompanyEmail</p>
+                <h3>Контактный телефон:</h3>
+                <p>@ConfigData.CompanyPhone</p>
+            }
+            else
+            {
+                @await Html.PartialAsync("MainPartial")
+                @await Html.PartialAsync("AboutPartial")
+                @await Html.PartialAsync("DetailsPartial")
+                @await Html.PartialAsync("OperationModePartial")
+                @await Html.PartialAsync("PhotoGalleryPartial")
+                @await Html.PartialAsync("FeedbackPartial")
+            }
         </div>
     </div>
 </div>

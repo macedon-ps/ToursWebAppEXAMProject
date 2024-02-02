@@ -1,0 +1,15 @@
+﻿@model EditAboutPageViewModel
+
+<div class="">
+    <h1>@Model.DetailsTitle</h1>
+    <h3>@Model.DetailsShortDescription</h3>
+    <h3>@Model.DetailsFullDescription</h3>
+    <img src="@Model.DetailsImagePath" alt="@Model.DetailsImagePath" />
+
+    <h3>Название компании:</h3>
+    <p>@ConfigData.CompanyName</p>
+    <h3>Электронная почта:</h3>
+    <p>@ConfigData.CompanyEmail</p>
+    <h3>Контактный телефон:</h3>
+    <p>@ConfigData.CompanyPhone</p>
+</div>

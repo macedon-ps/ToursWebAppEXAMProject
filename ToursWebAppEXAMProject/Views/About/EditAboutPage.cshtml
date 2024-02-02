@@ -1,0 +1,56 @@
+﻿@model EditAboutPageViewModel
+
+<div class="aboutPage">
+
+    @await Html.PartialAsync("AboutButtonMenuPartial")
+
+    <div class="aboutHeader">
+
+        @* для CKEditor 4 *@
+        <script src="~/js/ckeditor4/ckeditor.js"></script>
+
+        <form asp-controller="About" asp-action="SaveAboutPage" method="post" enctype="multipart/form-data">
+            <div>
+                <div asp-validation-summary="All"></div>
+                <div class="displayFlexCol">
+                    <label asp-for="MainTitle"></label>
+                    <input type="text" asp-for="MainTitle" />
+                    <span asp-validation-for="MainTitle"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="AboutTitle"></label>
+                    <input type="text" asp-for="AboutTitle" />
+                    <span asp-validation-for="AboutTitle"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="AboutShortDescription"></label>
+                    <input type="text" asp-for="AboutShortDescription" />
+                    <span asp-validation-for="AboutShortDescription"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="AboutFullDescription"></label>
+                    <textarea name="fullInfoAboutCompany" rows="20" cols="100" asp-for="AboutFullDescription">
+                        Это текстовая область для CKEditor4
+                    </textarea>
+                    <span asp-validation-for="AboutFullDescription"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="AboutImagePath"></label>
+                    <h3>@Model.AboutImagePath</h3>
+                    <div class="titleImage">
+                        <img src="@Model.AboutImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                    </div>
+                    <input type="file" name="changeTitleImagePath" value="" accept="image/*" />
+                    <span asp-validation-for="AboutImagePath"></span>
+                </div>
+                <input type="submit" value="Сохранить" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var newCKEdit = CKEDITOR.replace('fullInfoAboutCompany');
+    newCKEdit.updateElement();
+    //var newCKEdit2 = CKEDITOR.replace('fullMessageLine');
+    //newCKEdit2.updateElement();
+</script>

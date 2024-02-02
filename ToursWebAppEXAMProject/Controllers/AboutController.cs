@@ -2,13 +2,12 @@
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public class AboutController : Controller
+    public class AboutController : Controller
 	{
         private readonly IEditTechTaskInterface _AllTasks;
 
@@ -39,6 +38,12 @@ namespace ToursWebAppEXAMProject.Controllers
             var customer = new Customer();
 			return View(customer);
 		}
+
+        public IActionResult EditAboutPage()
+        {
+            var editAboutViewModel = new EditAboutPageViewModel();
+            return View(editAboutViewModel);
+        }
 
         /// <summary>
         /// Метод вывода формы обратной связи с данными, введенными пользователями сайта

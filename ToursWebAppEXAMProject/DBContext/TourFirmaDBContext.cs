@@ -25,6 +25,7 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Saller> Sallers { get; set; } = null!;
 		public virtual DbSet<Tour> Tours { get; set; } = null!;
 		public virtual DbSet<TechTaskViewModel> TechTaskViewModels { get; set; } = null!;
+		public virtual DbSet<EditAboutPageViewModel> EditAboutPage { get; set; } = null!;
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
