@@ -1,0 +1,32 @@
+﻿@model IEnumerable<EditAboutPageViewModel>
+
+<div class="aboutPage">
+
+    <div class="aboutHeader">
+        <h1 class="title">Выберите версию актуальной страницы About с информацией о туристической компании:</h1>
+        <hr class="horizontal-line" />
+        <br />
+        <h3 class="title">Версии страницы с информацией о туристической компании</h3><br />
+
+        <h4>Помните, что актуальная версия должна быть только одна. Если их больше, отображаться будет первая из списка</h4>
+        <h4>Если ни одна версия не выдела как актуальная, то выводиться на экран будет пустая страница без данных</h4>
+        
+        <table class="table">
+            <tr><th>Версия страницы /м.б. кратк. описание/</th><th>Id версии страницы</th><th>Актуальна ли данная версия</th><th>Дата создания/редактирования</th></tr>
+            @foreach (var pageVersion in Model)
+            {   
+                <tr>
+                    <td>@pageVersion.Keyword</td>
+                    <td>@pageVersion.Id</td>
+                    <td><input type="checkbox" checked="@pageVersion.IsActual"></td>
+                    <td>@pageVersion.DateAdded</td>
+                    <td>
+                        <a asp-controller="About" asp-action="EditAboutPage" asp-route-id="@pageVersion.Id">Редактировать</a>
+                        <a asp-controller="About" asp-action="DeleteAboutPage" asp-route-id="@pageVersion.Id">Удалить</a>
+                    </td>
+                </tr>
+               
+            }
+        </table>
+    </div>
+</div>

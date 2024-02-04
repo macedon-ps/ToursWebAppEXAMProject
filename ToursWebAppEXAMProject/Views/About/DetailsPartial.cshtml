@@ -1,10 +1,11 @@
 ﻿@model EditAboutPageViewModel
 
-<div class="">
-    <h1>@Model.DetailsTitle</h1>
-    <h3>@Model.DetailsShortDescription</h3>
-    <h3>@Model.DetailsFullDescription</h3>
-    <img src="@Model.DetailsImagePath" alt="@Model.DetailsImagePath" />
+<a name="details"></a>
+<div class="displayflex">
+    <h1 class="title">@Model.DetailsTitle</h1>
+    <h4 class="short-description">@Model.DetailsShortDescription</h4>
+    <div class="full-description">@Html.Raw(@Model.DetailsFullDescription)</div>
+    <img src="@Model.DetailsImagePath" alt="@Model.DetailsImagePath" class="image-editAboutPage" />
 
     <h3>Название компании:</h3>
     <p>@ConfigData.CompanyName</p>
@@ -12,4 +13,5 @@
     <p>@ConfigData.CompanyEmail</p>
     <h3>Контактный телефон:</h3>
     <p>@ConfigData.CompanyPhone</p>
+    <hr class="horizontal-line" />
 </div>

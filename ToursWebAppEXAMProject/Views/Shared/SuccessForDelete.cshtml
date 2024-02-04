@@ -1,29 +1,59 @@
 ﻿<div class="editPage">
     
-    @await Html.PartialAsync("../Edit/EditButtonMenuPartial")
-        
-    <div class="editHeader">
-        
-        <h3 class="title">Удаление объекта прошло  успешно!</h3>
-        <h4 class="title">Данные удаленного объекта:</h4>
-        <hr class="horizontal-line" />
-        <br />
-        <div>
-            <div class="padding_bottom_2 displayFlex">
-                Название: @Model.Name
+    @if (Model.ToString().Contains("EditAboutPageViewModel"))
+    {
+        @await Html.PartialAsync("../About/AboutButtonMenuPartial")
+
+        <div class="editHeader">
+
+            <h3 class="title">Удаление объекта прошло  успешно!</h3>
+            <h4 class="title">Данные удаленного объекта:</h4>
+            <hr class="horizontal-line" />
+            <br />
+            <div>
+                
+                <div class="padding_bottom_2 displayFlex">
+                    Версия страницы v.@Model.Id
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Краткое описание/ключевое слово: @Model.Keyword
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Время создания/редактирования: @Model.DateAdded
+                </div>
+         
             </div>
-            <div class="padding_bottom_2 displayFlex">
-                Краткое описание: @Model.ShortDescription
-            </div>
-            <div class="padding_bottom_2 displayFlex">
-                Полное описание: @Model.FullDescription
-            </div>
-            <div class="padding_bottom_2 displayFlex">
-                Титульная картинка: @Model.TitleImagePath
-            </div>
-            <!--<div class="padding_bottom_2 displayFlex">
-                Время создания: @Model.DateAdded
-            </div>-->
         </div>
-     </div>
+    }
+    @if (Model.ToString().Contains("Blog") || Model.ToString().Contains("City") || Model.ToString().Contains("Country") || Model.ToString().Contains("New") || Model.ToString().Contains("Product"))
+    {
+        @await Html.PartialAsync("../Edit/EditButtonMenuPartial")
+
+        <div class="editHeader">
+
+            <h3 class="title">Удаление объекта прошло  успешно!</h3>
+            <h4 class="title">Данные удаленного объекта:</h4>
+            <hr class="horizontal-line" />
+            <br />
+            <div>
+                
+                <div class="padding_bottom_2 displayFlex">
+                    Название: @Model.Name
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Краткое описание: @Model.ShortDescription
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Полное описание: @Model.FullDescription
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Титульная картинка: @Model.TitleImagePath
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Время создания/редактирования: @Model.DateAdded
+                </div>
+                
+            </div>
+        </div>
+    }
 </div>

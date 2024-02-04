@@ -11,6 +11,13 @@ namespace ToursWebAppEXAMProject.ViewModels
         
         public int Id { get; set; }
 
+        [Display(Name = "Ключевое слово")]
+        [StringLength(50, ErrorMessage = "Ключевое слово не должно содержать более 50 символов")]
+        public string? Keyword { get; set; } = "Ключевое слово";
+
+        [Display(Name = "Актуальная версия страницы")]
+        public bool IsActual { get; set; } = false;
+
         [Required(ErrorMessage = "Введите общий заголовок страницы")]
         [Display(Name = "Общий заголовок страницы")]
         [StringLength(200, ErrorMessage = "Общий заголовок страницы не должен содержать более 200 символов")]

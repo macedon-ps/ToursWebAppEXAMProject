@@ -259,7 +259,21 @@ body {
 	.table td button{
 		margin-right: 0.8em;
 	}
-.linkDesign{
+.short-description {
+	margin: 2em auto;
+	width: 80%;
+	text-align: center;
+	font-family: 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', 'serif';
+	font-size: 1.2em;
+}
+.full-description{
+	margin: 1em 0;
+	padding: 0.5em;
+}
+.image-editAboutPage{
+	margin: 0.5em;
+}
+.linkDesign {
 	margin: 1em 0 1em 2em;
 	padding: 0.2em 0;
 }
@@ -2240,6 +2254,7 @@ padding-top: 1em;
 }
 .displayFlex {
 	display: flex;
+	padding: 1em 0;
 }
 	.displayFlexCol {
 	display: flex;

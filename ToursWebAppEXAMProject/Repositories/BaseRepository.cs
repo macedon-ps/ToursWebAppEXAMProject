@@ -75,6 +75,9 @@ namespace ToursWebAppEXAMProject.Repositories
 				case "New":
 					itemKeyword[0] = "новость"; itemKeyword[1] = "новости"; itemKeyword[2] = "новости"; itemKeyword[3] = "новостей";
 					break;
+				case "EditAboutPage":
+					itemKeyword[0] = "страница About"; itemKeyword[1] = "страницы About"; itemKeyword[2] = "страницы About"; itemKeyword[3] = "страниц About";
+					break;
 			}
 		}
 		

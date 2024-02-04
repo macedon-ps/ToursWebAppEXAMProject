@@ -1,11 +1,13 @@
-﻿<div class="aboutButton">
-    <a asp-controller="About" asp-action="">Наши реквизиты</a>
-    <a asp-controller="About" asp-action="">Режим работы</a>
-    <a asp-controller="About" asp-action="">Фотогаллерея</a>
-    <a asp-controller="About" asp-action="FeedBackForm">Обратная связь</a>
+﻿@model EditAboutPageViewModel
+
+<div class="aboutButton">
+    <a asp-controller="About" asp-action="" asp-fragment="details">Наши реквизиты</a>
+    <a asp-controller="About" asp-action="" asp-fragment="operation_mode">Режим работы</a>
+    <a asp-controller="About" asp-action="" asp-fragment="photo_gallery">Фотогаллерея</a>
+    <a asp-controller="About" asp-action="" asp-fragment="feedback">Обратная связь</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="About" asp-action="EditAboutPage">EditPage</a>
+        <a asp-controller="About" asp-action="EditAboutPage" asp-route-id="@Model.Id">EditPage</a>
     }
     @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {

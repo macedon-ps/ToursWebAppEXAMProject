@@ -6,6 +6,7 @@ using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.Services;
+using ToursWebAppEXAMProject.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
 builder.Services.AddTransient<IBaseInterface<Offer>, BaseRepository<Offer>>();
 builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
+builder.Services.AddTransient<IBaseInterface<EditAboutPageViewModel>, BaseRepository<EditAboutPageViewModel>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 

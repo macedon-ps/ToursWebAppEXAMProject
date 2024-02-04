@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -9,13 +10,17 @@ namespace ToursWebAppEXAMProject.Controllers
 {
     public class AboutController : Controller
 	{
+        private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
+        private readonly IWebHostEnvironment _HostingEnvironment;
         private readonly IEditTechTaskInterface _AllTasks;
 
-        public AboutController(IEditTechTaskInterface Tasks)
+        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, IWebHostEnvironment HostingEnvironment, IEditTechTaskInterface Tasks)
 		{
+            this._AboutPage = AboutPage;
+            this._HostingEnvironment = HostingEnvironment;
             this._AllTasks = Tasks;
         }
-
+        
         /// <summary>
         /// Метод вывода стартовой страницы About
         /// </summary>
@@ -24,7 +29,21 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			WriteLogs("Переход по маршруту /About/Index.\n", NLogsModeEnum.Trace);
 
-			return View();
+            // выводим всегда актуальную на данный момент версию страницы About
+            var isActualVersion = _AboutPage.GetAllItems().FirstOrDefault(v => v.IsActual == true);
+            
+            var editAboutPageViewModel = new EditAboutPageViewModel();
+            if (isActualVersion != null && isActualVersion.Id != 0)
+            {
+                var pageVersion = isActualVersion.Id;
+                editAboutPageViewModel = _AboutPage.GetItemById(pageVersion);
+                return View(editAboutPageViewModel);
+            }
+            else
+            {
+                return View(editAboutPageViewModel);
+            }
+			
 		}
 
 		/// <summary>
@@ -39,11 +58,93 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(customer);
 		}
 
-        public IActionResult EditAboutPage()
+        public IActionResult EditAboutPage(int id)
         {
-            var editAboutViewModel = new EditAboutPageViewModel();
+            var editAboutViewModel = _AboutPage.GetItemById(id);
             return View(editAboutViewModel);
         }
+
+        public IActionResult DeleteAboutPage(int id)
+        {
+            var aboutPage = _AboutPage.GetItemById(id);
+            _AboutPage.DeleteItem(aboutPage, id);
+
+            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+
+            return View("../Shared/SuccessForDelete", aboutPage);
+        }
+
+        public IActionResult ChangeAboutPageVersion()
+        {
+            var allVersionsAboutPage = _AboutPage.GetAllItems();
+            return View(allVersionsAboutPage);
+        }
+
+
+        /// <summary>
+        /// Метод сохранения страницы About с данными, введенными редактором
+        /// </summary>
+        /// <param name="viewModel">Вью модель EditAboutPageViewModel</param>
+        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
+        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <returns></returns>
+        [Authorize(Roles = "superadmin,editor")]
+        [HttpPost]
+        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        {
+            WriteLogs("Запущен процесс сохранения вью модели EditAboutPageViewMode в БД. ", NLogsModeEnum.Debug);
+
+            if (ModelState.IsValid)
+            {
+                WriteLogs("Вью модель EditAboutPageViewMode прошла валидацию. ", NLogsModeEnum.Debug);
+
+                /*  TODO: смена картинки
+                // если мы хотим поменять картинку
+                if (changeTitleImagePath != null)
+                {
+                    var filePath = $"/images/NewsTitleImages/{changeTitleImagePath.FileName}";
+
+                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
+                    {
+                        await changeTitleImagePath.CopyToAsync(fstream);
+
+                        WriteLogs($"Новая титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                    }
+                    newsItem.TitleImagePath = filePath;
+                }*/
+
+                viewModel.MainFullDescription = formValues["fullInfoMain"];
+                viewModel.AboutFullDescription = formValues["fullInfoAbout"];
+                viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
+                viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
+                viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
+                viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
+                viewModel.DateAdded = DateTime.Now;
+             
+                _AboutPage.SaveItem(viewModel, viewModel.Id);
+
+                WriteLogs("Вью модель с данными страницы About успешно сохранена в БД. ", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+
+                // TODO: переделать представление вместо Success
+                return View("EditAboutPage", viewModel);
+            }
+            else
+            {
+                WriteLogs("Вью модель с данными страницы About не прошла валидацию. ", NLogsModeEnum.Warn);
+                WriteLogs("Возвращено EditAboutPage.cshtml\n", NLogsModeEnum.Trace);
+
+                viewModel.MainFullDescription = formValues["fullInfoMain"];
+                viewModel.AboutFullDescription = formValues["fullInfoAbout"];
+                viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
+                viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
+                viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
+                viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
+
+                return View("EditAboutPage", viewModel);
+            }
+        }
+
 
         /// <summary>
         /// Метод вывода формы обратной связи с данными, введенными пользователями сайта

@@ -1,8 +1,10 @@
 ﻿@model EditAboutPageViewModel
 
-<div class="">
-    <h1>@Model.OperationModeTitle</h1>
-    <h3>@Model.OperationModeShortDescription</h3>
-    <h3>@Model.OperationModeFullDescription</h3>
-    <img src="@Model.OperationModeImagePath" alt="@Model.OperationModeImagePath" />
+<a name="operation_mode"></a>
+<div class="displayflex">
+    <h1 class="title">@Model.OperationModeTitle</h1>
+    <h4 class="short-description">@Model.OperationModeShortDescription</h4>
+    <div class="full-description">@Html.Raw(@Model.OperationModeFullDescription)</div>
+    <img src="@Model.OperationModeImagePath" alt="@Model.OperationModeImagePath" class="image-editAboutPage" />
+    <hr class="horizontal-line" />
 </div>

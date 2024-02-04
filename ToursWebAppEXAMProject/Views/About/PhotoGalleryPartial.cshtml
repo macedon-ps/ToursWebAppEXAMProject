@@ -1,8 +1,10 @@
 ﻿@model EditAboutPageViewModel
 
-<div class="">
-    <h1>@Model.PhotoGalleryTitle</h1>
-    <h3>@Model.PhotoGalleryShortDescription</h3>
-    <h3>@Model.PhotoGalleryFullDescription</h3>
-    <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" />
+<a name="photo_gallery"></a>
+<div class="displayflex">
+    <h1 class="title">@Model.PhotoGalleryTitle</h1>
+    <h4 class="short-description">@Model.PhotoGalleryShortDescription</h4>
+    <div class="full-description">@Html.Raw(@Model.PhotoGalleryFullDescription)</div>
+    <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" class="image-editAboutPage" />
+    <hr class="horizontal-line" />
 </div>
