@@ -1,0 +1,32 @@
+﻿<div class="aboutPage">
+
+    @await Html.PartialAsync("AboutButtonMenuPartial")
+
+    <div class="aboutHeader">
+        <h1 class="title">Информация о нас:</h1>
+        <hr class="horizontal-line" />
+        <br />
+
+        <h2>Информация о туристической компании</h2>
+        <h3>Извините, но на данный момент страница с информацией о нашей компании находится в разработке.</h3>
+
+        <h2>Реквизиты компании:</h2>
+        <h3>Название компании:</h3>
+        <p>@ConfigData.CompanyName</p>
+        <h3>Электронная почта:</h3>
+        <p>@ConfigData.CompanyEmail</p>
+        <h3>Контактный телефон:</h3>
+        <p>@ConfigData.CompanyPhone</p>
+
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
+        {
+            <h3>Создать стартовую страницу ?</h3>
+            <div class="div-box">
+                <form asp-controller="About" asp-action="CreateAboutPage" method="get">
+                    <input type="submit" value="Создать" />
+                </form>
+            </div>
+        }
+
+    </div>
+</div>

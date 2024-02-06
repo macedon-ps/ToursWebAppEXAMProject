@@ -8,35 +8,18 @@
         <h1 class="title">Информация о нас:</h1>
         <hr class="horizontal-line" />
         <br />
-        
-        @if(Model == null)
-        {
-            <h2>Информация о туристической компании</h2>
-            <h3>Извините, но на данный момент страница с информацией о нашей компании находится в разработке.</h3>
                 
-            <h2>Реквизиты компании:</h2>
-            <h3>Название компании:</h3>
-            <p>@ConfigData.CompanyName</p>
-            <h3>Электронная почта:</h3>
-            <p>@ConfigData.CompanyEmail</p>
-            <h3>Контактный телефон:</h3>
-            <p>@ConfigData.CompanyPhone</p>
-        }
-        else
-        {
-            <div class="displayFlexRow">
-                <h4>Версия v.@Model.Keyword</h4>
-                <h4>Дата: @Model.DateAdded</h4>
-            </div>
-           
-            
-            @await Html.PartialAsync("MainPartial")
-            @await Html.PartialAsync("AboutPartial")
-            @await Html.PartialAsync("DetailsPartial")
-            @await Html.PartialAsync("OperationModePartial")
-            @await Html.PartialAsync("PhotoGalleryPartial")
-            @await Html.PartialAsync("FeedbackPartial")
-        }
-        
+        <div class="displayFlexRow">
+            <h4>@Model.Keyword</h4>
+            <h4>Дата: @Model.DateAdded</h4>
+        </div>
+                       
+        @await Html.PartialAsync("MainPartial")
+        @await Html.PartialAsync("AboutPartial")
+        @await Html.PartialAsync("DetailsPartial")
+        @await Html.PartialAsync("OperationModePartial")
+        @await Html.PartialAsync("PhotoGalleryPartial")
+        @await Html.PartialAsync("FeedbackPartial")
+ 
     </div>
 </div>

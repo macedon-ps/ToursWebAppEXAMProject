@@ -32,38 +32,46 @@ namespace ToursWebAppEXAMProject.Controllers
             // выводим всегда актуальную на данный момент версию страницы About
             var isActualVersion = _AboutPage.GetAllItems().FirstOrDefault(v => v.IsActual == true);
             
-            var editAboutPageViewModel = new EditAboutPageViewModel();
             if (isActualVersion != null && isActualVersion.Id != 0)
             {
                 var pageVersion = isActualVersion.Id;
-                editAboutPageViewModel = _AboutPage.GetItemById(pageVersion);
+                var editAboutPageViewModel = _AboutPage.GetItemById(pageVersion);
                 return View(editAboutPageViewModel);
             }
             else
             {
-                return View(editAboutPageViewModel);
+                return View("Sorry");
             }
 			
 		}
 
-		/// <summary>
-		/// Метод вывода формы обратной связи с пользователями сайта
-		/// </summary>
-		/// <returns></returns>
-		public IActionResult FeedBackForm()
-		{
-            WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
+        /// <summary>
+        /// Метод создания новой версии страницы About
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateAboutPage()
+        {
+            var editAboutPageViewModel = new EditAboutPageViewModel();
+            editAboutPageViewModel.IsActual = true;
+            return View("EditAboutPage", editAboutPageViewModel);
+        }
 
-            var customer = new Customer();
-			return View(customer);
-		}
-
+        /// <summary>
+        /// Метод вывода на редактирование страницы About по ее id
+        /// </summary>
+        /// <param name="id">идентификатор страницы About</param>
+        /// <returns></returns>
         public IActionResult EditAboutPage(int id)
         {
             var editAboutViewModel = _AboutPage.GetItemById(id);
             return View(editAboutViewModel);
         }
 
+        /// <summary>
+        /// Метод удаления страницы About по ее id
+        /// </summary>
+        /// <param name="id">идентификатор страницы About</param>
+        /// <returns></returns>
         public IActionResult DeleteAboutPage(int id)
         {
             var aboutPage = _AboutPage.GetItemById(id);
@@ -74,7 +82,11 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("../Shared/SuccessForDelete", aboutPage);
         }
 
-        public IActionResult ChangeAboutPageVersion()
+        /// <summary>
+        /// Метод изменения версий страницы About
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GetAllAboutPageVersions()
         {
             var allVersionsAboutPage = _AboutPage.GetAllItems();
             return View(allVersionsAboutPage);
@@ -126,8 +138,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 WriteLogs("Вью модель с данными страницы About успешно сохранена в БД. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
 
-                // TODO: переделать представление вместо Success
-                return View("EditAboutPage", viewModel);
+                return View("../Shared/Success", viewModel);
             }
             else
             {
@@ -145,6 +156,17 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+        /// <summary>
+        /// Метод вывода формы обратной связи с пользователями сайта
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult FeedBackForm()
+        {
+            WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
+
+            var customer = new Customer();
+            return View(customer);
+        }
 
         /// <summary>
         /// Метод вывода формы обратной связи с данными, введенными пользователями сайта

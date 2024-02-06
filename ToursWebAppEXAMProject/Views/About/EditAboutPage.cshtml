@@ -2,7 +2,7 @@
 
 <div class="aboutPage">
 
-    @await Html.PartialAsync("AboutButtonMenuPartial")
+    @await Html.PartialAsync("AboutButtonMenuForEditPartial")
 
     <div class="aboutHeader">
 
@@ -11,11 +11,7 @@
 
         <h4>Версия страницы v. @Model.Keyword</h4>
         <h4>Дата создания/редактирования: @Model.DateAdded</h4>
-
-        <form asp-controller="About" asp-action="ChangeAboutPageVersion">
-            <input type="submit" value="Редактировать/удалить версию страницы" />
-        </form>
-      
+ 
         <form asp-controller="About" asp-action="SaveAboutPage" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id"/>
             

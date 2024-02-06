@@ -1,19 +1,18 @@
 ﻿<!-- Модель не указана явно, (м.б. EditAboutPageViewModel) чтобы не было конфликта с TechTaskViewModel)-->
 <div class="aboutButton">
-    <a asp-controller="About" asp-action="" asp-fragment="details">Наши реквизиты</a>
-    <a asp-controller="About" asp-action="" asp-fragment="operation_mode">Режим работы</a>
-    <a asp-controller="About" asp-action="" asp-fragment="photo_gallery">Фото галлерея</a>
-    <a asp-controller="About" asp-action="" asp-fragment="feedback">Обратная связь</a>
+    <a asp-controller="About" asp-action="Index">Страница About</a>
+    
     @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
         @if (Model != null)
         {
-            <a asp-controller="About" asp-action="EditAboutPage" asp-route-id="@Model.Id">Create / Edit / Delete</a>
+            <a asp-controller="About" asp-action="CreateAboutPage">Create Page</a>
+            <a asp-controller="About" asp-action="EditAboutPage" asp-route-id="@Model.Id">Edit Page</a>
+            <a asp-controller="About" asp-action="GetAllAboutPageVersions">Edit / Delete Page Version</a>
         }
         else
         {
             <a asp-controller="About" asp-action="CreateAboutPage">Create Page</a>
-            <a asp-controller="About" asp-action="GetAllAboutPageVersions">Edit / Delete Page Version</a>
         }
 
     }
