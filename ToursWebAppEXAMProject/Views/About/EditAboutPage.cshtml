@@ -2,7 +2,7 @@
 
 <div class="aboutPage">
 
-    @await Html.PartialAsync("AboutButtonMenuForEditPartial")
+    @await Html.PartialAsync("AboutButtonMenuPartial")
 
     <div class="aboutHeader">
 
@@ -14,7 +14,8 @@
  
         <form asp-controller="About" asp-action="SaveAboutPage" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id"/>
-            
+            <input type="hidden" name="IsActualId" value="@Model.Id" />
+
             <div>
                 <div asp-validation-summary="All"></div>
 
@@ -30,8 +31,15 @@
                     <label asp-for="IsActual"></label>
                     <h4>Помните, что актуальная версия должна быть только одна. Если их больше, отображаться будет первая из списка</h4>
                     <h4>Если ни одна версия не выдела как актуальная, то выводиться на экран будет пустая страница без данных</h4>
-                    <input type="checkbox" asp-for="IsActual" />
-                    <h4>Актуальна ли данная версия: @Model.IsActual</h4>
+                    
+                    <div class="flexRow">
+                        <h4>Актуальна ли данная версия: </h4>
+                        <div class="checkbox-center">
+                            <input type="checkbox" asp-for="@Model.IsActual" />
+                        </div>
+                        <h4>@Model.IsActual</h4>
+                    </div>
+
                     <span asp-validation-for="IsActual"></span>
                 </div>
          

@@ -2217,6 +2217,13 @@ padding-top: 1em;
 	margin-top: 1em;
 	padding: 1em;
 }
+.checkbox-center{
+	margin: 0 1em;
+}
+.checkbox-center input{
+	margin: 0;
+	padding: 0 1em;
+}
 .asidePage {
 	min-height: 560px;
 	background-color: #7dced8;

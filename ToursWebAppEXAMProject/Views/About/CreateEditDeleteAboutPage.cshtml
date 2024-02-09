@@ -1,0 +1,56 @@
+﻿@model List<EditAboutPageViewModel>
+
+<div class="aboutPage">
+    
+    @await Html.PartialAsync("AboutButtonMenuPartial")
+
+    <div class="aboutHeader">
+
+        <h2>1. Создание новой страницы About:</h2>
+
+        <div class="div-box">
+            <form asp-controller="About" asp-action="CreateAboutPage" method="get">
+                <input type="submit" value="Создать" />
+            </form>
+        </div>
+
+        <h2>2. Редактирование/удаление страниц About:</h2>
+
+        <div class="div-box">
+
+            @foreach (var aboutPage in Model)
+            {
+                <div>
+                    <div class="titleImage">
+                        <img src="@aboutPage.MainImagePath" alt="@aboutPage.MainImagePath" align="left" class="blog-foto">
+                    </div>
+                    <div class="displayFlexCol">
+                        <div>
+                            <h2>@aboutPage.MainTitle</h2>
+                        </div>
+                        <div class="flexRow">
+                            <h4>Актуальна ли данная версия: </h4>
+                            <div class="checkbox-center">
+                                <input type="checkbox" asp-for="@aboutPage.IsActual" />
+                            </div>
+                            <h4>@aboutPage.IsActual</h4>
+                        </div>
+                        <div>
+                            <h4>Версия: @aboutPage.Keyword</h4>
+                        </div>
+                        <div>
+                            <h4>@aboutPage.MainShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@aboutPage.DateAdded</h4>
+                            <a asp-controller="About" asp-action="EditAboutPage" asp-route-id="@aboutPage.Id">редактировать</a>
+                            <a asp-controller="About" asp-action="DeleteAboutPage" asp-route-id="@aboutPage.Id">удалить</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    </div>
+</div>

@@ -36,6 +36,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var pageVersion = isActualVersion.Id;
                 var editAboutPageViewModel = _AboutPage.GetItemById(pageVersion);
+
                 return View(editAboutPageViewModel);
             }
             else
@@ -44,6 +45,17 @@ namespace ToursWebAppEXAMProject.Controllers
             }
 			
 		}
+
+        /// <summary>
+        /// Метод вывода меню редактирования страницы About
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateEditDeleteAboutPage()
+        {
+            var allVersionOfPage = _AboutPage.GetAllItems();
+
+            return View(allVersionOfPage);
+        }
 
         /// <summary>
         /// Метод создания новой версии страницы About
@@ -64,6 +76,7 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditAboutPage(int id)
         {
             var editAboutViewModel = _AboutPage.GetItemById(id);
+
             return View(editAboutViewModel);
         }
 
