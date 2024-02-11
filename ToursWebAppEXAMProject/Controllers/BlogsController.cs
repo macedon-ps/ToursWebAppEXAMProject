@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -11,12 +12,10 @@ namespace ToursWebAppEXAMProject.Controllers
     public class BlogsController : Controller
     {
         private readonly IBaseInterface<Blog> _AllBlogs;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-
-        public BlogsController(IBaseInterface<Blog> Blogs, IWebHostEnvironment hostingEnvironment)
+        
+        public BlogsController(IBaseInterface<Blog> Blogs)
         {
             this._AllBlogs = Blogs;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -203,15 +202,9 @@ namespace ToursWebAppEXAMProject.Controllers
                 // если мы хотим поменять картинку
                 if (changeTitleImagePath != null)
                 {
-                    var filePath = $"/images/BlogsTitleImages/{changeTitleImagePath.FileName}";
-
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
-
-                        WriteLogs($"Новая титульная картинка блога сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    blog.TitleImagePath = filePath;
+                    var folder = "/images/BlogsTitleImages/";
+                    FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    blog.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 
                 blog.FullDescription = formValues["fullInfoAboutBlog"];

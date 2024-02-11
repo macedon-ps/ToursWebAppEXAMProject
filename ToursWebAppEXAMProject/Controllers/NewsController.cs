@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -11,12 +12,10 @@ namespace ToursWebAppEXAMProject.Controllers
     public class NewsController : Controller
     {
         private readonly IBaseInterface<New> _AllNews;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-
-        public NewsController(IBaseInterface<New> News, IWebHostEnvironment hostingEnvironment)
+        
+        public NewsController(IBaseInterface<New> News)
         {
             this._AllNews = News;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -170,15 +169,9 @@ namespace ToursWebAppEXAMProject.Controllers
                 // если мы хотим поменять картинку
                 if (changeTitleImagePath != null)
                 {
-                    var filePath = $"/images/NewsTitleImages/{changeTitleImagePath.FileName}";
-
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
-
-                        WriteLogs($"Новая титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    newsItem.TitleImagePath = filePath;
+                    var folder = "/images/NewsTitleImages/";
+                    FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    newsItem.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 
                 newsItem.FullDescription = formValues["fullInfoAboutNew"];

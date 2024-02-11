@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -12,14 +13,11 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-
-        public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IWebHostEnvironment hostingEnvironment)
+        
+        public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities)
         {
             this._AllCountries = Countries;
             this._AllCities = Cities;
-            this._hostingEnvironment = hostingEnvironment;
-
         }
         public IActionResult Index()
         {
@@ -183,15 +181,9 @@ namespace ToursWebAppEXAMProject.Controllers
                 // если мы хотим поменять картинку
                 if (changeTitleImagePath != null)
                 {
-                    var filePath = $"/images/CountriesTitleImages/{changeTitleImagePath.FileName}";
-
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
-
-                        WriteLogs($"Новая титульная картинка страны сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    country.TitleImagePath = filePath;
+                    var folder = "/images/CountriesTitleImages/";
+                    FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    country.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 
                 country.FullDescription = formValues["fullInfoAboutCountry"];

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -12,13 +13,11 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         IBaseInterface<City> _AllCities;
         IBaseInterface<Country> _AllCountries;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-
-        public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries, IWebHostEnvironment hostingEnvironment)
+       
+        public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries)
         {
             this._AllCities = Cities;
             this._AllCountries = Countries;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -179,15 +178,9 @@ namespace ToursWebAppEXAMProject.Controllers
                 // если мы хотим поменять картинку
                 if (changeTitleImagePath != null)
                 {
-                    var filePath = $"/images/CitiesTitleImages/{changeTitleImagePath.FileName}";
-
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
-
-                        WriteLogs($"Новая титульная картинка города сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    city.TitleImagePath = filePath;
+                    var folder = "/images/CitiesTitleImages/";
+                    FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
                 if(formValues["checkIsCapital"] == "on")
                 {

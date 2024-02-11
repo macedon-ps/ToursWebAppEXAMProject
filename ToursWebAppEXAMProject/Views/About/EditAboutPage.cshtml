@@ -14,8 +14,13 @@
  
         <form asp-controller="About" asp-action="SaveAboutPage" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id"/>
-            <input type="hidden" name="IsActualId" value="@Model.Id" />
-
+            <input type="hidden" asp-for="MainImagePath"/>
+            <input type="hidden" asp-for="AboutImagePath"/>
+            <input type="hidden" asp-for="DetailsImagePath"/>
+            <input type="hidden" asp-for="OperationModeImagePath"/>
+            <input type="hidden" asp-for="PhotoGalleryImagePath"/>
+            <input type="hidden" asp-for="FeedbackImagePath"/>
+  
             <div>
                 <div asp-validation-summary="All"></div>
 

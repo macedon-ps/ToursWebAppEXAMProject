@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -13,14 +14,12 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<Product> _AllProducts;
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-
-        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IWebHostEnvironment hostingEnvironment)
+        
+        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities)
         {
             this._AllProducts = Products;
             this._AllCountries = Countries;
             this._AllCities = Cities;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -183,15 +182,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (changeTitleImagePath != null)
                     {
-                        var filePath = $"/images/ProductsTitleImages/{changeTitleImagePath.FileName}";
-
-                        using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                        {
-                            await changeTitleImagePath.CopyToAsync(fstream);
-
-                            WriteLogs($"Новая титульная картинка турпродукта сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                        }
-                        product.TitleImagePath = filePath;
+                        var folder = "/images/ProductsTitleImages/";
+                        FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                        product.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                     }
 
                     product.CountryId = Int32.Parse(formValues["CountryId"]);
