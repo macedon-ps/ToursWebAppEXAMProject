@@ -11,13 +11,21 @@ namespace ToursWebAppEXAMProject.FileUtilities
         /// <param name="filePath">путь сохранения картинки</param>
         /// <param name="changeTitleImagePath">значение поля типа IFormFile для названия сохраняемого файла</param>
         /// <param name="webHostEnvironment">webHostEnvironment</param>
-        public static async void SaveFileIsExistPath(string filePath, IFormFile? changeImagePath)
+        public static async void SaveFileIfExistPath(string folder, IFormFile? changeImagePath)
         {
-            using (var fstream = new FileStream(filePath, FileMode.Create))
+            // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
+            var fullPathToFolder = IsFolderExist(folder);
+
+            // создаем абсолютный и относительный пути к файлу
+            var fullFilePath = $"{fullPathToFolder}{changeImagePath.FileName}";
+            var relativeFilePath = $"{folder}{changeImagePath.FileName}";
+
+            // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
+            using (var fstream = new FileStream(fullFilePath, FileMode.Create))
             {
                 await changeImagePath.CopyToAsync(fstream);
 
-                WriteLogs($"Новая картинка сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
+                WriteLogs($"Новая картинка сохранена по пути: {relativeFilePath}\n", NLogsModeEnum.Debug);
             }
         }
 

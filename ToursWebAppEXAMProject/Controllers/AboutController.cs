@@ -135,76 +135,45 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeMainImagePath != null)
                 {
                     var folder = "/images/AboutPage/Main/";
-                    // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    
-                    var fullFilePath = $"{fullPathToFolder}{changeMainImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changeMainImagePath.FileName}";
-
-                    // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changeMainImagePath);
-                    viewModel.MainImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changeMainImagePath);
+                    viewModel.MainImagePath = $"{folder}{changeMainImagePath.FileName}";
                 }
 
                 // About
                 if (changeAboutImagePath != null)
                 {
                     var folder = "/images/AboutPage/About/";
-                    
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    var fullFilePath = $"{fullPathToFolder}{changeAboutImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changeAboutImagePath.FileName}";
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changeAboutImagePath);
-                    
-                    viewModel.AboutImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changeAboutImagePath);
+                    viewModel.AboutImagePath = $"{folder}{changeAboutImagePath.FileName}";
                 }
+
                 // Details
                 if (changeDetailsImagePath != null)
                 {
                     var folder = "/images/AboutPage/Details/";
-
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    var fullFilePath = $"{fullPathToFolder}{changeDetailsImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changeDetailsImagePath.FileName}";
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changeDetailsImagePath);
-
-                    viewModel.DetailsImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changeDetailsImagePath);
+                    viewModel.DetailsImagePath = $"{folder}{changeDetailsImagePath.FileName}";
                 }
                 // OperationMode
                 if (changeOperationModeImagePath != null)
                 {
                     var folder = "/images/AboutPage/OperationMode/";
-
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    var fullFilePath = $"{fullPathToFolder}{changeOperationModeImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changeOperationModeImagePath.FileName}";
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changeOperationModeImagePath);
-
-                    viewModel.OperationModeImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changeOperationModeImagePath);
+                    viewModel.OperationModeImagePath = $"{folder}{changeOperationModeImagePath.FileName}";
                 }
                 // PhotoGallery
                 if (changePhotoGalleryImagePath != null)
                 {
                     var folder = "/images/AboutPage/PhotoGallery/";
-
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    var fullFilePath = $"{fullPathToFolder}{changePhotoGalleryImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changePhotoGalleryImagePath);
-
-                    viewModel.PhotoGalleryImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changePhotoGalleryImagePath);
+                    viewModel.PhotoGalleryImagePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
                 }
                 // Feedback
                 if (changeFeedbackImagePath != null)
                 {
                     var folder = "/images/AboutPage/Feedback/";
-
-                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
-                    var fullFilePath = $"{fullPathToFolder}{changeFeedbackImagePath.FileName}";
-                    var relativeFilePath = $"{folder}{changeFeedbackImagePath.FileName}";
-                    FileUtils.SaveFileIsExistPath(fullFilePath, changeFeedbackImagePath);
-
-                    viewModel.FeedbackImagePath = relativeFilePath;
+                    FileUtils.SaveFileIfExistPath(folder, changeFeedbackImagePath);
+                    viewModel.FeedbackImagePath = $"{folder}{changeFeedbackImagePath.FileName}";
                 }
 
                 viewModel.MainFullDescription = formValues["fullInfoMain"];
