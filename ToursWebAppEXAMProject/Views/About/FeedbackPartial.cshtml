@@ -1,10 +1,16 @@
 ﻿@model EditAboutPageViewModel
 
 <a name="feedback"></a>
-<div class="displayflex">
-    <h1 class="title">@Model.FeedbackTitle</h1>
-    <h4 class="short-description">@Model.FeedbackShortDescription</h4>
+<div>
+    <<div>
+        <h1 class="title">@Model.FeedbackTitle</h1>
+    </div>
+    <div>
+        <h4 class="short-description">@Model.FeedbackShortDescription</h4>
+    </div>
+    <div class="titleImage40">
+        <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
+    </div>
     <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
-    <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
     <hr class="horizontal-line" />
 </div>

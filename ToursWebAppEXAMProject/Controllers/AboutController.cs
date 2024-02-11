@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
@@ -115,7 +116,14 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, 
+                                                        IFormCollection formValues, 
+                                                        IFormFile? changeMainImagePath, 
+                                                        IFormFile? changeAboutImagePath, 
+                                                        IFormFile? changeDetailsImagePath, 
+                                                        IFormFile? changeOperationModeImagePath, 
+                                                        IFormFile? changePhotoGalleryImagePath, 
+                                                        IFormFile? changeFeedbackImagePath)
         {
             WriteLogs("Запущен процесс сохранения вью модели EditAboutPageViewMode в БД. ", NLogsModeEnum.Debug);
 
@@ -123,20 +131,81 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 WriteLogs("Вью модель EditAboutPageViewMode прошла валидацию. ", NLogsModeEnum.Debug);
 
-                /*  TODO: смена картинки
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
+                // Main
+                if (changeMainImagePath != null)
                 {
-                    var filePath = $"/images/NewsTitleImages/{changeTitleImagePath.FileName}";
+                    var folder = "/images/AboutPage/Main/";
+                    // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    
+                    var fullFilePath = $"{fullPathToFolder}{changeMainImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changeMainImagePath.FileName}";
 
-                    using (var fstream = new FileStream(_hostingEnvironment.WebRootPath + filePath, FileMode.Create))
-                    {
-                        await changeTitleImagePath.CopyToAsync(fstream);
+                    // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changeMainImagePath);
+                    viewModel.MainImagePath = relativeFilePath;
+                }
 
-                        WriteLogs($"Новая титульная картинка новости сохранена по пути: {filePath}\n", NLogsModeEnum.Debug);
-                    }
-                    newsItem.TitleImagePath = filePath;
-                }*/
+                // About
+                if (changeAboutImagePath != null)
+                {
+                    var folder = "/images/AboutPage/About/";
+                    
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    var fullFilePath = $"{fullPathToFolder}{changeAboutImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changeAboutImagePath.FileName}";
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changeAboutImagePath);
+                    
+                    viewModel.AboutImagePath = relativeFilePath;
+                }
+                // Details
+                if (changeDetailsImagePath != null)
+                {
+                    var folder = "/images/AboutPage/Details/";
+
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    var fullFilePath = $"{fullPathToFolder}{changeDetailsImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changeDetailsImagePath.FileName}";
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changeDetailsImagePath);
+
+                    viewModel.DetailsImagePath = relativeFilePath;
+                }
+                // OperationMode
+                if (changeOperationModeImagePath != null)
+                {
+                    var folder = "/images/AboutPage/OperationMode/";
+
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    var fullFilePath = $"{fullPathToFolder}{changeOperationModeImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changeOperationModeImagePath.FileName}";
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changeOperationModeImagePath);
+
+                    viewModel.OperationModeImagePath = relativeFilePath;
+                }
+                // PhotoGallery
+                if (changePhotoGalleryImagePath != null)
+                {
+                    var folder = "/images/AboutPage/PhotoGallery/";
+
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    var fullFilePath = $"{fullPathToFolder}{changePhotoGalleryImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changePhotoGalleryImagePath);
+
+                    viewModel.PhotoGalleryImagePath = relativeFilePath;
+                }
+                // Feedback
+                if (changeFeedbackImagePath != null)
+                {
+                    var folder = "/images/AboutPage/Feedback/";
+
+                    var fullPathToFolder = FileUtils.IsFolderExist(folder);
+                    var fullFilePath = $"{fullPathToFolder}{changeFeedbackImagePath.FileName}";
+                    var relativeFilePath = $"{folder}{changeFeedbackImagePath.FileName}";
+                    FileUtils.SaveFileIsExistPath(fullFilePath, changeFeedbackImagePath);
+
+                    viewModel.FeedbackImagePath = relativeFilePath;
+                }
 
                 viewModel.MainFullDescription = formValues["fullInfoMain"];
                 viewModel.AboutFullDescription = formValues["fullInfoAbout"];

@@ -1,9 +1,15 @@
 ﻿@model EditAboutPageViewModel
 
-<div class="displayflex">
-    <h1 class="title">@Model.AboutTitle</h1>
-    <h4 class="short-description">@Model.AboutShortDescription</h4>
+<div>
+    <<div>
+        <h1 class="title">@Model.AboutTitle</h1>
+    </div>
+    <div>
+        <h4 class="short-description">@Model.AboutShortDescription</h4>
+    </div>
+    <div class="titleImage40">
+        <img src="@Model.AboutImagePath" alt="@Model.AboutImagePath" class="image-editAboutPage" />
+    </div>
     <div class="full-description">@Html.Raw(@Model.AboutFullDescription)</div>
-    <img src="@Model.AboutImagePath" alt="@Model.AboutImagePath" class="image-editAboutPage" />
     <hr class="horizontal-line" />
 </div>
