@@ -58,5 +58,10 @@ namespace ToursWebAppEXAMProject.FileUtilities
             var relativePath = fullPath.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", "");
             return relativePath;
         }
+
+        public static void DeletePhoto(string fullPathToFile)
+        {
+            File.Delete(fullPathToFile);
+        }
     }
 }

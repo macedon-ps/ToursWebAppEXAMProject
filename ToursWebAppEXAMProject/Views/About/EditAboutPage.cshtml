@@ -189,6 +189,22 @@
                     <span asp-validation-for="PhotoGalleryImagePath"></span>
                 </div>
 
+                @{
+                    var folderPath = FileUtils.GetFullPathToFolderPhotoGallery();
+                }
+                
+                <div class="photoGallery">
+                    @foreach (var image in Directory.GetFiles(folderPath))
+                    {
+                        var imagePath = FileUtils.GetRelativePath(image);
+
+                        <div class="titleImage25 mb2">
+                            <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
+                            <a asp-controller="About" asp-action="DeletePicture" asp-route-fullPathToFile="@image" class="delete-photo">Delete photo</a>
+                        </div>
+                    }
+                </div>
+                
                 <hr /> <!-- Feedback  -->
                 <div class="displayFlexCol">
                     <label asp-for="FeedbackTitle"></label>

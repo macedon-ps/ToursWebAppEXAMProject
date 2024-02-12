@@ -96,6 +96,13 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("../Shared/SuccessForDelete", aboutPage);
         }
 
+        public IActionResult DeletePicture(string fullPathToFile)
+        {
+            FileUtils.DeletePhoto(fullPathToFile);
+            
+            return View("DeletePicture", fullPathToFile);
+        }
+
         /// <summary>
         /// Метод изменения версий страницы About
         /// </summary>
