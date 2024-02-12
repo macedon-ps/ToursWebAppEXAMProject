@@ -2,15 +2,17 @@
 
 <a name="feedback"></a>
 <div>
-    <<div>
+    <div>
         <h1 class="title">@Model.FeedbackTitle</h1>
     </div>
     <div>
         <h4 class="short-description">@Model.FeedbackShortDescription</h4>
     </div>
-    <div class="titleImage40">
-        <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
+    <div class="displayFlexRow">
+        <div class="titleImage25">
+            <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
+        </div>
+        <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
     </div>
-    <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
     <hr class="horizontal-line" />
 </div>

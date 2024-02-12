@@ -1,16 +1,29 @@
-﻿@model EditAboutPageViewModel
+﻿@using ToursWebAppEXAMProject.FileUtilities;
+@model EditAboutPageViewModel
+@{
+    var folderPath = FileUtils.GetFullPathToFolderPhotoGallery();
+}
 
 <a name="photo_gallery"></a>
 <div>
-    <<div>
+    <div>
         <h1 class="title">@Model.PhotoGalleryTitle</h1>
     </div>
     <div>
         <h4 class="short-description">@Model.PhotoGalleryShortDescription</h4>
     </div>
-    <div class="titleImage40">
-        <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" class="image-editAboutPage" />
+    <div class="photoGallery">
+        
+        @foreach (var image in Directory.GetFiles(folderPath))
+        {
+            var imagePath = FileUtils.GetRelativePath(image);
+
+            <div class="titleImage25">
+                <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
+            </div>
+        }
     </div>
+    
     <div class="full-description">@Html.Raw(@Model.PhotoGalleryFullDescription)</div>
     <hr class="horizontal-line" />
 </div>

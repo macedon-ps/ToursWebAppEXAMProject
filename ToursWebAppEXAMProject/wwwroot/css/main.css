@@ -260,7 +260,7 @@ body {
 		margin-right: 0.8em;
 	}
 .short-description {
-	margin: 2em auto;
+	margin: 1em auto;
 	width: 80%;
 	text-align: center;
 	font-family: 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', 'serif';
@@ -271,7 +271,17 @@ body {
 	padding: 0.5em;
 }
 .image-editAboutPage{
+	width: 100%;
 	margin: 0.5em;
+}
+.photoGallery {
+	display: flex;
+	flex-wrap: wrap;
+}
+.image-photoGallery {
+	padding: 0.5em;
+	width: 100%;
+	object-fit: cover;
 }
 .linkDesign {
 	margin: 1em 0 1em 2em;
@@ -2292,7 +2302,8 @@ padding-top: 1em;
 	margin: 0.3em;
 	padding: 0.3em;
 }
-.titleImage{
+.titleImage, 
+.titleImage25 {
 	max-width: 25%;
 }
 .titleImage40 {

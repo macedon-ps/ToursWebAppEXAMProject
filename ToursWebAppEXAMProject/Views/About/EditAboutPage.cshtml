@@ -179,13 +179,14 @@
                     <span asp-validation-for="PhotoGalleryFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="OperationModeImagePath"></label>
-                    <h3>@Model.OperationModeImagePath</h3>
+                    <label asp-for="PhotoGalleryImagePath"></label>
+                    <h3>@Model.PhotoGalleryImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.OperationModeImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%"><img>
                     </div>
+                    <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
                     <input type="file" name="changePhotoGalleryImagePath" value="" accept="image/*" />
-                    <span asp-validation-for="OperationModeImagePath"></span>
+                    <span asp-validation-for="PhotoGalleryImagePath"></span>
                 </div>
 
                 <hr /> <!-- Feedback  -->

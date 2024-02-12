@@ -48,5 +48,15 @@ namespace ToursWebAppEXAMProject.FileUtilities
             
             return fullPathToFolder;
         }
+
+        public static string GetFullPathToFolderPhotoGallery()
+        {
+            return "E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
+        }
+        public static string GetRelativePath(string fullPath)
+        {
+            var relativePath = fullPath.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", "");
+            return relativePath;
+        }
     }
 }
