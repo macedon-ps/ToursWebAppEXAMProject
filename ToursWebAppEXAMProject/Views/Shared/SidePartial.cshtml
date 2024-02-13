@@ -1,8 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-<div class="asidePage">
+﻿<div class="asidePage">
     <h2>Полезные ссылки:</h2>
 
     <div>
@@ -15,14 +11,7 @@
        </a>
     </div>
     <div>   
-        
-        @{
-            // был свой эл.адрес "mailto:macedon1971@gmail.com", проверил, все работает
-            // поменял на электр. адрес из appsettings.json, он вымышленный, проверить не получится
-            // в будущем н.б. вставить реально существующий эл. адрес конкретной компании
-        }
-        @*<a href="mailto:macedon1971@gmail.com"*@
-        <a href="mailto:@ConfigData.CompanyEmail"
+       <a href="mailto:@ConfigData.CompanyEmail"
             
             <a asp-controller="Support" asp-action="" asp-route-service="ask">
                 <img src="~/images/SideBar/Question.bmp" alt="Задать вопрос" width="24" height="24">
@@ -63,10 +52,18 @@
             <h3>Viber</h3>
         </a>
     </div>
+    <br/>
+    <h2>Feedback:</h2>
+    <div>
+        <a asp-controller="About" asp-action="FeedBackForm">
+            <img src="~/images/AboutPage/Feedback/Email.jpg" alt="Feedback" width="24" height="24">
+            <h3>Feedback</h3>
+        </a>
+    </div>
 </div>
 
     
-@*
+@*  Техзадания для Бокового блока сайта
 <h2>!!! Это боковая часть !!!</h2>
 <h2>Автономные блоки - одинаковые на всех страницах</h2>
 <h3>Заголовок</h3>
