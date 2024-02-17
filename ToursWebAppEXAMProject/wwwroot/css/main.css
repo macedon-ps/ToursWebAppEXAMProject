@@ -246,6 +246,12 @@ body {
 	.marginTop1{
 		margin-top: 1em;
 	}
+	.iconLink{
+		display: flex;
+	}
+	.iconImage{
+		margin-right: 1em;
+	}
 	.table th{
 		padding-left: 3em;
 		text-align:left;
@@ -267,12 +273,16 @@ body {
 	font-size: 1.2em;
 }
 .full-description{
-	margin: 1em 0;
+	margin: 1em;
 	padding: 0.5em;
+}
+.flexGrow1 {
+	flex-grow: 1;
 }
 .image-editAboutPage{
 	width: 100%;
 	margin: 0.5em;
+	padding-right: 0.5em;
 }
 .photoGallery {
 	display: flex;

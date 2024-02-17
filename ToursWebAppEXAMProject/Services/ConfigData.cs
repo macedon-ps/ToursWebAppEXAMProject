@@ -24,5 +24,21 @@ namespace ToursWebAppEXAMProject.Services
 		/// </summary>
 		public static string CompanyEmail { get; set; }
 
+		/// <summary>
+		/// Ссылка на соц. сеть WhatsApp
+		/// </summary>
+		public static string WhatsApp { get; set; }
+
+        /// <summary>
+        /// Ссылка на соц. сеть Telegram
+        /// </summary>
+        public static string Telegram { get; set; }
+
+        /// <summary>
+        /// Ссылка на соц. сеть Viber
+        /// </summary>
+        public static string Viber { get; set; }
+
+		public static string Facebook { get; set; }
 	}
 }

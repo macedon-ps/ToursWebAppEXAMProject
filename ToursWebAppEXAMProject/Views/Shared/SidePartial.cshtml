@@ -2,26 +2,19 @@
     <h2>Полезные ссылки:</h2>
 
     <div>
-       <a href="tel:+380952030852"
-            <a asp-controller="Support" asp-action="" asp-route-service="call">
-                <img src="~/images/SideBar/Dial.bmp" alt="Позвонить" width="24" height="24">
-                <h3>Позвонить</h3>
-            </a>
-       
-       </a>
+        <a href="tel:@ConfigData.CompanyPhone" target="_blank">
+            <img src="~/images/SideBar/Dial.bmp" alt="Позвонить" width="24" height="24">
+            <h3>Позвонить</h3>
+        </a>
     </div>
-    <div>   
-       <a href="mailto:@ConfigData.CompanyEmail"
-            
-            <a asp-controller="Support" asp-action="" asp-route-service="ask">
-                <img src="~/images/SideBar/Question.bmp" alt="Задать вопрос" width="24" height="24">
-                <h4>Задать вопрос</h4>
-            </a> 
-        
-        </a> 
+    <div>
+        <a href="mailto:@ConfigData.CompanyEmail" target="_blank">
+            <img src="~/images/SideBar/Question.bmp" alt="Задать вопрос" width="24" height="24">
+            <h4>Задать вопрос</h4>
+       </a> 
     </div> 
     <div>
-        <a asp-controller="Support" asp-action="" asp-route-service="calculate">
+        <a asp-controller="Support" asp-action="">
             <img src="~/images/SideBar/Calculator.bmp" alt="Посчитать тур:" width="24" height="24">
             <h4>Посчитать тур</h4>
         </a>   
@@ -29,25 +22,25 @@
     <br/>
     <h2>Мы в соцсетях:</h2>
     <div>
-        <a asp-controller="Support" asp-action="">
+        <a href="https://@ConfigData.Facebook" target="_blank">
             <img src="~/images/SideBar/Facebook.png" alt="Facebook" width="24" height="24">
             <h3>Facebook</h3>
         </a>
     </div>
     <div>
-        <a asp-controller="Support" asp-action="">
-            <img src="~/images/SideBar/Instagram.png" alt="Instagram" width="24" height="24">
-            <h3>Instagram</h3>
+        <a href="https://@ConfigData.WhatsApp" target="_blank">
+            <img src="~/images/SideBar/Whatsapp.png" alt="Instagram" width="24" height="24">
+            <h3>WhatsApp</h3>
         </a>
     </div>
     <div>
-        <a asp-controller="Support" asp-action="">
+        <a href="https://@ConfigData.Telegram" target="_blank">
             <img src="~/images/SideBar/Telegram.png" alt="Telegram" width="24" height="24">
             <h3>Telegram</h3>
         </a>
     </div>
     <div>
-        <a asp-controller="Support" asp-action="">
+        <a href="https://@ConfigData.Viber" target="_blank">
             <img src="~/images/SideBar/Viber.png" alt="Viber" width="24" height="24">
             <h3>Viber</h3>
         </a>
@@ -61,28 +54,3 @@
         </a>
     </div>
 </div>
-
-    
-@*  Техзадания для Бокового блока сайта
-<h2>!!! Это боковая часть !!!</h2>
-<h2>Автономные блоки - одинаковые на всех страницах</h2>
-<h3>Заголовок</h3>
-    <ul>
-        <li>В Заголовке - д.б. <strong>название турфирмы, ее логотип</strong> на фоне красивого тропического пейзажа
-        </li>
-        <li>Д.б. <strong>меню навигации - Home, Search, Admin, Support, About</strong></li>
-        <li>д.б. возможность перевести на иностранный язык, т.е. д.б. <strong>локализация</strong></li>
-    </ul>
-<h3>Боковая панель/-ли</h3>
-    <ul>
-        <li>м.б. контакты, "позвонить", что то другое (вспомогательная информация или дополнительный сервис)</li>
-        <li></li>
-    </ul>
-<h3>Футер</h3>
-    <ul>
-        <li>В футере - д.б. <strong>"Разделы сайта", "Туристам", "Наши контакты", "Мы - в социальных сетях"</strong>
-        </li>
-        <li><strong>Рабочие ссылки</strong> на указанные ресурсы</li>
-        <li><strong>Авторские права</strong> на сайт, на дизайн и т.д.</li>
-    </ul>
-*@
