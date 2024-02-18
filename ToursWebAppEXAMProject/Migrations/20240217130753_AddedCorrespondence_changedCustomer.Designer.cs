@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToursWebAppEXAMProject.DBContext;
 
@@ -11,9 +12,11 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    partial class TourFirmaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240217130753_AddedCorrespondence_changedCustomer")]
+    partial class AddedCorrespondence_changedCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,44 +263,6 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("City", (string)null);
-                });
-
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Correspondence", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Answer")
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsExCustomerOfCompany")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("MessageDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OfferId");
-
-                    b.ToTable("Correspondences");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Country", b =>
@@ -937,21 +902,6 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasConstraintName("FK__City__CountryId__2D27B809");
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Correspondence", b =>
-                {
-                    b.HasOne("ToursWebAppEXAMProject.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("ToursWebAppEXAMProject.Models.Offer", "Offer")
-                        .WithMany()
-                        .HasForeignKey("OfferId");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Hotel", b =>

@@ -22,7 +22,9 @@ namespace ToursWebAppEXAMProject.Models
 
         public string Gender { get; set; } = "Пол не указан";
 
-        public int Age { get; set; } 
+        [Required(ErrorMessage = "Введите дату рождения")]
+        [Display(Name = "Дата рождения")]
+        public DateTime BirthDay { get; set; }
 
         public virtual ICollection<Offer> Offer { get; set; }
     }

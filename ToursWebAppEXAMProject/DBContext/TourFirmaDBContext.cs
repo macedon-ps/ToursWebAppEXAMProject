@@ -15,6 +15,7 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Blog> Blogs { get; set; } = null!;
 		public virtual DbSet<City> Cities { get; set; } = null!;
 		public virtual DbSet<Country> Countries { get; set; } = null!;
+		public virtual DbSet<Correspondence> Correspondences { get; set; } = null!;
 		public virtual DbSet<Customer> Customers { get; set; } = null!;
 		public virtual DbSet<DateTour> DateTours { get; set; } = null!;
 		public virtual DbSet<Food> Foods { get; set; } = null!;
