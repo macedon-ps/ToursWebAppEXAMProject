@@ -238,6 +238,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+                
+                
+                
                 //var age = Calculations.CalculateAge(customer.BirthDay);
 
                 /*WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);

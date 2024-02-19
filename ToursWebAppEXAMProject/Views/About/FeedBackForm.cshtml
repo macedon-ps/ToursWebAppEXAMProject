@@ -19,32 +19,34 @@
         <form asp-controller="About" asp-action="FeedBackForm" method="post"> 
             <input type="hidden" asp-for="Id"/>
             <input type="hidden" asp-for="Answer" />
-            <input type="hidden" asp-for="CustomerId" />
-            
-            <input type="hidden" asp-for="OfferId" />
-            <input type="hidden" asp-for="Offer" />
+            <input type="hidden" asp-for="AskerId" />
             <input type="hidden" asp-for="QuestionDate" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
-                    <label asp-for="Customer.Name"></label>
-                    <input asp-for="Customer.Name"/>
-                    <span asp-validation-for="Customer.Name"></span>
+                    <label asp-for="Asker.Name"></label>
+                    <input asp-for="Asker.Name" />
+                    <span asp-validation-for="Asker.Name"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Customer.Surname"></label>
-                    <input asp-for="Customer.Surname"/>
-                    <span asp-validation-for="Customer.Surname"></span>
+                    <label asp-for="Asker.Surname"></label>
+                    <input asp-for="Asker.Surname" />
+                    <span asp-validation-for="Asker.Surname"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Customer.BirthDay"></label>
-                    <input asp-for="Customer.BirthDay" type="datetime" />
-                    <span asp-validation-for="Customer.BirthDay"></span>
+                    <label asp-for="Asker.Email"></label>
+                    <input type="email" asp-for="Asker.Email" />
+                    <span asp-validation-for="Asker.Email"></span>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Customer.Gender"></label>
-                    <input asp-for="Customer.Gender"/>
-                    <span asp-validation-for="Customer.Gender"></span>
+                    <label asp-for="Asker.BirthDay"></label>
+                    <input asp-for="Asker.BirthDay" type="datetime" />
+                    <span asp-validation-for="Asker.BirthDay"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="Asker.Gender"></label>
+                    <input asp-for="Asker.Gender" />
+                    <span asp-validation-for="Asker.Gender"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="IsExCustomerOfCompany"></label>

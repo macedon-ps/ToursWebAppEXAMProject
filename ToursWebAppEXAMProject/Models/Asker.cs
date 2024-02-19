@@ -17,6 +17,11 @@ namespace ToursWebAppEXAMProject.Models
         [MaxLength(50, ErrorMessage = "Фамилия не должна быть длиннее 50 символов")]
         public string Surname { get; set; } = "Фамилия не указана";
 
+        [Required(ErrorMessage = "Введите Ваш email")]
+        [Display(Name = "email клиента")]
+        [MaxLength(50, ErrorMessage = "Email не должна быть длиннее 50 символов")]
+        public string Email { get; set; } = "email@gmail.com";
+
         [Display(Name = "Пол")]
         [MaxLength(10, ErrorMessage = "Пол не должен быть длиннее 10 символов")]
         public string Gender { get; set; } = "Пол не указан";

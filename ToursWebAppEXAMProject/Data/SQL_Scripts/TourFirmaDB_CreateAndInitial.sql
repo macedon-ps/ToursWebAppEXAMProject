@@ -75,7 +75,7 @@ Id int identity(1,1) not null primary key,
 Name nvarchar(50) check(Name<>'') not null,
 Surname nvarchar(50) check(Surname<>'') not null,
 Gender nvarchar(10) not null, 
-Age int not null,
+BirthDay datetime not null,
 );
 go
 create table Saller
@@ -153,12 +153,12 @@ insert into Tour (Name, ProductId, DateTourId, LocationId, FoodId) values
 								('Тур по Турции', 4, 4, 4, 4),
 								('Тур по Англии', 5, 5, 5, 3);
 go
-insert into Customer(Name, Surname, Gender, Age) values
-								('Семен', 'Степанов', 'мужчина', 33),
-								('Алена', 'Михайлова', 'женщина', 31),
-								('Влад', 'Ярославский', 'мужчина', 45),
-								('Юлия', 'Венедиктова', 'женщина', 42),
-								('Николай', 'Половинкин', 'мужчина', 42);
+insert into Customer(Name, Surname, Gender, BirthDay) values
+								('Семен', 'Степанов', 'мужчина', '2000-12-03'),
+								('Алена', 'Михайлова', 'женщина', '1997-04-16'),
+								('Влад', 'Ярославский', 'мужчина', '1986-06-21'),
+								('Юлия', 'Венедиктова', 'женщина', '1995-09-11'),
+								('Николай', 'Половинкин', 'мужчина', '2003-02-27');
 go
 insert into Saller(Name, Surname, Position) values
 								('Егор', 'Степанян', 'менеджер'),
