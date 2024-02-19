@@ -16,15 +16,23 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(400)]
         public string? Answer { get; set; } = "Ответ компании";
 
+        [Display(Name = "Были ли Вы уже клиентом нашей компании ?")]
         public bool IsExCustomerOfCompany { get; set; } = false;
 
+        public int AskerId { get; set; }
         public int? CustomerId { get; set; }
 
         public int? OfferId { get; set; }
 
         [Display(Name = "Время получения сообщения")]
         [DataType(DataType.Time)]
-        public DateTime MessageDate { get; set; } = DateTime.Now;
+        public DateTime? QuestionDate { get; set; }
+
+        [Display(Name = "Время ответа на сообщение")]
+        [DataType(DataType.Time)]
+        public DateTime? AnswerDate { get; set; }
+
+        public Asker? Asker { get; set; }
 
         public Customer? Customer { get; set; }
 

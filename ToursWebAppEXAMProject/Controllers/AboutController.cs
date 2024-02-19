@@ -223,7 +223,7 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
 
-            var customer = new Customer();
+            var customer = new Correspondence();
             return View(customer);
         }
 
@@ -234,26 +234,25 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="textAreaForm">Данные формы ввода типа IFormCollection</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult FeedBackForm(Customer customer, IFormCollection textAreaForm)
+		public IActionResult FeedBackForm(Correspondence message, IFormCollection textAreaForm)
 		{
 			if (ModelState.IsValid)
 			{
-                var age = Calculations.CalculateAge(customer.BirthDay);
+                //var age = Calculations.CalculateAge(customer.BirthDay);
 
-                WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
+                /*WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
 				WriteLogs($"Получены данные: Имя: {customer.Name}  Фамилия: {customer.Surname}  Возраст: {age}  Пол: {customer.Gender}  Вопрос: {textAreaForm["textArea"]}\n", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
+                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);*/
                 
                 // TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
-                // var textArea = textAreaForm["textArea"];
-                // ??? customer.question = textArea;  // возможно так
-
-                return View(customer);
+                message.Question = textAreaForm["textArea"];
+                
+                return View(message);
 			}
             WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
             WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
 
-            return View(new Customer());
+            return View(new Correspondence());
 		}
 
         /// <summary>

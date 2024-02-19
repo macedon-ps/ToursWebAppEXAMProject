@@ -12,8 +12,8 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    [Migration("20240217130753_AddedCorrespondence_changedCustomer")]
-    partial class AddedCorrespondence_changedCustomer
+    [Migration("20240219115014__added_Correspondence_Asker")]
+    partial class _added_Correspondence_Asker
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,42 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Asker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Askers");
+                });
+
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Blog", b =>
                 {
                     b.Property<int>("Id")
@@ -263,6 +299,52 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("City", (string)null);
+                });
+
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Correspondence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<DateTime?>("AnswerDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AskerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsExCustomerOfCompany")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("OfferId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<DateTime?>("QuestionDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AskerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Correspondences");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Country", b =>
@@ -893,6 +975,15 @@ namespace ToursWebAppEXAMProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Asker", b =>
+                {
+                    b.HasOne("ToursWebAppEXAMProject.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.City", b =>
                 {
                     b.HasOne("ToursWebAppEXAMProject.Models.Country", "Country")
@@ -902,6 +993,29 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasConstraintName("FK__City__CountryId__2D27B809");
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("ToursWebAppEXAMProject.Models.Correspondence", b =>
+                {
+                    b.HasOne("ToursWebAppEXAMProject.Models.Asker", "Asker")
+                        .WithMany()
+                        .HasForeignKey("AskerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToursWebAppEXAMProject.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("ToursWebAppEXAMProject.Models.Offer", "Offer")
+                        .WithMany()
+                        .HasForeignKey("OfferId");
+
+                    b.Navigation("Asker");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Hotel", b =>
