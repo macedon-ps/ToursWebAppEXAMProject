@@ -132,7 +132,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 WriteLogs(message, NLogsModeEnum.Warn);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Edit/Nothing", nothingInfo);
+                return View("../Shared/Nothing", nothingInfo);
             }
 
             WriteLogs($"Выводятся все турпродукты по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);

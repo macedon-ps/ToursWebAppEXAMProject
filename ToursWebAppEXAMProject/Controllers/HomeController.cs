@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -34,10 +35,11 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View(viewModel);
 		}
 
-		/// <summary>
+        /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Home
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         public IActionResult TechTaskHome()
 		{
             WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
@@ -53,6 +55,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
 		public IActionResult TechTaskHome(TechTaskViewModel model)
 		{

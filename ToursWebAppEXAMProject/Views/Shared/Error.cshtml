@@ -2,32 +2,21 @@
 @{
     ViewData["Title"] = "ErrorPage";
 }  
-@{
-    //TODO: переработать кнопки ErrorViewModel и протестировать
-}
 <div class="errorPage">
         <div class="errorButton">
-            <button class="">
-                <a class="" asp-area="" asp-controller="" asp-action="">Назад</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 2</a>
-             </button>
-             <button class="">
-                 <a class="" asp-area="" asp-controller="" asp-action="">Резерв 3</a>
-             </button>
+            <a asp-controller="" asp-action="">Резерв</a>
+            <a asp-controller="" asp-action="">Резерв 2</a>
+            <a asp-controller="" asp-action="">Резерв 3</a>
+            <a asp-controller="" asp-action="">Резерв 4</a>
         </div>
         <div class="errorHeader">
-            <h2>Упс, вы допустили ошибку:</h2><br/>
+            <h3>Упс, вы допустили ошибку:</h3><br/>
             
-            <h3>Содержание ошибки:</h3><br/>
-            <p class="text-danger">@Model.ErrorMessage</p><br/>
+            <h2>Содержание ошибки:</h2><br/>
+            <h3 class="text-danger">@Model.ErrorMessage</h3><br/>
             
-            <h3>Время ошибки: </h3><br/>
-            <p class="text-danger">@Model.DateTimeError</p>
+            <h2>Время ошибки: </h2><br/>
+            <h3 class="text-danger">@Model.DateTimeError</h3>
         </div>
    </div>
 

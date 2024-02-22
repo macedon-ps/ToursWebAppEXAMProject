@@ -21,6 +21,7 @@
             <input type="hidden" asp-for="Answer" />
             <input type="hidden" asp-for="AskerId" />
             <input type="hidden" asp-for="QuestionDate" />
+            <input type="hidden" asp-for="IsExCustomerOfCompany" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -47,11 +48,6 @@
                     <label asp-for="Asker.Gender"></label>
                     <input asp-for="Asker.Gender" />
                     <span asp-validation-for="Asker.Gender"></span>
-                </div>
-                <div class="displayFlexCol">
-                    <label asp-for="IsExCustomerOfCompany"></label>
-                    <input asp-for="IsExCustomerOfCompany" />
-                    <span asp-validation-for="IsExCustomerOfCompany"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="Question">Введите Ваш вопрос или пожелание:  </label>

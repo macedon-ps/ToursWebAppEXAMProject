@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.EnumsDictionaries;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -79,12 +80,13 @@ namespace ToursWebAppEXAMProject.Controllers
             
 			return View();
 		}
-		
+
 
         /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         [HttpGet]
 		public IActionResult TechTaskSearch()
 		{
@@ -101,6 +103,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
 		public IActionResult TechTaskSearch(TechTaskViewModel model)
 		{

@@ -13,13 +13,13 @@ namespace ToursWebAppEXAMProject.Controllers
     public class AboutController : Controller
 	{
         private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
-        private readonly IWebHostEnvironment _HostingEnvironment;
+        private readonly IBaseInterface<Customer> _AllCustomers;
         private readonly IEditTechTaskInterface _AllTasks;
 
-        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, IWebHostEnvironment HostingEnvironment, IEditTechTaskInterface Tasks)
+        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, IBaseInterface<Customer> AllCustomers, IEditTechTaskInterface Tasks)
 		{
             this._AboutPage = AboutPage;
-            this._HostingEnvironment = HostingEnvironment;
+            this._AllCustomers = AllCustomers;
             this._AllTasks = Tasks;
         }
         
@@ -238,17 +238,46 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                
-                
-                
-                //var age = Calculations.CalculateAge(customer.BirthDay);
+                /*1. Проверка по ФИО и эл.почте, является ли клиентом фирмы
+                2.1. Если нет, то данные обрабатываем
+                2.2. Выводим вью Success / Error
+                2.3. Сохраняем в Correspondence и Asker
+                3.1. Есди да, то данные обрабатываем
+                3.2. Выводим вью Success / Error. Из Customer выводим дополнительную информацию для Correspondence.
+                3.3. сохраняем в Correspondence и Asker. 
+                4. Отсылаем по почте
+                5. Во вью просмотреть ответ на свой вопрос*/
 
-                /*WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
-				WriteLogs($"Получены данные: Имя: {customer.Name}  Фамилия: {customer.Surname}  Возраст: {age}  Пол: {customer.Gender}  Вопрос: {textAreaForm["textArea"]}\n", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);*/
-                
+                var name = message.Asker.Name;
+                var surname = message.Asker.Surname;
+                var email = message.Asker.Email;
+                var customer = _AllCustomers.GetAllItems()
+                    .FirstOrDefault(x => (x.Name == name) && (x.Surname == surname) && (x.Email == email));
+
+                if(customer != null)
+                {
+                    message.IsExCustomerOfCompany = true;
+
+                }
+                else
+                {
+                    message.IsExCustomerOfCompany = false;
+                }
+
+                var age = Calculations.CalculateAge(message.Asker.BirthDay);
+                var question = textAreaForm["textArea"].ToString();
+
+                if (question != null)
+                {
+                    message.Question = question;
+                }
+
+                WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
+				WriteLogs($"Получены данные: Имя: {name}  Фамилия: {surname}  Возраст: {age}  Пол: {message.Asker.Gender}  Вопрос: {message.Question}\n", NLogsModeEnum.Debug);
+                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
+
                 // TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
-                message.Question = textAreaForm["textArea"];
+                
                 
                 return View(message);
 			}
@@ -262,6 +291,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода ТЗ и прогресса его выполнения для страницы About
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         public IActionResult TechTaskAbout()
 		{
             WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
@@ -277,6 +307,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="model">Данные с формы для ТЗ и прогресса его выполнени</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
 		public IActionResult TechTaskAbout(TechTaskViewModel model)
 		{

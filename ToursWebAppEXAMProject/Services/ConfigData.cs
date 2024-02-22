@@ -25,9 +25,14 @@ namespace ToursWebAppEXAMProject.Services
 		public static string CompanyEmail { get; set; }
 
 		/// <summary>
-		/// Ссылка на соц. сеть WhatsApp
+		/// Ссылка на сайт, где можно посчитать расходы на туристическое путешествие
 		/// </summary>
-		public static string WhatsApp { get; set; }
+        public static string CalculateTourSite { get; set; }
+
+        /// <summary>
+        /// Ссылка на соц. сеть WhatsApp
+        /// </summary>
+        public static string WhatsApp { get; set; }
 
         /// <summary>
         /// Ссылка на соц. сеть Telegram

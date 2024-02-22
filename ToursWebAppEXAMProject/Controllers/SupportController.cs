@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Translation.V2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
@@ -170,6 +171,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Support
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         public IActionResult TechTaskSupport()
 		{
             WriteLogs("Переход по маршруту Support/TechTaskSupport.\n", NLogsModeEnum.Trace);
@@ -185,6 +187,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="model">Данные с формы для ТЗ и прогресса его выполнени</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
 		public IActionResult TechTaskSupport(TechTaskViewModel model)
 		{

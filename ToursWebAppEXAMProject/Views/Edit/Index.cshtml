@@ -8,145 +8,155 @@
     @await Html.PartialAsync("EditButtonMenuPartial")
     
     <div class="editHeader">
-                 
+        
         <h1 class="title">Страница редактора сайта:</h1>
         <h3 class="title">Вход ограничен ролями "editor" и "superadmin"</h3><br />
         <hr class="horizontal-line" />
         <br />
         <div>
-
-            @if (Model.type == "New")
+        
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
             {
-                <h2>1. Создание новостей:</h2>
+                @if (Model.type == "New")
+                {
+                    <h2>1. Создание новостей:</h2>
 
-                <div class="div-box">
-                    <form asp-controller="News" asp-action="CreateNews" method="get">
-                        <input type="submit" value="Создать" />
-                    </form>
-                </div>
+                    <div class="div-box">
+                        <form asp-controller="News" asp-action="CreateNews" method="get">
+                            <input type="submit" value="Создать" />
+                        </form>
+                    </div>
 
-                <h2>2. Редактирование/удаление новостей:</h2>
+                    <h2>2. Редактирование/удаление новостей:</h2>
 
-                <div class="div-box">
+                    <div class="div-box">
 
-                    <h4>Выберите режим ввода:</h4>
+                        <h4>Выберите режим ввода:</h4>
 
-                    <form asp-controller="News" asp-action="GetQueryResultNews" method="get">
-                        <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                        <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
-                        <div>
-                            <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
-                        </div>
-                        <input type="submit" value="Найти" />
-                    </form>
-                </div>
+                        <form asp-controller="News" asp-action="GetQueryResultNews" method="get">
+                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <div>
+                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                            </div>
+                            <input type="submit" value="Найти" />
+                        </form>
+                    </div>
+                }
+
+                @if (Model.type == "Blog")
+                {
+                    <h2>1. Создание блогов:</h2>
+
+                    <div class="div-box">
+                        <form asp-controller="Blogs" asp-action="CreateBlog" method="get">
+                            <input type="submit" value="Создать" />
+                        </form>
+                    </div>
+
+                    <h2>2. Редактирование/удаление блогов:</h2>
+
+                    <div class="div-box">
+
+                        <h4>Выберите режим ввода:</h4>
+
+                        <form asp-controller="Blogs" asp-action="GetQueryResultBlogs" method="get">
+                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <div>
+                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                            </div>
+                            <input type="submit" value="Найти" />
+                        </form>
+                    </div>
+                }
+
+                @if (Model.type == "Product")
+                {
+                    <h2>1. Создание турпродуктов:</h2>
+
+                    <div class="div-box">
+                        <form asp-controller="Products" asp-action="CreateProduct" method="get">
+                            <input type="submit" value="Создать" />
+                        </form>
+                    </div>
+
+                    <h2>2. Редактирование/удаление турпродуктов:</h2>
+
+                    <div class="div-box">
+
+                        <h4>Выберите режим ввода:</h4>
+
+                        <form asp-controller="Products" asp-action="GetQueryResultProducts" method="get">
+                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <div>
+                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                            </div>
+                            <input type="submit" value="Найти" />
+                        </form>
+                    </div>
+                }
+                @if (Model.type == "Country")
+                {
+                    <h2>1. Создание стран:</h2>
+
+                    <div class="div-box">
+                        <form asp-controller="Countries" asp-action="CreateCountry" method="get">
+                            <input type="submit" value="Создать" />
+                        </form>
+                    </div>
+
+                    <h2>2. Редактирование/удаление стран:</h2>
+
+                    <div class="div-box">
+
+                        <h4>Выберите режим ввода:</h4>
+
+                        <form asp-controller="Countries" asp-action="GetQueryResultCountries" method="get">
+                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <div>
+                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                            </div>
+                            <input type="submit" value="Найти" />
+                        </form>
+                    </div>
+                }
+                @if (Model.type == "City")
+                {
+                    <h2>1. Создание городов:</h2>
+
+                    <div class="div-box">
+                        <form asp-controller="Cities" asp-action="CreateCity" method="get">
+                            <input type="submit" value="Создать" />
+                        </form>
+                    </div>
+
+                    <h2>2. Редактирование/удаление городов:</h2>
+
+                    <div class="div-box">
+
+                        <h4>Выберите режим ввода:</h4>
+
+                        <form asp-controller="Cities" asp-action="GetQueryResultCities" method="get">
+                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <div>
+                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                            </div>
+                            <input type="submit" value="Найти" />
+                        </form>
+                    </div>
+                }
             }
-            
-            @if (Model.type == "Blog")
+
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("admin")))
             {
-                <h2>1. Создание блогов:</h2>
-
-                <div class="div-box">
-                    <form asp-controller="Blogs" asp-action="CreateBlog" method="get">
-                        <input type="submit" value="Создать" />
-                    </form>
-                </div>
-
-                <h2>2. Редактирование/удаление блогов:</h2>
-
-                <div class="div-box">
-
-                    <h4>Выберите режим ввода:</h4>
-
-                    <form asp-controller="Blogs" asp-action="GetQueryResultBlogs" method="get">
-                        <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                        <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
-                        <div>
-                            <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
-                        </div>
-                        <input type="submit" value="Найти" />
-                    </form>
-                </div>
+                <h3>Роль "admin" на странице Edit позволяет просмотреть и оценить уровень выполнения задач редактора</h3>
+                <h3>P.S. В случае невозможности сделать это, обратитесь за помощью к "superadmin"</h3>
             }
 
-            @if (Model.type == "Product")
-            {
-                <h2>1. Создание турпродуктов:</h2>
-
-                <div class="div-box">
-                    <form asp-controller="Products" asp-action="CreateProduct" method="get">
-                        <input type="submit" value="Создать" />
-                    </form>
-                </div>
-
-                <h2>2. Редактирование/удаление турпродуктов:</h2>
-
-                <div class="div-box">
-
-                    <h4>Выберите режим ввода:</h4>
-
-                    <form asp-controller="Products" asp-action="GetQueryResultProducts" method="get">
-                        <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                        <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
-                        <div>
-                            <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
-                        </div>
-                        <input type="submit" value="Найти" />
-                    </form>
-                </div>
-            }
-            @if (Model.type == "Country")
-            {
-                <h2>1. Создание стран:</h2>
-
-                <div class="div-box">
-                    <form asp-controller="Countries" asp-action="CreateCountry" method="get">
-                        <input type="submit" value="Создать" />
-                    </form>
-                </div>
-
-                <h2>2. Редактирование/удаление стран:</h2>
-
-                <div class="div-box">
-
-                    <h4>Выберите режим ввода:</h4>
-
-                    <form asp-controller="Countries" asp-action="GetQueryResultCountries" method="get">
-                        <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                        <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
-                        <div>
-                            <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
-                        </div>
-                        <input type="submit" value="Найти" />
-                    </form>
-                </div>
-            }
-            @if (Model.type == "City")
-            {
-                <h2>1. Создание городов:</h2>
-
-                <div class="div-box">
-                    <form asp-controller="Cities" asp-action="CreateCity" method="get">
-                        <input type="submit" value="Создать" />
-                    </form>
-                </div>
-
-                <h2>2. Редактирование/удаление городов:</h2>
-
-                <div class="div-box">
-
-                    <h4>Выберите режим ввода:</h4>
-
-                    <form asp-controller="Cities" asp-action="GetQueryResultCities" method="get">
-                        <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                        <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
-                        <div>
-                            <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
-                        </div>
-                        <input type="submit" value="Найти" />
-                    </form>
-                </div>
-            }
         </div>
     </div>
 </div>
