@@ -12,30 +12,23 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(400, ErrorMessage = "Вопрос к компании не должен содержать более 400 символов")]
         public string Question { get; set; } = "Вопрос к компании";
 
-        [Display(Name = "Ответ компании")]
-        [StringLength(400)]
-        public string? Answer { get; set; } = "Ответ компании";
-
-        [Display(Name = "Были ли Вы уже клиентом нашей компании ?")]
-        public bool IsExCustomerOfCompany { get; set; } = false;
-
-        public int AskerId { get; set; }
-        public int? CustomerId { get; set; }
-
-        public int? OfferId { get; set; }
-
         [Display(Name = "Время получения сообщения")]
         [DataType(DataType.Time)]
         public DateTime? QuestionDate { get; set; }
+
+        [Display(Name = "Ответ компании")]
+        [StringLength(400)]
+        public string? Answer { get; set; } = "Ответ компании";
 
         [Display(Name = "Время ответа на сообщение")]
         [DataType(DataType.Time)]
         public DateTime? AnswerDate { get; set; }
 
-        public Asker? Asker { get; set; }
+        public bool IsCustomer { get; set; } = false;
 
-        public Customer? Customer { get; set; }
+        public int AskerId { get; set; }
+        
+        public virtual Asker? Asker { get; set; }
 
-        public Offer? Offer { get; set; }
     }
 }

@@ -30,8 +30,7 @@ namespace ToursWebAppEXAMProject.Models
         [Display(Name = "Дата рождения (формат: ГГГГ-ММ-ДД)")]
         public DateTime BirthDay { get; set; }
 
-        public int? CustomerId { get; set; }
+        public bool IsCustomer { get; set; } = false;
 
-        public virtual Customer? Customer { get; set; }
     }
 }
