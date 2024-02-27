@@ -7,18 +7,23 @@ using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 using ToursWebAppEXAMProject.Utils;
+using Microsoft.AspNetCore.Identity;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class AboutController : Controller
 	{
         private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
+        private readonly UserManager<User> _UserManager;
+        private readonly IBaseInterface<Asker> _AllAskers;
         private readonly IBaseInterface<Customer> _AllCustomers;
         private readonly IEditTechTaskInterface _AllTasks;
 
-        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, IBaseInterface<Customer> AllCustomers, IEditTechTaskInterface Tasks)
+        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IEditTechTaskInterface Tasks)
 		{
             this._AboutPage = AboutPage;
+            this._UserManager = UserManager;
+            this._AllAskers = AllAskers;
             this._AllCustomers = AllCustomers;
             this._AllTasks = Tasks;
         }
@@ -223,8 +228,8 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
 
-            var customer = new Correspondence();
-            return View(customer);
+            var viewModel = new CorrespondenceViewModel();
+            return View(viewModel);
         }
 
         /// <summary>
@@ -234,57 +239,66 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="textAreaForm">Данные формы ввода типа IFormCollection</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult FeedBackForm(Correspondence message, IFormCollection textAreaForm)
+		public IActionResult FeedBackForm(CorrespondenceViewModel model, IFormCollection textAreaForm)
 		{
 			if (ModelState.IsValid)
 			{
-                /*1. Проверка по ФИО и эл.почте, является ли клиентом фирмы
-                2.1. Если нет, то данные обрабатываем
-                2.2. Выводим вью Success / Error
-                2.3. Сохраняем в Correspondence и Asker
-                3.1. Есди да, то данные обрабатываем
-                3.2. Выводим вью Success / Error. Из Customer выводим дополнительную информацию для Correspondence.
-                3.3. сохраняем в Correspondence и Asker. 
-                4. Отсылаем по почте
-                5. Во вью просмотреть ответ на свой вопрос*/
+                var name = model.Name;
+                var surname = model.Surname;
+                var email = model.Email;
+                var gender = model.Gender;
+                var birthday = model.BirthDay;
+                model.QuestionDate = DateTime.Now;
 
-                var name = message.Asker.Name;
-                var surname = message.Asker.Surname;
-                var email = message.Asker.Email;
-                var customer = _AllCustomers.GetAllItems()
-                    .FirstOrDefault(x => (x.Name == name) && (x.Surname == surname) && (x.Email == email));
+                // 1. проверяем, является ли зарегистрированным пользователем
+                var user = _UserManager.Users.FirstOrDefault(u => u.Email == email && u.EmailConfirmed == true);
 
-                if(customer != null)
+                if (user != null)
                 {
-                    message.IsExCustomerOfCompany = true;
+                    // 1.1. пользователь зарегистрирован и прошел подтверждение email
+
+                    // 2. устанавливаем роль "asker" (м. видеть свои вопросы и ответы компании на них)
+
+                    // 3. создаем объект типа Asker и сохраняем его в БД
+                    
+                    // 4. проверяем, являлся ли пользователем услуг компании в прошлом
+                    var customer = _AllCustomers.GetAllItems()
+                        .FirstOrDefault(x => (x.Name == name) && (x.Surname == surname) && (x.Email == email));
+
+                    
+                    if (customer != null)
+                    {
+                        // 4.1. пользователь ранее уже был клиентом турфирмы и покупал путевку
+
+                    }
+                    else
+                    {
+                        // 4.2. Пользователь не покупал путевку ранее
+                        
+                    }
+
+                    // 5. создаем объект типа Correspondence и сохраняем его в БД
+
+                    model.Question = textAreaForm["textArea"].ToString();
 
                 }
-                else
-                {
-                    message.IsExCustomerOfCompany = false;
-                }
-
-                var age = Calculations.CalculateAge(message.Asker.BirthDay);
-                var question = textAreaForm["textArea"].ToString();
-
-                if (question != null)
-                {
-                    message.Question = question;
-                }
-
+                
+                /*var age = Calculations.CalculateAge(message.Asker.BirthDay);
                 WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
 				WriteLogs($"Получены данные: Имя: {name}  Фамилия: {surname}  Возраст: {age}  Пол: {message.Asker.Gender}  Вопрос: {message.Question}\n", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
+                */
 
-                // TODO: нужно делать ViewModel для пользователя и его вопроса, чтобы сохранить текст и передать в представление
-                
-                
-                return View(message);
+                return View(model);
 			}
+
+            // 1.2. Пользователь не зарегистрирован или не прошел подтверждение email
+            model.Question = textAreaForm["textArea"].ToString();
+
             WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
             WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
 
-            return View(new Correspondence());
+            return View(model);
 		}
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿@model Correspondence
+﻿@model CorrespondenceViewModel
 
 <div class="aboutPage">
     
@@ -17,43 +17,67 @@
         <br />Гарантируем сохранность Вашей конфиденциальной информации</p>
 
         <form asp-controller="About" asp-action="FeedBackForm" method="post"> 
-            <input type="hidden" asp-for="Id"/>
-            <input type="hidden" asp-for="Answer" />
-            <input type="hidden" asp-for="AskerId" />
-            <input type="hidden" asp-for="QuestionDate" />
-            <input type="hidden" asp-for="IsExCustomerOfCompany" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
-                    <label asp-for="Asker.Name"></label>
-                    <input asp-for="Asker.Name" />
-                    <span asp-validation-for="Asker.Name"></span>
+                    <label asp-for="Name" class="part70"></label>
+                    <div class="displayFlexRow">
+                        <input asp-for="Name" class="part70" />
+                        <span asp-validation-for="Name" class="part30"></span>
+                    </div>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Asker.Surname"></label>
-                    <input asp-for="Asker.Surname" />
-                    <span asp-validation-for="Asker.Surname"></span>
+                    <label asp-for="Surname" class="part70"></label>
+                    <div class="displayInline">
+                        <input asp-for="Surname" class="part70" />
+                        <span asp-validation-for="Surname"></span>
+                    </div>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Asker.Email"></label>
-                    <input type="email" asp-for="Asker.Email" />
-                    <span asp-validation-for="Asker.Email"></span>
+                    <label asp-for="Email" class="part70"></label>
+                    <div class="displayInline">
+                        <input type="email" asp-for="Email" class="part70" />
+                        <span asp-validation-for="Email"></span>
+                    </div>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Asker.BirthDay"></label>
-                    <input asp-for="Asker.BirthDay" type="datetime" />
-                    <span asp-validation-for="Asker.BirthDay"></span>
+                    <label asp-for="BirthDay" class="part70"></label>
+                    <div class="displayInline">
+                        <input asp-for="BirthDay" class="part70" />
+                        <span asp-validation-for="BirthDay"></span>
+                    </div>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Asker.Gender"></label>
-                    <input asp-for="Asker.Gender" />
-                    <span asp-validation-for="Asker.Gender"></span>
+                    <label asp-for="Gender" class="part70"></label>
+                    <div class="displayInline">
+                        <input asp-for="Gender" class="part70" />
+                        <span asp-validation-for="Gender" ></span>
+                    </div>
                 </div>
                 <div class="displayFlexCol">
-                    <label asp-for="Question">Введите Ваш вопрос или пожелание:  </label>
+                    <label asp-for="Question"></label>
                     <textarea asp-for="Question" name="textArea" cols="100" rows="20" ></textarea>
                     <span asp-validation-for="Question"></span>
                 </div>
+                <div class="displayFlexCol">
+                    <label asp-for="QuestionDate">Дата вопроса: </label>
+                    <p>@Model.QuestionDate</p>
+                    <span asp-validation-for="QuestionDate"></span>
+                </div>
+                @if(Model.Answer != null)
+                {
+                    <div class="displayFlexCol">
+                        <label asp-for="Answer">Ответ на Ваш вопрос:  </label>
+                        <textarea asp-for="Answer" name="textArea" cols="100" rows="20" ></textarea>
+                        <span asp-validation-for="Answer"></span>
+                    </div>
+                    <div class="displayFlexCol">
+                        <label asp-for="AnswerDate">Дата ответа: </label>
+                        <p>@Model.AnswerDate</p>
+                        <span asp-validation-for="AnswerDate"></span>
+                    </div>
+                }
+
                 <input type="submit" value="Отправить"/>
             </div>
         </form>
