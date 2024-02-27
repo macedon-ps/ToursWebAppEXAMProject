@@ -2296,7 +2296,7 @@ padding-top: 1em;
 	display: flex;
 	padding: 1em 0;
 }
-	.displayFlexCol {
+.displayFlexCol {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 0.5em;
@@ -2306,9 +2306,24 @@ padding-top: 1em;
 	justify-content: space-between;
 	margin: 1em 0;
 }
+.displayInline {
+	display: inline-block;
+}
+.displayInline > span{
+	margin-left: 2em;
+}
 .displayFlex label,
 .displayFlex input{
 	margin: 0.2em 0;
+}
+.part70{
+	margin: 0 auto 0 0;
+	width: 70%;
+}
+.part30 {
+	margin: 0 auto 0 0;
+	padding-left: 2em;
+	width: 30%;
 }
 .blockWidth20 {
 	min-width: 18%;

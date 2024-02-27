@@ -53,11 +53,11 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (result.Succeeded)
                 {
                     // генерация токена для пользователя и адреса для колбека
-                    var tocen = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action(
                         "ConfirmEmail",
                         "Account",
-                        new { userId = user.Id, code = tocen },
+                        new { userId = user.Id, code = token },
                         protocol: HttpContext.Request.Scheme);
 
                     // отправка сообщения на эл.почту для подтверждения регистрации
@@ -93,20 +93,25 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                
+                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован или не имеет подтверждающего токена регистрации"));
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View("Error");
+                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован"));
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
+            {
                 //TODO: создать вью успешного результата подтверждения регистрации нового пользователя с логином - email по ссылке в письме на его электроннe. почтe
                 //TODO: продумать механизм получения роли ("editor", "admin" или "superadmin")
                 return RedirectToAction("Index", "Home");  // тут м.б. страница успешного потверждения регистрации нового пользователя
+            }
             else
-                return View("Error");
+            {
+                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение"));
+            }
         }
 
         /// <summary>
@@ -141,7 +146,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         return View(model);
                     }
                 }
-
+               
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
