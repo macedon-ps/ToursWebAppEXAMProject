@@ -9,12 +9,20 @@
   <ItemGroup>
     <Compile Remove="Areas\**" />
     <Compile Remove="Controllers\Новая папка\**" />
+    <Compile Remove="WindOfWanderings.AspNetCore.Domain\**" />
+    <Compile Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
     <Content Remove="Areas\**" />
     <Content Remove="Controllers\Новая папка\**" />
+    <Content Remove="WindOfWanderings.AspNetCore.Domain\**" />
+    <Content Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
     <EmbeddedResource Remove="Areas\**" />
     <EmbeddedResource Remove="Controllers\Новая папка\**" />
+    <EmbeddedResource Remove="WindOfWanderings.AspNetCore.Domain\**" />
+    <EmbeddedResource Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
     <None Remove="Areas\**" />
     <None Remove="Controllers\Новая папка\**" />
+    <None Remove="WindOfWanderings.AspNetCore.Domain\**" />
+    <None Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
     </ItemGroup>
 
   <ItemGroup>
@@ -53,8 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="WindOfWanderings.AspNetCore.Infrastructure\" />
-    <Folder Include="WindOfWanderings.AspNetCore.Domain\" />
     <Folder Include="wwwroot\images\CitiesTitleImages\" />
     <Folder Include="wwwroot\images\ProductsTitleImages\" />
   </ItemGroup>

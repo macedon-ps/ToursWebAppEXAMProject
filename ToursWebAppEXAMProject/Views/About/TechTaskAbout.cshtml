@@ -6,7 +6,7 @@
 
     <div class="aboutHeader">
         
-        <h1 class="title">Техзадание для страницы с информацией о нас:</h1><br/>
+        <h1 class="title">Техзадание для страницы с информацией о нас и для боковой панели Aside:</h1><br/>
         <h3 class="title">Вход ограничен ролями "admin" и "superadmin"</h3><br />
         <hr class="horizontal-line" />
         
@@ -24,39 +24,39 @@
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask1" value="false"/>
                 1. Данная страница д. содержать:
-                <br/><strong>блок навигационных кнопок:</strong> "Наши реквизиты", "Режим работы", "Фотогаллерея", "Обратная связь", "ТЗ                  для About"
+                <br/><strong>блок навигационных кнопок:</strong> "Наши реквизиты", "Режим работы", "Фотогаллерея", "Обратная связь", "Edit AboutPage", "ТЗ для About"
                 <br /><strong>блок рекизитов тур.фирмы</strong>
                 <br /><strong>блок с информацией о режиме работы турфирмы</strong>
-                <br /><strong>блок с фотографиями сотрудников и офиса</strong>
-                <br /><strong>с формой обратной связи с клиентами туристической фирмы</strong>
-                
+                <br /><strong>блок с фотографиями путешествий по странам мира</strong>
+                                
                 <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask2" value="false"/>
-                2. Д.б. <strong>страница с названием и реквизитами турфирмы</strong>
+                2. Д.б. <strong>страница для создания, редактирования и удаления разных версий страницы About</strong>.
+                <br />Д.б. организован <strong>доступ к данной функциональности по ролям "superadmin", "editor"</strong>
                 
                 <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask3" value="false"/>
-                3. Д.б. <strong>страница с информацией о режиме работы турфирмы</strong>
+                3. Д.б. <strong>страница с формой обратной связи с клиентами туристической фирмы</strong>
+                <br />Д.б. реализован <strong>функционал создания, отправки, сохранения вопросов от клиентов и просмотра  ответов на них от туристической фирмы</strong> (+ для боковой панели)
                 
                 <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask4" value="false"/>
-                4. Д.б. <strong>страница с фотографиями сотрудников и офиса</strong>
+                4. Д.б. реализована возможность <strong>звонить из приложения и отправлять сообщения по email</strong> (+ для боковой панели)
 
                 <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask5" value="false"/>
-                5. Д.б. <strong>страница с формой обратной связи с клиентами туристической фирмы</strong>
+                5. Д.б. реализована возможность <strong>общения с клиентами через социальные сети Facebook, WhatsApp, Telegram, Viber</strong> (+ для боковой панели)
 
                 <br/><br/>
                 +<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="true"/>
                 -<input type="radio" asp-for="@Model.IsExecuteTechTask6" value="false"/>
                 6. Дополнительно:
-                <br />М.б. реализован <strong>функционал звонка</strong> (+ для боковой панели)
-                <br />М.б. реализован <strong>функционал выхода в социальные сети</strong> (+ для боковой панели)
-                
+                <br />М.б. реализован <strong>функционал подсчета стоимости поездки</strong> (+ для боковой панели)
+                               
                 <br/><br/>
                 <input type="submit" value="Сохранить" />
             </form>
