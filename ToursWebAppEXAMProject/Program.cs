@@ -5,7 +5,7 @@ using ToursWebAppEXAMProject.Hubs;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
-using ToursWebAppEXAMProject.Services;
+using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,7 +59,7 @@ builder.Services.AddDbContext<TourFirmaDBContext>(options =>
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
-builder.Configuration.Bind("EmailConfiguration", new EmailConfig());
+builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
 
 var app = builder.Build();
 

@@ -53,6 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="WindOfWanderings.AspNetCore.Infrastructure\" />
+    <Folder Include="WindOfWanderings.AspNetCore.Domain\" />
     <Folder Include="wwwroot\images\CitiesTitleImages\" />
     <Folder Include="wwwroot\images\ProductsTitleImages\" />
   </ItemGroup>

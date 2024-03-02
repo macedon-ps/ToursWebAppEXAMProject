@@ -1,5 +1,6 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
+using ToursWebAppEXAMProject.ConfigFiles;
 
 namespace ToursWebAppEXAMProject.Services
 {
@@ -17,7 +18,7 @@ namespace ToursWebAppEXAMProject.Services
             // создание сообщения
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress(EmailConfig.CompanyName, EmailConfig.Email));
+            emailMessage.From.Add(new MailboxAddress(ConfigEmail.CompanyName, ConfigEmail.Email));
             emailMessage.To.Add(new MailboxAddress("Получатель", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -28,9 +29,9 @@ namespace ToursWebAppEXAMProject.Services
             using (var client = new SmtpClient())
             {
                 // открытие соединения по протоколу SMTP
-                await client.ConnectAsync(EmailConfig.SmtpServer, EmailConfig.Port, EmailConfig.UseSsl);
+                await client.ConnectAsync(ConfigEmail.SmtpServer, ConfigEmail.Port, ConfigEmail.UseSsl);
                 // аутентификация по электронной почте и коду для приложения для аккаунта
-                await client.AuthenticateAsync(EmailConfig.Email, CodeApp.GetPassword());
+                await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
                 // отправка сообщения
                 await client.SendAsync(emailMessage);
                 // закрытие соединения

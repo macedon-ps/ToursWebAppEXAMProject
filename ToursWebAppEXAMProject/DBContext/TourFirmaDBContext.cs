@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Services;
+using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.DBContext
