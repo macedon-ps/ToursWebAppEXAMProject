@@ -6,7 +6,6 @@ using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
-using ToursWebAppEXAMProject.Utils;
 using Microsoft.AspNetCore.Identity;
 
 namespace ToursWebAppEXAMProject.Controllers
@@ -17,14 +16,16 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly UserManager<User> _UserManager;
         private readonly IBaseInterface<Asker> _AllAskers;
         private readonly IBaseInterface<Customer> _AllCustomers;
+        private readonly IBaseInterface<Correspondence> _AllCorrespondences;
         private readonly IEditTechTaskInterface _AllTasks;
 
-        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IEditTechTaskInterface Tasks)
+        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IBaseInterface<Correspondence> AllCorrespondences, IEditTechTaskInterface Tasks)
 		{
             this._AboutPage = AboutPage;
             this._UserManager = UserManager;
             this._AllAskers = AllAskers;
             this._AllCustomers = AllCustomers;
+            this._AllCorrespondences = AllCorrespondences;
             this._AllTasks = Tasks;
         }
         
@@ -148,7 +149,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeMainImagePath != null)
                 {
                     var folder = "/images/AboutPage/Main/";
-                    FileUtils.SaveFileIfExistPath(folder, changeMainImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeMainImagePath);
                     viewModel.MainImagePath = $"{folder}{changeMainImagePath.FileName}";
                 }
 
@@ -156,7 +157,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeAboutImagePath != null)
                 {
                     var folder = "/images/AboutPage/About/";
-                    FileUtils.SaveFileIfExistPath(folder, changeAboutImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeAboutImagePath);
                     viewModel.AboutImagePath = $"{folder}{changeAboutImagePath.FileName}";
                 }
 
@@ -164,28 +165,28 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeDetailsImagePath != null)
                 {
                     var folder = "/images/AboutPage/Details/";
-                    FileUtils.SaveFileIfExistPath(folder, changeDetailsImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeDetailsImagePath);
                     viewModel.DetailsImagePath = $"{folder}{changeDetailsImagePath.FileName}";
                 }
                 // OperationMode
                 if (changeOperationModeImagePath != null)
                 {
                     var folder = "/images/AboutPage/OperationMode/";
-                    FileUtils.SaveFileIfExistPath(folder, changeOperationModeImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeOperationModeImagePath);
                     viewModel.OperationModeImagePath = $"{folder}{changeOperationModeImagePath.FileName}";
                 }
                 // PhotoGallery
                 if (changePhotoGalleryImagePath != null)
                 {
                     var folder = "/images/AboutPage/PhotoGallery/";
-                    FileUtils.SaveFileIfExistPath(folder, changePhotoGalleryImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changePhotoGalleryImagePath);
                     viewModel.PhotoGalleryImagePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
                 }
                 // Feedback
                 if (changeFeedbackImagePath != null)
                 {
                     var folder = "/images/AboutPage/Feedback/";
-                    FileUtils.SaveFileIfExistPath(folder, changeFeedbackImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeFeedbackImagePath);
                     viewModel.FeedbackImagePath = $"{folder}{changeFeedbackImagePath.FileName}";
                 }
 
@@ -258,29 +259,50 @@ namespace ToursWebAppEXAMProject.Controllers
                     // 1.1. пользователь зарегистрирован и прошел подтверждение email
 
                     // 2. устанавливаем роль "asker" (м. видеть свои вопросы и ответы компании на них)
+                    _UserManager.AddToRoleAsync(user, "asker");
 
-                    // 3. создаем объект типа Asker и сохраняем его в БД
-                    
-                    // 4. проверяем, являлся ли пользователем услуг компании в прошлом
+                    // 3.1. создаем объект типа Asker
+                    var asker = new Asker();
+                    asker.Name = name;
+                    asker.Surname = surname;
+                    asker.Email = email;
+                    asker.Gender = gender;
+                    asker.BirthDay = birthday;
+                   
+                    // 3.2. проверяем, являлся ли пользователем услуг компании в прошлом
                     var customer = _AllCustomers.GetAllItems()
                         .FirstOrDefault(x => (x.Name == name) && (x.Surname == surname) && (x.Email == email));
-
-                    
+                                        
                     if (customer != null)
                     {
-                        // 4.1. пользователь ранее уже был клиентом турфирмы и покупал путевку
+                        // пользователь ранее уже был клиентом турфирмы и покупал путевку
+                        asker.IsCustomer = true;
+                    }
+                    // 3.3. сохраняем объект типа Asker в БД
+                    _AllAskers.SaveItem(asker, asker.Id);
 
+                    // 4.1. создаем объект типа Correspondence
+                    var correspondence = new Correspondence();
+                    correspondence.Question = model.Question;
+                    correspondence.QuestionDate = model.QuestionDate;
+
+                    var _asker = _AllAskers.GetAllItems().FirstOrDefault(x => x.Email == model.Email);
+                    if(_asker != null)
+                    {
+                        correspondence.AskerId = _asker.Id;
                     }
                     else
                     {
-                        // 4.2. Пользователь не покупал путевку ранее
-                        
+                        correspondence.AskerId = 0;
                     }
+                    
+                    correspondence.IsCustomer = asker.IsCustomer;
 
-                    // 5. создаем объект типа Correspondence и сохраняем его в БД
+                    // 4.2. сохраняем объект типа Correspondence в БД
+                    _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
+
 
                     model.Question = textAreaForm["textArea"].ToString();
-
                 }
                 
                 /*var age = Calculations.CalculateAge(message.Asker.BirthDay);

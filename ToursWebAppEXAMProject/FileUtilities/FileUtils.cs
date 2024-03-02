@@ -11,21 +11,38 @@ namespace ToursWebAppEXAMProject.FileUtilities
         /// <param name="filePath">путь сохранения картинки</param>
         /// <param name="changeTitleImagePath">значение поля типа IFormFile для названия сохраняемого файла</param>
         /// <param name="webHostEnvironment">webHostEnvironment</param>
-        public static async void SaveFileIfExistPath(string folder, IFormFile? changeImagePath)
+        public static async Task SaveFileIfExistPath(string folder, IFormFile? changeImagePath)
         {
             // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
             var fullPathToFolder = IsFolderExist(folder);
 
             // создаем абсолютный и относительный пути к файлу
-            var fullFilePath = $"{fullPathToFolder}{changeImagePath.FileName}";
-            var relativeFilePath = $"{folder}{changeImagePath.FileName}";
+            var fullFilePath = string.Empty;
+            var relativeFilePath = string.Empty;
 
+            if (changeImagePath != null)
+            {
+                fullFilePath = $"{fullPathToFolder}{changeImagePath.FileName}";
+                relativeFilePath = $"{folder}{changeImagePath.FileName}";
+            }
+            else
+            {
+                return;
+            }
+             
             // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
             using (var fstream = new FileStream(fullFilePath, FileMode.Create))
             {
-                await changeImagePath.CopyToAsync(fstream);
-
-                WriteLogs($"Новая картинка сохранена по пути: {relativeFilePath}\n", NLogsModeEnum.Debug);
+                if(changeImagePath != null)
+                {
+                    await changeImagePath.CopyToAsync(fstream);
+                    WriteLogs($"Новая картинка сохранена по пути: {relativeFilePath}\n", NLogsModeEnum.Debug);
+                }
+                else
+                {
+                    WriteLogs($"Ошибка сохранения картинки. Путь: {relativeFilePath}\n", NLogsModeEnum.Error);
+                    return;
+                }
             }
         }
 

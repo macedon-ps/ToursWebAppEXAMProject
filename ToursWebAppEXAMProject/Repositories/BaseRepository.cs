@@ -66,6 +66,9 @@ namespace ToursWebAppEXAMProject.Repositories
                 case "Asker":
                     itemKeyword[0] = "спрашивающий"; itemKeyword[1] = "спрашивающего"; itemKeyword[2] = "спрашивающие"; itemKeyword[3] = "спрашивающих";
                     break;
+                case "Correspondence":
+                    itemKeyword[0] = "сообщение"; itemKeyword[1] = "сообщения"; itemKeyword[2] = "сообщения"; itemKeyword[3] = "сообщений";
+                    break;
                 case "Saller":
 					itemKeyword[0] = "продавец"; itemKeyword[1] = "продавца"; itemKeyword[2] = "продавцы"; itemKeyword[3] = "продавецов";
 					break;
@@ -94,7 +97,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			
 			try
 			{
-				var items = dbSetEntityItems.AsNoTracking().ToList();
+				var items = dbSetEntityItems.ToList();
 
 				if (items == null)
 				{

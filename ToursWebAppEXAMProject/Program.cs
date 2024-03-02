@@ -29,6 +29,7 @@ builder.Services.AddTransient<IBaseInterface<Food>, BaseRepository<Food>>();
 builder.Services.AddTransient<IBaseInterface<Tour>, BaseRepository<Tour>>();
 builder.Services.AddTransient<IBaseInterface<Asker>, BaseRepository<Asker>>();
 builder.Services.AddTransient<IBaseInterface<Customer>, BaseRepository<Customer>>();
+builder.Services.AddTransient<IBaseInterface<Correspondence>, BaseRepository<Correspondence>>();
 builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
 builder.Services.AddTransient<IBaseInterface<Offer>, BaseRepository<Offer>>();
 builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();

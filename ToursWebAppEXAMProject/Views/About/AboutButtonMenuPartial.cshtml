@@ -1,8 +1,8 @@
 ﻿<div class="aboutButton">
-    <a asp-controller="About" asp-fragment="details">Наши реквизиты</a>
-    <a asp-controller="About" asp-fragment="operation_mode">Режим работы</a>
-    <a asp-controller="About" asp-fragment="photo_gallery">Фото галлерея</a>
-    <a asp-controller="About" asp-fragment="feedback">Обратная связь</a>
+    <a asp-controller="About" asp-action="Index" asp-fragment="details">Наши реквизиты</a>
+    <a asp-controller="About" asp-action="Index" asp-fragment="operation_mode">Режим работы</a>
+    <a asp-controller="About" asp-action="Index" asp-fragment="photo_gallery">Фото галлерея</a>
+    <a asp-controller="About" asp-action="Index" asp-fragment="feedback">Обратная связь</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
         <a asp-controller="About" asp-action="CreateEditDeleteAboutPage">Create / Edit / Delete</a>
