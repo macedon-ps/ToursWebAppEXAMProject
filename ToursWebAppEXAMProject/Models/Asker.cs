@@ -32,5 +32,16 @@ namespace ToursWebAppEXAMProject.Models
 
         public bool IsCustomer { get; set; } = false;
 
+        public Asker() { }
+
+        public Asker(string name, string surname, string email, string gender, DateTime birthday)
+        {
+            Name = name;
+            Surname = surname;
+            Email = email;
+            Gender = gender;
+            BirthDay = birthday;
+        }
+
     }
 }

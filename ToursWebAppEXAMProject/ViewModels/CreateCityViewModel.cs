@@ -1,4 +1,5 @@
-﻿using ToursWebAppEXAMProject.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.ViewModels
 {
@@ -9,6 +10,7 @@ namespace ToursWebAppEXAMProject.ViewModels
         /// </summary>
         public IEnumerable<Country> Countries { get; set; } = null!;
 
+        [Required(ErrorMessage ="Введите необходимые данные о городе")]
         /// <summary>
         /// Экземпляр города
         /// </summary>

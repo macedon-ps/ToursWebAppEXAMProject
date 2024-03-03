@@ -169,44 +169,55 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveCity(City city, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            WriteLogs("Запущен процесс сохранения города в БД. ", NLogsModeEnum.Debug);
-
-            if (ModelState.IsValid)
+            try
             {
-                WriteLogs("Модель City прошла валидацию. ", NLogsModeEnum.Debug);
+                WriteLogs("Запущен процесс сохранения города в БД. ", NLogsModeEnum.Debug);
 
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
+                if (ModelState.IsValid)
                 {
-                    var folder = "/images/CitiesTitleImages/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
-                    city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                    WriteLogs("Модель City прошла валидацию. ", NLogsModeEnum.Debug);
+
+                    // если мы хотим поменять картинку
+                    if (changeTitleImagePath != null)
+                    {
+                        var folder = "/images/CitiesTitleImages/";
+                        await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                        city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                    }
+                    if (formValues["checkIsCapital"] == "on")
+                    {
+                        city.isCapital = true;
+                    }
+
+                    // TODO: проверка city.CountryId на null
+
+                    city.CountryId = Int32.Parse(formValues["CountryId"]);
+                    city.FullDescription = formValues["fullInfoAboutCity"];
+                    city.DateAdded = DateTime.Now;
+
+                    _AllCities.SaveItem(city, city.Id);
+
+                    WriteLogs("Город успешно сохранен в БД. ", NLogsModeEnum.Debug);
+                    WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+
+                    return View("../Shared/Success", city);
                 }
-                if(formValues["checkIsCapital"] == "on")
+                else
                 {
-                    city.isCapital = true;
+                    WriteLogs("Модель City не прошла валидацию. ", NLogsModeEnum.Warn);
+                    WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
+
+                    city.FullDescription = formValues["fullInfoAboutCity"];
+
+                    return View("EditCity", city);
                 }
-                
-                city.CountryId = Int32.Parse(formValues["CountryId"]);
-                city.FullDescription = formValues["fullInfoAboutCity"];
-                city.DateAdded = DateTime.Now;
-
-                _AllCities.SaveItem(city, city.Id);
-
-                WriteLogs("Город успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
-
-                return View("../Shared/Success", city);
             }
-            else
+            catch (Exception ex)
             {
-                WriteLogs("Модель City не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
-
-                city.FullDescription = formValues["fullInfoAboutCity"];
-
-                return View("EditCity", city);
+                WriteLogs($"{ex.Message}", NLogsModeEnum.Error);
+                return View("Error", ex.Message);
             }
+            
         }
     }
 }

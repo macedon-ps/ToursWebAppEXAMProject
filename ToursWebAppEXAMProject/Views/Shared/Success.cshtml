@@ -1,6 +1,6 @@
 ﻿<div class="editPage">
     
-     @if (Model.ToString().Contains("EditAboutPageViewModel"))
+    @if (Model.ToString().Contains("EditAboutPageViewModel"))
     {
         @await Html.PartialAsync("../About/AboutButtonMenuPartial")
 
@@ -20,6 +20,34 @@
                 </div>
                 <div class="padding_bottom_2 displayFlex">
                     Время создания/редактирования: @Model.DateAdded
+                </div>
+
+            </div>
+        </div>
+    }
+    @if (Model.ToString().Contains("CorrespondenceViewModel"))
+    {
+        @await Html.PartialAsync("../About/AboutButtonMenuPartial")
+
+        <div class="editHeader">
+
+            <h3 class="title">Сохранение объекта прошло  успешно!</h3>
+            <h4 class="title">Данные сохраненного объекта:</h4>
+            <hr class="horizontal-line" />
+            <br />
+            <div>
+
+                <div class="padding_bottom_2 displayFlex">
+                    Пользователь: @Model.Name  @Model.Surname 
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Email: @Model.Email
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    Вопрос: @Model.Question
+                </div>
+                <div class="padding_bottom_2 displayFlex">
+                    @Model.QuestionDate
                 </div>
 
             </div>

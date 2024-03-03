@@ -30,5 +30,14 @@ namespace ToursWebAppEXAMProject.Models
         
         public virtual Asker? Asker { get; set; }
 
+        public Correspondence() { }
+
+        public Correspondence(string question, DateTime? questionDate, int askerId, bool isCustomer) 
+        {
+            Question = question;
+            QuestionDate = questionDate ?? DateTime.Now;
+            AskerId = askerId;
+            IsCustomer = isCustomer;
+        }
     }
 }

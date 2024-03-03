@@ -244,81 +244,44 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                var name = model.Name;
-                var surname = model.Surname;
-                var email = model.Email;
-                var gender = model.Gender;
-                var birthday = model.BirthDay;
-                model.QuestionDate = DateTime.Now;
-
-                // 1. проверяем, является ли зарегистрированным пользователем
-                var user = _UserManager.Users.FirstOrDefault(u => u.Email == email && u.EmailConfirmed == true);
+                var user = Feedback.GetUser(model, _UserManager);
 
                 if (user != null)
                 {
-                    // 1.1. пользователь зарегистрирован и прошел подтверждение email
+                    // устанавливаем роль "asker"
+                    //Feedback.AddToRole(user, "asker", _UserManager);
 
-                    // 2. устанавливаем роль "asker" (м. видеть свои вопросы и ответы компании на них)
-                    _UserManager.AddToRoleAsync(user, "asker");
+                    var asker = Feedback.GetAsker(model, _AllAskers);
 
-                    // 3.1. создаем объект типа Asker
-                    var asker = new Asker();
-                    asker.Name = name;
-                    asker.Surname = surname;
-                    asker.Email = email;
-                    asker.Gender = gender;
-                    asker.BirthDay = birthday;
-                   
-                    // 3.2. проверяем, являлся ли пользователем услуг компании в прошлом
-                    var customer = _AllCustomers.GetAllItems()
-                        .FirstOrDefault(x => (x.Name == name) && (x.Surname == surname) && (x.Email == email));
-                                        
-                    if (customer != null)
+                    if(asker == null)
                     {
-                        // пользователь ранее уже был клиентом турфирмы и покупал путевку
-                        asker.IsCustomer = true;
-                    }
-                    // 3.3. сохраняем объект типа Asker в БД
-                    _AllAskers.SaveItem(asker, asker.Id);
-
-                    // 4.1. создаем объект типа Correspondence
-                    var correspondence = new Correspondence();
-                    correspondence.Question = model.Question;
-                    correspondence.QuestionDate = model.QuestionDate;
-
-                    var _asker = _AllAskers.GetAllItems().FirstOrDefault(x => x.Email == model.Email);
-                    if(_asker != null)
-                    {
-                        correspondence.AskerId = _asker.Id;
-                    }
-                    else
-                    {
-                        correspondence.AskerId = 0;
+                        asker = new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
                     }
                     
-                    correspondence.IsCustomer = asker.IsCustomer;
+                    var isCustomer = Feedback.isCustomer(model, _AllCustomers);
+                    if (isCustomer)
+                    {
+                        asker.IsCustomer = true;
+                    }
 
-                    // 4.2. сохраняем объект типа Correspondence в БД
-                    _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
+                    // сохраняем объект типа Asker в БД
+                    _AllAskers.SaveItem(asker, asker.Id);
 
-
+                    // save correspondence and asker
                     model.Question = textAreaForm["textArea"].ToString();
-                }
-                
-                /*var age = Calculations.CalculateAge(message.Asker.BirthDay);
-                WriteLogs("FeedBackForm прошла валидацию. ", NLogsModeEnum.Debug);
-				WriteLogs($"Получены данные: Имя: {name}  Фамилия: {surname}  Возраст: {age}  Пол: {message.Asker.Gender}  Вопрос: {message.Question}\n", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
-                */
 
-                return View(model);
-			}
+                    var correspondence = new Correspondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
+                    _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
+                    
+                    return View("Success", model);
+                }
+            }
 
             // 1.2. Пользователь не зарегистрирован или не прошел подтверждение email
             model.Question = textAreaForm["textArea"].ToString();
 
-            WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
-            WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
+            //WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
+            //WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
 
             return View(model);
 		}
