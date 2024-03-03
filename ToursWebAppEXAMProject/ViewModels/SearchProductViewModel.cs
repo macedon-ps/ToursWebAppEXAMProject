@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 
 namespace ToursWebAppEXAMProject.ViewModels
 {

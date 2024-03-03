@@ -1,5 +1,5 @@
 ﻿using NLog;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 
 namespace ToursWebAppEXAMProject.LogsMode
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;

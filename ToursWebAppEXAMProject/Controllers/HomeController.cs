@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;

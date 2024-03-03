@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ToursWebAppEXAMProject.EnumsDictionaries
+namespace ToursWebAppEXAMProject.Enums
 {
 	public enum NumberOfPeopleEnum
 	{

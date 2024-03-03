@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.GoogleApiClients;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;

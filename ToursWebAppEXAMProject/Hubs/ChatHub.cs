@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using ToursWebAppEXAMProject.EnumsDictionaries;
+using ToursWebAppEXAMProject.Enums;
 using static ToursWebAppEXAMProject.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Hubs

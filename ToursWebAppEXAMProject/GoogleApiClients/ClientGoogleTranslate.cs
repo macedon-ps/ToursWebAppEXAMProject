@@ -1,5 +1,4 @@
 ﻿using Google.Cloud.Translation.V2;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ToursWebAppEXAMProject.GoogleApiClients
 {

@@ -1,5 +1,5 @@
-﻿namespace ToursWebAppEXAMProject.EnumsDictionaries
-{
+﻿namespace ToursWebAppEXAMProject.Enums
+{ 
     public enum NLogsModeEnum
     {
         NoInfo,
