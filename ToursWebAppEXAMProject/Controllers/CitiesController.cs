@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using TourWebAppEXAMProject.Utils;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -179,7 +179,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeTitleImagePath != null)
                 {
                     var folder = "/images/CitiesTitleImages/";
-                    FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
                     city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
                 if(formValues["checkIsCapital"] == "on")

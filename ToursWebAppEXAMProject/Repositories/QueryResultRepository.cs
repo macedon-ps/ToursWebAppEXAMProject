@@ -3,7 +3,7 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {

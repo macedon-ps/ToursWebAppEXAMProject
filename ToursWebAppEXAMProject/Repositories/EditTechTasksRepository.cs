@@ -3,11 +3,11 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
-	public class EditTechTasksRepository : IEditTechTaskInterface
+    public class EditTechTasksRepository : IEditTechTaskInterface
 	{
 		/// <summary>
 		/// Количество показателей технического задания

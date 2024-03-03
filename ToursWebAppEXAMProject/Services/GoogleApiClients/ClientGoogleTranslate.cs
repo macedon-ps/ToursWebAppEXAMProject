@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Translation.V2;
 
-namespace ToursWebAppEXAMProject.GoogleApiClients
+namespace TourWebAppEXAMProject.Services.GoogleApiClients
 {
     public static class ClientGoogleTranslate
     {
@@ -26,7 +26,7 @@ namespace ToursWebAppEXAMProject.GoogleApiClients
         {
             var client = TranslationClient.Create();
             var languages = client.ListLanguages(LanguageCodes.Russian);
-            
+
             // вывод списка языков
             return languages;
         }

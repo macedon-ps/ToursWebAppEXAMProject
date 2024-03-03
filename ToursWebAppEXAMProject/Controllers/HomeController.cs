@@ -4,7 +4,7 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {

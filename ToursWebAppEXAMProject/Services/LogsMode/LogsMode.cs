@@ -1,7 +1,7 @@
 ﻿using NLog;
 using ToursWebAppEXAMProject.Enums;
 
-namespace ToursWebAppEXAMProject.LogsMode
+namespace TourWebAppEXAMProject.Services.LogsMode
 {
     public class LogsMode
     {
@@ -18,20 +18,20 @@ namespace ToursWebAppEXAMProject.LogsMode
         /// <param name="isConsoleUsed">выводить ли сообщения (логи) в консоли</param>
         public static void WriteLogs(string? message, NLogsModeEnum? LoggerMode = NLogsModeEnum.Info, bool? isNLogUsed = true, bool? isConsoleUsed = true)
         {
-            if (message == null) 
+            if (message == null)
             {
                 logger.Info("Не введено сообщение");
                 Console.WriteLine("Не введено сообщение");
                 return;
             }
 
-            else if (isNLogUsed == false && isConsoleUsed == false) 
+            else if (isNLogUsed == false && isConsoleUsed == false)
             {
                 logger.Warn("Логгирование с помощью NLog отключено");
                 Console.WriteLine("Логгирование в консоли отключено");
-                return; 
+                return;
             }
-            
+
             else if (isNLogUsed == false && isConsoleUsed == true)
             {
                 Console.WriteLine(message);
@@ -39,25 +39,25 @@ namespace ToursWebAppEXAMProject.LogsMode
             }
 
             // логи NLog и в консоли Console.Write()
-            switch (LoggerMode) 
+            switch (LoggerMode)
             {
-                case NLogsModeEnum.Info: 
+                case NLogsModeEnum.Info:
                     logger.Info(message);
                     break;
                 case NLogsModeEnum.Debug:
-                    logger.Debug(message); 
+                    logger.Debug(message);
                     break;
-                case NLogsModeEnum.Trace: 
-                    logger.Trace(message); 
-                    break; 
+                case NLogsModeEnum.Trace:
+                    logger.Trace(message);
+                    break;
                 case NLogsModeEnum.Warn:
-                    logger.Warn(message); 
+                    logger.Warn(message);
                     break;
                 case NLogsModeEnum.Error:
-                    logger.Error(message);      
+                    logger.Error(message);
                     break;
             }
-            if(isConsoleUsed == true)
+            if (isConsoleUsed == true)
             {
                 Console.Write(message);
             }

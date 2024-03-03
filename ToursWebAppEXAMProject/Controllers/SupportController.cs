@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.GoogleApiClients;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using TourWebAppEXAMProject.Services.GoogleApiClients;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {

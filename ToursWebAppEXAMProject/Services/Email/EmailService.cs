@@ -2,7 +2,7 @@
 using MimeKit;
 using ToursWebAppEXAMProject.ConfigFiles;
 
-namespace ToursWebAppEXAMProject.Services
+namespace TourWebAppEXAMProject.Services.Email
 {
     public class EmailService
     {

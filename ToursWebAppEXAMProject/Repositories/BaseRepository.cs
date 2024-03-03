@@ -2,11 +2,11 @@
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
-	public class BaseRepository<T> : IBaseInterface<T> where T : class, new()
+    public class BaseRepository<T> : IBaseInterface<T> where T : class, new()
 	{
 		/// <summary>
 		/// Контекст подключения к MS SQL Server, к БД TourFirmaDB

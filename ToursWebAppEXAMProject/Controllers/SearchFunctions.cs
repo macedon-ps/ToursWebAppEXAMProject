@@ -4,11 +4,11 @@ using System.Text.Json;
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public partial class SearchController : Controller
+    public partial class SearchController : Controller
 	{
 		/// <summary>
 		/// Метод создания вью-модели для стартовой страницы поиска турпродуктов

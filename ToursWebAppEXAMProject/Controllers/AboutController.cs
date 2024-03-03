@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.FileUtilities;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 using Microsoft.AspNetCore.Identity;
+using TourWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {

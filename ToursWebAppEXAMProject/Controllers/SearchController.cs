@@ -5,11 +5,11 @@ using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-	public partial class SearchController: Controller
+    public partial class SearchController: Controller
 	{
 		private readonly IQueryResultInterface _QueryResult;
 		private readonly IBaseInterface<Country> _AllCountries;

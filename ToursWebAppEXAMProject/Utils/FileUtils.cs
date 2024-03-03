@@ -1,7 +1,7 @@
 ﻿using ToursWebAppEXAMProject.Enums;
-using static ToursWebAppEXAMProject.LogsMode.LogsMode;
+using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
-namespace ToursWebAppEXAMProject.FileUtilities
+namespace TourWebAppEXAMProject.Utils
 {
     public class FileUtils
     {
@@ -29,11 +29,11 @@ namespace ToursWebAppEXAMProject.FileUtilities
             {
                 return;
             }
-             
+
             // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
             using (var fstream = new FileStream(fullFilePath, FileMode.Create))
             {
-                if(changeImagePath != null)
+                if (changeImagePath != null)
                 {
                     await changeImagePath.CopyToAsync(fstream);
                     WriteLogs($"Новая картинка сохранена по пути: {relativeFilePath}\n", NLogsModeEnum.Debug);
@@ -62,7 +62,7 @@ namespace ToursWebAppEXAMProject.FileUtilities
                 Directory.CreateDirectory(fullPathToFolder);
                 WriteLogs($"Новая папка создана по пути: {fullPathToFolder}\n", NLogsModeEnum.Debug);
             }
-            
+
             return fullPathToFolder;
         }
 

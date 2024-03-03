@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.DBContext;
-using ToursWebAppEXAMProject.Hubs;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.ViewModels;
+using TourWebAppEXAMProject.Services.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 

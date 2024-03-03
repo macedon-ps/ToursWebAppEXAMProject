@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Services;
 using ToursWebAppEXAMProject.ViewModels;
+using TourWebAppEXAMProject.Services.Email;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
