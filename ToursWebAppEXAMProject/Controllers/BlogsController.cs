@@ -80,7 +80,7 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult SaveBlogMessage(int blogId, string textUser, string textMessage)
         {
             var blog = _AllBlogs.GetItemById(blogId);
-            var timeMessage = $"{DateTime.Now.ToString("HH:mm:ss")}";
+            var timeMessage = $"{DateTime.Now.ToString("MM/dd/yyyy HH:mm")}";
             var allMessageText = $"<p>{timeMessage}: <b>{textUser}:</b><br/> {textMessage}</p><br/>";
 
             // если чат пустой, т.е. с дефолтной строкой, то заменяем дефолтную строку пустой строкой и сохраняем
