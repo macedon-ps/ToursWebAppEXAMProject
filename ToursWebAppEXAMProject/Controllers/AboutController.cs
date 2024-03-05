@@ -7,6 +7,7 @@ using ToursWebAppEXAMProject.ViewModels;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 using Microsoft.AspNetCore.Identity;
 using TourWebAppEXAMProject.Utils;
+using TourWebAppEXAMProject.Services.Email;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -240,24 +241,20 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="textAreaForm">Данные формы ввода типа IFormCollection</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult FeedBackForm(CorrespondenceViewModel model, IFormCollection textAreaForm)
+		public async Task<IActionResult> FeedBackForm(CorrespondenceViewModel model, IFormCollection textAreaForm)
 		{
 			if (ModelState.IsValid)
 			{
                 var user = Feedback.GetUser(model, _UserManager);
 
-                if (user != null)
+                if (user.UserName != null)
                 {
-                    // устанавливаем роль "asker"
+                    // TODO: устанавливаем роль "asker"
                     //Feedback.AddToRole(user, "asker", _UserManager);
 
+                    // находим asker по параметрам или создаем новый объект
                     var asker = Feedback.GetAsker(model, _AllAskers);
 
-                    if(asker == null)
-                    {
-                        asker = new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
-                    }
-                    
                     var isCustomer = Feedback.isCustomer(model, _AllCustomers);
                     if (isCustomer)
                     {
@@ -273,6 +270,21 @@ namespace ToursWebAppEXAMProject.Controllers
                     var correspondence = new Correspondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
                     _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
                     
+
+
+                    model.Question = textAreaForm["textArea"].ToString();
+
+                    // отправляем через форму обратной связи вопрос турфирме от пользователя
+                    var questionToCompany = new EmailService();
+                    var isSendMessage = questionToCompany.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
+
+                    if(isSendMessage != null)
+                    {
+                        // автоматически формируется ответ турфирмы
+                        var answerToPerson = new EmailService();
+                        await answerToPerson.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
+                    }
+
                     return View("Success", model);
                 }
             }

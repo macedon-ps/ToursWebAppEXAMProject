@@ -45,5 +45,8 @@ namespace ToursWebAppEXAMProject.ConfigFiles
         public static string Viber { get; set; } = null!;
 
         public static string Facebook { get; set; } = null!;
+        
+        public static string Domain { get; set; } = null!;
+
     }
 }

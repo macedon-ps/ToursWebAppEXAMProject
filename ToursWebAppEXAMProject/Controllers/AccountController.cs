@@ -62,12 +62,9 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     // отправка сообщения на эл.почту для подтверждения регистрации
                     EmailService emailService = new EmailService();
-                    await emailService.SendEmailAsync(model.Email, "Confirm the registration of a new user",
-                        $"Подтвердите регистрацию нового пользователя в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration</a>");
+                     await emailService.SendEmailAsync(model.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
+                    var message = $"Для завершения регистрации нового пользователя приложения {user.UserName}, проверьте электронную почту {user.Email} и перейдите по ссылке, указанной в письме";
 
-                    //вывод на экран сообщения о письме на эл. почту для подтвержения регистрации нового пользователя
-                    /*return Content("Для завершения регистрации нового пользователя приложения, проверьте электронную почту и перейдите по ссылке, указанной в письме");*/
-                    var message = "Для завершения регистрации нового пользователя приложения, проверьте электронную почту и перейдите по ссылке, указанной в письме";
                     return View("Message", message);
                 }
                 else

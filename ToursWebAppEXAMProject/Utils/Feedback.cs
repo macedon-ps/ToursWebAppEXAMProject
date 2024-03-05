@@ -17,7 +17,7 @@ namespace TourWebAppEXAMProject.Utils
             }
             else
             {
-                return new User();
+                return new User() { UserName = model.Email, Email = model.Email, BirthYear = model.BirthDay.Year };
             }
         }
 
@@ -32,7 +32,7 @@ namespace TourWebAppEXAMProject.Utils
             }
             else
             {
-                return new Asker();
+                return new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
             }
         }
 

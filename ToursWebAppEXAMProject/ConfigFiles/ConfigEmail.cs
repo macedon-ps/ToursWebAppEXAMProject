@@ -8,9 +8,12 @@ namespace ToursWebAppEXAMProject.ConfigFiles
         public static string Email { get; set; } = null!;
         public static string Password { get; set; } = null!;
         public static string SmtpServer { get; set; } = null!;
-        public static int Port { get; set; }
-        public static bool UseSsl { get; set; }
-
+        public static int PortSmtp { get; set; }
+        public static bool UseSslSmtp { get; set; }
+        public static string ImapServer { get; set; } = null!;
+        public static int PortImap { get; set; }
+        public static bool UseSslImap { get; set; }
+        public static bool Adress { get; set; }
 
     }
 }
