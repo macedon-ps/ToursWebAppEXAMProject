@@ -170,13 +170,11 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод выхода из состояния авторизации
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             // удаляем токен
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         /// <summary>

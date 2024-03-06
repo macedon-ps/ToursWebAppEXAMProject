@@ -18,14 +18,22 @@
                 <a asp-controller="Users" asp-action="Index">Список пользователей</a>
                 <a asp-controller="Roles" asp-action="Index">Список ролей</a>
                 <a asp-controller="Roles" asp-action="UsersRolesList">Назначение ролей пользователям</a>
+                <a asp-controller="Account" asp-action="Logout">LogOut</a>
             </div>
         }
         @if(User.Identity.IsAuthenticated && User.IsInRole("admin"))
         {
             <div class="accountButton">
                 <a asp-controller="Users" asp-action="UsersList">Список пользователей</a>
+                <a asp-controller="Account" asp-action="Logout">LogOut</a>
             </div>
         }
-        
+        @if (User.Identity.IsAuthenticated && User.IsInRole("asker"))
+        {
+            <div class="accountButton">
+                <a asp-controller="" asp-action="">Ваши вопросы и ответы</a>
+                <a asp-controller="Account" asp-action="Logout">LogOut</a>
+            </div>
+        }
     </div>
 </div>
