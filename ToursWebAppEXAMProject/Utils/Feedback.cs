@@ -7,21 +7,18 @@ namespace TourWebAppEXAMProject.Utils
 {
     public class Feedback
     {
-        public static User GetUser(CorrespondenceViewModel model, UserManager<User> userManager)
+        public static User? GetUser(CorrespondenceViewModel model, UserManager<User> userManager)
         {
-            var user = userManager.Users.FirstOrDefault(u => u.Email == model.Email && u.EmailConfirmed == true);
+            var user = userManager.Users.FirstOrDefault(u => u.Email == model.Email);
             
             if (user != null)
             {
                 return user;
             }
-            else
-            {
-                return new User() { UserName = model.Email, Email = model.Email, BirthYear = model.BirthDay.Year };
-            }
+            return null;
         }
 
-        public static Asker GetAsker(CorrespondenceViewModel model, IBaseInterface<Asker> allAskers)
+        public static Asker? GetAsker(CorrespondenceViewModel model, IBaseInterface<Asker> allAskers)
         {
             var asker = allAskers.GetAllItems().
                 FirstOrDefault(a => (a.Name == model.Name) && (a.Surname == model.Surname) && (a.Email == model.Email));
@@ -30,10 +27,7 @@ namespace TourWebAppEXAMProject.Utils
             {
                 return asker;
             }
-            else
-            {
-                return new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
-            }
+            return null;
         }
 
         public static bool IsRegisterUser(CorrespondenceViewModel model, UserManager<User> userManager)
@@ -51,7 +45,7 @@ namespace TourWebAppEXAMProject.Utils
             return result;
         } 
         
-        public static bool isCustomer(CorrespondenceViewModel model, IBaseInterface<Customer> allCustomers)
+        public static bool IsCustomer(CorrespondenceViewModel model, IBaseInterface<Customer> allCustomers)
         {
             var result = false;
 

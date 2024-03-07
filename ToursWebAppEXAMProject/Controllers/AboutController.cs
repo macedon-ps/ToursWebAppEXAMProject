@@ -8,6 +8,7 @@ using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 using Microsoft.AspNetCore.Identity;
 using TourWebAppEXAMProject.Utils;
 using TourWebAppEXAMProject.Services.Email;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -246,51 +247,68 @@ namespace ToursWebAppEXAMProject.Controllers
 			if (ModelState.IsValid)
 			{
                 var user = Feedback.GetUser(model, _UserManager);
-
-                if (user.UserName != null)
+                
+                if (user != null)
                 {
-                    // TODO: устанавливаем роль "asker"
-                    //Feedback.AddToRole(user, "asker", _UserManager);
+                    if (!user.EmailConfirmed)
+                    {
+                        return RedirectToAction("NotConfirmedEmail", "Account");
+                    }
 
                     // находим asker по параметрам или создаем новый объект
                     var asker = Feedback.GetAsker(model, _AllAskers);
-
-                    var isCustomer = Feedback.isCustomer(model, _AllCustomers);
-                    if (isCustomer)
+                    
+                    if(asker == null)
                     {
-                        asker.IsCustomer = true;
+                        asker = new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
+                        
+                        var isCustomer = Feedback.IsCustomer(model, _AllCustomers);
+                        if (isCustomer)
+                        {
+                            asker.IsCustomer = true;
+                        }
+
+                        // сохраняем объект типа Asker в БД
+                        _AllAskers.SaveItem(asker, asker.Id);
                     }
 
-                    // сохраняем объект типа Asker в БД
-                    _AllAskers.SaveItem(asker, asker.Id);
-
-                    // save correspondence and asker
                     model.Question = textAreaForm["textArea"].ToString();
+                    model.QuestionDate = DateTime.Now;
 
                     var correspondence = new Correspondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
+
+                    // сохраняем объект типа correspondence в БД
                     _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
                     
-
-
-                    model.Question = textAreaForm["textArea"].ToString();
-
                     // отправляем через форму обратной связи вопрос турфирме от пользователя
                     var questionToCompany = new EmailService();
                     var isSendMessage = questionToCompany.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
 
-                    if(isSendMessage != null)
+                    if(isSendMessage.Id != 0)
                     {
                         // автоматически формируется ответ турфирмы
                         var answerToPerson = new EmailService();
                         await answerToPerson.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
                     }
+                    
+                    var userRoles = await _UserManager.GetRolesAsync(user);
+                    if (!userRoles.Contains("asker"))
+                    {
+                        // устанавливаем роль "asker"
+                        Feedback.AddToRole(user, "asker", _UserManager);
+                    }
 
                     return View("Success", model);
+                }
+                else
+                {
+                    return RedirectToAction("Register", "Account");
                 }
             }
 
             // 1.2. Пользователь не зарегистрирован или не прошел подтверждение email
             model.Question = textAreaForm["textArea"].ToString();
+            model.QuestionDate = DateTime.Now;
 
             //WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
             //WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);

@@ -185,5 +185,14 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Метод предложения пройти подтверждение email
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult NotConfirmedEmail()
+        {
+            return View();
+        }
     }
 }

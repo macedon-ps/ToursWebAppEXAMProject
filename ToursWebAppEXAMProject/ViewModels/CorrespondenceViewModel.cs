@@ -45,10 +45,6 @@ namespace ToursWebAppEXAMProject.ViewModels
         [DataType(DataType.Time)]
         public DateTime? AnswerDate { get; set; }
 
-        public CorrespondenceViewModel()
-        {
-            QuestionDate = DateTime.Now;
-        }
-
+        public CorrespondenceViewModel(){}
     }
 }
