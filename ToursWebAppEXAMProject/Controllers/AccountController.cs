@@ -117,7 +117,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="returnUrl">обратный адрес, т.е. адрес, с которого пользовател зашел</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string returnUrl)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }

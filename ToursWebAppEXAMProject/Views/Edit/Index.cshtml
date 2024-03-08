@@ -17,7 +17,7 @@
         
             @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
             {
-                @if (Model.type == "New")
+                @if (Model.Type == "New")
                 {
                     <h2>1. Создание новостей:</h2>
 
@@ -34,17 +34,17 @@
                         <h4>Выберите режим ввода:</h4>
 
                         <form asp-controller="News" asp-action="GetQueryResultNews" method="get">
-                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>
-                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                                <input asp-for="InsertedText" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
                             </div>
                             <input type="submit" value="Найти" />
                         </form>
                     </div>
                 }
 
-                @if (Model.type == "Blog")
+                @if (Model.Type == "Blog")
                 {
                     <h2>1. Создание блогов:</h2>
 
@@ -61,17 +61,17 @@
                         <h4>Выберите режим ввода:</h4>
 
                         <form asp-controller="Blogs" asp-action="GetQueryResultBlogs" method="get">
-                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>
-                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                                <input asp-for="InsertedText" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
                             </div>
                             <input type="submit" value="Найти" />
                         </form>
                     </div>
                 }
 
-                @if (Model.type == "Product")
+                @if (Model.Type == "Product")
                 {
                     <h2>1. Создание турпродуктов:</h2>
 
@@ -88,16 +88,16 @@
                         <h4>Выберите режим ввода:</h4>
 
                         <form asp-controller="Products" asp-action="GetQueryResultProducts" method="get">
-                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>
-                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                                <input asp-for="InsertedText" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
                             </div>
                             <input type="submit" value="Найти" />
                         </form>
                     </div>
                 }
-                @if (Model.type == "Country")
+                @if (Model.Type == "Country")
                 {
                     <h2>1. Создание стран:</h2>
 
@@ -114,16 +114,16 @@
                         <h4>Выберите режим ввода:</h4>
 
                         <form asp-controller="Countries" asp-action="GetQueryResultCountries" method="get">
-                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>
-                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                                <input asp-for="InsertedText" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
                             </div>
                             <input type="submit" value="Найти" />
                         </form>
                     </div>
                 }
-                @if (Model.type == "City")
+                @if (Model.Type == "City")
                 {
                     <h2>1. Создание городов:</h2>
 
@@ -140,10 +140,10 @@
                         <h4>Выберите режим ввода:</h4>
 
                         <form asp-controller="Cities" asp-action="GetQueryResultCities" method="get">
-                            <input type="radio" asp-for="isFullName" value="true" /><span class="spanMarginLR">Полное название</span>
-                            <input type="radio" asp-for="isFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
+                            <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
+                            <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>
-                                <input asp-for="fullNameOrKeywordOfItem" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
+                                <input asp-for="InsertedText" class="inputWidth-100" placeholder="Введите полное название / ключевое слово" />
                             </div>
                             <input type="submit" value="Найти" />
                         </form>

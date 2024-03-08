@@ -167,8 +167,8 @@ namespace ToursWebAppEXAMProject.Repositories
 			try
 			{
 				// предполагается возможность поиска коллекции сущностей:
-				// по полному названию						keyword - полное название, isFullName = true
-				// по ключевому слову в названии			keyword - ключевое слово,  isFullName = false
+				// по полному названию						keyword - полное название, IsFullName = true
+				// по ключевому слову в названии			keyword - ключевое слово,  IsFullName = false
 				// p.s. предполагается, что одинаковых названий м.б. несколько, т.к. нет ограничения уникальности для названия объекта сущности
 
 				var items = new List<T>();

@@ -118,16 +118,16 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultProducts(bool isFullName, string fullNameOrKeywordOfItem)
+        public IActionResult GetQueryResultProducts(bool isFullName, string insertedText)
         {
             WriteLogs("Переход по маршруту /Products/GetQueryResultProducts. ", NLogsModeEnum.Trace);
 
-            var products = _AllProducts.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+            var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
             var numberProducts = products.Count();
 
             if (numberProducts == 0)
             {
-                var message = $"Нет турпродуктов по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Edit/Nothing.cshtml\n";
+                var message = $"Нет турпродуктов по запросу \"{insertedText}\". Возвращено ../Edit/Nothing.cshtml\n";
 
                 WriteLogs(message, NLogsModeEnum.Warn);
 
@@ -135,7 +135,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("../Shared/Nothing", nothingInfo);
             }
 
-            WriteLogs($"Выводятся все турпродукты по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
+            WriteLogs($"Выводятся все турпродукты по запросу \"{insertedText}\".\n", NLogsModeEnum.Debug);
 
             return View(products);
         }
