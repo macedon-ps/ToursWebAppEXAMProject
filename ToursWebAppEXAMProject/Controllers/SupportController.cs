@@ -1,13 +1,7 @@
-﻿using Google.Cloud.Translation.V2;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Caching.Memory;
-using System.Text.Json;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Services.GoogleApiClients;
 using TourWebAppEXAMProject.Utils;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
@@ -15,13 +9,13 @@ namespace ToursWebAppEXAMProject.Controllers
 {
     public class SupportController : Controller
 	{
+        private readonly SupportUtils _SupportUtils;
         private readonly TechTaskUtils _TechTaskUtils;
-        private readonly IMemoryCache _MemoryCache;
-
-        public SupportController(TechTaskUtils TechTaskUtils, IMemoryCache Cashe)
+        
+        public SupportController(SupportUtils SupportUtils, TechTaskUtils TechTaskUtils)
 		{
+            _SupportUtils = SupportUtils;
             _TechTaskUtils = TechTaskUtils;
-            _MemoryCache = Cashe;
         }
 
         /// <summary>
@@ -44,36 +38,19 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
             try
             {
-                var viewModel = new TranslateTextViewModel();
-                // TODO: уменьшить число запросов. Возможно, кешировать данные
-
-                // проверка, использование и создание кешированных данных
-                _MemoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
-
-                if (languages == null)
-                {
-                    // вывод поддерживаемых языков для перевода через Google Translate API
-                    languages = ClientGoogleTranslate.GetAllLanguages();
-
-                    if (languages != null)
-                    {
-                        _MemoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
-                    }
-                }
-                
-                viewModel.LanguagesList = new SelectList(languages, "Code", "Name");
-                viewModel.LanguagesListJson = JsonSerializer.Serialize(languages);
-
+                var viewModel = _SupportUtils.GetModel();
+           
                 return View(viewModel);
             }
             catch (Exception ex)
             {
                 var error = new ErrorViewModel(ex.Message);
+
                 return View("Error", error);
             }
             
         }
-
+        
         /// <summary>
         /// Метод вывода страницы для перевода текста с данными перевода
         /// </summary>
@@ -84,41 +61,8 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             try
             {
-                if (viewModel.TextOrigin != null)
-                {
-                    viewModel.LanguageFrom = formValues["langFromSelect"];
-                    viewModel.LanguageTo = formValues["langToSelect"];
-                                       
-                    viewModel.Languages = JsonSerializer.Deserialize<IList<Language>>(viewModel.LanguagesListJson);
-                    viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
-                    
-                    // TODO: уменьшить число запросов. Возможно, кешировать данные
-
-                    // проверка, использование и создание кешированных данных
-                    if (viewModel.LanguagesList == null)
-                    {
-                        _MemoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
-
-                        if (languages == null)
-                        {
-                            // вывод поддерживаемых языков для перевода через Google Translate API
-                            languages = ClientGoogleTranslate.GetAllLanguages();
-
-                            if (languages != null)
-                            {
-                                _MemoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
-                            }
-                        }
-                        viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
-                    }
-                    
-                    // перевод текста через Google Translate API
-                    var translateText = ClientGoogleTranslate.TranslateText(viewModel.TextOrigin, viewModel.LanguageTo, viewModel.LanguageFrom);
-                    if (translateText != null)
-                    {
-                        viewModel.TextTranslated = translateText;
-                    }
-                }
+                var newViewModel = _SupportUtils.GetModel(viewModel, formValues);
+                
                 return View(viewModel);
             }
             catch (Exception ex)
@@ -135,10 +79,10 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetSupport(string service)
 		{
-            // TODO: разработать сервисы "map", "translate", "mobileApp"
-            
-			ViewData["service"] = service;
-			if (!(service == "map" | service == "translate" | service == "mobileApp"))
+            // TODO: разработать сервисы "map" и/или "weatherForecast"
+
+            ViewData["service"] = service;
+			if (!(service == "map" | service == "translate" | service == "weatherForecast"))
 			{
 				var errorInfo = new ErrorViewModel($"Не передано название сервиса, который должен быть реализован в методе GetSupport(string service) или сервис = \"{service}\" не существует / или не обработан");
 
@@ -148,7 +92,7 @@ namespace ToursWebAppEXAMProject.Controllers
 				return View("Error", errorInfo);
 			}
 
-			/*
+            /*
             if (service == "map")
             {
                 return View("Map");
@@ -157,14 +101,14 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
 				return View("Translate");
 			}
-            else if (service == "mobileApp")
+            else if (service == "weatherForecast")
             {
-                return View("MobileApp");
+                return View("WeatherForecast");
             }
 			*/
             // WriteLogs($"Переход по маршруту /Support/GetSupport?service={service}.\n");
-            
-			var serviceItem = service;
+
+            var serviceItem = service;
 			return View("GetSupport", serviceItem);
 		}
 

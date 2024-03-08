@@ -41,6 +41,7 @@ builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>()
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<SearchUtils>();
 builder.Services.AddTransient<TechTaskUtils>();
+builder.Services.AddTransient<SupportUtils>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
