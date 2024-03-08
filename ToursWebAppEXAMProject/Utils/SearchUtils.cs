@@ -1,21 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
 using ToursWebAppEXAMProject.Enums;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
-namespace ToursWebAppEXAMProject.Controllers
+namespace ToursWebAppEXAMProject.Utils
 {
-    public partial class SearchController : Controller
+    public class SearchUtils
 	{
+		private readonly IQueryResultInterface _QueryResult;
+		private readonly IBaseInterface<Country> _AllCountries;
+
+        public SearchUtils(IQueryResultInterface queryResult, IBaseInterface<Country> allCountries) 
+		{
+			_QueryResult = queryResult;
+			_AllCountries = allCountries;
+		}
+		
 		/// <summary>
-		/// Метод создания вью-модели для стартовой страницы поиска турпродуктов
-		/// </summary>
-		/// <param name="countryName">Название страны</param>
-		/// <returns></returns>
-		public SearchProductViewModel GetModel(string countryName)
+        /// Метод создания вью-модели для стартовой страницы поиска турпродуктов
+        /// </summary>
+        /// <param name="countryName">Название страны</param>
+        /// <returns></returns>
+        public SearchProductViewModel GetModel(string countryName)
 		{
             var searchViewModel = new SearchProductViewModel();
 
@@ -79,7 +88,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public SearchProductViewModel GetModel(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
-			var searchViewModel = viewModel as SearchProductViewModel;
+			var searchViewModel = viewModel;
 
 			try
 			{
@@ -135,7 +144,6 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			return searchViewModel;
 		}
-
 
 		/// <summary>
 		/// Метод создания списка стран в формате SelectList
@@ -245,12 +253,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			return citiesList;
 		}
-        public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
-        {
-            var products = _QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
-
-            return View("GetAllProducts", products);
-        }
+       
 
         /// <summary>
         /// Метод преобразования List<string> в строку
@@ -285,7 +288,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// </summary>
 		/// <param name="allItems">Все страны/города</param>
 		/// <returns></returns>
-		private List<string>? ParseStringToListOfStrings(string? allItemsOneString)
+		private List<string>? ParseStringToListOfStrings(string allItemsOneString)
 		{
 			var allItemsListOfString = new List<string>();
 
@@ -293,19 +296,36 @@ namespace ToursWebAppEXAMProject.Controllers
 
 			return allItemsListOfString;
 		}
-
+		
 		/// <summary>
 		/// Метод преобразования строки в SelectList
 		/// </summary>
 		/// <param name="allItems">Все страны/города</param>
 		/// <param name="selectedItemName">Название выбранной страны/города</param>
 		/// <returns></returns>
-		private SelectList? ParseStringToSelectList(string? allItemsOneString, string selectedItemName)
+		private SelectList? ParseStringToSelectList(string allItemsOneString, string selectedItemName)
 		{
 			var allItemsListOfString = ParseStringToListOfStrings(allItemsOneString);
 			var selectList = new SelectList(allItemsListOfString, selectedItemName);
 
 			return selectList;
 		}
-	}
+		
+
+        /// <summary>
+        /// Метод поиска туристических продуктов по запросу во вью-модели SearchProductViewModel
+        /// </summary>
+        /// <param name="searchViewModel"></param>
+        /// <returns></returns>
+        public List<Product> GetProductsQueryResult(string countryName, string cityName)
+        {
+            var products = new List<Product>();
+
+            if (countryName != "" && cityName != "")
+            {
+                products = (List<Product>)_QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
+            }
+            return products;
+        }
+    }
 }

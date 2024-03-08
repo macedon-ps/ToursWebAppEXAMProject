@@ -8,19 +8,20 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 using TourWebAppEXAMProject.Services.GoogleApiClients;
+using TourWebAppEXAMProject.Utils;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SupportController : Controller
-	{ 
-        private readonly IEditTechTaskInterface _AllTasks;
-        private readonly IMemoryCache _memoryCache;
+	{
+        private readonly TechTaskUtils _TechTaskUtils;
+        private readonly IMemoryCache _MemoryCache;
 
-        public SupportController(IEditTechTaskInterface Tasks, IMemoryCache Cashe)
+        public SupportController(TechTaskUtils TechTaskUtils, IMemoryCache Cashe)
 		{
-            this._AllTasks = Tasks;
-            this._memoryCache = Cashe;
+            _TechTaskUtils = TechTaskUtils;
+            _MemoryCache = Cashe;
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 // TODO: уменьшить число запросов. Возможно, кешировать данные
 
                 // проверка, использование и создание кешированных данных
-                _memoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
+                _MemoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
 
                 if (languages == null)
                 {
@@ -56,7 +57,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     if (languages != null)
                     {
-                        _memoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
+                        _MemoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
                     }
                 }
                 
@@ -96,7 +97,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     // проверка, использование и создание кешированных данных
                     if (viewModel.LanguagesList == null)
                     {
-                        _memoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
+                        _MemoryCache.TryGetValue("allLanguagesKey", out IList<Language>? languages);
 
                         if (languages == null)
                         {
@@ -105,7 +106,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
                             if (languages != null)
                             {
-                                _memoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
+                                _MemoryCache.Set("allLanguagesKey", languages, TimeSpan.FromMinutes(30));
                             }
                         }
                         viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
@@ -176,9 +177,8 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
             WriteLogs("Переход по маршруту Support/TechTaskSupport.\n", NLogsModeEnum.Trace);
             
-			var pageName = "Support";
-			var model = _AllTasks.GetTechTasksForPage(pageName);
-
+			var model = _TechTaskUtils.GetTechTaskForPage("Support");
+            
 			return View(model);
 		}
 
@@ -197,19 +197,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
                 WriteLogs("TechTaskViewModel прошла валидацию", NLogsModeEnum.Debug);
                 
-				double TechTasksCount = 6;
-				double TechTasksTrueCount = 0;
-				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
-
-				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
-				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
-
-				_AllTasks.SaveProgressTechTasks(model);
+				_TechTaskUtils.SetTechTaskProgressAndSave(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Support/TechTaskSupport.cshtml\n", NLogsModeEnum.Trace);

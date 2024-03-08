@@ -2,24 +2,24 @@
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
-using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ViewModels;
+using ToursWebAppEXAMProject.Utils;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using TourWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-    public partial class SearchController: Controller
+    public class SearchController: Controller
 	{
 		private readonly IQueryResultInterface _QueryResult;
-		private readonly IBaseInterface<Country> _AllCountries;
-		private readonly IEditTechTaskInterface _AllTasks;
+		private readonly SearchUtils _SearchUtils;
+		private readonly TechTaskUtils _TechTaskUtils;
 
-		public SearchController(IQueryResultInterface QueryResult, IBaseInterface<Country> Countries, IEditTechTaskInterface Tasks)
+		public SearchController(IQueryResultInterface QueryResult, SearchUtils SearchUtils, TechTaskUtils TechTaskUtils)
 		{
-			this._QueryResult = QueryResult;
-			this._AllCountries = Countries;
-			this._AllTasks = Tasks;
+			_QueryResult = QueryResult;
+			_SearchUtils = SearchUtils;
+			_TechTaskUtils = TechTaskUtils;
 		}
 
         /// <summary>
@@ -29,8 +29,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult Index(string countryName = "Украина")
 		{
-            // дефолтное значение countryName для стартовой страницы - "Украина"
-            var searchViewModel = GetModel(countryName);
+			// дефолтное значение countryName для стартовой страницы - "Украина"
+			var searchViewModel = _SearchUtils.GetModel(countryName);
 
 			WriteLogs("Переход по маршруту /Search/Index. ", NLogsModeEnum.Trace);
             WriteLogs("Выведено меню поиска турпродуктов.\n", NLogsModeEnum.Debug);
@@ -47,40 +47,43 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
 		public IActionResult Index(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
-			var searchViewModel = GetModel(viewModel, formValues);
-			
-			if (ModelState.IsValid)
+           	if (ModelState.IsValid)
 			{
-				WriteLogs("SearchProductViewModel прошла валидацию.\n", NLogsModeEnum.Debug);
+                var searchViewModel = _SearchUtils.GetModel(viewModel, formValues);
+
+                WriteLogs("SearchProductViewModel прошла валидацию.\n", NLogsModeEnum.Debug);
+				WriteLogs("Выведены результаты поиска турпродуктов. Переход по маршруту /Search/Index. \n", NLogsModeEnum.Trace);
 				
-                // TODO: Организовать вывод результатов поиска туристических продуктов
-
-                // WriteLogs("Выведены результаты поиска турпродуктов. Переход по маршруту /Search/Index. \n", NLogsModeEnum.Trace);
-                
-				// успешный вывод проверочных данных, кот. формируются на клиенте в браузере
-                // return View("success", searchViewModel);
-
-				// вывод результатов запроса пользователя
-				var products = new List<Product>();
-
 				var countryName = searchViewModel.CountryNameSelected;
 				var cityName = searchViewModel.CityNameSelected;
-
-				if(countryName!="" && cityName != "")
+								
+				if(countryName!=null && cityName!=null)
 				{
-                    products = (List<Product>)_QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
+                    var products = _SearchUtils.GetProductsQueryResult(countryName, cityName);
+					if (products != null)
+					{
+                        return View("../Products/GetAllProducts", products);
+                    }
                 }
-				
-				return View("../Products/GetAllProducts", products);
-
-
-			}
+   			}
             WriteLogs("SearchProductViewModel не прошла валидацию. ", NLogsModeEnum.Warn);
             WriteLogs("Переход по маршруту /Search/Index.\n", NLogsModeEnum.Trace);
             
-			return View();
+			return View(viewModel);
 		}
+		       
+		/// <summary>
+		/// Метод вывода турпродуктов по названию страны и города
+		/// </summary>
+		/// <param name="countryName"></param>
+		/// <param name="cityName"></param>
+		/// <returns></returns>
+        public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
+        {
+            var products = _QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
 
+            return View("GetAllProducts", products);
+        }
 
         /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
@@ -92,8 +95,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
             WriteLogs("Переход по маршруту Search/TechTaskSearch.\n", NLogsModeEnum.Trace);
            
-			var pageName = "Search";
-			var model = _AllTasks.GetTechTasksForPage(pageName);
+			var model = _TechTaskUtils.GetTechTaskForPage("Search");
 
 			return View(model);
 		}
@@ -112,22 +114,10 @@ namespace ToursWebAppEXAMProject.Controllers
 			if (ModelState.IsValid)
 			{
                 WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
-                
-				double TechTasksCount = 6;
-				double TechTasksTrueCount = 0;
-				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
 
-				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
-				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
+				_TechTaskUtils.SetTechTaskProgressAndSave(model);
 
-				_AllTasks.SaveProgressTechTasks(model);
-
-                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+				WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
                 
 				return View(model);
@@ -137,5 +127,5 @@ namespace ToursWebAppEXAMProject.Controllers
             
 			return View(model);
 		}
-	}
+    }
 }

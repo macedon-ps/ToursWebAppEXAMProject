@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
+using TourWebAppEXAMProject.Utils;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     [Authorize]
     public class EditController : Controller
-	{
-		private readonly IEditTechTaskInterface _AllTasks;
+    {
+		private readonly TechTaskUtils _TechTaskUtils;
 
-		public EditController(IEditTechTaskInterface Tasks)
+		public EditController(TechTaskUtils TechTaskUtils)
 		{
-			this._AllTasks = Tasks;
+			_TechTaskUtils = TechTaskUtils;
 		}
 		     
         /// <summary>
@@ -41,8 +41,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
             WriteLogs("Переход по маршруту Edit/TechTaskEdit.\n", NLogsModeEnum.Trace);
             
-			var pageName = "Edit";
-			var model = _AllTasks.GetTechTasksForPage(pageName);
+			var model = _TechTaskUtils.GetTechTaskForPage("Edit");
 
 			return View(model);
 		}
@@ -62,19 +61,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
                 WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
                 
-				double TechTasksCount = 6;
-				double TechTasksTrueCount = 0;
-				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
-
-				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
-				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
-
-				_AllTasks.SaveProgressTechTasks(model);
+				_TechTaskUtils.SetTechTaskProgressAndSave(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Edit/TechTaskEdit.cshtml\n", NLogsModeEnum.Trace);

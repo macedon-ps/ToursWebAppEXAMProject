@@ -4,6 +4,7 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
+using TourWebAppEXAMProject.Utils;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Controllers
@@ -12,13 +13,13 @@ namespace ToursWebAppEXAMProject.Controllers
 	{
 		private readonly IBaseInterface<Blog> _AllBlogs;
 		private readonly IBaseInterface<New> _AllNews;
-		private readonly IEditTechTaskInterface _AllTechTask;
+		private readonly TechTaskUtils _TechTaskUtils;
 
-		public HomeController(IBaseInterface<Blog> Blogs, IBaseInterface<New> News, IEditTechTaskInterface Tasks)
+        public HomeController(IBaseInterface<Blog> Blogs, IBaseInterface<New> News, TechTaskUtils TechTaskUtils)
 		{
-			this._AllBlogs = Blogs;
-			this._AllNews = News;
-			this._AllTechTask = Tasks;
+			_AllBlogs = Blogs;
+			_AllNews = News;
+			_TechTaskUtils = TechTaskUtils;
 		}
 
 		/// <summary>
@@ -28,6 +29,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Index()
 		{
 			WriteLogs("Переход по маршруту /.\n", NLogsModeEnum.Trace);
+
 			var viewModel = new NewsAndBlogsViewModel();
 			viewModel.AllBlogs = _AllBlogs.GetAllItems();
 			viewModel.AllNews = _AllNews.GetAllItems();	
@@ -43,11 +45,10 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult TechTaskHome()
 		{
             WriteLogs("Переход по маршруту Home/TechTaskHome.\n", NLogsModeEnum.Trace);
-            
-			var pageName = "Home";
-			var model = _AllTechTask.GetTechTasksForPage(pageName);
 
-			return View(model);
+            var model = _TechTaskUtils.GetTechTaskForPage("Home");
+
+            return View(model);
 		}
 
         /// <summary>
@@ -65,21 +66,9 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
                 WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
                 
-				double TechTasksCount = 6;
-				double TechTasksTrueCount = 0;
-				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
+				_TechTaskUtils.SetTechTaskProgressAndSave(model);
 
-				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
-				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
-
-				_AllTechTask.SaveProgressTechTasks(model);
-
-                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
+				WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /Home/TechTaskHome.cshtml\n", NLogsModeEnum.Trace);
                 
 				return View(model);

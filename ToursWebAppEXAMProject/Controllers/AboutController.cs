@@ -19,16 +19,16 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<Asker> _AllAskers;
         private readonly IBaseInterface<Customer> _AllCustomers;
         private readonly IBaseInterface<Correspondence> _AllCorrespondences;
-        private readonly IEditTechTaskInterface _AllTasks;
+        private readonly TechTaskUtils _TechTaskUtils;
 
-        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IBaseInterface<Correspondence> AllCorrespondences, IEditTechTaskInterface Tasks)
+        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IBaseInterface<Correspondence> AllCorrespondences, TechTaskUtils TechTaskUtils)
 		{
-            this._AboutPage = AboutPage;
-            this._UserManager = UserManager;
-            this._AllAskers = AllAskers;
-            this._AllCustomers = AllCustomers;
-            this._AllCorrespondences = AllCorrespondences;
-            this._AllTasks = Tasks;
+            _AboutPage = AboutPage;
+            _UserManager = UserManager;
+            _AllAskers = AllAskers;
+            _AllCustomers = AllCustomers;
+            _AllCorrespondences = AllCorrespondences;
+            _TechTaskUtils = TechTaskUtils;
         }
         
         /// <summary>
@@ -325,8 +325,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
             WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
             
-			var pageName = "About";
-			var model = _AllTasks.GetTechTasksForPage(pageName);
+			var model = _TechTaskUtils.GetTechTaskForPage("About");
 
 			return View(model);
 		}
@@ -346,19 +345,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			{
                 WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
                 
-				double TechTasksCount = 6;
-				double TechTasksTrueCount = 0;
-				if (model.IsExecuteTechTask1 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask2 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask3 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask4 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask5 == true) TechTasksTrueCount++;
-				if (model.IsExecuteTechTask6 == true) TechTasksTrueCount++;
-
-				double ExecuteTechTasksProgress = Math.Round((TechTasksTrueCount / TechTasksCount) * 100);
-				model.ExecuteTechTasksProgress = ExecuteTechTasksProgress;
-
-				_AllTasks.SaveProgressTechTasks(model);
+				_TechTaskUtils.SetTechTaskProgressAndSave(model);
 
                 WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);
