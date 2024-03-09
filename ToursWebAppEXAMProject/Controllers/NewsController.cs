@@ -12,10 +12,12 @@ namespace ToursWebAppEXAMProject.Controllers
     public class NewsController : Controller
     {
         private readonly IBaseInterface<New> _AllNews;
+        private readonly FileUtils _FileUtils;
         
-        public NewsController(IBaseInterface<New> News)
+        public NewsController(IBaseInterface<New> News, FileUtils FileUtils)
         {
-            this._AllNews = News;
+            _AllNews = News;
+            _FileUtils = FileUtils;
         }
 
         /// <summary>
@@ -170,7 +172,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeTitleImagePath != null)
                 {
                     var folder = "/images/NewsTitleImages/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
                     newsItem.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 

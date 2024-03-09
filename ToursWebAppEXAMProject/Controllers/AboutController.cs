@@ -8,27 +8,24 @@ using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 using Microsoft.AspNetCore.Identity;
 using TourWebAppEXAMProject.Utils;
 using TourWebAppEXAMProject.Services.Email;
-using Microsoft.AspNetCore.Authentication;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class AboutController : Controller
 	{
-        private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
-        private readonly UserManager<User> _UserManager;
-        private readonly IBaseInterface<Asker> _AllAskers;
-        private readonly IBaseInterface<Customer> _AllCustomers;
-        private readonly IBaseInterface<Correspondence> _AllCorrespondences;
+        private readonly AboutUtils _AboutUtils;
+        private readonly FileUtils _FileUtils;
+        private readonly FeedbackUtils _FeedbackUtils;
         private readonly TechTaskUtils _TechTaskUtils;
+        private readonly EmailService _EmailService;
 
-        public AboutController(IBaseInterface<EditAboutPageViewModel> AboutPage, UserManager<User> UserManager, IBaseInterface<Asker> AllAskers, IBaseInterface<Customer> AllCustomers, IBaseInterface<Correspondence> AllCorrespondences, TechTaskUtils TechTaskUtils)
+        public AboutController(AboutUtils AboutUtils, FileUtils FileUtils, FeedbackUtils FeedbackUtils, TechTaskUtils TechTaskUtils, EmailService EmailService)
 		{
-            _AboutPage = AboutPage;
-            _UserManager = UserManager;
-            _AllAskers = AllAskers;
-            _AllCustomers = AllCustomers;
-            _AllCorrespondences = AllCorrespondences;
+            _AboutUtils = AboutUtils;
+            _FileUtils = FileUtils;
+            _FeedbackUtils = FeedbackUtils;
             _TechTaskUtils = TechTaskUtils;
+            _EmailService = EmailService;
         }
         
         /// <summary>
@@ -39,32 +36,25 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			WriteLogs("Переход по маршруту /About/Index.\n", NLogsModeEnum.Trace);
 
-            // выводим всегда актуальную на данный момент версию страницы About
-            var isActualVersion = _AboutPage.GetAllItems().FirstOrDefault(v => v.IsActual == true);
+            var viewModel = _AboutUtils.GetModel();
             
-            if (isActualVersion != null && isActualVersion.Id != 0)
-            {
-                var pageVersion = isActualVersion.Id;
-                var editAboutPageViewModel = _AboutPage.GetItemById(pageVersion);
-
-                return View(editAboutPageViewModel);
-            }
-            else
+            if (viewModel == null || viewModel.Id == 0)
             {
                 return View("Sorry");
             }
-			
+
+            return View(viewModel);
 		}
 
         /// <summary>
         /// Метод вывода меню редактирования страницы About
         /// </summary>
         /// <returns></returns>
-        public IActionResult CreateEditDeleteAboutPage()
+        public IActionResult EditMenuAboutPage()
         {
-            var allVersionOfPage = _AboutPage.GetAllItems();
+            var allPages = _AboutUtils.GetAllModel();
 
-            return View(allVersionOfPage);
+            return View(allPages);
         }
 
         /// <summary>
@@ -73,9 +63,9 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult CreateAboutPage()
         {
-            var editAboutPageViewModel = new EditAboutPageViewModel();
-            editAboutPageViewModel.IsActual = true;
-            return View("EditAboutPage", editAboutPageViewModel);
+            var newViewModel = _AboutUtils.CreateModel();
+            
+            return View("EditAboutPage", newViewModel);
         }
 
         /// <summary>
@@ -85,9 +75,9 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult EditAboutPage(int id)
         {
-            var editAboutViewModel = _AboutPage.GetItemById(id);
-
-            return View(editAboutViewModel);
+            var editViewModel = _AboutUtils.GetModel(id);
+            
+            return View(editViewModel);
         }
 
         /// <summary>
@@ -97,31 +87,20 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult DeleteAboutPage(int id)
         {
-            var aboutPage = _AboutPage.GetItemById(id);
-            _AboutPage.DeleteItem(aboutPage, id);
+            var deleteModel = _AboutUtils.GetModel(id);
+            _AboutUtils.DeleteModel(id);
+            
+           WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
 
-            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
-
-            return View("../Shared/SuccessForDelete", aboutPage);
+            return View("../Shared/SuccessForDelete", deleteModel);
         }
 
         public IActionResult DeletePicture(string fullPathToFile)
         {
-            FileUtils.DeletePhoto(fullPathToFile);
+            _FileUtils.DeletePhoto(fullPathToFile);
             
             return View("DeletePicture", fullPathToFile);
         }
-
-        /// <summary>
-        /// Метод изменения версий страницы About
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult GetAllAboutPageVersions()
-        {
-            var allVersionsAboutPage = _AboutPage.GetAllItems();
-            return View(allVersionsAboutPage);
-        }
-
 
         /// <summary>
         /// Метод сохранения страницы About с данными, введенными редактором
@@ -132,14 +111,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, 
-                                                        IFormCollection formValues, 
-                                                        IFormFile? changeMainImagePath, 
-                                                        IFormFile? changeAboutImagePath, 
-                                                        IFormFile? changeDetailsImagePath, 
-                                                        IFormFile? changeOperationModeImagePath, 
-                                                        IFormFile? changePhotoGalleryImagePath, 
-                                                        IFormFile? changeFeedbackImagePath)
+        public IActionResult SaveAboutPage(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
         {
             WriteLogs("Запущен процесс сохранения вью модели EditAboutPageViewMode в БД. ", NLogsModeEnum.Debug);
 
@@ -147,78 +119,20 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 WriteLogs("Вью модель EditAboutPageViewMode прошла валидацию. ", NLogsModeEnum.Debug);
 
-                // Main
-                if (changeMainImagePath != null)
-                {
-                    var folder = "/images/AboutPage/Main/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeMainImagePath);
-                    viewModel.MainImagePath = $"{folder}{changeMainImagePath.FileName}";
-                }
-
-                // About
-                if (changeAboutImagePath != null)
-                {
-                    var folder = "/images/AboutPage/About/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeAboutImagePath);
-                    viewModel.AboutImagePath = $"{folder}{changeAboutImagePath.FileName}";
-                }
-
-                // Details
-                if (changeDetailsImagePath != null)
-                {
-                    var folder = "/images/AboutPage/Details/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeDetailsImagePath);
-                    viewModel.DetailsImagePath = $"{folder}{changeDetailsImagePath.FileName}";
-                }
-                // OperationMode
-                if (changeOperationModeImagePath != null)
-                {
-                    var folder = "/images/AboutPage/OperationMode/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeOperationModeImagePath);
-                    viewModel.OperationModeImagePath = $"{folder}{changeOperationModeImagePath.FileName}";
-                }
-                // PhotoGallery
-                if (changePhotoGalleryImagePath != null)
-                {
-                    var folder = "/images/AboutPage/PhotoGallery/";
-                    await FileUtils.SaveFileIfExistPath(folder, changePhotoGalleryImagePath);
-                    viewModel.PhotoGalleryImagePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
-                }
-                // Feedback
-                if (changeFeedbackImagePath != null)
-                {
-                    var folder = "/images/AboutPage/Feedback/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeFeedbackImagePath);
-                    viewModel.FeedbackImagePath = $"{folder}{changeFeedbackImagePath.FileName}";
-                }
-
-                viewModel.MainFullDescription = formValues["fullInfoMain"];
-                viewModel.AboutFullDescription = formValues["fullInfoAbout"];
-                viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
-                viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
-                viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
-                viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
-                viewModel.DateAdded = DateTime.Now;
-             
-                _AboutPage.SaveItem(viewModel, viewModel.Id);
+                var newViewModel =  _AboutUtils.SetEditAboutViewModelAndSave(viewModel, formValues, changeMainImagePath, changeAboutImagePath, changeDetailsImagePath, changeOperationModeImagePath, changePhotoGalleryImagePath, changeFeedbackImagePath);
 
                 WriteLogs("Вью модель с данными страницы About успешно сохранена в БД. ", NLogsModeEnum.Debug);
                 WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
 
-                return View("../Shared/Success", viewModel);
+                return View("../Shared/Success", newViewModel);
             }
             else
             {
                 WriteLogs("Вью модель с данными страницы About не прошла валидацию. ", NLogsModeEnum.Warn);
                 WriteLogs("Возвращено EditAboutPage.cshtml\n", NLogsModeEnum.Trace);
 
-                viewModel.MainFullDescription = formValues["fullInfoMain"];
-                viewModel.AboutFullDescription = formValues["fullInfoAbout"];
-                viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
-                viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
-                viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
-                viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
-
+                viewModel = _AboutUtils.SetEditAboutViewByFormValues(viewModel, formValues);
+                
                 return View("EditAboutPage", viewModel);
             }
         }
@@ -246,7 +160,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                var user = Feedback.GetUser(model, _UserManager);
+                var user = _FeedbackUtils.GetUser(model);
                 
                 if (user != null)
                 {
@@ -255,47 +169,39 @@ namespace ToursWebAppEXAMProject.Controllers
                         return RedirectToAction("NotConfirmedEmail", "Account");
                     }
 
-                    // находим asker по параметрам или создаем новый объект
-                    var asker = Feedback.GetAsker(model, _AllAskers);
+                    // находим asker по параметрам, если null, то создаем новый объект
+                    var asker = _FeedbackUtils.GetAsker(model);
                     
                     if(asker == null)
                     {
-                        asker = new Asker(model.Name, model.Surname, model.Email, model.Gender, model.BirthDay);
-                        
-                        var isCustomer = Feedback.IsCustomer(model, _AllCustomers);
-                        if (isCustomer)
-                        {
-                            asker.IsCustomer = true;
-                        }
+                        asker = _FeedbackUtils.CreateAsker(model);
 
                         // сохраняем объект типа Asker в БД
-                        _AllAskers.SaveItem(asker, asker.Id);
+                        _FeedbackUtils.SaveAsker(asker);
                     }
 
                     model.Question = textAreaForm["textArea"].ToString();
                     model.QuestionDate = DateTime.Now;
 
-                    var correspondence = new Correspondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
+                    var correspondence = _FeedbackUtils.CreateCorrespondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
 
                     // сохраняем объект типа correspondence в БД
-                    _AllCorrespondences.SaveItem(correspondence, correspondence.Id);
-                    
+                    _FeedbackUtils.SaveCorrespondence(correspondence);
+                                                           
                     // отправляем через форму обратной связи вопрос турфирме от пользователя
-                    var questionToCompany = new EmailService();
-                    var isSendMessage = questionToCompany.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
+                    var isSendMessage = _EmailService.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
 
                     if(isSendMessage.Id != 0)
                     {
                         // автоматически формируется ответ турфирмы
-                        var answerToPerson = new EmailService();
-                        await answerToPerson.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
+                        await _EmailService.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
                     }
                     
-                    var userRoles = await _UserManager.GetRolesAsync(user);
+                    var userRoles = await _FeedbackUtils.GetAllRolesForUser(user);
                     if (!userRoles.Contains("asker"))
                     {
                         // устанавливаем роль "asker"
-                        Feedback.AddToRole(user, "asker", _UserManager);
+                        _FeedbackUtils.AddToRole(user, "asker");
                     }
 
                     return View("Success", model);

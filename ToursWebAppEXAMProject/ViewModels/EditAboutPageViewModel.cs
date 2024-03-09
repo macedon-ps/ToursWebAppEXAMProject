@@ -109,6 +109,8 @@ namespace ToursWebAppEXAMProject.ViewModels
         [Display(Name = "Путь к фотографиям фотогалереии")]
         [StringLength(100, ErrorMessage = "Путь к фотографиям фотогалереи не должно содержать более 100 символов")]
         public string? PhotoGalleryImagePath { get; set; } = "Путь к фотографиям фотогалереии";
+
+
         
         [Display(Name = "Путь к фотографиям обратной связи")]
         [StringLength(100, ErrorMessage = "Путь к фотографиям обратной связи не должно содержать более 100 символов")]

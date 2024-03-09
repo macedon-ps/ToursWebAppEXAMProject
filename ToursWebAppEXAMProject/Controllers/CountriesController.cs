@@ -13,11 +13,13 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
+        private readonly FileUtils _FileUtils;
         
-        public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities)
+        public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
         {
-            this._AllCountries = Countries;
-            this._AllCities = Cities;
+            _AllCountries = Countries;
+            _AllCities = Cities;
+            _FileUtils = FileUtils;
         }
         public IActionResult Index()
         {
@@ -182,7 +184,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeTitleImagePath != null)
                 {
                     var folder = "/images/CountriesTitleImages/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
                     country.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 

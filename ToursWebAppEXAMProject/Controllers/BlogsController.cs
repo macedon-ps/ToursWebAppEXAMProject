@@ -12,10 +12,12 @@ namespace ToursWebAppEXAMProject.Controllers
     public class BlogsController : Controller
     {
         private readonly IBaseInterface<Blog> _AllBlogs;
+        private readonly FileUtils _FileUtils;
         
-        public BlogsController(IBaseInterface<Blog> Blogs)
+        public BlogsController(IBaseInterface<Blog> Blogs, FileUtils FileUtils)
         {
-            this._AllBlogs = Blogs;
+            _AllBlogs = Blogs;
+            _FileUtils = FileUtils;
         }
 
         /// <summary>
@@ -203,7 +205,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 if (changeTitleImagePath != null)
                 {
                     var folder = "/images/BlogsTitleImages/";
-                    await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                    await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
                     blog.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                 }
 

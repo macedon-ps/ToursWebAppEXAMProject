@@ -5,7 +5,7 @@
     <a asp-controller="About" asp-action="Index" asp-fragment="feedback">Обратная связь</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="About" asp-action="CreateEditDeleteAboutPage">Create / Edit / Delete</a>
+        <a asp-controller="About" asp-action="EditMenuAboutPage">Create / Edit / Delete</a>
     }
     @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {

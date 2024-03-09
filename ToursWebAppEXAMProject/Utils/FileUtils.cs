@@ -11,10 +11,10 @@ namespace TourWebAppEXAMProject.Utils
         /// <param name="filePath">путь сохранения картинки</param>
         /// <param name="changeTitleImagePath">значение поля типа IFormFile для названия сохраняемого файла</param>
         /// <param name="webHostEnvironment">webHostEnvironment</param>
-        public static async Task SaveFileIfExistPath(string folder, IFormFile? changeImagePath)
+        public async Task SaveImageToFolder(string folder, IFormFile? changeImagePath)
         {
             // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
-            var fullPathToFolder = IsFolderExist(folder);
+            var fullPathToFolder = GetOrCreateFolderPath(folder);
 
             // создаем абсолютный и относительный пути к файлу
             var fullFilePath = string.Empty;
@@ -50,7 +50,7 @@ namespace TourWebAppEXAMProject.Utils
         /// Метод проверки существования пути сохранения (папки сохранения); если ее нет, она создается
         /// </summary>
         /// <param name="folderPath">путь к папке</param>
-        public static string IsFolderExist(string folder)
+        public string GetOrCreateFolderPath(string folder)
         {
             var pathTillFolder = Path.GetFullPath("wwwroot");
             var fullPathToFolder = pathTillFolder + folder;
@@ -66,17 +66,17 @@ namespace TourWebAppEXAMProject.Utils
             return fullPathToFolder;
         }
 
-        public static string GetFullPathToFolderPhotoGallery()
+        public string GetFullPathToFolderPhotoGallery()
         {
             return "E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
         }
-        public static string GetRelativePath(string fullPath)
+        public string GetRelativePath(string fullPath)
         {
             var relativePath = fullPath.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", "");
             return relativePath;
         }
 
-        public static void DeletePhoto(string fullPathToFile)
+        public void DeletePhoto(string fullPathToFile)
         {
             File.Delete(fullPathToFile);
         }

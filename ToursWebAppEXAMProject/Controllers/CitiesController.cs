@@ -11,13 +11,16 @@ namespace ToursWebAppEXAMProject.Controllers
 {
     public class CitiesController : Controller
     {
-        IBaseInterface<City> _AllCities;
-        IBaseInterface<Country> _AllCountries;
+        private readonly IBaseInterface<City> _AllCities;
+        private readonly IBaseInterface<Country> _AllCountries;
+        private readonly FileUtils _FileUtils;
+
        
-        public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries)
+        public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries, FileUtils FileUtils)
         {
-            this._AllCities = Cities;
-            this._AllCountries = Countries;
+            _AllCities = Cities;
+            _AllCountries = Countries;
+            _FileUtils = FileUtils;
         }
 
         /// <summary>
@@ -181,7 +184,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     if (changeTitleImagePath != null)
                     {
                         var folder = "/images/CitiesTitleImages/";
-                        await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                        await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
                         city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                     }
                     if (formValues["checkIsCapital"] == "on")

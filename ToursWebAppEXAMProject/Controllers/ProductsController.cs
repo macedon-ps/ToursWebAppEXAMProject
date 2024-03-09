@@ -14,12 +14,14 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<Product> _AllProducts;
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
+        private readonly FileUtils _FileUtils;
         
-        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities)
+        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
         {
-            this._AllProducts = Products;
-            this._AllCountries = Countries;
-            this._AllCities = Cities;
+            _AllProducts = Products;
+            _AllCountries = Countries;
+            _AllCities = Cities;
+            _FileUtils = FileUtils;
         }
 
         /// <summary>
@@ -183,7 +185,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     if (changeTitleImagePath != null)
                     {
                         var folder = "/images/ProductsTitleImages/";
-                        await FileUtils.SaveFileIfExistPath(folder, changeTitleImagePath);
+                        await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
                         product.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
                     }
 

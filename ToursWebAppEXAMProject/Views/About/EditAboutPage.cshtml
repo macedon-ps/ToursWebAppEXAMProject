@@ -191,13 +191,19 @@
                 </div>
 
                 @{
-                    var folderPath = FileUtils.GetFullPathToFolderPhotoGallery();
+                    // TODO: перенести код в контроллер и передать во вью
+                    //var folderPath = _FileUtils.GetFullPathToFolderPhotoGallery();
+
+                    var folderPath = "E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
                 }
                 
                 <div class="photoGallery">
                     @foreach (var image in Directory.GetFiles(folderPath))
                     {
-                        var imagePath = FileUtils.GetRelativePath(image);
+                        // TODO: перенести код в контроллер и передать во вью
+                        // var imagePath = _FileUtils.GetRelativePath(image);
+
+                        var imagePath = image.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", "");
 
                         <div class="titleImage25 mb2">
                             <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
