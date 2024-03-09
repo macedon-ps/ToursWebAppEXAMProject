@@ -208,7 +208,5 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("EditCountry", country);
             }
         }
-
-
     }
 }

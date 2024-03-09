@@ -220,7 +220,6 @@ namespace ToursWebAppEXAMProject.Controllers
                 WriteLogs($"{ex.Message}", NLogsModeEnum.Error);
                 return View("Error", ex.Message);
             }
-            
-        }
+         }
     }
 }

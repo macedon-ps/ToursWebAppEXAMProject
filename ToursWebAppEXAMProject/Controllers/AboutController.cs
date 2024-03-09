@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Interfaces;
-using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
-using Microsoft.AspNetCore.Identity;
 using TourWebAppEXAMProject.Utils;
 using TourWebAppEXAMProject.Services.Email;
 
@@ -212,7 +209,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 }
             }
 
-            // 1.2. Пользователь не зарегистрирован или не прошел подтверждение email
+            // Пользователь не зарегистрирован или не прошел подтверждение email
             model.Question = textAreaForm["textArea"].ToString();
             model.QuestionDate = DateTime.Now;
 
