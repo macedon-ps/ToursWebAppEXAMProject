@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.ViewModels;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
-using TourWebAppEXAMProject.Utils;
-using TourWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.Services.Email;
+using NLog;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -15,6 +14,7 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly FeedbackUtils _FeedbackUtils;
         private readonly TechTaskUtils _TechTaskUtils;
         private readonly EmailService _EmailService;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public AboutController(AboutUtils AboutUtils, FileUtils FileUtils, FeedbackUtils FeedbackUtils, TechTaskUtils TechTaskUtils, EmailService EmailService)
 		{
@@ -31,15 +31,18 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult Index()
 		{
-			WriteLogs("Переход по маршруту /About/Index.\n", NLogsModeEnum.Trace);
+			var viewModel = _AboutUtils.GetModel();
+            _logger.Debug("Получена вью-модель EditAboutPageViewModel. ");
 
-            var viewModel = _AboutUtils.GetModel();
-            
             if (viewModel == null || viewModel.Id == 0)
             {
+                _logger.Warn("Стартовая страница /About/Index.cshtml не создана или ни одна из версий страницы не является актуальной");
+
+                _logger.Trace("Переход по маршруту /About/Sorry.\n");
                 return View("Sorry");
             }
 
+            _logger.Trace("Переход по маршруту /About/Index.\n");
             return View(viewModel);
 		}
 
@@ -50,7 +53,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditMenuAboutPage()
         {
             var allPages = _AboutUtils.GetAllModel();
+            _logger.Debug("Получена вью-модель IEnumerable<EditAboutPageViewModel>. ");
 
+            _logger.Trace("Переход по маршруту /About/EditMenuAboutPage.\n");
             return View(allPages);
         }
 
@@ -61,7 +66,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateAboutPage()
         {
             var newViewModel = _AboutUtils.CreateModel();
-            
+            _logger.Debug("Создана вью-модель EditAboutPageViewModel. ");
+
+            _logger.Trace("Переход по маршруту /About/EditAboutPage.\n");
             return View("EditAboutPage", newViewModel);
         }
 
@@ -73,7 +80,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditAboutPage(int id)
         {
             var editViewModel = _AboutUtils.GetModel(id);
-            
+            _logger.Debug($"Получена вью-модель EditAboutPageViewModel по id={id}. ");
+
+            _logger.Trace("Переход по маршруту /About/EditAboutPage.\n");
             return View(editViewModel);
         }
 
@@ -86,16 +95,18 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             var deleteModel = _AboutUtils.GetModel(id);
             _AboutUtils.DeleteModel(id);
-            
-           WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Debug($"Удалена вью-модель EditAboutPageViewModel по id={id}. ");
 
-            return View("../Shared/SuccessForDelete", deleteModel);
+            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
+            return View("SuccessForDelete", deleteModel);
         }
 
         public IActionResult DeletePicture(string fullPathToFile)
         {
             _FileUtils.DeletePhoto(fullPathToFile);
-            
+            _logger.Debug($"Удалена картинка по пути: {fullPathToFile}. ");
+
+            _logger.Trace("Переход по маршруту /About/DeletePicture.\n");
             return View("DeletePicture", fullPathToFile);
         }
 
@@ -110,27 +121,35 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public IActionResult SaveAboutPage(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
         {
-            WriteLogs("Запущен процесс сохранения вью модели EditAboutPageViewMode в БД. ", NLogsModeEnum.Debug);
-
-            if (ModelState.IsValid)
+            try
             {
-                WriteLogs("Вью модель EditAboutPageViewMode прошла валидацию. ", NLogsModeEnum.Debug);
+                if (ModelState.IsValid)
+                {
+                    _logger.Debug("Вью-модель EditAboutPageViewModel прошла валидацию. ");
+                    
+                    var newViewModel = _AboutUtils.SetEditAboutViewModelAndSave(viewModel, formValues, changeMainImagePath, changeAboutImagePath, changeDetailsImagePath, changeOperationModeImagePath, changePhotoGalleryImagePath, changeFeedbackImagePath);
+                    _logger.Debug("Вью-модель EditAboutPageViewModel заполнена данными из формыи успешно сохранена в БД. ");
+           
+                    _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
+                    return View("Success", newViewModel);
+                }
+                else
+                {
+                    _logger.Warn("Вью-модель EditAboutPageViewModel не прошла валидацию. ");
+                  
+                    viewModel = _AboutUtils.SetEditAboutViewByFormValues(viewModel, formValues);
+                    _logger.Debug("Вью-модель EditAboutPageViewModel заполнена отдельными данными из формы. ");
 
-                var newViewModel =  _AboutUtils.SetEditAboutViewModelAndSave(viewModel, formValues, changeMainImagePath, changeAboutImagePath, changeDetailsImagePath, changeOperationModeImagePath, changePhotoGalleryImagePath, changeFeedbackImagePath);
-
-                WriteLogs("Вью модель с данными страницы About успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
-
-                return View("../Shared/Success", newViewModel);
+                    _logger.Trace("Возвращено EditAboutPage.cshtml\n");
+                    return View("EditAboutPage", viewModel);
+                }
             }
-            else
+            catch (Exception error)
             {
-                WriteLogs("Вью модель с данными страницы About не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено EditAboutPage.cshtml\n", NLogsModeEnum.Trace);
+                _logger.Error(error.Message);
 
-                viewModel = _AboutUtils.SetEditAboutViewByFormValues(viewModel, formValues);
-                
-                return View("EditAboutPage", viewModel);
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", error.Message);
             }
         }
 
@@ -140,9 +159,10 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult FeedBackForm()
         {
-            WriteLogs("Переход по маршруту /About/FeedBackForm.\n", NLogsModeEnum.Trace);
-
             var viewModel = new CorrespondenceViewModel();
+            _logger.Debug("Создаем вью-модель CorrespondenceViewModel");
+
+            _logger.Trace("Переход по маршруту /About/FeedBackForm.\n");
             return View(viewModel);
         }
 
@@ -155,68 +175,100 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
 		public async Task<IActionResult> FeedBackForm(CorrespondenceViewModel model, IFormCollection textAreaForm)
 		{
-			if (ModelState.IsValid)
-			{
-                var user = _FeedbackUtils.GetUser(model);
-                
-                if (user != null)
+            try
+            {
+                if (ModelState.IsValid)
                 {
-                    if (!user.EmailConfirmed)
-                    {
-                        return RedirectToAction("NotConfirmedEmail", "Account");
-                    }
+                    _logger.Debug("Вью-модель CorrespondenceViewModel прошла валидацию. ");
 
-                    // находим asker по параметрам, если null, то создаем новый объект
-                    var asker = _FeedbackUtils.GetAsker(model);
-                    
-                    if(asker == null)
-                    {
-                        asker = _FeedbackUtils.CreateAsker(model);
+                    var user = _FeedbackUtils.GetUser(model);
 
-                        // сохраняем объект типа Asker в БД
-                        _FeedbackUtils.SaveAsker(asker);
+                    if (user != null)
+                    {
+                        _logger.Debug($"Получен зарегистрированный пользователь {user.UserName}. ");
+                        
+                        if (!user.EmailConfirmed)
+                        {
+                            _logger.Debug("В доступе отказано, т.к. пользователь не подтвердил свой email");
+
+                            _logger.Trace("Переход по маршруту / Account / NotConfirmedEmail.\n");
+                            return RedirectToAction("NotConfirmedEmail", "Account");
+                        }
+
+                        // находим asker по параметрам, если null, то создаем новый объект
+                        var asker = _FeedbackUtils.GetAsker(model);
+
+                        if (asker == null)
+                        {
+                            asker = _FeedbackUtils.CreateAsker(model);
+
+                            // сохраняем объект типа Asker в БД
+                            _FeedbackUtils.SaveAsker(asker);
+                            _logger.Debug($"Создан новый asker {asker.Name} с email: {asker.Email}");
+                        }
+                        else
+                        {
+                            _logger.Debug($"Получен asker {asker.Name} с email: {asker.Email}");
+                        }
+                        
+
+                        model.Question = textAreaForm["textArea"].ToString();
+                        model.QuestionDate = DateTime.Now;
+
+                        var correspondence = _FeedbackUtils.CreateCorrespondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
+                        
+                        // сохраняем объект типа correspondence в БД
+                        _FeedbackUtils.SaveCorrespondence(correspondence);
+                        _logger.Debug("Создано новое сообщение и сохранено в БД");
+
+                        // отправляем через форму обратной связи вопрос турфирме от пользователя
+                        var isSendMessage = _EmailService.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
+                        _logger.Debug($"Пришло сообщение по email от {model.Email}");
+
+                        if (isSendMessage.Id != 0)
+                        {
+                            // автоматически формируется ответ турфирмы
+                            await _EmailService.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
+                            _logger.Debug($"Сформирован и отправлен по email ответ для {model.Email}");
+                        }
+
+                        var userRoles = await _FeedbackUtils.GetAllRolesForUser(user);
+                        if (!userRoles.Contains("asker"))
+                        {
+                            // устанавливаем роль "asker"
+                            _FeedbackUtils.AddToRole(user, "asker");
+                            _logger.Debug($"Для {user.UserName} присвоена роль asker");
+                        }
+
+                        _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
+                        return View("Success", model);
                     }
+                    else
+                    {
+                        _logger.Debug($"Данный пользователь не зарегистрирован. ");
+
+                        _logger.Trace("Перенапраление по маршруту /Account/Register.\n");
+                        return RedirectToAction("Register", "Account");
+                    }
+                }
+                else
+                {
+                    _logger.Debug("Вью-модель CorrespondenceViewModel не прошла валидацию. ");
 
                     model.Question = textAreaForm["textArea"].ToString();
                     model.QuestionDate = DateTime.Now;
 
-                    var correspondence = _FeedbackUtils.CreateCorrespondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
-
-                    // сохраняем объект типа correspondence в БД
-                    _FeedbackUtils.SaveCorrespondence(correspondence);
-                                                           
-                    // отправляем через форму обратной связи вопрос турфирме от пользователя
-                    var isSendMessage = _EmailService.SendEmailFromClientAsync(model.Email, $"{model.Name} {model.Surname}", model.Question);
-
-                    if(isSendMessage.Id != 0)
-                    {
-                        // автоматически формируется ответ турфирмы
-                        await _EmailService.SendEmailAsync(model.Email, $"Ответ для {model.Name} {model.Surname}", $"Спасибо, что обратились к нам. На Ваш вопрос:\n{model.Question}\n в ближайшее время будет подготовлен ответ");
-                    }
-                    
-                    var userRoles = await _FeedbackUtils.GetAllRolesForUser(user);
-                    if (!userRoles.Contains("asker"))
-                    {
-                        // устанавливаем роль "asker"
-                        _FeedbackUtils.AddToRole(user, "asker");
-                    }
-
-                    return View("Success", model);
-                }
-                else
-                {
-                    return RedirectToAction("Register", "Account");
+                    _logger.Trace("Возвращено /About/FeedBackForm.\n");
+                    return View(model);
                 }
             }
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
 
-            // Пользователь не зарегистрирован или не прошел подтверждение email
-            model.Question = textAreaForm["textArea"].ToString();
-            model.QuestionDate = DateTime.Now;
-
-            //WriteLogs("FeedBackForm не прошла валидацию. ", NLogsModeEnum.Warn);
-            //WriteLogs("Возвращено /About/FeedBackForm.cshtml\n", NLogsModeEnum.Trace);
-
-            return View(model);
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
 		}
 
         /// <summary>
@@ -226,11 +278,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,admin")]
         public IActionResult TechTaskAbout()
 		{
-            WriteLogs("Переход по маршруту About/TechTaskAbout.\n", NLogsModeEnum.Trace);
-            
-			var model = _TechTaskUtils.GetTechTaskForPage("About");
+            var viewModel = _TechTaskUtils.GetTechTaskForPage("About");
+            _logger.Debug("Получена вью-модель TechTaskViewModel. ");
 
-			return View(model);
+            _logger.Trace("Переход по маршруту About/TechTaskSupport.\n");
+            return View(viewModel);
 		}
 
         /// <summary>
@@ -240,25 +292,35 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
-		public IActionResult TechTaskAbout(TechTaskViewModel model)
+		public IActionResult TechTaskAbout(TechTaskViewModel viewModel)
 		{
-            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _logger.Debug("Вью-модель TechTaskViewModel прошла валидацию. ");
 
-            if (ModelState.IsValid)
-			{
-                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
-                
-				_TechTaskUtils.SetTechTaskProgressAndSave(model);
+                    _TechTaskUtils.SetTechTaskProgressAndSave(viewModel);
+                    _logger.Debug("Вью-модель TechTaskViewModel заполнена данными и сохранена. ");
 
-                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);
-                
-				return View(model);
-			}
-            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
-            WriteLogs("Возвращено /About/TechTaskAbout.cshtml\n", NLogsModeEnum.Trace);
+                    _logger.Trace("Возвращено /About/TechTaskHome.cshtml\n");
+                    return View(viewModel);
+                }
+                else
+                {
+                    _logger.Warn("Вью-модель TechTaskViewModel не прошла валидацию. Данные модели не сохранены. ");
 
-            return View(model);
-		}
+                    _logger.Trace("Возвращено /About/TechTaskHome.cshtml\n");
+                    return View(viewModel);
+                }
+            }
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
+
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
+ 		}
 	}
 }

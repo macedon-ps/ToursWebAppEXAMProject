@@ -3,15 +3,16 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using NLog;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
     public class QueryResultRepository : IQueryResultInterface
 	{
 		private readonly TourFirmaDBContext context;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-		public string[] itemKeyword = new string[4];
+        public string[] itemKeyword = new string[4];
 		
 		/// <summary>
 		/// DI. Подключение зависимости. Связывание с комнтекстом
@@ -27,46 +28,6 @@ namespace ToursWebAppEXAMProject.Repositories
 			itemKeyword[3] = "городов";
 		}
 
-
-		/// <summary>
-		/// Метод вывода списка городов по внешнему ключу Id страны
-		/// </summary>
-		/// <param name="foreignKeyId">внешний ключ - Id страны</param>
-		/// <returns></returns>
-		public IEnumerable<City> GetCitiesByCountryForeignKeyId(int foreignKeyId)
-		{
-			WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по Id = {foreignKeyId}. ", NLogsModeEnum.Debug);
-			
-			try
-			{
-				var items = new List<City>();
-				
-				// для городов
-				items = context.Cities
-				.FromSqlRaw($"Select * from City where CountryId = '{foreignKeyId}'")
-				.ToList();
-
-				if (items == null)
-				{
-                    WriteLogs($"Выборка {itemKeyword[3]} по Id = {foreignKeyId} не осуществлена.\n", NLogsModeEnum.Warn);
-                    
-					return new List<City>();
-				}
-				else
-				{
-                    WriteLogs("Выборка осуществлена успешно.\n", NLogsModeEnum.Debug);
-                    
-					return items;
-				}
-			}
-			catch (Exception ex)
-			{
-                WriteLogs($"Выборка {itemKeyword[3]} по Id = {foreignKeyId} не осуществлена.\n Код ошибки: {ex.Message}\n");
-               
-				return new List<City>();
-			}
-		}
-
         /// <summary>
         /// Метод вывода списка городов по названию страны
         /// </summary>
@@ -74,7 +35,7 @@ namespace ToursWebAppEXAMProject.Repositories
         /// <returns></returns>
         public IEnumerable<City> GetCitiesByCountryName(string countryName)
 		{
-            WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по названию = {countryName}. ", NLogsModeEnum.Debug);
+            _logger.Debug($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по названию = {countryName}. ");
             
 			try
 			{
@@ -87,20 +48,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-                    WriteLogs($"В БД отсутствует {itemKeyword[3]} по названию = {countryName}.\n", NLogsModeEnum.Warn);
+                    _logger.Warn($"В БД отсутствует {itemKeyword[3]} по названию = {countryName}.\n");
                     
 					return new List<City>();
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно");
                     
 					return items;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка {itemKeyword[3]} по названию = {countryName} не осуществлена.\nКод ошибки: {ex.Message}", NLogsModeEnum.Error);
+                _logger.Error($"Выборка {itemKeyword[3]} по названию = {countryName} не осуществлена.\nКод ошибки: {ex.Message}");
                 
 				return new List<City>();
 			}
@@ -115,7 +76,7 @@ namespace ToursWebAppEXAMProject.Repositories
         /// <exception cref="NotImplementedException"></exception>
         public IEnumerable<Product> GetProductsByCountryNameAndCityName(string countryName, string cityName)
         {
-            WriteLogs($"Произведено подключение к БД. Запрашиваются турпродукты для страны \"{countryName}\" и для города \"{cityName}\". ", NLogsModeEnum.Debug);
+            _logger.Debug($"Произведено подключение к БД. Запрашиваются турпродукты для страны \"{countryName}\" и для города \"{cityName}\". ");
 
             try
             {
@@ -127,43 +88,32 @@ namespace ToursWebAppEXAMProject.Repositories
                
                 if (products == null)
                 {
-                    WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена.\n", NLogsModeEnum.Warn);
+                    _logger.Warn($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена.\n");
 
                     return new List<Product>();
                 }
                 else
                 {
-                    WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" осуществлена успешно.\n", NLogsModeEnum.Debug);
+                    _logger.Debug($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" осуществлена успешно.\n");
 
                     return products;
                 }
             }
             catch (Exception ex)
             {
-                WriteLogs($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена. \nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new List<Product>();
             }
         }
 
         /// <summary>
-        /// Метод вывода списка турпродуктов по названию страны
-        /// </summary>
-        /// <param name="countryName">название страны</param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public IEnumerable<Product> GetProductsByCountryName(string countryName)
-        {
-            throw new NotImplementedException();
-        }
-
-		/// <summary>
 		/// Метод выборки из БД и преобразования в строку всех стран  городов
 		/// </summary>
 		/// <returns></returns>
         public string GetAllCountriesAndCitiesByString()
 		{
-            WriteLogs("Произведено подключение к БД. Запрашивается список всех стран и городов одной строкой. ", NLogsModeEnum.Debug);
+            _logger.Debug("Произведено подключение к БД. Запрашивается список всех стран и городов одной строкой. ");
             
 			try
 			{
@@ -206,20 +156,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (allInfo == null)
 				{
-                    WriteLogs("Выборка списка всех сторан и городов одной строкой не осуществлена.\n", NLogsModeEnum.Warn);
+                    _logger.Warn("Выборка списка всех сторан и городов одной строкой не осуществлена.\n");
                     
 					return "В БД нет записей о странах и городах";
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно\n");
                     
 					return allInfo;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка списка всех стран и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка списка всех стран и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n");
                 
 				return $"Вызвано исключение: {ex.Message}";
 			}
@@ -253,7 +203,7 @@ namespace ToursWebAppEXAMProject.Repositories
         /// <exception cref="NotImplementedException"></exception>
         public string GetAllCountryMapsByString()
         {
-            WriteLogs("Произведено подключение к БД. Запрашивается список всех стран и их карт одной строкой. ", NLogsModeEnum.Debug);
+            _logger.Debug("Произведено подключение к БД. Запрашивается список всех стран и их карт одной строкой. ");
 
             try
             {
@@ -274,20 +224,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
                 if (countriesAndMapsString == null)
                 {
-                    WriteLogs("Выборка списка всех сторан и их карт одной строкой не осуществлена.\n", NLogsModeEnum.Warn);
+                    _logger.Warn("Выборка списка всех сторан и их карт одной строкой не осуществлена.\n");
 
                     return "В БД нет записей о странах и городах";
                 }
                 else
                 {
-                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно\n");
 
                     return countriesAndMapsString;
                 }
             }
             catch (Exception ex)
             {
-                WriteLogs($"Выборка списка всех стран и их карт одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка списка всех стран и их карт одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n");
 
                 return $"Вызвано исключение: {ex.Message}";
             }

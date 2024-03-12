@@ -1,7 +1,7 @@
 ﻿using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 
-namespace TourWebAppEXAMProject.Utils
+namespace ToursWebAppEXAMProject.Utils
 {
     public class TechTaskUtils
     {

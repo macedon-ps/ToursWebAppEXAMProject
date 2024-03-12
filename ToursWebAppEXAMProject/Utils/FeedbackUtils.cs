@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using NuGet.ContentModel;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 
-namespace TourWebAppEXAMProject.Utils
+namespace ToursWebAppEXAMProject.Utils
 {
     public class FeedbackUtils
     {

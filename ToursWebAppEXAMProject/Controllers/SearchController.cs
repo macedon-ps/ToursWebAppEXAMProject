@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
-using TourWebAppEXAMProject.Utils;
+using NLog;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SearchController: Controller
 	{
-		private readonly IQueryResultInterface _QueryResult;
 		private readonly SearchUtils _SearchUtils;
 		private readonly TechTaskUtils _TechTaskUtils;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-		public SearchController(IQueryResultInterface QueryResult, SearchUtils SearchUtils, TechTaskUtils TechTaskUtils)
+        public SearchController(SearchUtils SearchUtils, TechTaskUtils TechTaskUtils)
 		{
-			_QueryResult = QueryResult;
 			_SearchUtils = SearchUtils;
 			_TechTaskUtils = TechTaskUtils;
 		}
@@ -31,10 +27,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		{
 			// дефолтное значение countryName для стартовой страницы - "Украина"
 			var searchViewModel = _SearchUtils.GetModel(countryName);
-
-			WriteLogs("Переход по маршруту /Search/Index. ", NLogsModeEnum.Trace);
-            WriteLogs("Выведено меню поиска турпродуктов.\n", NLogsModeEnum.Debug);
-
+            _logger.Debug("Получена вью-модель SearchProductViewModel по дефолту. ");
+            
+            _logger.Trace("Переход по маршруту /Search/Index.\n");
             return View(searchViewModel);
 		}
 
@@ -47,45 +42,56 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
 		public IActionResult Index(SearchProductViewModel viewModel, IFormCollection formValues)
 		{
-           	if (ModelState.IsValid)
-			{
-                var searchViewModel = _SearchUtils.GetModel(viewModel, formValues);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _logger.Debug("Вью-модель SearchProductViewModel прошла валидацию. ");
 
-                WriteLogs("SearchProductViewModel прошла валидацию.\n", NLogsModeEnum.Debug);
-				WriteLogs("Выведены результаты поиска турпродуктов. Переход по маршруту /Search/Index. \n", NLogsModeEnum.Trace);
-				
-				var countryName = searchViewModel.CountryNameSelected;
-				var cityName = searchViewModel.CityNameSelected;
-								
-				if(countryName!=null && cityName!=null)
-				{
-                    var products = _SearchUtils.GetProductsQueryResult(countryName, cityName);
-					if (products != null)
-					{
-                        return View("../Products/GetAllProducts", products);
+                    var searchViewModel = _SearchUtils.GetModel(viewModel, formValues);
+                    _logger.Debug("Вью-модель SearchProductViewModel заполнена данными из формы. ");
+
+                    var countryName = searchViewModel.CountryNameSelected;
+                    var cityName = searchViewModel.CityNameSelected;
+
+                    if (countryName != null && cityName != null)
+                    {
+
+                        var products = _SearchUtils.GetProductsQueryResult(countryName, cityName);
+                        if (products != null)
+                        {
+                            _logger.Debug("Получен список турпродуктов по результатам запроса. ");
+
+                            _logger.Trace("Переход по маршруту ../Products/GetAllProducts.\n");
+                            return View("../Products/GetAllProducts", products);
+                        }
+                        
+                        _logger.Warn("По результатам запроса получен пустой список турпродуктов.\n");
+                        _logger.Trace("Переход по маршруту /Search/Index.\n");
+                        return View(viewModel);
                     }
+                    _logger.Warn($"Введенные название страны {countryName} и/или название города {cityName} отсутствуют в БД");
+                    _logger.Trace("Переход по маршруту /Search/Index.\n");
+                    return View(viewModel);
                 }
-   			}
-            WriteLogs("SearchProductViewModel не прошла валидацию. ", NLogsModeEnum.Warn);
-            WriteLogs("Переход по маршруту /Search/Index.\n", NLogsModeEnum.Trace);
-            
-			return View(viewModel);
+                else
+                {
+                    _logger.Warn("Вью-модель SearchProductViewModel не прошла валидацию. ");
+
+                    _logger.Trace("Переход по маршруту /Search/Index.\n");
+                    return View(viewModel);
+                }
+            }
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
+
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
 		}
 		       
 		/// <summary>
-		/// Метод вывода турпродуктов по названию страны и города
-		/// </summary>
-		/// <param name="countryName"></param>
-		/// <param name="cityName"></param>
-		/// <returns></returns>
-        public IActionResult GetQueryResultProductsByCountryAndCityName(string countryName, string cityName)
-        {
-            var products = _QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
-
-            return View("GetAllProducts", products);
-        }
-
-        /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
         /// </summary>
         /// <returns></returns>
@@ -93,11 +99,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult TechTaskSearch()
 		{
-            WriteLogs("Переход по маршруту Search/TechTaskSearch.\n", NLogsModeEnum.Trace);
-           
-			var model = _TechTaskUtils.GetTechTaskForPage("Search");
+            var model = _TechTaskUtils.GetTechTaskForPage("Search");
+            _logger.Debug("Получена вью-модель TechTaskViewModel. ");
 
-			return View(model);
+            _logger.Trace("Переход по маршруту Search/TechTaskSearch.\n");
+            return View(model);
 		}
 
         /// <summary>
@@ -107,25 +113,33 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
-		public IActionResult TechTaskSearch(TechTaskViewModel model)
+		public IActionResult TechTaskSearch(TechTaskViewModel viewModel)
 		{
-            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
-            
-			if (ModelState.IsValid)
-			{
-                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _logger.Debug("Вью-модель TechTaskViewModel прошла валидацию. ");
 
-				_TechTaskUtils.SetTechTaskProgressAndSave(model);
+                    _TechTaskUtils.SetTechTaskProgressAndSave(viewModel);
+                    _logger.Debug("Вью-модель TechTaskViewModel заполнена данными и сохранена. ");
 
-				WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
-                
-				return View(model);
-			}
-            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
-            WriteLogs("Возвращено /Search/TechTaskSearch.cshtml\n", NLogsModeEnum.Trace);
-            
-			return View(model);
-		}
+                    _logger.Trace("Возвращено /Search/TechTaskHome.cshtml\n");
+                    return View(viewModel);
+                }
+
+                _logger.Warn("Вью-модель TechTaskViewModel не прошла валидацию. Данные модели не сохранены. ");
+
+                _logger.Trace("Возвращено /Search/TechTaskHome.cshtml\n");
+                return View(viewModel);
+            }
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
+
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
+ 		}
     }
 }

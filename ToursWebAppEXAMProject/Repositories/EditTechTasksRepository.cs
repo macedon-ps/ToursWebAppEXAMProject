@@ -3,7 +3,7 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using NLog;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -29,7 +29,9 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// </summary>
 		private readonly TourFirmaDBContext context;
 
-		public EditTechTasksRepository(TourFirmaDBContext _context)
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public EditTechTasksRepository(TourFirmaDBContext _context)
 		{
 			this.context = _context;
 		}
@@ -41,7 +43,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public TechTaskViewModel GetTechTasksForPage(string pageName)			
 		{
-			WriteLogs($"Произведено подключение к БД. Запрашиваются показатели выполнения ТЗ для страницы \"{pageName}\". ", NLogsModeEnum.Debug);
+			_logger.Debug($"Произведено подключение к БД. Запрашиваются показатели выполнения ТЗ для страницы \"{pageName}\". ");
 			
 			try
 			{
@@ -49,20 +51,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (techTasksOfPage == null)
 				{
-                    WriteLogs($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\n", NLogsModeEnum.Warn);
+                    _logger.Warn($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\n");
                    
 					return new TechTaskViewModel();
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно. \n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно. \n");
                     
 					return techTasksOfPage;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка показателей выполнения ТЗ для страницы \"{pageName}\" не осуществлена.\nКод ошибки: {ex.Message}\n");
                 
 				return new TechTaskViewModel();
 			}
@@ -75,7 +77,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public double GetProgressTechTasks(TechTaskViewModel techTasks)
 		{
-            WriteLogs($"Запрашиваются прогресс выполнения ТЗ для страницы \"{techTasks.PageName}\". ", NLogsModeEnum.Debug);
+            _logger.Debug($"Запрашиваются прогресс выполнения ТЗ для страницы \"{techTasks.PageName}\". ");
             
 			TechTasksCount = 6;
 			if (techTasks.IsExecuteTechTask1 == true) TechTasksTrueCount++;
@@ -92,19 +94,19 @@ namespace ToursWebAppEXAMProject.Repositories
 
 		public void SaveProgressTechTasks(TechTaskViewModel techTasks)
 		{
-            WriteLogs("Произведено подключение к БД. ", NLogsModeEnum.Debug);
+            _logger.Debug("Произведено подключение к БД. ");
             
 			try
 			{
 				if (techTasks == null)
 				{
-                    WriteLogs("Модель не существует.\n", NLogsModeEnum.Warn);
+                    _logger.Warn("Модель не существует.\n");
                     
 					return;
 				}
 				else if (techTasks != null)
 				{
-                    WriteLogs($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName}", NLogsModeEnum.Debug);
+                    _logger.Debug($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName}", NLogsModeEnum.Debug);
                     
 					context.Entry(techTasks).State = EntityState.Modified;
 					context.SaveChanges();
@@ -113,7 +115,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName} не осуществлено.\nКод ошибки: {ex.Message}", NLogsModeEnum.Error);
+                _logger.Error($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName} не осуществлено.\nКод ошибки: {ex.Message}");
             }
 		}
 	}

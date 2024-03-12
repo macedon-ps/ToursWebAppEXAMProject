@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Interfaces;
+using NLog;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class NewsController : Controller
     {
-        private readonly IBaseInterface<New> _AllNews;
-        private readonly FileUtils _FileUtils;
         
-        public NewsController(IBaseInterface<New> News, FileUtils FileUtils)
+        private readonly NewsUtils _NewsUtils;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public NewsController(NewsUtils NewsUtils)
         {
-            _AllNews = News;
-            _FileUtils = FileUtils;
+            _NewsUtils = NewsUtils;
         }
 
         /// <summary>
@@ -26,23 +24,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllNews()
         {
-            WriteLogs("Переход по маршруту /News/GetAllNews. ", NLogsModeEnum.Trace);
-
-            var newsItems = _AllNews.GetAllItems();
+            var newsItems = _NewsUtils.GetNews();
+            _logger.Debug("Получена модель IEnumerable<New>. ");
 
             if (newsItems == null)
             {
-                var errorMessage = "В БД нет ни одной новости";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn("В БД нет ни одной новости. "); 
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml.\n", NLogsModeEnum.Warn);
-
-                return View("../Shared/Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                return View("Nothing", new NothingViewModel("В БД нет ни одной новости."));
             }
+            else
+            {
+                _logger.Debug("Выводятся все новости. ");
 
-            WriteLogs("Выводятся все новости.\n", NLogsModeEnum.Debug);
-
-            return View(newsItems);
+                _logger.Trace("Переход по маршруту /News/GetNews.\n");
+                return View(newsItems);
+            }
         }
 
         /// <summary>
@@ -52,23 +50,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetNews(int id)
         {
-            WriteLogs($"Переход по маршруту /News/GetNesw?id={id}. ", NLogsModeEnum.Trace);
-
-            var newsItem = _AllNews.GetItemById(id);
+            var newsItem = _NewsUtils.GetNewsById(id);
+            _logger.Debug($"Получена модель New по id = {id}. ");
 
             if (newsItem.Id == 0)
             {
-                var errorMessage = $"В БД нет новости с id = {id}";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn($"В БД нет новости с id = {id}. ");
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared//Error.cshtml\n", NLogsModeEnum.Warn);
-
-                return View("../Shared/Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет новости с id = {id}.\n"));
             }
+            else
+            {
+                _logger.Debug($"Выводится новость с id = {id}. ");
 
-            WriteLogs($"Выводится новость с id = {id}.\n", NLogsModeEnum.Debug);
-
-            return View(newsItem);
+                _logger.Trace($"Переход по маршруту /News/GetNesw?id={id}.\n");
+                return View(newsItem);
+            }
         }
 
         /// <summary>
@@ -78,12 +76,10 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateNews()
         {
-            WriteLogs("Выполняется действие /News/CreateNews. ", NLogsModeEnum.Trace);
-
             var newsItem = new New();
+            _logger.Debug("Создается модель New. ");
 
-            WriteLogs("Возвращено /News/EditNews.cshtml\n", NLogsModeEnum.Trace);
-
+            _logger.Trace("Переход по маршруту /News/EditNews.cshtml\n");
             return View("EditNews", newsItem);
         }
 
@@ -96,42 +92,41 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditNews(int id)
         {
-            WriteLogs("Переход по маршруту /News/EditNews. ", NLogsModeEnum.Trace);
+            var newsItem = _NewsUtils.GetNewsForEdit(id);
+            _logger.Debug($"Получена модель New по id={id}. ");
 
-            var newsItem = _AllNews.GetItemById(id);
-            newsItem.DateAdded = DateTime.Now;
-                        
-           return View(newsItem);
+            _logger.Trace("Переход по маршруту /News/EditNews.\n");
+            return View(newsItem);
         }
 
         /// <summary>
         /// Метод вывода результатов выборки новостей по тому, что ищем - полное название или ключевое слово (букву)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
-        /// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
+        /// <param name="insertedText">текст для поиска</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultNews(bool isFullName, string fullNameOrKeywordOfItem)
+        public IActionResult GetQueryResultNews(bool isFullName, string insertedText)
         {
-            WriteLogs("Переход по маршруту /News/GetQueryResultNews. ", NLogsModeEnum.Trace);
-
-            var newsItems = _AllNews.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
-            var numberNews = newsItems.Count();
-         
-            if (numberNews == 0)
+            var newsItems = _NewsUtils.QueryResult(isFullName, insertedText);
+            _logger.Debug("Получена модель IEnumerable<New>. ");
+                     
+            if (newsItems == null)
             {
-                var message = $"Нет новостей по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
+                _logger.Warn($"По результатам запроса получен пустой список новостей по запросу \"...{insertedText}...\". ");
 
-                WriteLogs(message, NLogsModeEnum.Warn);
-
-                var nothingInfo = new ErrorViewModel(message);
-                return View("../Shared/Nothing", nothingInfo);
+                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет новостей по запросу \"...{insertedText}...\"."));
             }
+            else
+            {
+                _logger.Debug("Получен список новостей по результатам запроса. ");
+                _logger.Debug($"Выводятся все новости по запросу. ");
 
-            WriteLogs($"Выводятся все новости по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
-
-            return View(newsItems);
+                _logger.Trace("Переход по маршруту /News/GetQueryResultNews.\n");
+                return View(newsItems);
+            }
         }
 
         /// <summary>
@@ -143,12 +138,15 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult DeleteNews(int id)
         {
-            var newsItem = _AllNews.GetItemById(id);
-            _AllNews.DeleteItem(newsItem, id);
+            var newsItem = _NewsUtils.GetNewsById(id);
+            if(newsItem!=null)
+            {
+                _NewsUtils.DeleteNewsById(newsItem);
+            }
+            _logger.Debug($"Удалена новость по id={id}. ");
 
-            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
-
-            return View("../Shared/SuccessForDelete", newsItem);
+            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
+            return View("SuccessForDelete", newsItem);
         }
 
         /// <summary>
@@ -162,38 +160,40 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveNews(New newsItem, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            WriteLogs("Запущен процесс сохранения новости в БД. ", NLogsModeEnum.Debug);
-
-            if (ModelState.IsValid)
+            try
             {
-                WriteLogs("Модель New прошла валидацию. ", NLogsModeEnum.Debug);
-
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
+                if (ModelState.IsValid)
                 {
-                    var folder = "/images/NewsTitleImages/";
-                    await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
-                    newsItem.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                    _logger.Debug("Модель New прошла валидацию. ");
+
+                    // если мы хотим поменять картинку
+                    if (changeTitleImagePath != null)
+                    {
+                        await _NewsUtils.SaveImagePathAsync(changeTitleImagePath);
+                    }
+
+                    newsItem = _NewsUtils.SetNewsModel(newsItem, formValues, changeTitleImagePath);
+                    _NewsUtils.SaveNews(newsItem);
+                    _logger.Debug("Новость успешно сохранена в БД. ");
+                    
+                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    return View("Success", newsItem);
                 }
-
-                newsItem.FullDescription = formValues["fullInfoAboutNew"];
-                newsItem.DateAdded = DateTime.Now;
-
-                _AllNews.SaveItem(newsItem, newsItem.Id);
-
-                WriteLogs("Новость успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
-
-                return View("../Shared/Success", newsItem);
+                else
+                {
+                    _logger.Warn("Модель New не прошла валидацию. ");
+                    newsItem = _NewsUtils.SetNewsModelByFormValues(newsItem, formValues);
+                    
+                    _logger.Trace("Возвращено /News/EditNews.cshtml\n");
+                    return View("EditNews", newsItem);
+                }
             }
-            else
+            catch (Exception error)
             {
-                WriteLogs("Модель New не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /News/EditNews.cshtml\n", NLogsModeEnum.Trace);
+                _logger.Error(error.Message);
 
-                newsItem.FullDescription = formValues["fullInfoAboutNew"];
-
-                return View("EditNews", newsItem);
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
             }
         }
     }

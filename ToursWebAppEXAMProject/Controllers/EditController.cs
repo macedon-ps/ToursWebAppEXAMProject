@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
+using NLog;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -11,8 +10,9 @@ namespace ToursWebAppEXAMProject.Controllers
     public class EditController : Controller
     {
 		private readonly TechTaskUtils _TechTaskUtils;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-		public EditController(TechTaskUtils TechTaskUtils)
+        public EditController(TechTaskUtils TechTaskUtils)
 		{
 			_TechTaskUtils = TechTaskUtils;
 		}
@@ -24,12 +24,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
 		public IActionResult Index(string type = "New")
 		{
-			WriteLogs("Переход по маршруту /Edit/Index.\n", NLogsModeEnum.Trace);
+            var viewModel = new EditMenuViewModel(false, "", type);
+            _logger.Debug("Получена вью-модель EditMenuViewModel с дефолтными параметрами. ");
 
-            // страница Index.cshtml по умолчанию принимает тип New, по нажатию на кнопки - др.типы (New, Blog, Product)
-            var model = new EditMenuViewModel(false, "", type);
-
-			return View(model);
+            _logger.Trace("Переход по маршруту /Edit/Index.\n");
+            return View(viewModel);
 		}
 
         /// <summary>
@@ -39,11 +38,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,admin")]
         public IActionResult TechTaskEdit()
 		{
-            WriteLogs("Переход по маршруту Edit/TechTaskEdit.\n", NLogsModeEnum.Trace);
-            
-			var model = _TechTaskUtils.GetTechTaskForPage("Edit");
+        	var model = _TechTaskUtils.GetTechTaskForPage("Edit");
+            _logger.Debug("Получена вью-модель TechTaskViewModel. ");
 
-			return View(model);
+            _logger.Trace("Переход по маршруту Edit/TechTaskEdit.\n");
+            return View(model);
 		}
 
         /// <summary>
@@ -53,26 +52,35 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,admin")]
         [HttpPost]
-		public IActionResult TechTaskEdit(TechTaskViewModel model)
+		public IActionResult TechTaskEdit(TechTaskViewModel viewModel)
 		{
-            WriteLogs("Сохранение выполнения ТЗ в БД. ", NLogsModeEnum.Debug);
-            
-			if (ModelState.IsValid)
-			{
-                WriteLogs("TechTaskViewModel прошла валидацию. ", NLogsModeEnum.Debug);
-                
-				_TechTaskUtils.SetTechTaskProgressAndSave(model);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _logger.Debug("Вью-модель TechTaskViewModel прошла валидацию. ");
 
-                WriteLogs("Показатели выполнения ТЗ сохранены. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено /Edit/TechTaskEdit.cshtml\n", NLogsModeEnum.Trace);
-                				
-				return View(model);
-			}
+                    _TechTaskUtils.SetTechTaskProgressAndSave(viewModel);
+                    _logger.Debug("Вью-модель TechTaskViewModel заполнена данными и сохранена. ");
 
-            WriteLogs("TechTaskViewModel не прошла валидацию. Показатели выполнения ТЗ не сохранены. ", NLogsModeEnum.Warn);
-            WriteLogs("Возвращено /Edit/TechTaskEdit.cshtml\n", NLogsModeEnum.Trace);
-            
-			return View(model);
+                    _logger.Trace("Возвращено /Edit/TechTaskHome.cshtml\n");
+                    return View(viewModel);
+                }
+                else
+                {
+                    _logger.Warn("Вью-модель TechTaskViewModel не прошла валидацию. Данные модели не сохранены. ");
+
+                    _logger.Trace("Возвращено /Edit/TechTaskHome.cshtml\n");
+                    return View(viewModel);
+                }
+            }
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
+
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
 		}
 	}
 }

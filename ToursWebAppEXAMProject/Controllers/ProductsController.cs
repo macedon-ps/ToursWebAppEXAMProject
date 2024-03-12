@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
+using NLog;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -15,7 +14,8 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly FileUtils _FileUtils;
-        
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
         {
             _AllProducts = Products;
@@ -30,7 +30,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllProducts()
         {
-            WriteLogs("Переход по маршруту /Products/GetAllProducts. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Products/GetAllProducts. ");
 
             var products = _AllProducts.GetAllItems();
 
@@ -39,12 +39,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = "В БД нет ни одного турпродукта";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs("Выводятся все турпродукты\n", NLogsModeEnum.Debug);
+            _logger.Debug("Выводятся все турпродукты\n");
 
             return View(products);
         }
@@ -56,7 +56,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetProduct(int id)
         {
-            WriteLogs($"Переход по маршруту /Products/GetProduct?id={id}. ", NLogsModeEnum.Trace);
+            _logger.Trace($"Переход по маршруту /Products/GetProduct?id={id}. ");
 
             var product = _AllProducts.GetItemById(id);
 
@@ -65,12 +65,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = $"В БД нет турпродукта с id = {id}";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs($"Выводится турпродукт с id = {id}.\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводится турпродукт с id = {id}.\n");
 
             return View(product);
         }
@@ -90,7 +90,7 @@ namespace ToursWebAppEXAMProject.Controllers
             productViewModel.Countries = countries;
             productViewModel.Cities = cities;
            
-            WriteLogs("Возвращено /Products/CreateProduct.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено /Products/CreateProduct.cshtml\n");
 
             return View(productViewModel);
         }
@@ -104,7 +104,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            WriteLogs("Переход по маршруту /Products/EditProduct. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Products/EditProduct. ");
 
             var product = _AllProducts.GetItemById(id);
             product.DateAdded = DateTime.Now;
@@ -122,7 +122,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult GetQueryResultProducts(bool isFullName, string insertedText)
         {
-            WriteLogs("Переход по маршруту /Products/GetQueryResultProducts. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Products/GetQueryResultProducts. ");
 
             var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
             var numberProducts = products.Count();
@@ -131,13 +131,13 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var message = $"Нет турпродуктов по запросу \"{insertedText}\". Возвращено ../Edit/Nothing.cshtml\n";
 
-                WriteLogs(message, NLogsModeEnum.Warn);
+                _logger.Warn(message);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Shared/Nothing", nothingInfo);
+                return View("Nothing", nothingInfo);
             }
 
-            WriteLogs($"Выводятся все турпродукты по запросу \"{insertedText}\".\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводятся все турпродукты по запросу \"{insertedText}\".\n");
 
             return View(products);
         }
@@ -154,9 +154,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var product = _AllProducts.GetItemById(id);
             _AllProducts.DeleteItem(product, id);
 
-            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
 
-            return View("../Shared/SuccessForDelete", product);
+            return View("SuccessForDelete", product);
         }
 
         /// <summary>
@@ -173,13 +173,13 @@ namespace ToursWebAppEXAMProject.Controllers
             // TODO: продумать способ создания страны и города с их id до создания продукта с его CountryId и CityId
             // отобразить UI создания страны и города
             
-            WriteLogs("Запущен процесс сохранения турпродукта в БД. ", NLogsModeEnum.Debug);
+            _logger.Debug("Запущен процесс сохранения турпродукта в БД. ");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    WriteLogs("Модель Product прошла валидацию. ", NLogsModeEnum.Debug);
+                    _logger.Debug("Модель Product прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (changeTitleImagePath != null)
@@ -196,20 +196,20 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     _AllProducts.SaveItem(product, product.Id);
 
-                    WriteLogs("Турпродукт успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                    WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+                    _logger.Debug("Турпродукт успешно сохранен в БД. ");
+                    _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
 
-                    return View("../Shared/Success", product);
+                    return View("Success", product);
                 }
                 catch (Exception error)
                 {
-                    return View("../Shared/Error", error.Message);
+                    return View("Error", error.Message);
                 }
             }
             else
             {
-                WriteLogs("Модель Product не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Products/EditProduct.cshtml\n", NLogsModeEnum.Trace);
+                _logger.Warn("Модель Product не прошла валидацию. ");
+                _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
 
                 product.FullDescription = formValues["fullInfoAboutProduct"];
 

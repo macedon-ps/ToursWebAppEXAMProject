@@ -6,10 +6,9 @@ using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Services.Hubs;
+using ToursWebAppEXAMProject.Services.Hubs;
 using ToursWebAppEXAMProject.Utils;
-using TourWebAppEXAMProject.Utils;
-using TourWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.Services.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +46,8 @@ builder.Services.AddTransient<AboutUtils>();
 builder.Services.AddTransient<FeedbackUtils>();
 builder.Services.AddTransient<FileUtils>();
 builder.Services.AddTransient<EmailService>();
+builder.Services.AddTransient<NewsUtils>();
+builder.Services.AddTransient<BlogUtils>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации

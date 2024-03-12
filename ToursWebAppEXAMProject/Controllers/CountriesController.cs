@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
+using NLog;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -14,7 +13,8 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly FileUtils _FileUtils;
-        
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
         {
             _AllCountries = Countries;
@@ -32,7 +32,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllCountries()
         {
-            WriteLogs("Переход по маршруту /Countries/GetAllCountries. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Countries/GetAllCountries. ");
             
             var countries = _AllCountries.GetAllItems();
 
@@ -41,12 +41,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = "В БД нет ни одной страны";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs("Выводятся все страны\n", NLogsModeEnum.Debug);
+            _logger.Debug("Выводятся все страны\n");
 
             return View(countries);
         }
@@ -58,7 +58,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetCountry(int id)
         {
-            WriteLogs($"Переход по маршруту /Countries/GetCountry?id={id}. ", NLogsModeEnum.Trace);
+            _logger.Trace($"Переход по маршруту /Countries/GetCountry?id={id}. ");
 
             var country = _AllCountries.GetItemById(id);
             
@@ -70,12 +70,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = $"В БД нет страны с id = {id}";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs($"Выводится страна с id = {id}.\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводится страна с id = {id}.\n");
 
             return View(country);
         }
@@ -87,11 +87,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateCountry()
         {
-            WriteLogs("Выполняется действие /Countries/CreateCountry. ", NLogsModeEnum.Trace);
+            _logger.Trace("Выполняется действие /Countries/CreateCountry. ");
 
             var country = new Country();
 
-            WriteLogs("Возвращено /Countries/EditCountry.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
 
             return View("EditCountry", country);
         }
@@ -105,7 +105,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditCountry(int id)
         {
-            WriteLogs("Переход по маршруту /Countries/EditCountry. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Countries/EditCountry. ");
 
             var country = _AllCountries.GetItemById(id);
 
@@ -126,7 +126,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult GetQueryResultCountries(bool isFullName, string fullNameOrKeywordOfItem)
         {
-            WriteLogs("Переход по маршруту /Countries/GetQueryResultCountries. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Countries/GetQueryResultCountries. ");
 
             var countries = _AllCountries.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
             var numberCountries = countries.Count();
@@ -135,13 +135,13 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var message = $"Нет стран по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
 
-                WriteLogs(message, NLogsModeEnum.Warn);
+                _logger.Warn(message);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Shared/Nothing", nothingInfo);
+                return View("Nothing", nothingInfo);
             }
 
-            WriteLogs($"Выводятся все страны по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводятся все страны по запросу \"{fullNameOrKeywordOfItem}\".\n");
 
             return View(countries);
         }
@@ -158,9 +158,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var country = _AllCountries.GetItemById(id);
             _AllCountries.DeleteItem(country, id);
 
-            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
 
-            return View("../Shared/SuccessForDelete", country);
+            return View("SuccessForDelete", country);
         }
 
         /// <summary>
@@ -174,11 +174,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveCountry(Country country, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            WriteLogs("Запущен процесс сохранения страны в БД. ", NLogsModeEnum.Debug);
+            _logger.Debug("Запущен процесс сохранения страны в БД. ");
 
             if (ModelState.IsValid)
             {
-                WriteLogs("Модель Country прошла валидацию. ", NLogsModeEnum.Debug);
+                _logger.Debug("Модель Country прошла валидацию. ");
 
                 // если мы хотим поменять картинку
                 if (changeTitleImagePath != null)
@@ -193,15 +193,15 @@ namespace ToursWebAppEXAMProject.Controllers
 
                 _AllCountries.SaveItem(country, country.Id);
 
-                WriteLogs("Страна успешно сохранена в БД. ", NLogsModeEnum.Debug);
-                WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+                _logger.Debug("Страна успешно сохранена в БД. ");
+                _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
 
-                return View("../Shared/Success", country);
+                return View("Success", country);
             }
             else
             {
-                WriteLogs("Модель Country не прошла валидацию. ", NLogsModeEnum.Warn);
-                WriteLogs("Возвращено /Countries/EditCountry.cshtml\n", NLogsModeEnum.Trace);
+                _logger.Warn("Модель Country не прошла валидацию. ");
+                _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
 
                 country.FullDescription = formValues["fullInfoAboutCountry"];
 

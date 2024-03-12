@@ -2,7 +2,7 @@
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using NLog;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -24,12 +24,13 @@ namespace ToursWebAppEXAMProject.Repositories
 		
 		public string[] itemKeyword = new string[4];
 		private readonly string itemTypeName;
-		
-		/// <summary>
-		/// DI. Подключение зависимости. Связывание с комнтекстом
-		/// </summary>
-		/// <param name="_context">контекст подключения к БД</param>
-		public BaseRepository(TourFirmaDBContext _context)
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// DI. Подключение зависимости. Связывание с комнтекстом
+        /// </summary>
+        /// <param name="_context">контекст подключения к БД</param>
+        public BaseRepository(TourFirmaDBContext _context)
 		{
 			context = _context;
 			dbSetEntityItems = _context.Set<T>();		
@@ -93,7 +94,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public IEnumerable<T> GetAllItems()
 		{
-			WriteLogs($"Произведено подключение к БД. Запрашиваются все {itemKeyword[2]}. ", NLogsModeEnum.Debug);
+			_logger.Debug($"Произведено подключение к БД. Запрашиваются все {itemKeyword[2]}. ");
 			
 			try
 			{
@@ -101,20 +102,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-					WriteLogs($"В БД нет {itemKeyword[3]}\n", NLogsModeEnum.Warn);
+					_logger.Warn($"В БД нет {itemKeyword[3]}\n");
 					
 					return new List<T>();
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно\n");
                     
 					return items ;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка {itemKeyword[3]} не осуществлена. \nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка {itemKeyword[3]} не осуществлена. \nКод ошибки: {ex.Message}\n");
                 
 				return new List<T>();
 			}
@@ -127,7 +128,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public T GetItemById(int id)
 		{
-            WriteLogs($"Произведено подключение к БД. Запрашивается {itemKeyword[1]} с id = {id}. ", NLogsModeEnum.Debug);
+            _logger.Debug($"Произведено подключение к БД. Запрашивается {itemKeyword[1]} с id = {id}. ");
             
 			try
 			{
@@ -135,20 +136,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (item == null)
 				{
-                    WriteLogs($"В БД отсутствует {itemKeyword[1]} с Id = {id}.\n", NLogsModeEnum.Warn);
+                    _logger.Warn($"В БД отсутствует {itemKeyword[1]} с Id = {id}.\n");
                     
 					return new T();
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно\n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно\n");
                     
 					return item;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка {itemKeyword[1]} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка {itemKeyword[1]} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new T();
 			}
@@ -162,7 +163,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <exception cref="NotImplementedException"></exception>
 		public IEnumerable<T> GetQueryResultItemsAfterFullName(string keyword, bool isFullName)
 		{
-            WriteLogs($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по ключевому слову \"{keyword}\". ", NLogsModeEnum.Debug);
+            _logger.Debug($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по ключевому слову \"{keyword}\". ");
             
 			try
 			{
@@ -188,20 +189,20 @@ namespace ToursWebAppEXAMProject.Repositories
 												
 				if (items == null)
 				{
-                    WriteLogs($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена.\n", NLogsModeEnum.Warn);
+                    _logger.Warn($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
                    
 					return new List<T>();
 				}
 				else
 				{
-                    WriteLogs("Выборка осуществлена успешно.\n", NLogsModeEnum.Debug);
+                    _logger.Debug("Выборка осуществлена успешно.\n");
                     
 					return items;
 				}
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new List<T>();
 			}
@@ -213,19 +214,19 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <param name="item">объект сущности</param>
 		public void SaveItem(T item, int id)
 		{
-            WriteLogs("Произведено подключение к БД. ", NLogsModeEnum.Debug);
+            _logger.Debug("Произведено подключение к БД. ");
             
 			try
 			{
 				if (item == null)
 				{
-                    WriteLogs("Модель не существует.\n", NLogsModeEnum.Warn);
+                    _logger.Warn("Модель не существует.\n");
                     
 					return;
 				}
 				if(item != null && id==0)
 				{
-                    WriteLogs($"Создание нового(ой) {itemKeyword[1]}.\n", NLogsModeEnum.Debug);
+                    _logger.Debug($"Создание нового(ой) {itemKeyword[1]}.\n");
                     
 					dbSetEntityItems.Add(item);
 					context.SaveChanges();
@@ -233,7 +234,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				}
 				if(item != null && id != 0)
 				{
-                    WriteLogs($"Обновление существующего(ей) {itemKeyword[1]}.\n", NLogsModeEnum.Debug);
+                    _logger.Debug($"Обновление существующего(ей) {itemKeyword[1]}.\n");
                     
 					context.Entry(item).State = EntityState.Modified;
 					context.SaveChanges();
@@ -242,7 +243,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Создание/обновление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Создание/обновление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 
@@ -252,13 +253,13 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <param name="id">идентификатор сущности</param>
 		public void DeleteItem(T tItem, int id)
 		{
-            WriteLogs("Произведено подключение к БД. ", NLogsModeEnum.Debug);
+            _logger.Debug("Произведено подключение к БД. ");
             
 			try
 			{
 				if (dbSetEntityItems.Find(id)!=null)
 				{
-                    WriteLogs($"Удаление {itemKeyword[1]}", NLogsModeEnum.Debug);
+                    _logger.Debug($"Удаление {itemKeyword[1]}");
                     
 					dbSetEntityItems.Remove(tItem);
 					context.SaveChanges();
@@ -266,7 +267,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                WriteLogs($"Удаление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n", NLogsModeEnum.Error);
+                _logger.Error($"Удаление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 	}

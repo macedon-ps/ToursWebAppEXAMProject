@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.Services.Email;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -11,6 +12,7 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -20,6 +22,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
         public IActionResult Index()
         {
+            _logger.Trace("Переход по маршруту /Account/Index.\n");
             return View();
         }
 
@@ -30,6 +33,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            _logger.Trace("Переход по маршруту /Account/Register.\n");
             return View();
         }
 
@@ -39,43 +43,61 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <param name="model">вьюмодель регистрации нового пользователя</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            // создание токена  с подтверждением по email
-
-            if (ModelState.IsValid)
+            try
             {
-                // добавляем пользователя
-                User user = new User { Email = model.Email, UserName = model.Email, BirthYear = model.Year };
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                // если пользователь создан
-                if (result.Succeeded)
+                // создание токена  с подтверждением по email
+                if (ModelState.IsValid)
                 {
-                    // генерация токена для пользователя и адреса для колбека
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action(
-                        "ConfirmEmail",
-                        "Account",
-                        new { userId = user.Id, code = token },
-                        protocol: HttpContext.Request.Scheme);
+                    _logger.Debug("Вью-модель RegisterViewModel прошла валидацию. ");
 
-                    // отправка сообщения на эл.почту для подтверждения регистрации
-                    EmailService emailService = new EmailService();
-                     await emailService.SendEmailAsync(model.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
-                    var message = $"Для завершения регистрации нового пользователя приложения {user.UserName}, проверьте электронную почту {user.Email} и перейдите по ссылке, указанной в письме";
+                    // добавляем пользователя
+                    User user = new User { Email = viewModel.Email, UserName = viewModel.Email, BirthYear = viewModel.Year };
+                    var result = await _userManager.CreateAsync(user, viewModel.Password);
 
-                    return View("Message", message);
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    // если пользователь создан
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        _logger.Debug($"Зарегистрирован новый пользователь {user.UserName}. ");
+
+                        // генерация токена для пользователя и адреса для колбека
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.Action(
+                            "ConfirmEmail",
+                            "Account",
+                            new { userId = user.Id, code = token },
+                            protocol: HttpContext.Request.Scheme);
+
+                        // отправка сообщения на эл.почту для подтверждения регистрации
+                        EmailService emailService = new EmailService();
+                        await emailService.SendEmailAsync(viewModel.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
+                        _logger.Debug($"Отправлено сообщение пользователю {viewModel.Email} для подтверждения его email. ");
+
+                        var message = $"Для завершения регистрации нового пользователя приложения {user.UserName}, проверьте электронную почту {user.Email} и перейдите по ссылке, указанной в письме";
+
+                        _logger.Trace("Переход по маршруту /Account/Message.\n");
+                        return View("Message", message);
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                            _logger.Error($"Error's code: {error.Code}\nError's description: {error.Description}");
+                        }
                     }
                 }
+                _logger.Trace("Возвращено /Account/Register.\n");
+                return View(viewModel);
             }
-            return View(model);
+            catch (Exception error)
+            {
+                _logger.Error(error.Message);
+
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
+            }
         }
 
         /// <summary>
@@ -89,7 +111,7 @@ namespace ToursWebAppEXAMProject.Controllers
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
-            {
+            {   
                 
                 return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован или не имеет подтверждающего токена регистрации"));
             }

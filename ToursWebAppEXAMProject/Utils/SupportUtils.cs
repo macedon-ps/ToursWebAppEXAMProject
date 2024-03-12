@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Services.GoogleApiClients;
+using ToursWebAppEXAMProject.Services.GoogleApiClients;
 
-namespace TourWebAppEXAMProject.Utils
+namespace ToursWebAppEXAMProject.Utils
 {
     public class SupportUtils
     {

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using NLog;
 using System.Text.Json;
-using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
 
 namespace ToursWebAppEXAMProject.Utils
 {
@@ -12,6 +11,7 @@ namespace ToursWebAppEXAMProject.Utils
 	{
 		private readonly IQueryResultInterface _QueryResult;
 		private readonly IBaseInterface<Country> _AllCountries;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public SearchUtils(IQueryResultInterface queryResult, IBaseInterface<Country> allCountries) 
 		{
@@ -46,7 +46,7 @@ namespace ToursWebAppEXAMProject.Utils
                 }
                 else
                 {
-                    WriteLogs($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ", NLogsModeEnum.Warn);
+                    _logger.Warn($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ");
                 }
 
                 if (city != null)
@@ -63,7 +63,7 @@ namespace ToursWebAppEXAMProject.Utils
                 }
                 else
                 {
-                    WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
+                    _logger.Warn($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ");
                 }
 
                 searchViewModel.AllCountriesAndCitiesByString = _QueryResult
@@ -74,8 +74,8 @@ namespace ToursWebAppEXAMProject.Utils
             }
             catch (Exception error)
 			{
-				WriteLogs($"Ошибка создания SearchProductViewModel: {error.Message}", NLogsModeEnum.Error);
-			}
+				_logger.Error($"Ошибка создания SearchProductViewModel: {error.Message}");
+            }
 
 			return searchViewModel;
 		}
@@ -111,7 +111,7 @@ namespace ToursWebAppEXAMProject.Utils
 				}
                 else
                 {
-                    WriteLogs($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ", NLogsModeEnum.Warn);
+                    _logger.Warn($"Ошибка поиска страны. Страна с названием {countryName} отсутствует в БД ");
                 }
 
                 if (city != null)
@@ -128,7 +128,7 @@ namespace ToursWebAppEXAMProject.Utils
                 }
                 else
                 {
-                    WriteLogs($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ", NLogsModeEnum.Warn);
+					_logger.Warn($"Ошибка поиске города. Нет ни одного города для страны {countryName} в БД ");
                 }
 
                 searchViewModel.AllCountriesAndCitiesByString = _QueryResult
@@ -139,7 +139,7 @@ namespace ToursWebAppEXAMProject.Utils
             }
             catch (Exception error)
             {
-                WriteLogs($"Ошибка создания SearchProductViewModel: {error.Message}", NLogsModeEnum.Error);
+                _logger.Error($"Ошибка создания SearchProductViewModel: {error.Message}");
             }
 
 			return searchViewModel;
@@ -260,7 +260,7 @@ namespace ToursWebAppEXAMProject.Utils
         /// </summary>
         /// <param name="listOfStrings">коллекция строк</param>
         /// <returns></returns>
-        private string ParseListOfStringsToString(List<string> allItemsListOfString)
+        public string ParseListOfStringsToString(List<string> allItemsListOfString)
 		{
 			var allItemsOneString = "";
 			allItemsOneString = String.Join(",", allItemsListOfString);

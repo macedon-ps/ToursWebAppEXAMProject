@@ -1,10 +1,11 @@
-﻿using ToursWebAppEXAMProject.Enums;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+﻿using NLog;
 
-namespace TourWebAppEXAMProject.Utils
+namespace ToursWebAppEXAMProject.Utils
 {
     public class FileUtils
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Метод сохранения картинки для страницы About по указанному пути с проверкой пути
         /// </summary>
@@ -36,11 +37,11 @@ namespace TourWebAppEXAMProject.Utils
                 if (changeImagePath != null)
                 {
                     await changeImagePath.CopyToAsync(fstream);
-                    WriteLogs($"Новая картинка сохранена по пути: {relativeFilePath}\n", NLogsModeEnum.Debug);
+                    _logger.Debug($"Новая картинка сохранена по пути: {relativeFilePath}\n");
                 }
                 else
                 {
-                    WriteLogs($"Ошибка сохранения картинки. Путь: {relativeFilePath}\n", NLogsModeEnum.Error);
+                    _logger.Error($"Ошибка сохранения картинки. Путь: {relativeFilePath}\n");
                     return;
                 }
             }
@@ -60,7 +61,7 @@ namespace TourWebAppEXAMProject.Utils
             if (!exists)
             {
                 Directory.CreateDirectory(fullPathToFolder);
-                WriteLogs($"Новая папка создана по пути: {fullPathToFolder}\n", NLogsModeEnum.Debug);
+                _logger.Debug($"Новая папка создана по пути: {fullPathToFolder}\n");
             }
 
             return fullPathToFolder;

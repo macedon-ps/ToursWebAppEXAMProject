@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.Enums;
+using NLog;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
-using TourWebAppEXAMProject.Utils;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -14,8 +13,8 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly IBaseInterface<City> _AllCities;
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly FileUtils _FileUtils;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-       
         public CitiesController(IBaseInterface<City> Cities, IBaseInterface<Country> Countries, FileUtils FileUtils)
         {
             _AllCities = Cities;
@@ -29,7 +28,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllCities()
         {
-            WriteLogs("Переход по маршруту /Cities/GetAllCities. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Cities/GetAllCities. ");
 
             var cities = _AllCities.GetAllItems();
 
@@ -38,12 +37,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = "В БД нет ни одного города";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs("Выводятся все города\n", NLogsModeEnum.Debug);
+            _logger.Debug("Выводятся все города\n");
 
             return View(cities);
         }
@@ -55,7 +54,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetCity(int id)
         {
-            WriteLogs($"Переход по маршруту /Cities/GetCity?id={id}. ", NLogsModeEnum.Trace);
+            _logger.Trace($"Переход по маршруту /Cities/GetCity?id={id}. ");
 
             var city = _AllCities.GetItemById(id);
 
@@ -64,12 +63,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 var errorMessage = $"В БД нет города с id = {id}";
                 var errorInfo = new ErrorViewModel(errorMessage);
 
-                WriteLogs($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n", NLogsModeEnum.Warn);
+                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
 
-                return View("../Shared/Error", errorInfo);
+                return View("Error", errorInfo);
             }
 
-            WriteLogs($"Выводится город с id = {id}.\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводится город с id = {id}.\n");
 
             return View(city);
         }
@@ -81,7 +80,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateCity()
         {
-            WriteLogs("Выполняется действие /Cities/CreateCity. ", NLogsModeEnum.Trace);
+            _logger.Trace("Выполняется действие /Cities/CreateCity. ");
 
             var cityViewModel = new CreateCityViewModel();
             var city = new City();
@@ -89,7 +88,7 @@ namespace ToursWebAppEXAMProject.Controllers
             cityViewModel.City = city;
             cityViewModel.Countries = countries;
 
-            WriteLogs("Возвращено /Cities/CreateCity.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено /Cities/CreateCity.cshtml\n");
 
             return View(cityViewModel);
         }
@@ -103,7 +102,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditCity(int id)
         {
-            WriteLogs("Переход по маршруту /Cities/EditCity. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Cities/EditCity. ");
 
             // TODO: вставить индекс страны при редактировании
 
@@ -124,7 +123,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult GetQueryResultCities(bool isFullName, string fullNameOrKeywordOfItem)
         {
-            WriteLogs("Переход по маршруту /Cities/GetQueryResultCities. ", NLogsModeEnum.Trace);
+            _logger.Trace("Переход по маршруту /Cities/GetQueryResultCities. ");
 
             var cities = _AllCities.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
             var numberCities = cities.Count();
@@ -133,13 +132,13 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 var message = $"Нет городов по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
 
-                WriteLogs(message, NLogsModeEnum.Warn);
+                _logger.Warn(message);
 
                 var nothingInfo = new ErrorViewModel(message);
-                return View("../Shared/Nothing", nothingInfo);
+                return View("Nothing", nothingInfo);
             }
 
-            WriteLogs($"Выводятся все города по запросу \"{fullNameOrKeywordOfItem}\".\n", NLogsModeEnum.Debug);
+            _logger.Debug($"Выводятся все города по запросу \"{fullNameOrKeywordOfItem}\".\n");
 
             return View(cities);
         }
@@ -156,9 +155,9 @@ namespace ToursWebAppEXAMProject.Controllers
             var city = _AllCities.GetItemById(id);
             _AllCities.DeleteItem(city, id);
 
-            WriteLogs("Возвращено ../Shared/SuccessForDelete.cshtml\n", NLogsModeEnum.Trace);
+            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
 
-            return View("../Shared/SuccessForDelete", city);
+            return View("SuccessForDelete", city);
         }
 
         /// <summary>
@@ -174,11 +173,11 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             try
             {
-                WriteLogs("Запущен процесс сохранения города в БД. ", NLogsModeEnum.Debug);
+                _logger.Debug("Запущен процесс сохранения города в БД. ");
 
                 if (ModelState.IsValid)
                 {
-                    WriteLogs("Модель City прошла валидацию. ", NLogsModeEnum.Debug);
+                    _logger.Debug("Модель City прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (changeTitleImagePath != null)
@@ -200,15 +199,15 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     _AllCities.SaveItem(city, city.Id);
 
-                    WriteLogs("Город успешно сохранен в БД. ", NLogsModeEnum.Debug);
-                    WriteLogs("Возвращено ../Shared/Success.cshtml\n", NLogsModeEnum.Trace);
+                    _logger.Debug("Город успешно сохранен в БД. ");
+                    _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
 
-                    return View("../Shared/Success", city);
+                    return View("Success", city);
                 }
                 else
                 {
-                    WriteLogs("Модель City не прошла валидацию. ", NLogsModeEnum.Warn);
-                    WriteLogs("Возвращено /Cities/EditCity.cshtml\n", NLogsModeEnum.Trace);
+                    _logger.Warn("Модель City не прошла валидацию. ");
+                    _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
 
                     city.FullDescription = formValues["fullInfoAboutCity"];
 
@@ -217,7 +216,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
             catch (Exception ex)
             {
-                WriteLogs($"{ex.Message}", NLogsModeEnum.Error);
+                _logger.Error($"{ex.Message}");
                 return View("Error", ex.Message);
             }
          }
