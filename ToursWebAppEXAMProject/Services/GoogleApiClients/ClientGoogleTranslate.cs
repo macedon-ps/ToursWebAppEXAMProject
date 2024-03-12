@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Translation.V2;
 
-namespace TourWebAppEXAMProject.Services.GoogleApiClients
+namespace ToursWebAppEXAMProject.Services.GoogleApiClients
 {
     public static class ClientGoogleTranslate
     {

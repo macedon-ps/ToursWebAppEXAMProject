@@ -7,29 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\**" />
-    <Compile Remove="Controllers\Новая папка\**" />
-    <Compile Remove="WindOfWanderings.AspNetCore.Domain\**" />
-    <Compile Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
-    <Content Remove="Areas\**" />
-    <Content Remove="Controllers\Новая папка\**" />
-    <Content Remove="WindOfWanderings.AspNetCore.Domain\**" />
-    <Content Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
-    <EmbeddedResource Remove="Areas\**" />
-    <EmbeddedResource Remove="Controllers\Новая папка\**" />
-    <EmbeddedResource Remove="WindOfWanderings.AspNetCore.Domain\**" />
-    <EmbeddedResource Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
-    <None Remove="Areas\**" />
-    <None Remove="Controllers\Новая папка\**" />
-    <None Remove="WindOfWanderings.AspNetCore.Domain\**" />
-    <None Remove="WindOfWanderings.AspNetCore.Infrastructure\**" />
-    </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="bundleconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.schema\5.0.1\contentFiles\any\any\NLog.xsd" />
   </ItemGroup>

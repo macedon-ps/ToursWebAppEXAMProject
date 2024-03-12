@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourWebAppEXAMProject", "ToursWebAppEXAMProject\TourWebAppEXAMProject.csproj", "{C43B84DA-C64C-4889-8561-19AAB136B900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToursWebAppEXAMProject", "ToursWebAppEXAMProject\ToursWebAppEXAMProject.csproj", "{C43B84DA-C64C-4889-8561-19AAB136B900}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

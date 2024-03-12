@@ -1,11 +1,10 @@
 ﻿using MailKit.Net.Imap;
 using MailKit;
-using MailKit.Net.Pop3;
 using MailKit.Net.Smtp;
 using MimeKit;
 using ToursWebAppEXAMProject.ConfigFiles;
 
-namespace TourWebAppEXAMProject.Services.Email
+namespace ToursWebAppEXAMProject.Services.Email
 {
     public class EmailService
     {

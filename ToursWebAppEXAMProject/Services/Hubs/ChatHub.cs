@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using ToursWebAppEXAMProject.Enums;
-using static TourWebAppEXAMProject.Services.LogsMode.LogsMode;
+using NLog;
 
-namespace TourWebAppEXAMProject.Services.Hubs
+namespace ToursWebAppEXAMProject.Services.Hubs
 {
     public class ChatHub : Hub
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Метод рассылки сообщений в SignalR Core
         /// </summary>

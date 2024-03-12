@@ -1,7 +1,7 @@
 ﻿using NLog;
 using ToursWebAppEXAMProject.Enums;
 
-namespace TourWebAppEXAMProject.Services.LogsMode
+namespace ToursWebAppEXAMProject.Services.LogsMode
 {
     public class LogsMode
     {
