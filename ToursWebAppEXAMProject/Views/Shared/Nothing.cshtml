@@ -1,9 +1,6 @@
-﻿@model ErrorViewModel
-@{
-    ViewData["Title"] = "Nothing";
-}
+﻿@model NothingViewModel
 
-<div class="errorPage">
+<div class="errorPage"> 
     <div class="errorButton">
         <a asp-controller="Edit" asp-action="Index">Index</a>
         <a asp-controller="Edit" asp-action="">Резерв 2</a>
@@ -14,10 +11,11 @@
         <h3>К сожалению, нет данных:</h3><br />
 
         <h2>Описание проблемы:</h2><br />
-        <h3 class="text-danger">@Model.ErrorMessage</h3><br />
+        <h3 class="text-danger">@Model.
+            WarnMessage</h3><br />
         <h3>Попробуйте сделать другой запрос</h3>
 
         <h2>Время появления проблемы: </h2><br />
-        <h3 class="text-danger">@Model.DateTimeError</h3>
+        <h3 class="text-danger">@Model.DateTimeWarn</h3>
     </div>
 </div>
