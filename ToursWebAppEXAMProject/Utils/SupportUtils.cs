@@ -20,7 +20,7 @@ namespace ToursWebAppEXAMProject.Utils
         /// Метод получения вью-модели TranslateTextViewModel
         /// </summary>
         /// <returns></returns>
-        public TranslateTextViewModel? GetModel()
+        public TranslateTextViewModel GetModel()
         {
             var viewModel = new TranslateTextViewModel();
             

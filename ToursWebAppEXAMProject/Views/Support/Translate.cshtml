@@ -40,7 +40,8 @@
                     </div>
                     <div class="area-translate">
                         <h3 class="title">Перевод текста:</h3>
-                        <textarea asp-for="TextTranslated" rows="7" cols="79" class="text-area-translate" /> @Model.TextTranslated
+                        <!-- Не исправлять теги <textarea/> и </textarea>, иначе не выводит содержимое -->
+                        <textarea asp-for="TextTranslated" rows="7" cols="79" class="text-area-translate"/> @Model.TextTranslated
                         </textarea>
                     </div>
                 </div>
