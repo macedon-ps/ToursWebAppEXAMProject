@@ -26,6 +26,11 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(400, ErrorMessage = "Краткое описание города не должно содержать более 400 символов")]
         public string ShortDescription { get; set; } = "Краткое описание города";
 
+        [Required(ErrorMessage = "Введите краткое описание достопримечательностей")]
+        [Display(Name = "Достопримечательности")]
+        [StringLength(400, ErrorMessage = "Краткое описание достопримечательностей не должно содержать более 400 символов")]
+        public string? LocalDescrition { get; set; } = "Достопримечательности";
+
         [Required(ErrorMessage = "Введите полное описание города")]
         [Display(Name = "Полное описание города")]
         public string FullDescription { get; set; } = "Полное описание города";
