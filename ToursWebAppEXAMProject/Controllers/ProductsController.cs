@@ -170,9 +170,6 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveProduct(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            // TODO: продумать способ создания страны и города с их id до создания продукта с его CountryId и CityId
-            // отобразить UI создания страны и города
-            
             _logger.Debug("Запущен процесс сохранения турпродукта в БД. ");
 
             if (ModelState.IsValid)

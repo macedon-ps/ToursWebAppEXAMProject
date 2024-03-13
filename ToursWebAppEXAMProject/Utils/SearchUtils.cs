@@ -197,14 +197,8 @@ namespace ToursWebAppEXAMProject.Utils
 		/// <returns></returns>
 		private City GetCityByCountrySelectedName(string countryNameSelected)
 		{
-			var city = _QueryResult.GetCitiesByCountryName(countryNameSelected).First();
-
-			if(city == null)
-			{
-				city = new City();
-			}
-
-			return city;
+			var city = _QueryResult.GetCitiesByCountryName(countryNameSelected).First() ?? new City();
+            return city;
 		}
 
         /// <summary>
@@ -216,13 +210,7 @@ namespace ToursWebAppEXAMProject.Utils
         private City GetCityByCitySelectedName(string countryNameSelected, string cityNameSelected)
         {
             var city = _QueryResult.GetCitiesByCountryName(countryNameSelected).FirstOrDefault
-				(n => n.Name == cityNameSelected);
-
-            if (city == null)
-            {
-                city = new City();
-            }
-
+				(n => n.Name == cityNameSelected) ?? new City();
             return city;
         }
 
