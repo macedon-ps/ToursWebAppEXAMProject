@@ -1,14 +1,6 @@
 ﻿@model SearchProductViewModel
 @{
     ViewData["Title"] = "Search Page";
-
-    string ParseListOfStringsToString(List<string> allItemsListOfString)
-	{
-		var allItemsOneString = "";
-		allItemsOneString = String.Join(",", allItemsListOfString);
-
-		return allItemsOneString;
-	}
 }
 
 <div class="searchPage">

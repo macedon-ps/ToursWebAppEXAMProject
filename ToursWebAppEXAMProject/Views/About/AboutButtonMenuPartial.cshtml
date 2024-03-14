@@ -3,11 +3,11 @@
     <a asp-controller="About" asp-action="Index" asp-fragment="operation_mode">Режим работы</a>
     <a asp-controller="About" asp-action="Index" asp-fragment="photo_gallery">Фото галлерея</a>
     <a asp-controller="About" asp-action="Index" asp-fragment="feedback">Обратная связь</a>
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
+    @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
         <a asp-controller="About" asp-action="EditMenuAboutPage">Create / Edit / Delete</a>
     }
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
+    @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="About" asp-action="TechTaskAbout">ТЗ для About</a>
     }

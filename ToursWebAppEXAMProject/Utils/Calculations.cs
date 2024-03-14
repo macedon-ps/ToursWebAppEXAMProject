@@ -4,7 +4,7 @@
     {
         public static int CalculateAge(DateTime birthday)
         {
-            if (birthday == null) return 0;
+            if (birthday == DateTime.MinValue) return 0;
             else
             {
                 var now = DateTime.Now;

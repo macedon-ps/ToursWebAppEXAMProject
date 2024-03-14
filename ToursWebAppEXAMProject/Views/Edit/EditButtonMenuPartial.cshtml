@@ -1,15 +1,15 @@
 ﻿<div class="editButton">
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
+    @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("editor") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="Edit" asp-action="Index" asp-route-type="New">Create / Edit / Delete новости</a>
-        <a asp-controller="Edit" asp-action="Index" asp-route-type="Blog">Create / Edit / Delete блоги</a>
-        <a asp-controller="Edit" asp-action="Index" asp-route-type="Product">Create / Edit / Delete турпродукты</a>
-        <a asp-controller="Edit" asp-action="Index" asp-route-type="Country">Create / Edit / Delete страны</a>
-        <a asp-controller="Edit" asp-action="Index" asp-route-type="City">Create / Edit / Delete города</a>
+        <a asp-controller="Edit" asp-action="Index" asp-route-type="New">Cr | Ed | Del новости</a>
+        <a asp-controller="Edit" asp-action="Index" asp-route-type="Blog">Cr | Ed | Del блоги</a>
+        <a asp-controller="Edit" asp-action="Index" asp-route-type="Product">Cr | Ed | Del турпродукты</a>
+        <a asp-controller="Edit" asp-action="Index" asp-route-type="Country">Cr | Ed | Del страны</a>
+        <a asp-controller="Edit" asp-action="Index" asp-route-type="City">Cr | Ed | Del города</a>
     }
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
+    @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="Edit" asp-action="TechTaskEdit">ТЗ для Edit</a>
+        <a asp-controller="Edit" asp-action="TechTaskEdit" class="smallFontSize">ТЗ для Edit</a>
     }
 </div>
 

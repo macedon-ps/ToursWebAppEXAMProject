@@ -57,13 +57,13 @@ namespace ToursWebAppEXAMProject.Utils
             _AboutPage.DeleteItem(aboutPage, id);
         }
 
-        public EditAboutPageViewModel SetEditAboutViewModelAndSave(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
+        public async Task<EditAboutPageViewModel> SetEditAboutViewModelAndSave(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
         {
             // Main
             if (changeMainImagePath != null)
             {
                 var folder = "/images/AboutPage/Main/";
-                _FileUtils.SaveImageToFolder(folder, changeMainImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changeMainImagePath);
                 viewModel.MainImagePath = $"{folder}{changeMainImagePath.FileName}";
             }
 
@@ -71,7 +71,7 @@ namespace ToursWebAppEXAMProject.Utils
             if (changeAboutImagePath != null)
             {
                 var folder = "/images/AboutPage/About/";
-                _FileUtils.SaveImageToFolder(folder, changeAboutImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changeAboutImagePath);
                 viewModel.AboutImagePath = $"{folder}{changeAboutImagePath.FileName}";
             }
 
@@ -79,28 +79,28 @@ namespace ToursWebAppEXAMProject.Utils
             if (changeDetailsImagePath != null)
             {
                 var folder = "/images/AboutPage/Details/";
-                _FileUtils.SaveImageToFolder(folder, changeDetailsImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changeDetailsImagePath);
                 viewModel.DetailsImagePath = $"{folder}{changeDetailsImagePath.FileName}";
             }
             // OperationMode
             if (changeOperationModeImagePath != null)
             {
                 var folder = "/images/AboutPage/OperationMode/";
-                _FileUtils.SaveImageToFolder(folder, changeOperationModeImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changeOperationModeImagePath);
                 viewModel.OperationModeImagePath = $"{folder}{changeOperationModeImagePath.FileName}";
             }
             // PhotoGallery
             if (changePhotoGalleryImagePath != null)
             {
                 var folder = "/images/AboutPage/PhotoGallery/";
-                _FileUtils.SaveImageToFolder(folder, changePhotoGalleryImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changePhotoGalleryImagePath);
                 viewModel.PhotoGalleryImagePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
             }
             // Feedback
             if (changeFeedbackImagePath != null)
             {
                 var folder = "/images/AboutPage/Feedback/";
-                _FileUtils.SaveImageToFolder(folder, changeFeedbackImagePath);
+                await _FileUtils.SaveImageToFolder(folder, changeFeedbackImagePath);
                 viewModel.FeedbackImagePath = $"{folder}{changeFeedbackImagePath.FileName}";
             }
 
