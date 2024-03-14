@@ -43,7 +43,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				// для городов
 				items = context.Cities
-				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
+				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.LocalDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
 				.ToList();
 
 				if (items == null)
@@ -132,7 +132,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				foreach (Country country in countries)
 				{
 					cities = context.Cities
-					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City where City.CountryId = {country.Id}")
+					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.LocalDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City where City.CountryId = {country.Id}")
 					.ToList();
 
 					// заполняем countriesWithSitiesOneString, citiesOfOneCountryListOneString и allInfo
@@ -174,27 +174,6 @@ namespace ToursWebAppEXAMProject.Repositories
 				return $"Вызвано исключение: {ex.Message}";
 			}
 		}
-
-
-        /// <summary>
-        /// Метод выборки из БД и преобразования в строку всех стран и их описаний
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string GetAllCountryShortDescriptionsByString()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Метод выборки из БД и преобразования в строку всех городов и их описаний
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string GetAllCityShortDescriptionsByString()
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Метод выборки из БД и преобразования в строку всех стран и их карт

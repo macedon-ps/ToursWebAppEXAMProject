@@ -28,11 +28,6 @@ namespace ToursWebAppEXAMProject.ViewModels
 		public SelectList? CountriesList { get; set; } = null!;
 
 		/// <summary>
-		/// Событие изменения списка стран
-		/// </summary>
-		//public event Action? SelectCountryChangeEvent;
-
-		/// <summary>
 		/// Название выбранного города
 		/// </summary>
 		[Display(Name = "Город:")]
@@ -56,17 +51,16 @@ namespace ToursWebAppEXAMProject.ViewModels
         /// Выбранные даты отдыха
         /// </summary>
         [Display(Name = "Даты поездки:")]
-		// TODO: нужно доработать данный параметр DaysInterval / возможно это только дата начала ???
-		public DateTime DateFrom { get; set; } = Convert.ToDateTime((DateTime.Now).ToShortDateString());
+		public DateTime DateFrom { get; set; } = Convert.ToDateTime(DateTime.Now.ToShortDateString());
 
 		// по умолчанию - интервал в 5 дней
-        public DateTime DateTo { get; set; } = Convert.ToDateTime((DateTime.Now.AddDays(5)).ToShortDateString());
+        public DateTime DateTo { get; set; } = Convert.ToDateTime(DateTime.Now.AddDays(5).ToShortDateString());
 
         /// <summary>
         /// Количество дней отдыха
         /// </summary>
         [Display(Name = "Дней поездки:")]
-		public NumberOfDaysEnum NumberOfDaysFromSelectList { get; set; } = NumberOfDaysEnum.Шесть_Восемь;
+		public NumberOfDaysEnum NumberOfDaysFromSelectList { get; set; } = NumberOfDaysEnum.Четыре_Пять;
 
 		/// <summary>
 		/// Количество взрослых и детей
@@ -79,29 +73,5 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		[Display(Name = "Карта / фотографии:")]
 		public string MapImagePath { get; set; } = "/images/Maps/UkraineMap.jpg";
-		
-		/// <summary>
-		/// Краткая информация о стране
-		/// </summary>
-		[Display(Name = "Информация о стране:")]
-		public string CountryDescription { get; set; } = "Информация о стране:";
-
-		/// <summary>
-		/// Краткая информация о городе
-		/// </summary>
-		[Display(Name = "Информация о городе:")]
-		public string CityDescrition { get; set; } = "Информация о городе:";
-
-		/// <summary>
-		/// Краткая информация о достопримечательности
-		/// </summary>
-		[Display(Name = "Достопримечательность:")]
-		public string LocalDescrition { get; set; } = "Достопримечательность:";
-
-		/// <summary>
-		/// Список адресов картинок / изображений
-		/// </summary>
-		public List<string>? PicturesImagePath { get; set; }
-
 	}
 }

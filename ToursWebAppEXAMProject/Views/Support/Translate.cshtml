@@ -13,12 +13,12 @@
             <input asp-for="LanguagesList" type="hidden" />
             <input asp-for="LanguagesListJson" type="hidden" />
             <div class="container">
-                <h1 class="display-4 text-center">Translate text</h1>
+                <h1 class="title">Перевод текста</h1>
                 
                 <div>
                     <div>
                         <label asp-for="LanguageFrom"></label>
-                        <select asp-for="LanguageFrom"
+                        <select asp-for="LanguageFrom" class="languageFrom"
                             asp-items="@Model.LanguagesList" name="langFromSelect">
                         </select>
                     </div>
@@ -26,7 +26,7 @@
                 <div>
                     <div>
                         <label asp-for="LanguageTo"></label>
-                        <select asp-for="LanguageTo"
+                        <select asp-for="LanguageTo" class="languageTo"
                             asp-items="@Model.LanguagesList" name="langToSelect">   
                         </select>
                     </div>

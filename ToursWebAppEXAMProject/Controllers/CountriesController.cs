@@ -120,28 +120,28 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода результатов выборки стран по тому, что ищем - полное название или ключевое слово (букву)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
-        /// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
+        /// <param name="InsertedText">текст для поиска</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultCountries(bool isFullName, string fullNameOrKeywordOfItem)
+        public IActionResult GetQueryResultCountries(bool isFullName, string InsertedText)
         {
             _logger.Trace("Переход по маршруту /Countries/GetQueryResultCountries. ");
 
-            var countries = _AllCountries.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+            var countries = _AllCountries.GetQueryResultItemsAfterFullName(InsertedText, isFullName);
             var numberCountries = countries.Count();
 
             if (numberCountries == 0)
             {
-                var message = $"Нет стран по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
+                var message = $"Нет стран по запросу \"{InsertedText}\". Возвращено ../Shared/Nothing.cshtml\n";
 
                 _logger.Warn(message);
 
-                var nothingInfo = new ErrorViewModel(message);
+                var nothingInfo = new NothingViewModel(message);
                 return View("Nothing", nothingInfo);
             }
 
-            _logger.Debug($"Выводятся все страны по запросу \"{fullNameOrKeywordOfItem}\".\n");
+            _logger.Debug($"Выводятся все страны по запросу \"{InsertedText}\".\n");
 
             return View(countries);
         }

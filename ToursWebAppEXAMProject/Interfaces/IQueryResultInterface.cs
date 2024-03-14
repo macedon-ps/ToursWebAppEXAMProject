@@ -10,10 +10,6 @@ namespace ToursWebAppEXAMProject.Interfaces
 
         string GetAllCountriesAndCitiesByString();
 
-		string GetAllCountryShortDescriptionsByString();
-
-        string GetAllCityShortDescriptionsByString();
-
 		string GetAllCountryMapsByString();
 
     }

@@ -133,7 +133,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
                 _logger.Warn(message);
 
-                var nothingInfo = new ErrorViewModel(message);
+                var nothingInfo = new NothingViewModel(message);
                 return View("Nothing", nothingInfo);
             }
 

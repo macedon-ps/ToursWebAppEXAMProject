@@ -117,28 +117,28 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода результатов выборки городов по тому, что ищем - полное название или ключевое слово (букву)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
-        /// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
+        /// <param name="InsertedText">текст для поиска</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultCities(bool isFullName, string fullNameOrKeywordOfItem)
+        public IActionResult GetQueryResultCities(bool isFullName, string InsertedText)
         {
             _logger.Trace("Переход по маршруту /Cities/GetQueryResultCities. ");
 
-            var cities = _AllCities.GetQueryResultItemsAfterFullName(fullNameOrKeywordOfItem, isFullName);
+            var cities = _AllCities.GetQueryResultItemsAfterFullName(InsertedText, isFullName);
             var numberCities = cities.Count();
 
             if (numberCities == 0)
             {
-                var message = $"Нет городов по запросу \"{fullNameOrKeywordOfItem}\". Возвращено ../Shared/Nothing.cshtml\n";
+                var message = $"Нет городов по запросу \"{InsertedText}\". Возвращено ../Shared/Nothing.cshtml\n";
 
                 _logger.Warn(message);
 
-                var nothingInfo = new ErrorViewModel(message);
+                var nothingInfo = new NothingViewModel(message);
                 return View("Nothing", nothingInfo);
             }
 
-            _logger.Debug($"Выводятся все города по запросу \"{fullNameOrKeywordOfItem}\".\n");
+            _logger.Debug($"Выводятся все города по запросу \"{InsertedText}\".\n");
 
             return View(cities);
         }

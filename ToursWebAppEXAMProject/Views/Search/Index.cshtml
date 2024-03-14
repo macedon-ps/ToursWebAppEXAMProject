@@ -16,9 +16,9 @@
     @await Html.PartialAsync("SearchButtonMenuPartial")
 
     <div class="searchHeader">
-        <h1 class="title">Поиск туристических продуктов:</h1>
-        <<hr class="horizontal-line" />
-        <br />
+        <h1 class="titleLowHeader">Поиск туристических продуктов:</h1>
+        <hr class="horizontal-line-search" />
+        
         <div class="searchMenu">  
 
             <form class="form" asp-controller="Search" asp-action="Index" method="post" name="myForm">
@@ -29,62 +29,56 @@
                 <input type="hidden" asp-for="AllCountriesAndMapsByString" value="@Model.AllCountriesAndMapsByString" id="AllCountriesAndMaps" />
                 @*<input type="hidden" asp-for="CityNameSelected" />*@
 
-                @*свойства, кот. предварительно преобразуются в строки*@
-                @*<input type="hidden"  name="CountriesOneStringFormValue" value="@ParseListOfStringsToString(Model.Countries)" />
-                <input type="hidden"  name="CitiesOneStringFormValue" value="@ParseListOfStringsToString(Model.Cities)" />*@
-                
                 @*свойства для данных страны и города при возврате на предыдущую страницу*@
                 <input type="hidden" id="backCountry" value="" />
                 <input type="hidden" id="backCity" value="" />
 
-                @* Первый блок элементов: 
-                    3 select (список стран, количество дней отдыха, количество отдыхающих), 
-                    календарь и кнопка "Найти тур" *@
+                @* Первый блок элементов: 3 select (список стран, количество дней отдыха, количество отдыхающих), календарь и кнопка "Найти тур" *@
                 
                 <div class="flexRow searchBlock1">   
                     
                     @*Список стран (выпадающий список, единственный выбор)
                     По выбранной стране будет выводиться список городов этой страны class="flexColumn blockWidth20"*@
-                    <div >
+                    <div class="block1Left">
+                        <label asp-for="CountryNameSelected"></label>
+                        <select asp-for="CountryNameSelected" 
+                            asp-items="@Model.CountriesList" id="countriesSelect">
+                        </select>
+                    </div>
+                    
+                    <div class="block1Right">
+                        @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
+                        @{
+                            // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
+                        }
                         <div>
-                            <label asp-for="CountryNameSelected"></label>
-                            <select asp-for="CountryNameSelected" 
-                                asp-items="@Model.CountriesList" id="countriesSelect">
+                            <label asp-for="DateFrom"></label>
+                            <input asp-for="DateFrom" />
+                            <input asp-for="DateTo" />
+                        </div>
+
+                        @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
+                        <div class="block1Middle">
+                            <label asp-for="NumberOfDaysFromSelectList"></label>
+                            <select asp-for="NumberOfDaysFromSelectList"
+                                    asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
                             </select>
                         </div>
-                        @*<div id="countriesSelectDiv" class="flexColumn blockWidth20"></div>*@
+
+                        @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
+                        <div class="block1Middle">
+                            <label asp-for="NumberOfPeopleFromSelectList"></label>
+                            <select asp-for="NumberOfPeopleFromSelectList"
+                                    asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
+                            </select>
+                        </div>
+
+                        @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
+                        <div>
+                            <input type="submit" value="Найти тур" />
+                        </div>
                     </div>
                     
-                    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
-                    @{
-                        // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
-                    }
-                    <div >
-                        <label asp-for="DateFrom"></label>
-                        <input asp-for="DateFrom" />
-                        <input asp-for="DateTo" />
-                    </div>
-                    
-                    @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
-                    <div >
-                        <label asp-for="NumberOfDaysFromSelectList"></label>
-                        <select asp-for="NumberOfDaysFromSelectList" 
-                            asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
-                        </select>
-                    </div>
-                
-                    @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
-                    <div >
-                        <label asp-for="NumberOfPeopleFromSelectList"></label>
-                        <select asp-for="NumberOfPeopleFromSelectList" 
-                            asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
-                        </select>
-                    </div>
-                    
-                    @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
-                    <div >
-                        <input type="submit" value="Найти тур" />
-                    </div>
                 </div> 
 
                 @* Второй блок элементов: 
@@ -92,9 +86,8 @@
                 *@
 
                 <div class="flexRow searchBlock2">   
-                    @*Список городов (выпадающий список, множественный выбор)
-                    Список городов выводится по выбранной стране class="flexColumn blockWidth20"*@
-                    <div >
+                    @*Список городов*@
+                    <div class="flexColumn block2Left">
                         <div id="divForChangeCitiesSelectList" >
                             <label asp-for="CityNameSelected"></label>
                             <select  asp-for="CityNameSelected" 
@@ -104,22 +97,12 @@
                         @*<div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>*@
                     </div>
                         
-                    @*Карта страны / Фото страны, городов, достопримечательностей (одна картинка / фото) class="flexColumn blockWidth60"*@
-                    <div >
+                    @*Карта страны*@
+                    <div class="flexColumn block2Right">
                         <label asp-for="MapImagePath"></label>
-                        <div id="countryMap" class="">
+                        <div id="countryMap" class="image-countryMap">
                             @Html.Raw(Model.MapImagePath)
                         </div>
-                    </div>
-
-                    @*Описание страны, городов, достопримечательностей (1 - страны, 2 - города, 3 - достопримечательности) class="flexColumn blockWidth20"*@
-                    <div class="descriptionBlock">
-                        <label asp-for="CountryDescription"></label>
-                        <p id="countryDesc">@Model.CountryDescription</p>
-                        <label asp-for="CityDescrition"></label>
-                        <p id="cityDesc">@Model.CityDescrition</p>
-                        <label asp-for="LocalDescrition"></label>
-                        <p id="localDesc">@Model.LocalDescrition</p>
                     </div>
                 </div>
                 <div>@* Блок данных информационного характера, на пермод разработки
