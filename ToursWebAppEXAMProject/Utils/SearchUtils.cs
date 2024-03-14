@@ -11,12 +11,14 @@ namespace ToursWebAppEXAMProject.Utils
 	{
 		private readonly IQueryResultInterface _QueryResult;
 		private readonly IBaseInterface<Country> _AllCountries;
+		private readonly IBaseInterface<City> _AllCities;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public SearchUtils(IQueryResultInterface queryResult, IBaseInterface<Country> allCountries) 
+        public SearchUtils(IQueryResultInterface QueryResult, IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities) 
 		{
-			_QueryResult = queryResult;
-			_AllCountries = allCountries;
+			_QueryResult = QueryResult;
+			_AllCountries = AllCountries;
+			_AllCities = AllCities;
 		}
 		
 		/// <summary>
@@ -38,8 +40,7 @@ namespace ToursWebAppEXAMProject.Utils
                     searchViewModel.CountryId = country.Id;
                     searchViewModel.CountryNameSelected = country.Name;
                     searchViewModel.MapImagePath = country.CountryMapPath;
-                    searchViewModel.CountryDescription = country.ShortDescription;
-
+                    
                     var allCountries = GetAllCountries();
                     searchViewModel.Countries = allCountries;
                     searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
@@ -52,14 +53,10 @@ namespace ToursWebAppEXAMProject.Utils
                 if (city != null)
                 {
                     searchViewModel.CityNameSelected = city.Name;
-                    searchViewModel.CityDescrition = city.ShortDescription;
-
+                    
                     var allCities = GetAllCities(countryName);
                     searchViewModel.Cities = allCities;
                     searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
-                    
-					// TODO: определить данные для LocalDescrition
-                    //searchViewModel.LocalDescrition = 
                 }
                 else
                 {
@@ -103,8 +100,7 @@ namespace ToursWebAppEXAMProject.Utils
                     searchViewModel.CountryId = country.Id;
                     searchViewModel.CountryNameSelected = country.Name;
                     searchViewModel.MapImagePath = country.CountryMapPath;
-                    searchViewModel.CountryDescription = country.ShortDescription;
-
+                    
                     // передаваемые данные через элементы форм в строковом формате
                     searchViewModel.Countries = GetAllCountries();
                     searchViewModel.CountriesList = GetAllCountriesSelectList(countryName);
@@ -117,14 +113,10 @@ namespace ToursWebAppEXAMProject.Utils
                 if (city != null)
                 {
                     searchViewModel.CityNameSelected = city.Name;
-                    searchViewModel.CityDescrition = city.ShortDescription;
-
+                    
                     var allCities = GetAllCities(countryName);
                     searchViewModel.Cities = allCities;
                     searchViewModel.CitiesList = GetAllCitiesSelectList(countryName);
-
-                    // TODO: определить данные для LocalDescrition
-                    //searchViewModel.LocalDescrition = 
                 }
                 else
                 {
@@ -314,6 +306,21 @@ namespace ToursWebAppEXAMProject.Utils
                 products = (List<Product>)_QueryResult.GetProductsByCountryNameAndCityName(countryName, cityName);
             }
             return products;
+        }
+
+        public QueryResultProductViewModel GetQueryResulpProductsViewModel(SearchProductViewModel searchViewModel, List<Product> products, string countryName, string cityName)
+        {
+            var viewModel = new QueryResultProductViewModel();
+
+			viewModel.Products = products;
+			viewModel.DateFrom = searchViewModel.DateFrom;
+			viewModel.DateTo = searchViewModel.DateTo;
+			viewModel.NumberOfDaysFromSelectList = searchViewModel.NumberOfDaysFromSelectList;
+			viewModel.NumberOfPeopleFromSelectList = searchViewModel.NumberOfPeopleFromSelectList;
+			viewModel.Country = _AllCountries.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CountryNameSelected);
+			viewModel.City = _AllCities.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CityNameSelected);
+
+			return viewModel;
         }
     }
 }

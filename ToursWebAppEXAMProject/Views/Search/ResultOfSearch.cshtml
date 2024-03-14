@@ -1,41 +1,79 @@
-﻿@model SearchProductViewModel
+﻿@model QueryResultProductViewModel
 
 <div class="searchPage">
     
     @await Html.PartialAsync("SearchButtonMenuPartial")
-
-    
+        
     <div class="searchHeader">
         
-        <h4 class="title">Данные поиска:</h4>
-        <hr class="horizontal-line" />
-        <br />
+        <h2 class="titleLowHeader">Данные поиска:</h2>
+        <hr class="horizontal-line-search" />
+        
         <div>
-            <div class="displayFlexCol">
-                <h4>Страна:</h4> 
-                <p>@Model.CountryNameSelected</p>
-                <h4>Город:</h4> 
-                
-                <p>@Model.CityNameSelected</p>
+            <div class="flexRow searchBlock3">
+                <div>
+                    <h3>Страна:</h3>
+                    <h4>@Model.Country.Name</h4>
+                </div>
+                <div>
+                    <h3>Город:</h3>
+                    <h4>@Model.City.Name</h4>
+                </div>
+                <div>
+                    <h3>От: </h3><span>@Model.DateFrom</span>
+                </div>
+                <div>
+                    <h3>До: </h3><span>@Model.DateTo</span>
+                </div>
+                <div>
+                    <h3>Дней поездки:</h3>
+                    <h4>@Model.NumberOfDaysFromSelectList</h4>
+                </div>
+                <div>
+                    <h3>Взрослых и детей:</h3>
+                    <h4>@Model.NumberOfPeopleFromSelectList</h4>
+                </div>
             </div>
-            <div class="displayFlexCol">
-                <h4>Дата поездки:</h4> 
-                <p> <span>От: </span>@Model.DateFrom</p>
-                <p>  <span>До: </span>@Model.DateTo</p>
-                <h4>Дней поездки:</h4> 
-                <p>@Model.NumberOfDaysFromSelectList</p>
-                <h4>Взрослых и детей:</h4> 
-                <p>@Model.NumberOfPeopleFromSelectList</p>
-                <h4>Карта страны:</h4> 
-                <p>@Model.MapImagePath</p>
+            <div class="displayFlexRow searchBlock4">
+                <div id="countryMap" class="image-countryMap50">
+                    <h3>Карта страны:</h3>
+                    @Html.Raw(Model.Country.CountryMapPath)
+                </div>
+                <div class="countryData">
+                    <h3>Информация о стране:</h3>
+                    <h4>@Model.Country.ShortDescription</h4>
+                    <h3>Информация о городе:</h3>
+                    <h4>@Model.City.ShortDescription</h4>
+                    <h3>Информация о достопримечательностях:</h3>
+                    <h4>@Model.City.LocalDescription</h4>
+                </div>
             </div>
-            <div class="displayFlexCol">
-                <h4>Информация о стране:</h4> 
-                <p>@Model.CountryDescription</p>
-                <h4>Информация о городе:</h4> 
-                <p>@Model.CityDescrition</p>
-                <h4>Информация о достопримечательности:</h4> 
-                <p>@Model.LocalDescrition</p>
+            
+            
+
+            <h2>Найденные туристические продукты:</h2>
+
+            <div class="searchHeader">
+                @foreach (var product in Model.Products)
+                {
+                    <div>
+                        <div class="titleImage">
+                            <img src="@product.TitleImagePath" alt="@product.TitleImagePath" align="left" class="product-foto">
+                        </div>
+                        <div class="displayFlexCol">
+                            <div>
+                                <h2>@product.Name</h2>
+                            </div>
+                            <div>
+                                <h4>@product.ShortDescription</h4>
+                            </div>
+                            <div class="dateAdded">
+                                <h4>@product.DateAdded</h4>
+                                <a asp-controller="Products" asp-action="GetProduct" asp-route-id="@product.Id">Подробнее ...</a>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
      </div>

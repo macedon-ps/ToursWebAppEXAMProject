@@ -62,8 +62,11 @@ namespace ToursWebAppEXAMProject.Controllers
                         {
                             _logger.Debug("Получен список турпродуктов по результатам запроса. ");
 
-                            _logger.Trace("Переход по маршруту ../Products/GetAllProducts.\n");
-                            return View("../Products/GetAllProducts", products);
+                            var queryResultViewModel = _SearchUtils.GetQueryResulpProductsViewModel(viewModel, products, countryName, cityName);
+                            _logger.Debug("Получена вью-модель QueryResultProductViewModel. ");
+
+                            _logger.Trace("Переход по маршруту /Search/ResultOfSearch.\n");
+                            return View("ResultOfSearch", queryResultViewModel);
                         }
                         
                         _logger.Warn("По результатам запроса получен пустой список турпродуктов.\n");
