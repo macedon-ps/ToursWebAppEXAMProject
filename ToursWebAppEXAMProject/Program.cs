@@ -50,6 +50,7 @@ builder.Services.AddTransient<NewsUtils>();
 builder.Services.AddTransient<BlogUtils>();
 builder.Services.AddTransient<CountryUtils>();
 builder.Services.AddTransient<CityUtils>();
+builder.Services.AddTransient<ProductUtils>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
