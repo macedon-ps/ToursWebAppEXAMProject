@@ -90,18 +90,10 @@ namespace ToursWebAppEXAMProject.Utils
 
         public void SaveCity(City city)
         {
-            try
+            if (city != null)
             {
-                if (city != null)
-                {
-                    _AllCities.SaveItem(city, city.Id);
-                }
+                _AllCities.SaveItem(city, city.Id);
             }
-            catch (Exception error)
-            {
-                _logger.Error(error.Message);
-            }
-            
         }
 
         public City SetCityModelByFormValues(City city, IFormCollection formValues)

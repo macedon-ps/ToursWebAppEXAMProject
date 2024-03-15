@@ -10,18 +10,13 @@ namespace ToursWebAppEXAMProject.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IBaseInterface<Product> _AllProducts;
-        private readonly IBaseInterface<Country> _AllCountries;
-        private readonly IBaseInterface<City> _AllCities;
-        private readonly FileUtils _FileUtils;
+        private readonly ProductUtils _ProductUtils;
+        
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public ProductsController(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
+        public ProductsController(ProductUtils ProductUtils)
         {
-            _AllProducts = Products;
-            _AllCountries = Countries;
-            _AllCities = Cities;
-            _FileUtils = FileUtils;
+            _ProductUtils = ProductUtils;
         }
 
         /// <summary>
@@ -30,23 +25,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllProducts()
         {
-            _logger.Trace("Переход по маршруту /Products/GetAllProducts. ");
-
-            var products = _AllProducts.GetAllItems();
+            var products = _ProductUtils.GetProducts();
+            _logger.Debug("Получена модель IEnumerable<Product>. ");
 
             if (products == null)
             {
-                var errorMessage = "В БД нет ни одного турпродукта";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn("В БД нет ни одного турпродукта. ");
 
-                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
-
-                return View("Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                return View("Nothing", new NothingViewModel("В БД нет ни одного турпродукта."));
             }
+            else
+            {
+                _logger.Debug("Выводятся все турпродукты. ");
 
-            _logger.Debug("Выводятся все турпродукты\n");
-
-            return View(products);
+                _logger.Trace("Переход по маршруту /Products/GetAllProducts.\n");
+                return View(products);
+            }
         }
 
         /// <summary>
@@ -56,23 +51,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetProduct(int id)
         {
-            _logger.Trace($"Переход по маршруту /Products/GetProduct?id={id}. ");
-
-            var product = _AllProducts.GetItemById(id);
+            var product = _ProductUtils.GetProductById(id);
+            _logger.Debug($"Получена модель Product по id = {id}. ");
 
             if (product.Id == 0)
             {
-                var errorMessage = $"В БД нет турпродукта с id = {id}";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn($"В БД нет турпродукта с id = {id}. ");
 
-                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
-
-                return View("Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет турпродукта с id = {id}.\n"));
             }
+            else
+            {
+                _logger.Debug($"Выводится турпродукт с id = {id}. ");
 
-            _logger.Debug($"Выводится турпродукт с id = {id}.\n");
-
-            return View(product);
+                _logger.Trace($"Переход по маршруту /Products/GetProduct?id={id}.\n");
+                return View(product);
+            }
         }
 
         /// <summary>
@@ -82,17 +77,13 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateProduct()
         {
-            var productViewModel = new CreateProductViewModel();
-            var product = new Product();
-            var countries = _AllCountries.GetAllItems();
-            var cities = _AllCities.GetAllItems();
-            productViewModel.Product = product;
-            productViewModel.Countries = countries;
-            productViewModel.Cities = cities;
-           
-            _logger.Trace("Возвращено /Products/CreateProduct.cshtml\n");
+            var productViewModel = _ProductUtils.GetCreateProductViewModel();
+            _logger.Debug("Создается вью-модель CreateProductViewModel. ");
 
+            _logger.Trace("Переход по маршруту /Products/CreateProduct.cshtml\n");
             return View(productViewModel);
+
+            
         }
 
         /// <summary>
@@ -104,11 +95,10 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            _logger.Trace("Переход по маршруту /Products/EditProduct. ");
+            var product = _ProductUtils.GetProductForEdit(id);
+            _logger.Debug($"Получена модель Product по id={id}. ");
 
-            var product = _AllProducts.GetItemById(id);
-            product.DateAdded = DateTime.Now;
-
+            _logger.Trace("Переход по маршруту /Products/EditProduct.\n");
             return View(product);
         }
 
@@ -122,24 +112,24 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult GetQueryResultProducts(bool isFullName, string insertedText)
         {
-            _logger.Trace("Переход по маршруту /Products/GetQueryResultProducts. ");
+            var products = _ProductUtils.QueryResult(isFullName, insertedText);
+            _logger.Debug("Получена модель IEnumerable<Product>. ");
 
-            var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
-            var numberProducts = products.Count();
-
-            if (numberProducts == 0)
+            if (products == null)
             {
-                var message = $"Нет турпродуктов по запросу \"{insertedText}\". Возвращено ../Edit/Nothing.cshtml\n";
+                _logger.Warn($"По результатам запроса получен пустой список турпродуктов по запросу \"...{insertedText}...\". ");
 
-                _logger.Warn(message);
-
-                var nothingInfo = new NothingViewModel(message);
-                return View("Nothing", nothingInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет турпродуктов по запросу \"...{insertedText}...\"."));
             }
+            else
+            {
+                _logger.Debug("Получен список турпродуктов по результатам запроса. ");
+                _logger.Debug($"Выводятся все турпродукты по запросу. ");
 
-            _logger.Debug($"Выводятся все турпродукты по запросу \"{insertedText}\".\n");
-
-            return View(products);
+                _logger.Trace("Переход по маршруту /Products/GetQueryResultProducts.\n");
+                return View(products);
+            }
         }
 
         /// <summary>
@@ -151,11 +141,14 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult DeleteProduct(int id)
         {
-            var product = _AllProducts.GetItemById(id);
-            _AllProducts.DeleteItem(product, id);
+            var product = _ProductUtils.GetProductById(id);
+            if (product != null)
+            {
+                _ProductUtils.DeleteProductById(product);
+            }
+            _logger.Debug($"Удален турпродукт по id={id}. ");
 
-            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
-
+            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", product);
         }
 
@@ -170,47 +163,52 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveProduct(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            _logger.Debug("Запущен процесс сохранения турпродукта в БД. ");
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
                     _logger.Debug("Модель Product прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (changeTitleImagePath != null)
                     {
-                        var folder = "/images/ProductsTitleImages/";
-                        await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
-                        product.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                        await _ProductUtils.SaveImagePathAsync(changeTitleImagePath);
                     }
 
-                    product.CountryId = Int32.Parse(formValues["CountryId"]);
-                    product.CityId = Int32.Parse(formValues["CityId"]);
-                    product.FullDescription = formValues["fullInfoAboutProduct"];
-                    product.DateAdded = DateTime.Now;
+                    product = _ProductUtils.SetProductModel(product, formValues, changeTitleImagePath);
 
-                    _AllProducts.SaveItem(product, product.Id);
+                    if (product.CountryId !=0 && product.CityId !=0)
+                    {
+                        _ProductUtils.SaveProduct(product);
+                        _logger.Debug("Турпродукт успешно сохранен в БД. ");
 
-                    _logger.Debug("Турпродукт успешно сохранен в БД. ");
-                    _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
+                        _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                        return View("Success", product);
+                    }
+                    else
+                    {
+                        _logger.Warn("Модель Product не прошла валидацию. Не задана страна и/или город. ");
+                        product = _ProductUtils.SetProductModelByFormValues(product, formValues);
 
-                    return View("Success", product);
+                        _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
+                        return View("EditProduct", product);
+                    }
                 }
-                catch (Exception error)
+                else
                 {
-                    return View("Error", error.Message);
+                    _logger.Warn("Модель Product не прошла валидацию. ");
+                    product = _ProductUtils.SetProductModelByFormValues(product, formValues);
+
+                    _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
+                    return View("EditProduct", product);
                 }
             }
-            else
+            catch (Exception error)
             {
-                _logger.Warn("Модель Product не прошла валидацию. ");
-                _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
+                _logger.Error(error.Message);
 
-                product.FullDescription = formValues["fullInfoAboutProduct"];
-
-                return View("EditProduct", product);
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
             }
         }
     }

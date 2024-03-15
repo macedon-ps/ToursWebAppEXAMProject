@@ -12,17 +12,11 @@ namespace ToursWebAppEXAMProject.Controllers
     public class CitiesController : Controller
     {
         private readonly CityUtils _CityUtils;
-        private readonly IBaseInterface<City> _AllCities;
-        private readonly IBaseInterface<Country> _AllCountries;
-        private readonly FileUtils _FileUtils;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public CitiesController(CityUtils CityUtils, IBaseInterface<City> Cities, IBaseInterface<Country> Countries, FileUtils FileUtils)
+        public CitiesController(CityUtils CityUtils)
         {
             _CityUtils = CityUtils;
-            _AllCities = Cities;
-            _AllCountries = Countries;
-            _FileUtils = FileUtils;
         }
 
         /// <summary>
@@ -191,7 +185,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     }
                     else
                     {
-                        _logger.Warn("Модель City не прошла валидацию. ");
+                        _logger.Warn("Модель City не прошла валидацию. Не задана страна. ");
                         city = _CityUtils.SetCityModelByFormValues(city, formValues);
 
                         _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
