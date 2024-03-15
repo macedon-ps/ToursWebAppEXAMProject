@@ -2193,7 +2193,7 @@ select.languageTo{
 	position: relative;
 	height: 550px;
 }
-.homeHeader, .searchHeader, .editHeader,
+.homeHeader, .editHeader,
 .supportHeader, .aboutHeader, .accountHeader,
 .usersHeader, .rolesHeader, .errorHeader {
 	height: 500px;
@@ -2212,6 +2212,15 @@ select.languageTo{
 	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
+}
+.searchHeader-unscroll {
+	height: 500px;
+	background-color: #7dced8;
+	padding: 0 1em 1em;
+	margin: 0.8em 0 0 0;
+	display: flex;
+	flex-direction: column;
+	background-color: #62cad1;
 }
 .accountHeader {
 	margin-top: 1em;
@@ -2408,13 +2417,13 @@ padding-top: 1em;
 	width: 100%;
 	margin: 0 0 0.5em 0;
 	padding: 0.5em 1em 0.25em;
-	background-color: #a9f7fc;
+	background-color: #62cad1;
 }
 .searchBlock3 {
 	width: 100%;
 	margin: 0 0 0.5em 0;
 	padding: 0.5em 1em 0.25em;
-	background-color: #a9f7fc;
+	background-color: #62cad1;
 	display: flex;
 	justify-content: space-between;
 }
@@ -2423,7 +2432,7 @@ padding-top: 1em;
 	height: 400px;
 	margin: 0 0 0.5em 0;
 	padding: 0.5em 1em 0.25em;
-	background-color: #a9f7fc;
+	background-color: #62cad1;
 }
 .block1Left,
 .block2Left {

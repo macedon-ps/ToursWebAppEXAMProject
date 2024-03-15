@@ -38,7 +38,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _logger.Debug("Выводятся все новости. ");
 
-                _logger.Trace("Переход по маршруту /News/GetNews.\n");
+                _logger.Trace("Переход по маршруту /News/GetAllNews.\n");
                 return View(newsItems);
             }
         }

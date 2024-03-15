@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
@@ -10,16 +9,12 @@ namespace ToursWebAppEXAMProject.Controllers
 {
     public class CountriesController : Controller
     {
-        private readonly IBaseInterface<Country> _AllCountries;
-        private readonly IBaseInterface<City> _AllCities;
-        private readonly FileUtils _FileUtils;
+        private readonly CountryUtils _CountryUtils;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public CountriesController(IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils)
+        public CountriesController(CountryUtils CountryUtils)
         {
-            _AllCountries = Countries;
-            _AllCities = Cities;
-            _FileUtils = FileUtils;
+            _CountryUtils = CountryUtils;
         }
         public IActionResult Index()
         {
@@ -32,23 +27,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetAllCountries()
         {
-            _logger.Trace("Переход по маршруту /Countries/GetAllCountries. ");
-            
-            var countries = _AllCountries.GetAllItems();
+            var countries = _CountryUtils.GetCountries();
+            _logger.Debug("Получена модель IEnumerable<Country>. ");
 
-            if(countries == null)
+            if (countries == null)
             {
-                var errorMessage = "В БД нет ни одной страны";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn("В БД нет ни одной страны. ");
 
-                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
-
-                return View("Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                return View("Nothing", new NothingViewModel("В БД нет ни одной страны."));
             }
+            else
+            {
+                _logger.Debug("Выводятся все страны. ");
 
-            _logger.Debug("Выводятся все страны\n");
-
-            return View(countries);
+                _logger.Trace("Переход по маршруту /Countries/GetAllCountries.\n");
+                return View(countries);
+            }
         }
 
         /// <summary>
@@ -58,26 +53,23 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult GetCountry(int id)
         {
-            _logger.Trace($"Переход по маршруту /Countries/GetCountry?id={id}. ");
-
-            var country = _AllCountries.GetItemById(id);
-            
-            var cities = _AllCities.GetAllItems().Where(c => c.CountryId == id);
-            country.Cities = cities;
+            var country = _CountryUtils.GetCountryById(id);
+            _logger.Debug($"Получена модель Country по id = {id}. ");
 
             if (country.Id == 0)
             {
-                var errorMessage = $"В БД нет страны с id = {id}";
-                var errorInfo = new ErrorViewModel(errorMessage);
+                _logger.Warn($"В БД нет страны с id = {id}. ");
 
-                _logger.Warn($"{errorMessage}. Возвращено ../Shared/Error.cshtml\n");
-
-                return View("Error", errorInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет страны с id = {id}.\n"));
             }
+            else
+            {
+                _logger.Debug($"Выводится страна с id = {id}. ");
 
-            _logger.Debug($"Выводится страна с id = {id}.\n");
-
-            return View(country);
+                _logger.Trace($"Переход по маршруту /Countries/GetCountry?id={id}.\n");
+                return View(country);
+            }
         }
 
         /// <summary>
@@ -87,12 +79,10 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateCountry()
         {
-            _logger.Trace("Выполняется действие /Countries/CreateCountry. ");
-
             var country = new Country();
+            _logger.Debug("Создается модель Country. ");
 
-            _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
-
+            _logger.Trace("Переход по маршруту /Countries/EditCountry.cshtml\n");
             return View("EditCountry", country);
         }
 
@@ -105,14 +95,10 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditCountry(int id)
         {
-            _logger.Trace("Переход по маршруту /Countries/EditCountry. ");
+            var country = _CountryUtils.GetCountryForEdit(id);
+            _logger.Debug($"Получена модель Country по id={id}. ");
 
-            var country = _AllCountries.GetItemById(id);
-
-            var cities = _AllCities.GetAllItems().Where(c => c.CountryId == id);
-            country.Cities = cities;
-            country.DateAdded = DateTime.Now;
-
+            _logger.Trace("Переход по маршруту /Countries/EditCountry.\n");
             return View(country);
         }
 
@@ -120,30 +106,30 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода результатов выборки стран по тому, что ищем - полное название или ключевое слово (букву)
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
-        /// <param name="InsertedText">текст для поиска</param>
+        /// <param name="insertedText">текст для поиска</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultCountries(bool isFullName, string InsertedText)
+        public IActionResult GetQueryResultCountries(bool isFullName, string insertedText)
         {
-            _logger.Trace("Переход по маршруту /Countries/GetQueryResultCountries. ");
+            var countries = _CountryUtils.QueryResult(isFullName, insertedText);
+            _logger.Debug("Получена модель IEnumerable<Country>. ");
 
-            var countries = _AllCountries.GetQueryResultItemsAfterFullName(InsertedText, isFullName);
-            var numberCountries = countries.Count();
-
-            if (numberCountries == 0)
+            if (countries == null)
             {
-                var message = $"Нет стран по запросу \"{InsertedText}\". Возвращено ../Shared/Nothing.cshtml\n";
+                _logger.Warn($"По результатам запроса получен пустой список стран по запросу \"...{insertedText}...\". ");
 
-                _logger.Warn(message);
-
-                var nothingInfo = new NothingViewModel(message);
-                return View("Nothing", nothingInfo);
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет стран по запросу \"...{insertedText}...\"."));
             }
+            else
+            {
+                _logger.Debug("Получен список стран по результатам запроса. ");
+                _logger.Debug($"Выводятся все страны по запросу. ");
 
-            _logger.Debug($"Выводятся все страны по запросу \"{InsertedText}\".\n");
-
-            return View(countries);
+                _logger.Trace("Переход по маршруту /Countries/GetQueryResultCountries.\n");
+                return View(countries);
+            }
         }
 
         /// <summary>
@@ -155,11 +141,14 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult DeleteCountry(int id)
         {
-            var country = _AllCountries.GetItemById(id);
-            _AllCountries.DeleteItem(country, id);
+            var country = _CountryUtils.GetCountryById(id);
+            if (country != null)
+            {
+                _CountryUtils.DeleteCountryById(country);
+            }
+            _logger.Debug($"Удалена страна по id={id}. ");
 
-            _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
-
+            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", country);
         }
 
@@ -174,38 +163,40 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveCountry(Country country, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
-            _logger.Debug("Запущен процесс сохранения страны в БД. ");
-
-            if (ModelState.IsValid)
+            try
             {
-                _logger.Debug("Модель Country прошла валидацию. ");
-
-                // если мы хотим поменять картинку
-                if (changeTitleImagePath != null)
+                if (ModelState.IsValid)
                 {
-                    var folder = "/images/CountriesTitleImages/";
-                    await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
-                    country.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                    _logger.Debug("Модель Country прошла валидацию. ");
+
+                    // если мы хотим поменять картинку
+                    if (changeTitleImagePath != null)
+                    {
+                        await _CountryUtils.SaveImagePathAsync(changeTitleImagePath);
+                    }
+
+                    country = _CountryUtils.SetCountryModel(country, formValues, changeTitleImagePath);
+                    _CountryUtils.SaveCountry(country);
+                    _logger.Debug("Страна успешно сохранена в БД. ");
+
+                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    return View("Success", country);
                 }
+                else
+                {
+                    _logger.Warn("Модель Country не прошла валидацию. ");
+                    country = _CountryUtils.SetCountryModelByFormValues(country, formValues);
 
-                country.FullDescription = formValues["fullInfoAboutCountry"];
-                country.DateAdded = DateTime.Now;
-
-                _AllCountries.SaveItem(country, country.Id);
-
-                _logger.Debug("Страна успешно сохранена в БД. ");
-                _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
-
-                return View("Success", country);
+                    _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
+                    return View("EditNews", country);
+                }
             }
-            else
+            catch (Exception error)
             {
-                _logger.Warn("Модель Country не прошла валидацию. ");
-                _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
+                _logger.Error(error.Message);
 
-                country.FullDescription = formValues["fullInfoAboutCountry"];
-
-                return View("EditCountry", country);
+                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
+                return View("Error", new ErrorViewModel(error.Message));
             }
         }
     }

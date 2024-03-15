@@ -310,16 +310,17 @@ namespace ToursWebAppEXAMProject.Utils
 
         public QueryResultProductViewModel GetQueryResulpProductsViewModel(SearchProductViewModel searchViewModel, List<Product> products, string countryName, string cityName)
         {
-            var viewModel = new QueryResultProductViewModel();
-
-			viewModel.Products = products;
-			viewModel.DateFrom = searchViewModel.DateFrom;
-			viewModel.DateTo = searchViewModel.DateTo;
-			viewModel.NumberOfDaysFromSelectList = searchViewModel.NumberOfDaysFromSelectList;
-			viewModel.NumberOfPeopleFromSelectList = searchViewModel.NumberOfPeopleFromSelectList;
-			viewModel.Country = _AllCountries.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CountryNameSelected);
-			viewModel.City = _AllCities.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CityNameSelected);
-
+            var viewModel = new QueryResultProductViewModel
+            {
+                Products = products,
+                DateFrom = searchViewModel.DateFrom,
+                DateTo = searchViewModel.DateTo,
+                NumberOfDaysFromSelectList = searchViewModel.NumberOfDaysFromSelectList,
+                NumberOfPeopleFromSelectList = searchViewModel.NumberOfPeopleFromSelectList,
+                Country = _AllCountries.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CountryNameSelected) ?? new Country(),
+                City = _AllCities.GetAllItems().FirstOrDefault(c => c.Name == searchViewModel.CityNameSelected) ?? new City(),
+            };
+			
 			return viewModel;
         }
     }
