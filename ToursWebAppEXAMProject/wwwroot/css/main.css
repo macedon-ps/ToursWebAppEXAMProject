@@ -154,7 +154,13 @@ body {
 		line-height: 1.2em;
 		margin-bottom: 0.5em;
 	}
-
+	.map1, .map2{
+		width: 400px;
+		height: 300px;
+		margin: 0.5em;
+		padding: 0.3em;
+	}
+	
 	strong {
 		color: #474e43;
 	}
@@ -2398,9 +2404,16 @@ padding-top: 1em;
 	object-fit: cover;
 	padding: 0.5em 0.5em 0.5em 0;
 }
-.mb2{
-	margin-bottom: 2em;
+.height270{
+	height: 270px;
 }
+.height270 img {
+	height: 100%;
+	object-fit: cover;
+}
+	.mb2 {
+		margin-bottom: 2em;
+	}
 .dateAdded,
 .editDelete,
 .searchDelete{

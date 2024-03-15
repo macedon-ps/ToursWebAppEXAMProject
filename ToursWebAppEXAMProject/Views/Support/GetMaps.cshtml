@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "MapsPage";
+}
+
+<div class="supportPage">
+
+    @await Html.PartialAsync("SupportButtonMenuPartial")
+
+    <div class="supportHeader">
+        <h1 class="title">Страница c картами:</h1>
+        <hr class="horizontal-line" />
+        <br />
+        <div>
+            <h3>КА "ШАГ" на картах Одессы и Херсона:</h3>
+            <div class="flexRow">
+                <div class="map1">
+                    @await Html.PartialAsync("OdessaStepMapPartial")
+                </div>
+                <div class="map2">
+                    @await Html.PartialAsync("KhersonStepMapPartial")
+                </div>
+            </div>
+            
+            
+        </div>
+        <br />
+        
+    </div>
+</div>

@@ -1,5 +1,4 @@
-﻿@model string
-@{
+﻿@{
     ViewData["Title"] = "Support Page";
 }
 
@@ -12,18 +11,33 @@
         <hr class="horizontal-line" />
         <br />
         <div>
-            <h3>Карта:</h3>
-        </div>
-        <br/>
-        <div>
-            <h3>Перевод текста:</h3>
+            <h2 class="title">Перевод текста:</h2>
         </div>
         <a href="https://translate.google.com.ua/" target="_blank">Google Translate</a>
         <a href="https://www.reverso.net/text-translation" target="_blank">Reverso Translate</a>
-        <br/>
+        <br />
         <a asp-controller="Support" asp-action="Translate">Перевод текста через Google Translate API</a>
-        <div>
-            <h3>Прогноз погоды:</h3>
+
+        <hr class="horizontal-line" />
+        <br />
+
+        <h2 class="title">КА "ШАГ" на картах Одессы и Херсона:</h2>
+
+        <div class="displayFlexRow">
+            <div class="titleImage50">
+                <h3>Карта Одессы</h3>
+                <div class="height270">
+                    <img src="~/images/Maps/Odessa.png" alt="Карта Одессы" align="left">
+                </div>
+                <a asp-controller="Support" asp-action="GetMap">КА "ШАГ" (Одесса)</a>
+            </div>
+            <div class="titleImage50 ">
+                <h3>Карта Херсона</h3>
+                <div class="height270">
+                    <img src="~/images/Maps/Kherson.png" alt="Карта Херсона" align="left">
+                </div>
+                <a asp-controller="Support" asp-action="GetMap2">КА "ШАГ" (Херсон)</a>
+            </div>
         </div>
     </div>
 </div>

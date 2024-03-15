@@ -1,8 +1,9 @@
 ﻿<div class="supportButton">
+    <a asp-controller="Support" asp-action="Index">Support</a>
     <a asp-controller="Support" asp-action="Translate">Перевод текста</a>
-    <a asp-controller="Support" asp-action="">Карта</a>
-    <a asp-controller="Support" asp-action="">Прогноз погоды</a>
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
+    <a asp-controller="Support" asp-action="GetMap">Карта Одессы / КА "Шаг"</a>
+    <a asp-controller="Support" asp-action="GetMap2">Карта Херсона / КА "Шаг"</a>
+    @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="Support" asp-action="TechTaskSupport">ТЗ для Support</a>
     }

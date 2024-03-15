@@ -91,6 +91,16 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+        public IActionResult GetMap()
+        {
+            return View("OdessaStepMap");
+        }
+
+        public IActionResult GetMap2()
+        {
+            return View("KhersonStepMap");
+        }
+
         /// <summary>
         /// Метод предоставления услуги поддержки
         /// </summary>
