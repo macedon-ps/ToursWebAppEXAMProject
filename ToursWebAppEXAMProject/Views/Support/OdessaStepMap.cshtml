@@ -3,7 +3,10 @@
   <head>
     <title>Simple Marker</title>
     <!-- The callback parameter is required, so we use console.debug as a noop -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEVmfZAyKdq0DmdqKx-08Hnatd9hibv6A&callback=console.debug&libraries=maps,marker&v=beta">
+    @{
+        var url = $"https://maps.googleapis.com/maps/api/js?key={ConfigMapApi.GetMapApiKey()}";
+    }
+    <script async src="@url">
     </script>
     <style>
       /* Always set the map height explicitly to define the size of the div
