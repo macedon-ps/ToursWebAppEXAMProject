@@ -7,7 +7,11 @@
 images/
 
 # User-specific files
+// password for code app
 CodeApp.cs
+// code for GoogleMapApi
+ConfigMapApi.cs
+
 *.rsuser
 *.suo
 *.user
