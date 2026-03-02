@@ -1,0 +1,44 @@
+﻿@model SearchProductViewModel
+
+
+@*Список стран (выпадающий список, единственный выбор)
+                    По выбранной стране будет выводиться список городов этой страны class="flexColumn blockWidth20"*@
+<div class="block1Left">
+    <label asp-for="CountryNameSelected"></label>
+    <select asp-for="CountryNameSelected"
+            asp-items="@Model.CountriesList" id="countriesSelect">
+    </select>
+</div>
+
+<div class="block1Right">
+    @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
+    @{
+        // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
+    }
+    <div>
+        <label asp-for="DateFrom"></label>
+        <input asp-for="DateFrom" />
+        <input asp-for="DateTo" />
+    </div>
+
+    @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
+    <div class="block1Middle">
+        <label asp-for="NumberOfDaysFromSelectList"></label>
+        <select asp-for="NumberOfDaysFromSelectList"
+                asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
+        </select>
+    </div>
+
+    @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
+    <div class="block1Middle">
+        <label asp-for="NumberOfPeopleFromSelectList"></label>
+        <select asp-for="NumberOfPeopleFromSelectList"
+                asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
+        </select>
+    </div>
+
+    @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
+    <div>
+        <input type="submit" value="Найти тур" />
+    </div>
+</div>

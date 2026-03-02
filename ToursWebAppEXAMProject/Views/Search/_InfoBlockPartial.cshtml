@@ -1,0 +1,33 @@
+﻿@model SearchProductViewModel
+
+@*
+    <div class="flexColumn searchBlock2">
+        <p>Полные данные вью модели:</p><br />
+        <p>Model.CountryId / Id страны: @Model.CountryId</p>
+        <p>Model.CountryNameSelected / Страна: @Model.CountryNameSelected</p>
+        <p>Model.CountryDescription / Описание страны: @Model.CountryDescription </p>
+        <p>Model.CountriesList / Список стран:</p>
+            @foreach(var country in Model.CountriesList){
+                <p>Страна: @country.Text value: @country.Value isSelected: @country.Selected</p>
+            }
+        <br />
+                                                  
+        <p>Model.CityNameSelect / Город: @Model.CityNameSelected</p>
+        <p>Model.CityDescrition / Описание города: @Model.CityDescrition </p>
+        <p>Model.LocalDescrition / Описание достопримечательности: @Model.LocalDescrition</p>
+        <p>Model.CitiesList / Список городов: </p>
+                    
+        @foreach(var city in Model.CitiesList)
+        {
+            <p>Город: @city.Text value: @city.Value isSelected: @city.Selected</p>
+        }
+        <br />
+
+        <p>Model.DaysInterval / Даты: @Model.DaysInterval</p>
+        <p>Model.NumberOfDaysFromSelectList / Количество дней:  @Model.NumberOfDaysFromSelectList </p>
+        <p>Model.NumberOfPeopleFromSelectLi / Количество людей: @Model.NumberOfPeopleFromSelectList</p><br />
+                         
+        <p>Model.MapImagePath / Карта: @Model.MapImagePath</p>
+        <p>Model.PicturesImagePath / Картинки: @Model.PicturesImagePath</p>
+    </div>
+*@

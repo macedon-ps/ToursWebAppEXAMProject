@@ -1,0 +1,20 @@
+﻿@model SearchProductViewModel
+
+@*Список городов*@
+<div class="flexColumn block2Left">
+    <div id="divForChangeCitiesSelectList">
+        <label asp-for="CityNameSelected"></label>
+        <select asp-for="CityNameSelected"
+                asp-items="@Model.CitiesList" id="citiesSelect">
+        </select>
+    </div>
+    @*<div id="citiesSelectDiv" class="flexColumn blockWidth20"></div>*@
+</div>
+
+@*Карта страны*@
+<div class="flexColumn block2Right">
+    <label asp-for="MapImagePath"></label>
+    <div id="countryMap" class="image-countryMap">
+        @Html.Raw(Model.MapImagePath)
+    </div>
+</div>
