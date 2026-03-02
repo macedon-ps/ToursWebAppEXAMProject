@@ -2,7 +2,7 @@
     
     @if (Model.ToString().Contains("EditAboutPageViewModel"))
     {
-        @await Html.PartialAsync("../About/AboutButtonMenuPartial")
+        @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
 
         <div class="editHeader">
 
@@ -27,7 +27,7 @@
     }
     @if (Model.ToString().Contains("CorrespondenceViewModel"))
     {
-        @await Html.PartialAsync("../About/AboutButtonMenuPartial")
+        @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
 
         <div class="editHeader">
 
@@ -55,7 +55,7 @@
     }
     @if (Model.ToString().Contains("Blog") || Model.ToString().Contains("City") || Model.ToString().Contains("Country") || Model.ToString().Contains("New") || Model.ToString().Contains("Product"))
     {
-        @await Html.PartialAsync("../Edit/EditButtonMenuPartial")
+        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
 
         <div class="editHeader">
 

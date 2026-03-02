@@ -50,7 +50,7 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetBlog(int id)
         {
             var blog = _BlogUtils.GetBlogById(id);
-            _logger.Debug($"Получена модель New по id = {id}. ");
+            _logger.Debug($"Получена модель Blog по id = {id}. ");
 
             if (blog.Id == 0)
             {
@@ -63,7 +63,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _logger.Debug($"Выводится новость с id = {id}. ");
 
-                _logger.Trace($"Переход по маршруту /News/GetNesw?id={id}.\n");
+                _logger.Trace($"Переход по маршруту /News/GetBlog?id={id}.\n");
                 return View(blog);
             }
         }

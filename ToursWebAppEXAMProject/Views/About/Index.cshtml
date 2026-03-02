@@ -2,7 +2,7 @@
 
 <div class="aboutPage">
     
-    @await Html.PartialAsync("AboutButtonMenuPartial")
+    @await Html.PartialAsync("_AboutButtonMenuPartial")
 
     <div class="aboutHeader">
         <h1 class="title">Информация о нас:</h1>
@@ -14,12 +14,12 @@
             <h4>Дата: @Model.DateAdded</h4>
         </div>
                        
-        @await Html.PartialAsync("MainPartial")
-        @await Html.PartialAsync("AboutPartial")
-        @await Html.PartialAsync("DetailsPartial")
-        @await Html.PartialAsync("OperationModePartial")
-        @await Html.PartialAsync("PhotoGalleryPartial")
-        @await Html.PartialAsync("FeedbackPartial")
+        @await Html.PartialAsync("_MainPartial")
+        @await Html.PartialAsync("_AboutPartial")
+        @await Html.PartialAsync("_DetailsPartial")
+        @await Html.PartialAsync("_OperationModePartial")
+        @await Html.PartialAsync("_PhotoGalleryPartial")
+        @await Html.PartialAsync("_FeedbackPartial")
  
     </div>
 </div>

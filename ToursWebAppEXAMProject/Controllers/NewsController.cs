@@ -164,7 +164,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель New прошла валидацию. ");
+                    _logger.Debug("Модель News прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (changeTitleImagePath != null)
