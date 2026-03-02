@@ -1,6 +1,6 @@
 ﻿@model EditAboutPageViewModel
 @{
-    var folderPath = "E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
+    var folderPath = "E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
 }
 
 <a name="photo_gallery"></a>
@@ -15,7 +15,7 @@
         
         @foreach (var image in Directory.GetFiles(folderPath))
         {
-            var imagePath = image.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", ""); 
+            var imagePath = image.Replace("E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot", "");
 
             <div class="titleImage25">
                 <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
