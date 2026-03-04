@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Запрос по турпродуктам";
+}
+
 <div class="searchPage">
 
     @await Html.PartialAsync("../Search/_SearchButtonMenuPartial")

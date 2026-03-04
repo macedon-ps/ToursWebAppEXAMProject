@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<Country>
+@{
+    ViewData["Title"] = "Запрос по странам";
+}
+
 <div class="editPage">
     
     @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
