@@ -50,6 +50,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод вывода меню редактирования страницы About
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,editor")]
         public IActionResult EditMenuAboutPage()
         {
             var allPages = _AboutUtils.GetAllModel();
@@ -63,6 +64,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод создания новой версии страницы About
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,editor")]
         public IActionResult CreateAboutPage()
         {
             var newViewModel = _AboutUtils.CreateModel();
@@ -77,6 +79,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="id">идентификатор страницы About</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,editor")]
         public IActionResult EditAboutPage(int id)
         {
             var editViewModel = _AboutUtils.GetModel(id);
@@ -91,6 +94,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <param name="id">идентификатор страницы About</param>
         /// <returns></returns>
+        [Authorize(Roles = "superadmin,editor")]
         public IActionResult DeleteAboutPage(int id)
         {
             var deleteModel = _AboutUtils.GetModel(id);
@@ -101,6 +105,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", deleteModel);
         }
 
+        [Authorize(Roles = "superadmin,editor")]
         public IActionResult DeletePicture(string fullPathToFile)
         {
             _FileUtils.DeletePhoto(fullPathToFile);

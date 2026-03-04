@@ -2,10 +2,11 @@
 using ToursWebAppEXAMProject.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IdentityAuthN_AuthZ.ConfirmEmail.Controllers
 {
-    //[Authorize(Roles = "superadmin")]
+    [Authorize(Roles = "superadmin")]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

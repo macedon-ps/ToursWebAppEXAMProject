@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
-    //[Authorize(Roles ="superadmin,admin")]
+    [Authorize(Roles ="superadmin,admin")]
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
