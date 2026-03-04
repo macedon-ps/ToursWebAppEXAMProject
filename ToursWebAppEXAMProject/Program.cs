@@ -65,6 +65,12 @@ builder.Services.AddIdentity<User, IdentityRole>(opts => {
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<TourFirmaDBContext>();
 
+// cookie не будет продлеваться, сессия закончится строго при закрытии браузера
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.SlidingExpiration = false;
+});
+
 // подключение сервиса использования MS SQL Server и БД
 //builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
 

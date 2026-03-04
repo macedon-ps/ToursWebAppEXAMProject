@@ -165,8 +165,9 @@ namespace ToursWebAppEXAMProject.Controllers
                         return View(model);
                     }
                 }
-               
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                // 3-й параметр (model.RememberMe) делаем false, чтобы роли действовали только в рамках текущей сессии, а не сохранялись после закрытия браузера (14 дней - по дефолту) - из соображений безопасности
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                 if (result.Succeeded)
                 {
