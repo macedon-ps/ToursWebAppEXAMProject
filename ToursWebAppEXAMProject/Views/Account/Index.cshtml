@@ -32,6 +32,12 @@
                 <a asp-controller="Account" asp-action="Logout">LogOut</a>
             </div>
         }
+        @if (User.Identity.IsAuthenticated && User.IsInRole("editor"))
+        {
+            <div class="accountButton">
+                <a asp-controller="Account" asp-action="Logout">LogOut</a>
+            </div>
+        }
         @if (User.Identity.IsAuthenticated && User.IsInRole("asker"))
         {
             <div class="accountButton">
