@@ -4,13 +4,23 @@ namespace ToursWebAppEXAMProject.Interfaces
 {
 	public interface IQueryResultInterface
 	{
-		IEnumerable<City> GetCitiesByCountryName(string countryName);
+		IEnumerable<Product> GetProductsByCountryIdAndCityId(int? countryId, int? cityId);
 
-        IEnumerable<Product> GetProductsByCountryNameAndCityName(string countryName, string cityName);
+        /// <summary>
+        /// Получение словаря, где ключ - название страны, а значение - список городов в этой стране
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, List<string>> GetAllCountriesAndCities();
 
-        string GetAllCountriesAndCitiesByString();
+        /// <summary>
+        /// Получение словаря, где ключ - название страны, а значение - ссылка на карту этой страны
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, string> GetAllCountriesAndMaps();
 
-		string GetAllCountryMapsByString();
+        int? GetIdByCountryName(string countryName);
+
+        int? GetIdByCityName(string cityName);
 
     }
 }
