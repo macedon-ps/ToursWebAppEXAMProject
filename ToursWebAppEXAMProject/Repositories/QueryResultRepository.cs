@@ -1,15 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.Enums;
+using Microsoft.Extensions.Logging;
+using NLog;
+using System.Diagnostics.Metrics;
 using ToursWebAppEXAMProject.DBContext;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using NLog;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
     public class QueryResultRepository : IQueryResultInterface
 	{
-		private readonly TourFirmaDBContext context;
+		private readonly TourFirmaDBContext _context;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public string[] itemKeyword = new string[4];
@@ -18,9 +20,9 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
 		/// <param name="_context">контекст подключения к БД</param>
-		public QueryResultRepository(TourFirmaDBContext _context)
+		public QueryResultRepository(TourFirmaDBContext context)
 		{
-			context = _context;
+			_context = context;
 			
 			itemKeyword[0] = "город"; 
 			itemKeyword[1] = "города"; 
@@ -28,64 +30,26 @@ namespace ToursWebAppEXAMProject.Repositories
 			itemKeyword[3] = "городов";
 		}
 
+        // старая реализация
         /// <summary>
-        /// Метод вывода списка городов по названию страны
-        /// </summary>
-        /// <param name="countryName">название страны</param>
-        /// <returns></returns>
-        public IEnumerable<City> GetCitiesByCountryName(string countryName)
-		{
-            _logger.Debug($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по названию = {countryName}. ");
-            
-			try
-			{
-				var items = new List<City>();
-
-				// для городов
-				items = context.Cities
-				.FromSqlRaw($"select City.Id, City.Name, City.ShortDescription, City.LocalDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City, Country where City.CountryId = Country.Id and Country.Name = '{countryName}'")
-				.ToList();
-
-				if (items == null)
-				{
-                    _logger.Warn($"В БД отсутствует {itemKeyword[3]} по названию = {countryName}.\n");
-                    
-					return new List<City>();
-				}
-				else
-				{
-                    _logger.Debug("Выборка осуществлена успешно");
-                    
-					return items;
-				}
-			}
-			catch (Exception ex)
-			{
-                _logger.Error($"Выборка {itemKeyword[3]} по названию = {countryName} не осуществлена.\nКод ошибки: {ex.Message}");
-                
-				return new List<City>();
-			}
-		}
-
-        /// <summary>
-        /// Метод вывода списка турпродуктов по названию страны и города
+        /// Метод вывода списка турпродуктов по названию страны и города (для сервера)
         /// </summary>
         /// <param name="countryName">название страны</param>
         /// <param name="cityName">название города</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public IEnumerable<Product> GetProductsByCountryNameAndCityName(string countryName, string cityName)
+        /*
+        public IEnumerable<Product> GetProductsByCountryIdAndCityId(string countryName, string cityName)
         {
             _logger.Debug($"Произведено подключение к БД. Запрашиваются турпродукты для страны \"{countryName}\" и для города \"{cityName}\". ");
 
             try
             {
-                var products = new List<Product>();
+                var products = _context.Products
+                    .Where(p => p.Country.Name == countryName &&
+                                p.City.Name == cityName)
+                    .ToList();
 
-                products = context.Products
-                .FromSqlRaw($"select distinct Product.Name, Product.ShortDescription, Product.FullDescription, Product.TitleImagePath, Product.DateAdded, Product.Id, Product.CountryId, Product.CityId from Product, Country, City where Product.CountryId = Country.Id AND Country.Name = '{countryName}' AND Product.CityId = City.Id AND City.Name = '{cityName}';")
-                .ToList();
-               
                 if (products == null)
                 {
                     _logger.Warn($"Выборка турпородуктов по названию страны \"{countryName}\" и названию города \"{cityName}\" не осуществлена.\n");
@@ -105,121 +69,115 @@ namespace ToursWebAppEXAMProject.Repositories
 
                 return new List<Product>();
             }
+        }*/
+
+        /// <summary>
+        /// Метод создания словаря (страна, список городов) в js (для фронта)
+        /// </summary>
+        /// <returns>Словарь (страна, список городов)</returns>
+        public Dictionary<string, List<string>> GetAllCountriesAndCities()
+        {
+            var countriesCities = new Dictionary<string, List<string>>();
+
+            // легкий запрос, но страны без городов не выводятся
+            countriesCities = _context.Cities
+                                .AsNoTracking()
+                                .OrderBy(c => c.Country.Name)
+                                .ThenBy(c => c.Name)
+                                .GroupBy(c => c.Country.Name)
+                                .ToDictionary(
+                                    g => g.Key,
+                                    g => g.Select(c => c.Name).ToList()
+                                );
+
+            // дорогой запрос, но все страны, даже без городов, выводятся
+            /*countriesCities = _context.Countries
+                                .Include(c => c.Cities)
+                                .ToDictionary(
+                                    c => c.Name,
+                                    c => c.Cities.Select(city => city.Name).ToList()
+                                );*/
+            
+            return countriesCities;
         }
 
         /// <summary>
-		/// Метод выборки из БД и преобразования в строку всех стран  городов
-		/// </summary>
-		/// <returns></returns>
-        public string GetAllCountriesAndCitiesByString()
-		{
-            _logger.Debug("Произведено подключение к БД. Запрашивается список всех стран и городов одной строкой. ");
-            
-			try
-			{
-				// объявляем и инициализируем переменные
-				var cities = new List<City>();
-				string countriesWithSitiesOneString = "";
-				string citiesOfOneCountryListOneString = "";
-				string allInfo = "";
-
-				// запрос к БД дать список стран в формате List<Country>, страны не повторяются
-				var countries = context.Countries
-				.FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath, Country.DateAdded from Country, City where Country.Id = City.CountryId")
-				.ToList();
-
-				// для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
-				foreach (Country country in countries)
-				{
-					cities = context.Cities
-					.FromSqlRaw($"select distinct City.Id, City.Name, City.ShortDescription, City.LocalDescription, City.FullDescription, City.isCapital, City.TitleImagePath, City.DateAdded, City.CountryId from City where City.CountryId = {country.Id}")
-					.ToList();
-
-					// заполняем countriesWithSitiesOneString, citiesOfOneCountryListOneString и allInfo
-					countriesWithSitiesOneString += $"{country.Name}:";
-
-					foreach (City city in cities)
-					{
-						citiesOfOneCountryListOneString += city.Name + ",";
-					}
-
-					countriesWithSitiesOneString += citiesOfOneCountryListOneString + "\n";
-					allInfo += countriesWithSitiesOneString;
-
-					// очищаем countriesWithSitiesOneString и citiesOfOneCountryListOneString для нового элемента коллекции
-					citiesOfOneCountryListOneString = "";
-					countriesWithSitiesOneString = "";
-				}
-
-				// итоговый вариант // для редактирования
-				// Console.WriteLine(allInfo);
-
-				if (allInfo == null)
-				{
-                    _logger.Warn("Выборка списка всех сторан и городов одной строкой не осуществлена.\n");
-                    
-					return "В БД нет записей о странах и городах";
-				}
-				else
-				{
-                    _logger.Debug("Выборка осуществлена успешно\n");
-                    
-					return allInfo;
-				}
-			}
-			catch (Exception ex)
-			{
-                _logger.Error($"Выборка списка всех стран и городов одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n");
-                
-				return $"Вызвано исключение: {ex.Message}";
-			}
-		}
-
-        /// <summary>
-        /// Метод выборки из БД и преобразования в строку всех стран и их карт
+        /// Метод создания словаря (страна, карта) в js (для фронта)
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string GetAllCountryMapsByString()
+        /// <returns>Словарь (страна, карта)</returns>
+        public Dictionary<string, string> GetAllCountriesAndMaps()
         {
-            _logger.Debug("Произведено подключение к БД. Запрашивается список всех стран и их карт одной строкой. ");
+            var countriesMaps = new Dictionary<string, string>();
+
+            countriesMaps = _context.Countries
+                                        .ToDictionary(
+                                            c => c.Name,
+                                            c => c.TitleImagePath
+                                        );
+            return countriesMaps;
+        }
+
+        public IEnumerable<Product> GetProductsByCountryIdAndCityId(int? countryId, int? cityId)
+        {
+            _logger.Debug($"Произведено подключение к БД. Запрашиваются турпродукты для Id страны \"{countryId}\" и для Id города \"{cityId}\". ");
 
             try
             {
-                // объявляем и инициализируем переменные
-                var countries = new List<Country>();
-                string countriesAndMapsString = "";
+                if(countryId == 0 || cityId == 0)
+                {
+                    return new List<Product>();
+                }
                 
-                // запрос к БД дать список стран в формате List<Country>, страны не повторяются
-                countries = context.Countries
-                .FromSqlRaw($"select distinct Country.Id, Country.Name, Country.ShortDescription, Country.FullDescription, Country.Capital, Country.TitleImagePath, Country.CountryMapPath, Country.DateAdded from Country, City where Country.Id = City.CountryId")
-                .ToList();
+                var products = _context.Products
+                    .Where(p => p.CountryId == countryId &&
+                                p.CityId == cityId)
+                    .ToList();
 
-                // для каждой страны - в цикле - новый запрос к БД - дать список городов для каждой страныб города не повторяются
-                foreach (Country country in countries)
+                if (products == null)
                 {
-                   countriesAndMapsString += $"{country.Name}#{country.CountryMapPath}\n";
-				}
+                    _logger.Warn($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена.\n");
 
-                if (countriesAndMapsString == null)
-                {
-                    _logger.Warn("Выборка списка всех сторан и их карт одной строкой не осуществлена.\n");
-
-                    return "В БД нет записей о странах и городах";
+                    return new List<Product>();
                 }
                 else
                 {
-                    _logger.Debug("Выборка осуществлена успешно\n");
+                    _logger.Debug($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" осуществлена успешно.\n");
 
-                    return countriesAndMapsString;
+                    return products;
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error($"Выборка списка всех стран и их карт одной строкой не осуществлена.\nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
-                return $"Вызвано исключение: {ex.Message}";
+                return new List<Product>();
             }
         }
-	}
+
+        public int? GetIdByCountryName(string countryName)
+        {
+            if (string.IsNullOrWhiteSpace(countryName))
+                return null;
+
+            countryName = countryName.Trim();
+
+            return _context.Countries
+                .Where(x => x.Name.ToLower() == countryName.ToLower())
+                .Select(x => (int?)x.Id)
+                .FirstOrDefault();
+        }
+
+        public int? GetIdByCityName(string cityName)
+        {
+            if (string.IsNullOrWhiteSpace(cityName))
+                return null;
+
+            cityName = cityName.Trim();
+
+            return _context.Cities
+                .Where(x => x.Name.ToLower() == cityName.ToLower())
+                .Select(x => (int?)x.Id)
+                .FirstOrDefault();
+        }
+    }
 }
