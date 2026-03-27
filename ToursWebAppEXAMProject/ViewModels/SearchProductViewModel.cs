@@ -43,9 +43,9 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// </summary>
 		public SelectList? CitiesList { get; set; } = null!;
 
-		public string? AllCountriesAndCitiesByString { get; set; }
+        public Dictionary<string, List<string>> AllCountriesAndCities { get; set; }
 
-        public string? AllCountriesAndMapsByString { get; set; }
+        public Dictionary<string, string> AllCountriesAndMaps { get; set; }
 
         /// <summary>
         /// Выбранные даты отдыха
