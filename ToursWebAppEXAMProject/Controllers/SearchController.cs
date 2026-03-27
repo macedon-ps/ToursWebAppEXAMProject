@@ -3,20 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
 using NLog;
+using ToursWebAppEXAMProject.Interfaces;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SearchController: Controller
 	{
 		private readonly SearchUtils _SearchUtils;
+        private readonly ProductUtils _ProductUtils;
 		private readonly TechTaskUtils _TechTaskUtils;
+        private readonly IQueryResultInterface _QueryResult;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public SearchController(SearchUtils SearchUtils, TechTaskUtils TechTaskUtils)
+        public SearchController(SearchUtils searchUtils, ProductUtils productUtils, TechTaskUtils techTaskUtils, IQueryResultInterface queryResult)
 		{
-			_SearchUtils = SearchUtils;
-			_TechTaskUtils = TechTaskUtils;
-		}
+			_SearchUtils = searchUtils;
+            _ProductUtils = productUtils;
+            _TechTaskUtils = techTaskUtils;
+            _QueryResult = queryResult;
+        }
 
         /// <summary>
         /// Метод вывода стартовой страницы Search
@@ -40,7 +45,7 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// /// <param name="formValues">Данные формы ввода</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult Index(SearchProductViewModel viewModel, IFormCollection formValues)
+		public IActionResult Index(SearchFormViewModel formViewModel)
 		{
             try
             {
@@ -48,21 +53,21 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.Debug("Вью-модель SearchProductViewModel прошла валидацию. ");
 
-                    var searchViewModel = _SearchUtils.GetModel(viewModel, formValues);
+                    var searchViewModel = _SearchUtils.GetModel(formViewModel.CountryNameSelected);
                     _logger.Debug("Вью-модель SearchProductViewModel заполнена данными из формы. ");
 
-                    var countryName = searchViewModel.CountryNameSelected;
-                    var cityName = searchViewModel.CityNameSelected;
+                    var countryId = _QueryResult.GetIdByCountryName(formViewModel.CountryNameSelected);
+                    var cityId = _QueryResult.GetIdByCityName(formViewModel.CityNameSelected);
 
-                    if (countryName != null && cityName != null)
+                    if (countryId != 0 && cityId != 0)
                     {
 
-                        var products = _SearchUtils.GetProductsQueryResult(countryName, cityName);
+                        var products = _ProductUtils.GetProductsQueryResultForSearch(countryId, cityId);
                         if (products != null)
                         {
                             _logger.Debug("Получен список турпродуктов по результатам запроса. ");
 
-                            var queryResultViewModel = _SearchUtils.GetQueryResulpProductsViewModel(viewModel, products, countryName, cityName);
+                            var queryResultViewModel = _SearchUtils.GetQueryResulpProductsViewModel(formViewModel, products, countryId, cityId);
                             _logger.Debug("Получена вью-модель QueryResultProductViewModel. ");
 
                             _logger.Trace("Переход по маршруту /Search/ResultOfSearch.\n");
@@ -71,19 +76,20 @@ namespace ToursWebAppEXAMProject.Controllers
                         
                         _logger.Warn("По результатам запроса получен пустой список турпродуктов.\n");
                         _logger.Trace("Переход по маршруту /Search/Index.\n");
-                        return View(viewModel);
+                        return View(formViewModel);
                     }
-                    _logger.Warn($"Введенные название страны {countryName} и/или название города {cityName} отсутствуют в БД");
+                    _logger.Warn($"Введенные название страны {formViewModel.CountryNameSelected} и/или название города {formViewModel.CityNameSelected} отсутствуют в БД");
                     _logger.Trace("Переход по маршруту /Search/Index.\n");
-                    return View(viewModel);
+                    return View(formViewModel);
                 }
                 else
                 {
                     _logger.Warn("Вью-модель SearchProductViewModel не прошла валидацию. ");
 
                     _logger.Trace("Переход по маршруту /Search/Index.\n");
-                    return View(viewModel);
+                    return View(formViewModel);
                 }
+                Console.WriteLine("OK");
             }
             catch (Exception error)
             {
@@ -92,7 +98,8 @@ namespace ToursWebAppEXAMProject.Controllers
                 _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
                 return View("Error", new ErrorViewModel(error.Message));
             }
-		}
+            Console.WriteLine("EXIT");
+        }
 		       
 		/// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Search

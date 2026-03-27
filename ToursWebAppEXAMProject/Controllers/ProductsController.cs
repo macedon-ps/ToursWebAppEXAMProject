@@ -4,13 +4,14 @@ using NLog;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.Interfaces;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ProductUtils _ProductUtils;
-        
+
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public ProductsController(ProductUtils ProductUtils)
@@ -102,16 +103,16 @@ namespace ToursWebAppEXAMProject.Controllers
         }
 
         /// <summary>
-        /// Метод вывода результатов выборки турпродуктов по тому, что ищем - полное название или ключевое слово (букву)
+        /// Метод вывода результатов выборки турпродуктов по тому, что ищем - полное название или ключевое слово (букву). Выборка турпродуктов для редактирования (Edit).
         /// </summary>
         /// <param name="isFullName">полное название - true, ключевое слово (буква) - false</param>
         /// <param name="fullNameOrKeywordOfItem">текст для поиска</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetQueryResultProducts(bool isFullName, string insertedText)
+        public IActionResult GetProductsQueryResult(bool isFullName, string insertedText)
         {
-            var products = _ProductUtils.QueryResult(isFullName, insertedText);
+            var products = _ProductUtils.GetProductsQueryResultForEdit(isFullName, insertedText);
             _logger.Debug("Получена модель IEnumerable<Product>. ");
 
             if (products == null)
@@ -126,11 +127,12 @@ namespace ToursWebAppEXAMProject.Controllers
                 _logger.Debug("Получен список турпродуктов по результатам запроса. ");
                 _logger.Debug($"Выводятся все турпродукты по запросу. ");
 
-                _logger.Trace("Переход по маршруту /Products/GetQueryResultProducts.\n");
+                _logger.Trace("Переход по маршруту /Products/GetProductsQueryResult.\n");
                 return View(products);
             }
         }
 
+        
         /// <summary>
         /// Метод удаления отдельного турпродукта по его id
         /// </summary>
