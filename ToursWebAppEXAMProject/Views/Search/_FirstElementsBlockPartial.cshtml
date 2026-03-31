@@ -4,17 +4,15 @@
 @*Список стран (выпадающий список, единственный выбор)
   По выбранной стране будет выводиться список городов этой страны class="flexColumn blockWidth20"*@
 <div class="block1Left">
-    <label asp-for="CountryNameSelected"></label>
-    <select asp-for="CountryNameSelected"
-            asp-items="@Model.CountriesList" id="CountryNameSelected" name="CountryNameSelected">
+    <label>Страна:</label>
+    <select asp-for="CountryIdSelected"
+            asp-items="@Model.CountriesList" id="CountryIdSelected" name="CountryIdSelected">
+        <option value="">Выберите страну</option>
     </select>
 </div>
 
 <div class="block1Right">
     @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
-    @{
-        // TODO: доработать выпадающий календарь, чтобы м.б. выбирать интервал "от" и "до"
-    }
     <div>
         <label asp-for="DateFrom"></label>
         <input asp-for="DateFrom" />

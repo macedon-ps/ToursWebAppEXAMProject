@@ -3,9 +3,9 @@
 @*Список городов*@
 <div class="flexColumn block2Left">
     <div id="divForChangeCitiesSelectList">
-        <label asp-for="CityNameSelected"></label>
-        <select asp-for="CityNameSelected"
-                asp-items="@Model.CitiesList" id="CityNameSelected" name="CityNameSelected">
+        <label>Город:</label>
+        <select asp-for="CityIdSelected"
+                asp-items="@Model.CitiesList" id="CityIdSelected" name="CityIdSelected">
         </select>
     </div>
 </div>

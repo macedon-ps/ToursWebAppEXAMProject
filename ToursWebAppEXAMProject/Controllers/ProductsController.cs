@@ -110,7 +110,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpGet]
-        public IActionResult GetProductsQueryResult(bool isFullName, string insertedText)
+        public IActionResult GetProductsQueryResultForEdit(bool isFullName, string insertedText)
         {
             var products = _ProductUtils.GetProductsQueryResultForEdit(isFullName, insertedText);
             _logger.Debug("Получена модель IEnumerable<Product>. ");
@@ -127,12 +127,42 @@ namespace ToursWebAppEXAMProject.Controllers
                 _logger.Debug("Получен список турпродуктов по результатам запроса. ");
                 _logger.Debug($"Выводятся все турпродукты по запросу. ");
 
-                _logger.Trace("Переход по маршруту /Products/GetProductsQueryResult.\n");
+                _logger.Trace("Переход по маршруту /Products/GetProductsQueryResultForEdit.\n");
                 return View(products);
             }
         }
 
-        
+        /// <summary>
+        /// Метод вывода результатов выборки турпродуктов по Id страны и города. Выборка турпродуктов в поиске (Search).
+        /// </summary>
+        /// <param name="countryId">id страны.</param>
+        /// <param name="cityId">id города.</param>
+        /// <returns>Выборка турпродуктов в поиске (Search).</returns>
+        [HttpGet]
+        public IActionResult GetProductsQueryResultForSearch(int? countryId, int? cityId)
+        {
+            var products = _ProductUtils.GetProductsQueryResultForSearch(countryId, cityId);
+            _logger.Debug("Получена модель IEnumerable<Product>. ");
+
+            if (products == null)
+            {
+                _logger.Warn($"По результатам запроса получен пустой список турпродуктов по запросу \"/Search/?countryId={countryId}&cityId={cityId}\". ");
+
+                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                return View("Nothing", new NothingViewModel($"В БД нет турпродуктов по запросу \"/Search/?countryId={countryId}&cityId={cityId}\"."));
+            }
+            else
+            {
+                _logger.Debug("Получен список турпродуктов по результатам запроса. ");
+                _logger.Debug($"Выводятся все турпродукты по запросу. ");
+
+                _logger.Trace("Переход по маршруту /Products/GetProductsQueryResultForSearch.\n");
+                return View(products);
+            }
+        }
+
+
+
         /// <summary>
         /// Метод удаления отдельного турпродукта по его id
         /// </summary>

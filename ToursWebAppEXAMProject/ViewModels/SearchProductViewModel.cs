@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ToursWebAppEXAMProject.DTOs;
 using ToursWebAppEXAMProject.Enums;
 
 namespace ToursWebAppEXAMProject.ViewModels
@@ -7,45 +8,38 @@ namespace ToursWebAppEXAMProject.ViewModels
     public class SearchProductViewModel
 	{
 		/// <summary>
-		/// Id страны
+		/// Id выбранной из списка страны
 		/// </summary>
-		public int CountryId { get; set; }
+		public int? CountryIdSelected { get; set; }
 
-		/// <summary>
-		/// Название выбранной страны
-		/// </summary>
-		[Display(Name = "Страна:")]
+        /// <summary>
+        /// Название выбранной страны
+        /// </summary>
+        [Display(Name = "Страна:")]
 		public string? CountryNameSelected { get; set; } 
-
-		/// <summary>
-		/// Список стран в формате List<string>
-		/// </summary>
-		public List<string>? Countries { get; set; } = null!;
 
 		/// <summary>
 		/// Список стран в формате SelectList
 		/// </summary>
 		public SelectList? CountriesList { get; set; } = null!;
 
-		/// <summary>
-		/// Название выбранного города
-		/// </summary>
-		[Display(Name = "Город:")]
-		public string? CityNameSelected { get; set; } 
+        /// <summary>
+        /// Id выбранного из списка города
+        /// </summary>
+        public int? CityIdSelected { get; set; }
 
-		/// <summary>
-		/// Список городов выбранной страны в формате List<string>
-		/// </summary>
-		public List<string>? Cities { get; set; } = null!;
+        /// <summary>
+        /// Название выбранного города
+        /// </summary>
+        [Display(Name = "Город:")]
+		public string? CityNameSelected { get; set; } 
 
 		/// <summary>
 		/// Список городов выбранной страны в формате SelectList
 		/// </summary>
 		public SelectList? CitiesList { get; set; } = null!;
 
-        public Dictionary<string, List<string>> AllCountriesAndCities { get; set; }
-
-        public Dictionary<string, string> AllCountriesAndMaps { get; set; }
+        public List<CountryDto> CountriesData { get; set; } = new();
 
         /// <summary>
         /// Выбранные даты отдыха

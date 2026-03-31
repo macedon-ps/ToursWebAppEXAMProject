@@ -209,5 +209,24 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
         }
+
+        /// <summary>
+        /// API-метод для получения списка городов по id страны, который используется для динамического заполнения выпадающего списка городов на странице Search при выборе страны.
+        /// </summary>
+        /// <param name="countryId">Id страны</param>
+        /// <returns>список городов выбранной страны</returns>
+        [HttpGet]
+        public IActionResult GetCities(int countryId)
+        {
+            var cities = _CityUtils.GetCitiesByCountryId(countryId);
+
+            var result = cities.Select(c => new
+            {
+                id = c.Id,
+                name = c.Name
+            });
+
+            return Json(result);
+        }
     }
 }

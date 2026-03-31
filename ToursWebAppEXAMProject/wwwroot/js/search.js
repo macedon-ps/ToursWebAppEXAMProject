@@ -1,7 +1,5 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
-
-    const countrySelect = document.getElementById("countrySelect");
-    const citySelect = document.getElementById("citySelect");
+﻿    const countrySelect = document.getElementById("CountryIdSelected");
+    const citySelect = document.getElementById("CityIdSelected");
 
     const citiesCache = {};
 
@@ -14,20 +12,24 @@
 
         if (citiesCache[countryId]) {
             renderCities(citiesCache[countryId]);
+            console.log("Cities загрузились из кеша");
             return;
         }
 
-        const response = await fetch(`/Search/GetCities?countryId=${countryId}`);
+        // загрузка городов для выбранной страны через fetch-запрос к серверу
+        const response = await fetch(`/Cities/GetCities?countryId=${countryId}`);
         const cities = await response.json();
-
+        
         citiesCache[countryId] = cities;
+        console.log("Cities сохранены типа в кеш");
 
         renderCities(cities);
     }
 
     function renderCities(cities) {
+        
         citySelect.innerHTML = '<option value="">Выберите город</option>';
-
+       
         cities.forEach(city => {
             const option = document.createElement("option");
             option.value = city.id;
@@ -36,14 +38,44 @@
         });
     }
 
-    countrySelect.addEventListener("change", function () {
-        loadCities(this.value);
-    });
-
-    citySelect.addEventListener("change", function () {
+    countrySelect.addEventListener("change", function (e) {
+        
         const countryId = countrySelect.value;
-        const cityId = this.value;
+        const cityId = citySelect.value;
+        
+        loadCities(e.target.value);
 
-        window.location.href = `/search?countryId=${countryId}&cityId=${cityId}`;
+        // замена URL без перезагрузки страницы, с изменением истории браузера
+        history.pushState({}, "", `/search?countryId=${countryId}`);
+        // меняем заголовок страницы
+        document.title = `Поиск туров: /search?countryId=${countryId ?? ""}`;
     });
+
+    citySelect.addEventListener("change", function (e) {
+        
+        const countryId = countrySelect.value;
+        const cityId = citySelect.value;
+        
+        // замена URL без перезагрузки страницы, с изменением истории браузера
+        history.pushState({}, "", `/search?countryId=${countryId}&cityId=${cityId}`);
+        // меняем заголовок страницы
+        document.title = `Поиск туров: /search?countryId=${countryId ?? ""}&cityId=${cityId ?? ""}`;
+    });
+
+window.addEventListener("popstate", function (event) {
+    const params = new URLSearchParams(window.location.search);
+
+    const countryId = params.get("countryId");
+    const cityId = params.get("cityId");
+
+    if (countryId !== null) {
+        loadCities(countryId);
+        countrySelect.value = countryId;
+
+        if (cityId !== null) {
+            citySelect.value = cityId;
+        } else {
+            citySelect[0].selected;
+        }
+    }
 });

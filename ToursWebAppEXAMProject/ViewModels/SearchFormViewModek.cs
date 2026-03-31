@@ -9,13 +9,13 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// Название выбранной страны
 		/// </summary>
 		[Display(Name = "Страна:")]
-        public string? CountryNameSelected { get; set; }
+        public int? CountryIdSelected { get; set; }
 
         /// <summary>
 		/// Название выбранного города
 		/// </summary>
 		[Display(Name = "Город:")]
-        public string? CityNameSelected { get; set; }
+        public int? CityIdSelected { get; set; }
 
         /// <summary>
         /// Выбранные даты отдыха

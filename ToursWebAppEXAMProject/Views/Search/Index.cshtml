@@ -15,13 +15,47 @@
 
             <form class="form" asp-controller="Search" asp-action="Index" method="post" name="myForm">
                 
-                @await Html.PartialAsync("_HiddenElementsPartial")
-
-                @* Первый блок элементов: 3 select (список стран, количество дней отдыха, количество отдыхающих), календарь и кнопка "Найти тур" *@
+               @* Первый блок элементов: 3 select (список стран, количество дней отдыха, количество отдыхающих), календарь и кнопка "Найти тур" *@
                 
                 <div class="flexRow searchBlock1">   
                     
-                    @await Html.PartialAsync("_FirstElementsBlockPartial")
+                    <div class="block1Left">
+                        <label>Страна:</label>
+                        <select asp-for="CountryIdSelected"
+                                asp-items="@Model.CountriesList">
+                            <option value="">Выберите страну</option>
+                        </select>
+                    </div>
+
+                    <div class="block1Right">
+                        @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
+                        <div>
+                            <label asp-for="DateFrom"></label>
+                            <input asp-for="DateFrom" />
+                            <input asp-for="DateTo" />
+                        </div>
+
+                        @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
+                        <div class="block1Middle">
+                            <label asp-for="NumberOfDaysFromSelectList"></label>
+                            <select asp-for="NumberOfDaysFromSelectList"
+                                    asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
+                            </select>
+                        </div>
+
+                        @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
+                        <div class="block1Middle">
+                            <label asp-for="NumberOfPeopleFromSelectList"></label>
+                            <select asp-for="NumberOfPeopleFromSelectList"
+                                    asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
+                            </select>
+                        </div>
+
+                        @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
+                        <div>
+                            <input type="submit" value="Найти тур" />
+                        </div>
+                    </div>
                     
                 </div> 
 
@@ -31,14 +65,25 @@
 
                 <div class="flexRow searchBlock2">   
                     
-                    @await Html.PartialAsync("_SecondElementsBlockPartial")
+                    @*Список городов*@
+                    <div class="flexColumn block2Left">
+                        <div id="divForChangeCitiesSelectList">
+                            <label>Город:</label>
+                            <select asp-for="CityIdSelected"
+                                    asp-items="@Model.CitiesList">
+                            </select>
+                        </div>
+                    </div>
 
-                </div>
-                <div>@* Блок данных информационного характера, на период разработки
-                   В дальнейшем, будет убран из проекта*@
+                    @*Карта страны*@
+                    <div class="flexColumn block2Right">
+                        <label asp-for="MapImagePath"></label>
+                        <div class="country-map">
+                            <div id="countryMap">
+                            </div>
+                        </div>
+                    </div>
 
-                    @await Html.PartialAsync("_InfoBlockPartial")
-               
                 </div>
             </form>
         </div>

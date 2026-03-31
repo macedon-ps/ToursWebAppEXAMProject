@@ -3,24 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
 using NLog;
-using ToursWebAppEXAMProject.Interfaces;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SearchController: Controller
 	{
 		private readonly SearchUtils _SearchUtils;
-        private readonly ProductUtils _ProductUtils;
-		private readonly TechTaskUtils _TechTaskUtils;
-        private readonly IQueryResultInterface _QueryResult;
+        private readonly TechTaskUtils _TechTaskUtils;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public SearchController(SearchUtils searchUtils, ProductUtils productUtils, TechTaskUtils techTaskUtils, IQueryResultInterface queryResult)
+        public SearchController(SearchUtils searchUtils, TechTaskUtils techTaskUtils)
 		{
 			_SearchUtils = searchUtils;
-            _ProductUtils = productUtils;
             _TechTaskUtils = techTaskUtils;
-            _QueryResult = queryResult;
         }
 
         /// <summary>
@@ -28,15 +23,14 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-		public IActionResult Index(string countryName = "Украина")
-		{
-			// дефолтное значение countryName для стартовой страницы - "Украина"
-			var searchViewModel = _SearchUtils.GetModel(countryName);
+        public IActionResult Index(int? countryId, int? cityId)
+        {
+            var searchViewModel = _SearchUtils.GetModel(countryId, cityId);
             _logger.Debug("Получена вью-модель SearchProductViewModel по дефолту. ");
-            
+
             _logger.Trace("Переход по маршруту /Search/Index.\n");
             return View(searchViewModel);
-		}
+        }
 
         /// <summary>
         /// POST версия метода вывода страницы Search с данными поиска, введенными пользователем
@@ -45,60 +39,40 @@ namespace ToursWebAppEXAMProject.Controllers
 		/// /// <param name="formValues">Данные формы ввода</param>
         /// <returns></returns>
         [HttpPost]
-		public IActionResult Index(SearchFormViewModel formViewModel)
+		public IActionResult Index(SearchProductViewModel viewModel)
 		{
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Вью-модель SearchProductViewModel прошла валидацию. ");
+                    _logger.Debug("Модель прошла валидацию");
 
-                    var searchViewModel = _SearchUtils.GetModel(formViewModel.CountryNameSelected);
-                    _logger.Debug("Вью-модель SearchProductViewModel заполнена данными из формы. ");
+                    var countryId = viewModel.CountryIdSelected;
+                    var cityId = viewModel.CityIdSelected;
 
-                    var countryId = _QueryResult.GetIdByCountryName(formViewModel.CountryNameSelected);
-                    var cityId = _QueryResult.GetIdByCityName(formViewModel.CityNameSelected);
-
-                    if (countryId != 0 && cityId != 0)
+                    if (countryId.HasValue && cityId.HasValue)
                     {
+                        _logger.Trace($"Redirect: countryId={countryId}, cityId={cityId}");
 
-                        var products = _ProductUtils.GetProductsQueryResultForSearch(countryId, cityId);
-                        if (products != null)
-                        {
-                            _logger.Debug("Получен список турпродуктов по результатам запроса. ");
-
-                            var queryResultViewModel = _SearchUtils.GetQueryResulpProductsViewModel(formViewModel, products, countryId, cityId);
-                            _logger.Debug("Получена вью-модель QueryResultProductViewModel. ");
-
-                            _logger.Trace("Переход по маршруту /Search/ResultOfSearch.\n");
-                            return View("ResultOfSearch", queryResultViewModel);
-                        }
-                        
-                        _logger.Warn("По результатам запроса получен пустой список турпродуктов.\n");
-                        _logger.Trace("Переход по маршруту /Search/Index.\n");
-                        return View(formViewModel);
+                        return RedirectToAction(
+                            "GetProductsQueryResultForSearch",
+                            "Product",
+                            new { countryId = countryId.Value, cityId = cityId.Value }
+                        );
                     }
-                    _logger.Warn($"Введенные название страны {formViewModel.CountryNameSelected} и/или название города {formViewModel.CityNameSelected} отсутствуют в БД");
-                    _logger.Trace("Переход по маршруту /Search/Index.\n");
-                    return View(formViewModel);
-                }
-                else
-                {
-                    _logger.Warn("Вью-модель SearchProductViewModel не прошла валидацию. ");
 
-                    _logger.Trace("Переход по маршруту /Search/Index.\n");
-                    return View(formViewModel);
+                    _logger.Warn("Не выбрана страна или город");
+                    return View(viewModel);
                 }
-                Console.WriteLine("OK");
+
+                _logger.Warn("ModelState невалиден");
+                return View(viewModel);
             }
             catch (Exception error)
             {
                 _logger.Error(error.Message);
-
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
                 return View("Error", new ErrorViewModel(error.Message));
             }
-            Console.WriteLine("EXIT");
         }
 		       
 		/// <summary>
