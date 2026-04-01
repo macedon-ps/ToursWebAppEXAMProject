@@ -1,0 +1,31 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Результат выборки по турпродуктам";
+}
+
+<div class="searchPage">
+
+    @await Html.PartialAsync("../Search/_SearchButtonMenuPartial")
+
+    <div class="searchHeader">
+
+        @foreach (var item in Model)
+        {
+            <div>
+                <div class="titleImage">
+                    <img src="@item.TitleImagePath" alt="@item.Name, вид города" align="left" class="product-foto">
+                </div>
+                <div>
+                    <h2>@item.Name</h2>
+                </div>
+                <div>
+                    <h4>@item.ShortDescription</h4>
+                </div>
+            </div>
+            <div class="dateAdded">
+                <h4>@item.DateAdded</h4>
+                <a asp-controller="Products" asp-action="GetProduct" asp-route-id="@item.Id">Подробнее ...</a>
+            </div>
+         }
+    </div>
+</div>

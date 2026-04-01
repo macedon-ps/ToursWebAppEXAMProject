@@ -56,7 +56,7 @@ namespace ToursWebAppEXAMProject.Controllers
 
                         return RedirectToAction(
                             "GetProductsQueryResultForSearch",
-                            "Product",
+                            "Products",
                             new { countryId = countryId.Value, cityId = cityId.Value }
                         );
                     }
