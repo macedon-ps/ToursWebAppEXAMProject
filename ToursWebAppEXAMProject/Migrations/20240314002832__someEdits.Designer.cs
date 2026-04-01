@@ -259,7 +259,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CountryIdSelected")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateAdded")
@@ -303,7 +303,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryIdSelected");
+                    b.HasIndex("CountryId");
 
                     b.ToTable("City", (string)null);
                 });
@@ -589,7 +589,7 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CountryIdSelected")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateAdded")
@@ -625,7 +625,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("CountryIdSelected");
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Product", (string)null);
                 });
@@ -981,7 +981,7 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.HasOne("ToursWebAppEXAMProject.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryIdSelected")
+                        .HasForeignKey("CountryId")
                         .IsRequired()
                         .HasConstraintName("FK__City__CountryId__2D27B809");
 
@@ -1047,7 +1047,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasOne("ToursWebAppEXAMProject.Models.Country", "Country")
                         .WithMany("Products")
-                        .HasForeignKey("CountryIdSelected")
+                        .HasForeignKey("CountryId")
                         .IsRequired()
                         .HasConstraintName("FK__Products__CountryId__35BCFE0A");
 

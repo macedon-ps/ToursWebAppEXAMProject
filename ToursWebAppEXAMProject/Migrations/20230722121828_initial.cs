@@ -287,7 +287,7 @@ namespace ToursWebAppEXAMProject.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_City_CountryId",
                 table: "City",
-                column: "CountryIdSelected");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hotel_CityId",
@@ -317,7 +317,7 @@ namespace ToursWebAppEXAMProject.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CountryId",
                 table: "Product",
-                column: "CountryIdSelected");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tour_DateTourId",
