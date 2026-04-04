@@ -9,12 +9,14 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<Product> _AllProducts;
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
+        private readonly IQueryResultInterface _QueryResult;
         private readonly FileUtils _FileUtils;
-        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, FileUtils FileUtils) 
+        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IQueryResultInterface QueryResult, FileUtils FileUtils) 
         { 
             _AllProducts = Products;
             _AllCountries = Countries;
             _AllCities = Cities;
+            _QueryResult = QueryResult;
             _FileUtils = FileUtils;
         }
 
@@ -51,12 +53,29 @@ namespace ToursWebAppEXAMProject.Utils
             return product;
         }
 
-        public IEnumerable<Product> QueryResult(bool isFullName, string insertedText)
+        public IEnumerable<Product> GetProductsQueryResultForEdit(bool isFullName, string insertedText)
         {
             var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
 
             return products;
         }
+
+        /// <summary>
+        /// Метод поиска туристических продуктов по запросу во вью-модели SearchProductViewModel. Выборка турпродуктов как результат поиска по фильтрам (Search).
+        /// </summary>
+        /// <param name="searchViewModel"></param>
+        /// <returns></returns>
+        public List<Product> GetProductsQueryResultForSearch(int? countryId, int? cityId)
+        {
+            var products = new List<Product>();
+
+            if (countryId != 0 && cityId != 0)
+            {
+                products = (List<Product>)_QueryResult.GetProductsByCountryIdAndCityId(countryId, cityId);
+            }
+            return products;
+        }
+
 
         public void DeleteProductById(Product product)
         {
@@ -72,7 +91,7 @@ namespace ToursWebAppEXAMProject.Utils
         public Product SetProductModel(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
         {
             var fullInfoProduct = formValues["fullInfoAboutProduct"].ToString();
-            var countryIdInfo = formValues["CountryId"].ToString();
+            var countryIdInfo = formValues["CountryIdSelected"].ToString();
             var cityIdInfo = formValues["CityId"].ToString();
 
             if (fullInfoProduct != null) product.FullDescription = fullInfoProduct;
