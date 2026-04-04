@@ -199,5 +199,18 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
         }
+
+        /// <summary>
+        /// API-метод для получения карты страны по id страны.
+        /// </summary>
+        /// <param name="countryId">Id страны.</param>
+        /// <returns>Карта выбранной страны.</returns>
+        [HttpGet]
+        public IActionResult GetMap(int countryId)
+        {
+            var map = _CountryUtils.GetMapByCountryId(countryId);
+
+            return Json(map);
+        }
     }
 }

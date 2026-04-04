@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using System.Diagnostics.Metrics;
 using ToursWebAppEXAMProject.Interfaces;
@@ -12,12 +13,16 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<City> _AllCities;
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly FileUtils _FileUtils;
+        private readonly IQueryResultInterface _QueryResult;
+        private readonly IMemoryCache _Cache;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, FileUtils FileUtils)
+        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, FileUtils FileUtils, IQueryResultInterface QueryResult, IMemoryCache Cache)
         {
             _AllCities = AllCities;
             _AllCountries = AllCountries;
             _FileUtils = FileUtils;
+            _QueryResult = QueryResult;
+            _Cache = Cache;
         }
 
         public IEnumerable<City> GetCities()
@@ -71,7 +76,7 @@ namespace ToursWebAppEXAMProject.Utils
         {
             var fullInfoCity = formValues["fullInfoAboutCity"].ToString();
             var isCapitalInfo = formValues["checkIsCapital"].ToString();
-            var countryIdInfo = formValues["CountryId"].ToString();
+            var countryIdInfo = formValues["CountryIdSelected"].ToString();
 
             if (fullInfoCity != null) city.FullDescription = fullInfoCity;
             if (isCapitalInfo == "on") city.isCapital = true;
@@ -102,6 +107,20 @@ namespace ToursWebAppEXAMProject.Utils
             if (fullInfoCity != null) city.FullDescription = fullInfoCity;
 
             return city;
+        }
+
+        public List<City> GetCitiesByCountryId(int countryId)
+        {
+            var cacheKey = $"cities_{countryId}";
+
+            if (!_Cache.TryGetValue(cacheKey, out List<City> cities))
+            {
+                cities = _QueryResult.GetCitiesByCountryId(countryId);
+                    
+                _Cache.Set(cacheKey, cities, TimeSpan.FromMinutes(30));
+            }
+
+            return cities;
         }
     }
 }

@@ -23,9 +23,9 @@ namespace ToursWebAppEXAMProject.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Index(int? countryId, int? cityId)
+        public IActionResult Index(int? countryId, int? cityId, string? map)
         {
-            var searchViewModel = _SearchUtils.GetModel(countryId, cityId);
+            var searchViewModel = _SearchUtils.GetModel(countryId, cityId, map);
             _logger.Debug("Получена вью-модель SearchProductViewModel по дефолту. ");
 
             _logger.Trace("Переход по маршруту /Search/Index.\n");

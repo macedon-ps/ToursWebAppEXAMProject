@@ -7,12 +7,14 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
+        private readonly IQueryResultInterface _QueryResult;
         private readonly FileUtils _FileUtils;
 
-        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, FileUtils FileUtils)
+        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, IQueryResultInterface QueryResult, FileUtils FileUtils)
         {
             _AllCountries = AllCountries;
             _AllCities = AllCities;
+            _QueryResult = QueryResult;
             _FileUtils = FileUtils;
         }
 
@@ -88,6 +90,11 @@ namespace ToursWebAppEXAMProject.Utils
             if (fullInfoCountry != null) country.FullDescription = fullInfoCountry;
 
             return country;
+        }
+
+        public string GetMapByCountryId(int countryId)
+        {
+            return _QueryResult.GetMapByCountryId(countryId);
         }
     }
 }
