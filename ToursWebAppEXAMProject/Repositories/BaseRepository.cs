@@ -3,6 +3,7 @@ using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using NLog;
+using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -104,7 +105,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				{
 					_logger.Warn($"В БД нет {itemKeyword[3]}\n");
 					
-					return new List<T>();
+					return items;
 				}
 				else
 				{
@@ -112,7 +113,7 @@ namespace ToursWebAppEXAMProject.Repositories
                     
 					return items ;
 				}
-			}
+            }
 			catch (Exception ex)
 			{
                 _logger.Error($"Выборка {itemKeyword[3]} не осуществлена. \nКод ошибки: {ex.Message}\n");

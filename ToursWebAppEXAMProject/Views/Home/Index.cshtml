@@ -13,43 +13,61 @@
 
         <div class="displayFlex row">
             <div class="col-6 col-12-medium">
-                @foreach(var newItem in Model.AllNews)
+                
+                @if (Model.AllNews == null || !Model.AllNews.Any())
                 {
                     <div>
-                        <div class="titleImage">
-                            <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" width="20%" height="20%">
-                        </div>
+                        <h3 class="title marginTop2">Извините, но новостей в БД пока нет</h3>
+                    </div>
+                }
+                else {
+                    @foreach (var newItem in Model.AllNews)
+                    {
                         <div>
-                            <h2>@newItem.Name</h2>
+                            <div class="titleImage">
+                                <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" width="20%" height="20%">
+                            </div>
+                            <div>
+                                <h2>@newItem.Name</h2>
+                            </div>
+                            <div>
+                                <h4>@newItem.ShortDescription</h4>
+                            </div>
+                            <div class="dateAdded">
+                                <h4>@newItem.DateAdded</h4>
+                                <a asp-controller="News" asp-action="GetNews" asp-route-id="@newItem.Id">Подробнее ...</a>
+                            </div>
                         </div>
-                        <div>
-                            <h4>@newItem.ShortDescription</h4>
-                        </div>
-                        <div class="dateAdded">
-                            <h4>@newItem.DateAdded</h4>
-                            <a asp-controller="News" asp-action="GetNews" asp-route-id="@newItem.Id">Подробнее ...</a>
-                        </div>
-                    </div> 
+                    }
                 }
             </div>
             <div class="col-6 col-12-medium">
-                @foreach(var blog in Model.AllBlogs)
+                @if (Model.AllBlogs == null)
                 {
                     <div>
-                        <div class="titleImage">
-                            <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
-                        </div>
-                        <div>
-                            <h2>@blog.Name</h2>
-                        </div>
-                        <div>
-                            <h4>@blog.ShortDescription</h4>
-                        </div>
-                        <div class="dateAdded">
-                            <h4>@blog.DateAdded</h4>
-                            <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
-                        </div>
+                        <h3 class="title marginTop2">Извините, но блогов в БД пока нет</h3>
                     </div>
+                }
+                else
+                {
+                    @foreach (var blog in Model.AllBlogs)
+                    {
+                        <div>
+                            <div class="titleImage">
+                                <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
+                            </div>
+                            <div>
+                                <h2>@blog.Name</h2>
+                            </div>
+                            <div>
+                                <h4>@blog.ShortDescription</h4>
+                            </div>
+                            <div class="dateAdded">
+                                <h4>@blog.DateAdded</h4>
+                                <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                            </div>
+                        </div>
+                    }
                 }
             </div>          
         </div>
