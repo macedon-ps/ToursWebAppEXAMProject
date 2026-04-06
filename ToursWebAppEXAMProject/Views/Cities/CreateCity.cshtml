@@ -16,7 +16,6 @@
             <input type="hidden" asp-for="City.Id" />
             <input type="hidden" asp-for="City.CountryId" />
             <input type="hidden" asp-for="City.DateAdded" />
-            <input type="hidden" asp-for="City.TitleImagePath" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -26,7 +25,7 @@
                 </div>
                 <div class="check-isCapital">
                     <label asp-for="City.isCapital"></label>
-                    <input name="checkIsCapital" type="checkbox" checked="@Model.City.isCapital" />
+                    <input asp-for="City.isCapital" type="checkbox" checked="@Model.City.isCapital" />
                 </div>
                 <div>
                     <h3>Выберите страну</h3>
@@ -43,18 +42,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="City.FullDescription"></label>
-                    <textarea name="fullInfoAboutCity" rows="20" cols="100" asp-for="City.FullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="City.FullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="City.FullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="City.TitleImagePath"></label>
                     <h3>@Model.City.TitleImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.City.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%"><img>
+                        <img src="@Model.City.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeTitleImagePath" asp-for="City.TitleImagePath" accept="image/*" />
+                    <input type="file" asp-for="City.TitleImagePath" accept="image/*" />
                     <span asp-validation-for="City.TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
@@ -63,6 +60,5 @@
     </div>
 </div>
 <script>
-    var newCKEdit = CKEDITOR.replace('fullInfoAboutCity');
-    newCKEdit.updateElement();
+    var newCKEdit = CKEDITOR.replace('City.FullDescription');
 </script>

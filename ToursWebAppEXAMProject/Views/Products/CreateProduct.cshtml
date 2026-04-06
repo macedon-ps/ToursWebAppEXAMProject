@@ -17,7 +17,6 @@
             <input type="hidden" asp-for="Product.CountryId" />
             <input type="hidden" asp-for="Product.CityId" />
             <input type="hidden" asp-for="Product.DateAdded" />
-            <input type="hidden" asp-for="Product.TitleImagePath" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -48,18 +47,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="Product.FullDescription"></label>
-                    <textarea name="fullInfoAboutProduct" rows="20" cols="100" asp-for="Product.FullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="Product.FullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="Product.FullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="Product.TitleImagePath"></label>
                     <h3>@Model.Product.TitleImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.Product.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%"><img>
+                        <img src="@Model.Product.TitleImagePath" alt="Титульная картинка горорда" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeTitleImagePath" asp-for="Product.TitleImagePath" accept="image/*" />
+                    <input type="file" asp-for="Product.TitleImagePath" accept="image/*" />
                     <span asp-validation-for="Product.TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
@@ -68,6 +65,5 @@
     </div>
 </div>
 <script>
-    var newCKEdit = CKEDITOR.replace('fullInfoAboutProduct');
-    newCKEdit.updateElement();
+    var newCKEdit = CKEDITOR.replace('Product.FullDescription');
 </script>

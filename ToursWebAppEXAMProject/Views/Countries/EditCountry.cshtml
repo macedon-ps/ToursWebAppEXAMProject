@@ -15,7 +15,6 @@
         <form asp-controller="Countries" asp-action="SaveCountry" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DateAdded" />
-            <input type="hidden" asp-for="TitleImagePath" />
             <div>
                 <div asp-validation-summary="All"></div>
                 <div class="displayFlexCol">
@@ -30,9 +29,7 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="FullDescription"></label>
-                    <textarea name="fullInfoAboutCountry" rows="20" cols="100" asp-for="FullDescription" >
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="FullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="FullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
@@ -63,9 +60,9 @@
                     <label asp-for="TitleImagePath"></label>
                     <h4>@Model.TitleImagePath</h4>
                     <div class="titleImage">
-                        <img src="@Model.TitleImagePath" alt="Карта страны" align="left" width="50%"><img>
+                        <img src="@Model.TitleImagePath" alt="Карта страны" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeTitleImagePath" asp-for="TitleImagePath" accept="image/*" />
+                    <input type="file" asp-for="TitleImagePath" accept="image/*" />
                     <span asp-validation-for="TitleImagePath"></span>
                 </div>
                 <input type="submit" value="Сохранить" />
@@ -74,6 +71,5 @@
     </div>
 </div>
 <script>
-    var newCKEdit = CKEDITOR.replace('fullInfoAboutCountry');
-    newCKEdit.updateElement();
+    var newCKEdit = CKEDITOR.replace('FullDescription');
 </script>

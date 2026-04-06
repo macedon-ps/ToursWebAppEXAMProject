@@ -92,7 +92,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditNews(int id)
         {
-            var newsItem = _NewsUtils.GetNewsForEdit(id);
+            var newsItem = _NewsUtils.GetNewsById(id);
             _logger.Debug($"Получена модель New по id={id}. ");
 
             _logger.Trace("Переход по маршруту /News/EditNews.\n");
@@ -152,13 +152,13 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения новости с данными, введенными пользователем
         /// </summary>
-        /// <param name="newsItem">Модель новости</param>
+        /// <param name="newsModel">Модель новости</param>
         /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
         /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveNews(New newsItem, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveNews(New newsModel, IFormFile? imageFileName)
         {
             try
             {
@@ -167,25 +167,24 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель News прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (changeTitleImagePath != null)
+                    if (imageFileName != null)
                     {
-                        await _NewsUtils.SaveImagePathAsync(changeTitleImagePath);
+                        await _NewsUtils.SaveNewImageByFileNameAsync(imageFileName);
                     }
 
-                    newsItem = _NewsUtils.SetNewsModel(newsItem, formValues, changeTitleImagePath);
-                    _NewsUtils.SaveNews(newsItem);
+                    newsModel = _NewsUtils.SetNewsModel(newsModel, imageFileName);
+                    _NewsUtils.SaveNewsModel(newsModel);
                     _logger.Debug("Новость успешно сохранена в БД. ");
                     
                     _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                    return View("Success", newsItem);
+                    return View("Success", newsModel);
                 }
                 else
                 {
                     _logger.Warn("Модель New не прошла валидацию. ");
-                    newsItem = _NewsUtils.SetNewsModelByFormValues(newsItem, formValues);
-                    
+                                        
                     _logger.Trace("Возвращено /News/EditNews.cshtml\n");
-                    return View("EditNews", newsItem);
+                    return View("EditNews", newsModel);
                 }
             }
             catch (Exception error)
