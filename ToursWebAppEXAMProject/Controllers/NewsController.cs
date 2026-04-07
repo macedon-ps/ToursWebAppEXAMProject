@@ -158,7 +158,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveNews(New newsModel, IFormFile? imageFileName)
+        public async Task<IActionResult> SaveNews(New newsModel, IFormFile? TitleImagePath)
         {
             try
             {
@@ -167,12 +167,12 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель News прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (imageFileName != null)
+                    if (TitleImagePath != null)
                     {
-                        await _NewsUtils.SaveNewImageByFileNameAsync(imageFileName);
+                        await _NewsUtils.SaveNewImageByFileNameAsync(TitleImagePath);
                     }
 
-                    newsModel = _NewsUtils.SetNewsModel(newsModel, imageFileName);
+                    newsModel = _NewsUtils.SetNewsModel(newsModel, TitleImagePath);
                     _NewsUtils.SaveNewsModel(newsModel);
                     _logger.Debug("Новость успешно сохранена в БД. ");
                     
