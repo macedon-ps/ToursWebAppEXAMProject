@@ -45,14 +45,6 @@ namespace ToursWebAppEXAMProject.Utils
             return productViewModel;
         }
 
-        public Product GetProductForEdit(int id)
-        {
-            var product = _AllProducts.GetItemById(id);
-            product.DateAdded = DateTime.Now;
-
-            return product;
-        }
-
         public IEnumerable<Product> GetProductsQueryResultForEdit(bool isFullName, string insertedText)
         {
             var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
@@ -82,47 +74,32 @@ namespace ToursWebAppEXAMProject.Utils
             _AllProducts.DeleteItem(product, product.Id);
         }
 
-        public async Task SaveImagePathAsync(IFormFile changeTitleImagePath)
+        public async Task SaveProductImageByFileNameAsync(IFormFile changeTitleImagePath)
         {
             var folder = "/images/ProductsTitleImages/";
             await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
         }
 
-        public Product SetProductModel(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public Product SetProductModel(Product productModel, IFormFile? imageFileName)
         {
-            var fullInfoProduct = formValues["fullInfoAboutProduct"].ToString();
-            var countryIdInfo = formValues["CountryIdSelected"].ToString();
-            var cityIdInfo = formValues["CityId"].ToString();
+            // добавляем дату добавления турпродукта (текущую дату)
+            productModel.DateAdded = DateTime.Now;
 
-            if (fullInfoProduct != null) product.FullDescription = fullInfoProduct;
-            if (countryIdInfo != "") product.CountryId = Int32.Parse(countryIdInfo);
-            if (cityIdInfo != "") product.CityId = Int32.Parse(cityIdInfo);
-
-            if (changeTitleImagePath != null)
+            if (imageFileName != null)
             {
                 var folder = "/images/ProductsTitleImages/";
-                product.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                productModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
             }
 
-            product.DateAdded = DateTime.Now;
-
-            return product;
+            return productModel;
         }
 
-        public void SaveProduct(Product product)
+        public void SaveProductModel(Product productModel)
         {
-            if (product != null)
+            if (productModel != null)
             {
-                _AllProducts.SaveItem(product, product.Id);
+                _AllProducts.SaveItem(productModel, productModel.Id);
             }
-        }
-
-        public Product SetProductModelByFormValues(Product product, IFormCollection formValues)
-        {
-            var fullInfoProduct = formValues["fullInfoAboutProduct"].ToString();
-            if (fullInfoProduct != null) product.FullDescription = fullInfoProduct;
-
-            return product;
         }
     }
 }

@@ -24,14 +24,6 @@ namespace ToursWebAppEXAMProject.Utils
             return _AllBlogs.GetItemById(id);
         }
 
-        public Blog GetBlogForEdit(int id)
-        {
-            var blog = _AllBlogs.GetItemById(id);
-            blog.DateAdded = DateTime.Now;
-
-            return blog;
-        }
-
         public IEnumerable<Blog> QueryResult(bool isFullName, string insertedText)
         {
             return _AllBlogs.GetQueryResultItemsAfterFullName(insertedText, isFullName);
@@ -42,35 +34,31 @@ namespace ToursWebAppEXAMProject.Utils
             _AllBlogs.DeleteItem(blog, blog.Id);
         }
 
-        public async Task SaveImagePathAsync(IFormFile changeTitleImagePath)
+        public async Task SaveBlogImageByFileNameAsync(IFormFile changeTitleImagePath)
         {
             var folder = "/images/BlogsTitleImages/";
             await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
         }
 
-        public Blog SetBlogModel(Blog blog, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public Blog SetBlogModel(Blog blogModel, IFormFile? imageFileName)
         {
-            var fullInfoBlog = formValues["fullInfoAboutBlog"].ToString();
-            var fullMessageLine = formValues["fullMessageLine"].ToString();
+            // добавляем дату добавления блога (текущую дату)            
+            blogModel.DateAdded = DateTime.Now;
 
-            if (fullInfoBlog != null) blog.FullDescription = fullInfoBlog;
-            if(fullMessageLine != null) blog.FullMessageLine = fullMessageLine;
-            blog.DateAdded = DateTime.Now;
-
-            if (changeTitleImagePath != null)
+            if (imageFileName != null)
             {
                 var folder = "/images/BlogsTitleImages/";
-                blog.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                blogModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
             }
 
-            return blog;
+            return blogModel;
         }
 
-        public void SaveBlog(Blog blog)
+        public void SaveBlogModel(Blog blogModel)
         {
-            if (blog != null)
+            if (blogModel != null)
             {
-                _AllBlogs.SaveItem(blog, blog.Id);
+                _AllBlogs.SaveItem(blogModel, blogModel.Id);
             }
         }
 
@@ -91,14 +79,14 @@ namespace ToursWebAppEXAMProject.Utils
             if (blog.FullMessageLine == "Вся строка сообщений")
             {
                 blog.FullMessageLine = "";
-                SaveBlog(blog);
+                SaveBlogModel(blog);
             }
 
             blog.Message = $"В {timeMessage} пользователь {userName} прислал сообщение";
             blog.FullMessageLine += allMessageText;
 
             // сохраняем сообщения чата в БД
-            SaveBlog(blog);
+            SaveBlogModel(blog);
 
             return blog;
         }

@@ -91,7 +91,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditBlog(int id)
         {
-            var blog = _BlogUtils.GetBlogForEdit(id);
+            var blog = _BlogUtils.GetBlogById(id);
             _logger.Debug($"Получена модель Blog по id={id}. ");
 
             _logger.Trace("Переход по маршруту /Blogs/EditBlog.\n");
@@ -153,13 +153,13 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения блога с данными, введенными пользователем
         /// </summary>
-        /// <param name="blog">Модель блога</param>
+        /// <param name="blogModel">Модель блога</param>
         /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
         /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveBlog(Blog blog, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveBlog(Blog blogModel, IFormFile? TitleImagePath)
         {
             try
             {
@@ -168,25 +168,24 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель Blog прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (changeTitleImagePath != null)
+                    if (TitleImagePath != null)
                     {
-                        await _BlogUtils.SaveImagePathAsync(changeTitleImagePath);
+                        await _BlogUtils.SaveBlogImageByFileNameAsync(TitleImagePath);
                     }
 
-                    blog = _BlogUtils.SetBlogModel(blog, formValues, changeTitleImagePath);
-                    _BlogUtils.SaveBlog(blog);
+                    blogModel = _BlogUtils.SetBlogModel(blogModel, TitleImagePath);
+                    _BlogUtils.SaveBlogModel(blogModel);
                     _logger.Debug("Блог успешно сохранен в БД. ");
 
                     _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                    return View("Success", blog);
+                    return View("Success", blogModel);
                 }
                 else
                 {
                     _logger.Warn("Модель Blog не прошла валидацию. ");
-                    blog = _BlogUtils.SetBlogModelByFormValues(blog, formValues);
-                    
+                                        
                     _logger.Trace("Возвращено /Blogs/EditBlog.cshtml\n");
-                    return View("EditBlog", blog);
+                    return View("EditBlog", blogModel);
                 }
             }
             catch (Exception error)

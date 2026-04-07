@@ -95,7 +95,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult EditProduct(int id)
         {
-            var product = _ProductUtils.GetProductForEdit(id);
+            var product = _ProductUtils.GetProductById(id);
             _logger.Debug($"Получена модель Product по id={id}. ");
 
             _logger.Trace("Переход по маршруту /Products/EditProduct.\n");
@@ -186,13 +186,13 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения турпродукта с данными, введенными пользователем
         /// </summary>
-        /// <param name="product">Модель турпродукта</param>
+        /// <param name="productModel">Модель турпродукта</param>
         /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="TitleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveProduct(Product product, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveProduct(Product productModel, IFormFile? TitleImagePath)
         {
             try
             {
@@ -201,37 +201,35 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель Product прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (changeTitleImagePath != null)
+                    if (TitleImagePath != null)
                     {
-                        await _ProductUtils.SaveImagePathAsync(changeTitleImagePath);
+                        await _ProductUtils.SaveProductImageByFileNameAsync(TitleImagePath);
                     }
 
-                    product = _ProductUtils.SetProductModel(product, formValues, changeTitleImagePath);
+                    productModel = _ProductUtils.SetProductModel(productModel, TitleImagePath);
 
-                    if (product.CountryId !=0 && product.CityId !=0)
+                    if (productModel.CountryId !=0 && productModel.CityId !=0)
                     {
-                        _ProductUtils.SaveProduct(product);
+                        _ProductUtils.SaveProductModel(productModel);
                         _logger.Debug("Турпродукт успешно сохранен в БД. ");
 
                         _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                        return View("Success", product);
+                        return View("Success", productModel);
                     }
                     else
                     {
                         _logger.Warn("Модель Product не прошла валидацию. Не задана страна и/или город. ");
-                        product = _ProductUtils.SetProductModelByFormValues(product, formValues);
-
+                        
                         _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
-                        return View("EditProduct", product);
+                        return View("EditProduct", productModel);
                     }
                 }
                 else
                 {
                     _logger.Warn("Модель Product не прошла валидацию. ");
-                    product = _ProductUtils.SetProductModelByFormValues(product, formValues);
-
+                   
                     _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
-                    return View("EditProduct", product);
+                    return View("EditProduct", productModel);
                 }
             }
             catch (Exception error)

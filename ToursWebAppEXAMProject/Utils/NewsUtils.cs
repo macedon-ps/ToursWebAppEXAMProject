@@ -7,7 +7,7 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<New> _AllNews;
         private readonly FileUtils _FileUtils;
-
+        
         public NewsUtils(IBaseInterface<New> News, FileUtils FileUtils) 
         {
             _AllNews = News;
@@ -24,14 +24,6 @@ namespace ToursWebAppEXAMProject.Utils
             return _AllNews.GetItemById(id);
         }
 
-        public New GetNewsForEdit(int id)
-        {
-            var newsItem = _AllNews.GetItemById(id);
-            newsItem.DateAdded = DateTime.Now;
-
-            return newsItem;
-        }
-
         public IEnumerable<New> QueryResult(bool isFullName, string insertedText)
         {
             return _AllNews.GetQueryResultItemsAfterFullName(insertedText, isFullName);
@@ -42,42 +34,32 @@ namespace ToursWebAppEXAMProject.Utils
             _AllNews.DeleteItem(newsItem, newsItem.Id);
         }
 
-        public async Task SaveImagePathAsync(IFormFile changeTitleImagePath)
+        public async Task SaveNewImageByFileNameAsync(IFormFile imageFileName)
         {
             var folder = "/images/NewsTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
+            await _FileUtils.SaveImageToFolder(folder, imageFileName);
         }
 
-        public New SetNewsModel(New newsItem, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public New SetNewsModel(New newsModel, IFormFile? imageFileName)
         {
-            var fullInfoNews = formValues["fullInfoAboutNew"].ToString();
+            // добавляем дату добавления новости (текущую дату)
+            newsModel.DateAdded = DateTime.Now;
+
+            if (imageFileName != null)
+            {
+                newsModel.TitleImagePath = $"/images/NewsTitleImages/{imageFileName.FileName}";
+            }
             
-            if (fullInfoNews != null) newsItem.FullDescription = fullInfoNews;
-            newsItem.DateAdded = DateTime.Now;
-
-            if (changeTitleImagePath != null)
-            {
-                var folder = "/images/NewsTitleImages/";
-                newsItem.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
-            }
-
-            return newsItem;    
+            return newsModel;    
         }
 
-        public void SaveNews(New newsItem)
+        public void SaveNewsModel(New newsModel)
         {
-            if (newsItem != null)
+            if (newsModel != null)
             {
-                _AllNews.SaveItem(newsItem, newsItem.Id);
+                _AllNews.SaveItem(newsModel, newsModel.Id);
             }
         }
 
-        public New SetNewsModelByFormValues(New newsItem, IFormCollection formValues)
-        {
-            var fullInfoNews = formValues["fullInfoAboutNew"].ToString();
-            if (fullInfoNews != null) newsItem.FullDescription = fullInfoNews;
-
-            return newsItem;
-        }
     }
 }
