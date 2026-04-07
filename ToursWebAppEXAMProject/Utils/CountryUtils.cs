@@ -60,36 +60,26 @@ namespace ToursWebAppEXAMProject.Utils
             await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
         }
 
-        public Country SetCountryModel(Country country, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public Country SetCountryModel(Country countryModel, IFormFile? imageFileName)
         {
-            var fullInfoCountry = formValues["fullInfoAboutCountry"].ToString();
+            // добавляем дату добавления новости (текущую дату)
+            countryModel.DateAdded = DateTime.Now;
 
-            if (fullInfoCountry != null) country.FullDescription = fullInfoCountry;
-            country.DateAdded = DateTime.Now;
-
-            if (changeTitleImagePath != null)
+            if (imageFileName != null)
             {
                 var folder = "/images/CountriesTitleImages/";
-                country.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                countryModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
             }
 
-            return country;
+            return countryModel;
         }
 
-        public void SaveCountry(Country country)
+        public void SaveCountryModel(Country countryModel)
         {
-            if (country != null)
+            if (countryModel != null)
             {
-                _AllCountries.SaveItem(country, country.Id);
+                _AllCountries.SaveItem(countryModel, countryModel.Id);
             }
-        }
-
-        public Country SetCountryModelByFormValues(Country country, IFormCollection formValues)
-        {
-            var fullInfoCountry = formValues["fullInfoAboutCountry"].ToString();
-            if (fullInfoCountry != null) country.FullDescription = fullInfoCountry;
-
-            return country;
         }
 
         public string GetMapByCountryId(int countryId)

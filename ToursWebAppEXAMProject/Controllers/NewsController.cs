@@ -153,12 +153,11 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод сохранения новости с данными, введенными пользователем
         /// </summary>
         /// <param name="newsModel">Модель новости</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveNews(New newsModel, IFormFile? TitleImagePath)
+        public async Task<IActionResult> SaveNews(New newsModel, IFormFile? titleImagePath)
         {
             try
             {
@@ -167,12 +166,12 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель News прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (TitleImagePath != null)
+                    if (titleImagePath != null)
                     {
-                        await _NewsUtils.SaveNewImageByFileNameAsync(TitleImagePath);
+                        await _NewsUtils.SaveNewImageByFileNameAsync(titleImagePath);
                     }
 
-                    newsModel = _NewsUtils.SetNewsModel(newsModel, TitleImagePath);
+                    newsModel = _NewsUtils.SetNewsModel(newsModel, titleImagePath);
                     _NewsUtils.SaveNewsModel(newsModel);
                     _logger.Debug("Новость успешно сохранена в БД. ");
                     

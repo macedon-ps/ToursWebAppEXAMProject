@@ -72,41 +72,27 @@ namespace ToursWebAppEXAMProject.Utils
             await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
         }
 
-        public City SetCityModel(City city, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public City SetCityModel(City cityModel, IFormFile? imageFileName)
         {
-            var fullInfoCity = formValues["fullInfoAboutCity"].ToString();
-            var isCapitalInfo = formValues["checkIsCapital"].ToString();
-            var countryIdInfo = formValues["CountryIdSelected"].ToString();
 
-            if (fullInfoCity != null) city.FullDescription = fullInfoCity;
-            if (isCapitalInfo == "on") city.isCapital = true;
-            if(countryIdInfo != "") city.CountryId = Int32.Parse(countryIdInfo);
-            
-            if (changeTitleImagePath != null)
+            // если мы хотим поменять картинку
+            cityModel.DateAdded = DateTime.Now;
+
+            if (imageFileName != null)
             {
                 var folder = "/images/CitiesTitleImages/";
-                city.TitleImagePath = $"{folder}{changeTitleImagePath.FileName}";
+                cityModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
             }
 
-            city.DateAdded = DateTime.Now;
-
-            return city;
+            return cityModel;
         }
 
-        public void SaveCity(City city)
+        public void SaveCity(City cityModel)
         {
-            if (city != null)
+            if (cityModel != null)
             {
-                _AllCities.SaveItem(city, city.Id);
+                _AllCities.SaveItem(cityModel, cityModel.Id);
             }
-        }
-
-        public City SetCityModelByFormValues(City city, IFormCollection formValues)
-        {
-            var fullInfoCity = formValues["fullInfoAboutCity"].ToString();
-            if (fullInfoCity != null) city.FullDescription = fullInfoCity;
-
-            return city;
         }
 
         public List<City> GetCitiesByCountryId(int countryId)

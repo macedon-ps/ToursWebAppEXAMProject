@@ -155,13 +155,12 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения страны с данными, введенными пользователем
         /// </summary>
-        /// <param name="country">Модель страны</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="countryModel">Модель страны</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveCountry(Country country, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveCountry(Country countryModel, IFormFile? titleImagePath)
         {
             try
             {
@@ -170,25 +169,24 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель Country прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (changeTitleImagePath != null)
+                    if (titleImagePath != null)
                     {
-                        await _CountryUtils.SaveImagePathAsync(changeTitleImagePath);
+                        await _CountryUtils.SaveImagePathAsync(titleImagePath);
                     }
 
-                    country = _CountryUtils.SetCountryModel(country, formValues, changeTitleImagePath);
-                    _CountryUtils.SaveCountry(country);
+                    countryModel = _CountryUtils.SetCountryModel(countryModel, titleImagePath);
+                    _CountryUtils.SaveCountryModel(countryModel);
                     _logger.Debug("Страна успешно сохранена в БД. ");
 
                     _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                    return View("Success", country);
+                    return View("Success", countryModel);
                 }
                 else
                 {
                     _logger.Warn("Модель Country не прошла валидацию. ");
-                    country = _CountryUtils.SetCountryModelByFormValues(country, formValues);
-
+                    
                     _logger.Trace("Возвращено /Countries/EditCountry.cshtml\n");
-                    return View("EditNews", country);
+                    return View("EditNews", countryModel);
                 }
             }
             catch (Exception error)

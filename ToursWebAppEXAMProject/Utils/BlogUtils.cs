@@ -62,14 +62,6 @@ namespace ToursWebAppEXAMProject.Utils
             }
         }
 
-        public Blog SetBlogModelByFormValues(Blog blog, IFormCollection formValues)
-        {
-            var fullInfoBlog = formValues["fullInfoAboutBlog"].ToString();
-            if(fullInfoBlog!=null) blog.FullDescription = fullInfoBlog;
-
-            return blog;
-        }
-
         public Blog SetBlogModelWithChatDataAndSave(Blog blog, string userName, string message)
         {
             var timeMessage = $"{DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";

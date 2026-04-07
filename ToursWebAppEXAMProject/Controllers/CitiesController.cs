@@ -153,13 +153,12 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения города с данными, введенными пользователем
         /// </summary>
-        /// <param name="city">Модель города</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="cityModel">Модель города</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveCity(City city, IFormCollection formValues, IFormFile? changeTitleImagePath)
+        public async Task<IActionResult> SaveCity(City cityModel, IFormFile? titleImagePath)
         {
             try
             {
@@ -168,37 +167,35 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель City прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (changeTitleImagePath != null)
+                    if (titleImagePath != null)
                     {
-                        await _CityUtils.SaveImagePathAsync(changeTitleImagePath);
+                        await _CityUtils.SaveImagePathAsync(titleImagePath);
                     }
 
-                    city = _CityUtils.SetCityModel(city, formValues, changeTitleImagePath);
+                    cityModel = _CityUtils.SetCityModel(cityModel, titleImagePath);
 
-                    if (city.CountryId !=0)
+                    if (cityModel.CountryId !=0)
                     {
-                        _CityUtils.SaveCity(city);
+                        _CityUtils.SaveCity(cityModel);
                         _logger.Debug("Город успешно сохранен в БД. ");
 
                         _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                        return View("Success", city);
+                        return View("Success", cityModel);
                     }
                     else
                     {
                         _logger.Warn("Модель City не прошла валидацию. Не задана страна. ");
-                        city = _CityUtils.SetCityModelByFormValues(city, formValues);
-
+                        
                         _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
-                        return View("EditCity", city);
+                        return View("EditCity", cityModel);
                     }
                 }
                 else
                 {
                     _logger.Warn("Модель City не прошла валидацию. ");
-                    city = _CityUtils.SetCityModelByFormValues(city, formValues);
-
+                    
                     _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
-                    return View("EditCity", city);
+                    return View("EditCity", cityModel);
                 }
             }
             catch (Exception error)

@@ -154,12 +154,11 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод сохранения блога с данными, введенными пользователем
         /// </summary>
         /// <param name="blogModel">Модель блога</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveBlog(Blog blogModel, IFormFile? TitleImagePath)
+        public async Task<IActionResult> SaveBlog(Blog blogModel, IFormFile? titleImagePath)
         {
             try
             {
@@ -168,12 +167,12 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель Blog прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (TitleImagePath != null)
+                    if (titleImagePath != null)
                     {
-                        await _BlogUtils.SaveBlogImageByFileNameAsync(TitleImagePath);
+                        await _BlogUtils.SaveBlogImageByFileNameAsync(titleImagePath);
                     }
 
-                    blogModel = _BlogUtils.SetBlogModel(blogModel, TitleImagePath);
+                    blogModel = _BlogUtils.SetBlogModel(blogModel, titleImagePath);
                     _BlogUtils.SaveBlogModel(blogModel);
                     _logger.Debug("Блог успешно сохранен в БД. ");
 

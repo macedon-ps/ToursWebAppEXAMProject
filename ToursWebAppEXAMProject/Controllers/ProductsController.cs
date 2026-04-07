@@ -187,12 +187,11 @@ namespace ToursWebAppEXAMProject.Controllers
         /// Метод сохранения турпродукта с данными, введенными пользователем
         /// </summary>
         /// <param name="productModel">Модель турпродукта</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="TitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="titleImagePath">Данные формы ввода типа IFormFile</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveProduct(Product productModel, IFormFile? TitleImagePath)
+        public async Task<IActionResult> SaveProduct(Product productModel, IFormFile? titleImagePath)
         {
             try
             {
@@ -201,12 +200,12 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.Debug("Модель Product прошла валидацию. ");
 
                     // если мы хотим поменять картинку
-                    if (TitleImagePath != null)
+                    if (titleImagePath != null)
                     {
-                        await _ProductUtils.SaveProductImageByFileNameAsync(TitleImagePath);
+                        await _ProductUtils.SaveProductImageByFileNameAsync(titleImagePath);
                     }
 
-                    productModel = _ProductUtils.SetProductModel(productModel, TitleImagePath);
+                    productModel = _ProductUtils.SetProductModel(productModel, titleImagePath);
 
                     if (productModel.CountryId !=0 && productModel.CityId !=0)
                     {

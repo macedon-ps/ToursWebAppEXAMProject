@@ -36,8 +36,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// POST версия метода вывода страницы Search с данными поиска, введенными пользователем
         /// </summary>
         /// <param name="viewModel">Данные вью-модели</param>
-		/// /// <param name="formValues">Данные формы ввода</param>
-        /// <returns></returns>
+		/// <returns></returns>
         [HttpPost]
 		public IActionResult Index(SearchProductViewModel viewModel)
 		{
