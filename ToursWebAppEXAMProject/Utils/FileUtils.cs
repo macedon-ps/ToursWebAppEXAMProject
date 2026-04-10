@@ -4,7 +4,13 @@ namespace ToursWebAppEXAMProject.Utils
 {
     public class FileUtils
     {
+        private readonly IWebHostEnvironment _env;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public FileUtils(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
 
         /// <summary>
         /// Метод сохранения картинки для страницы About по указанному пути с проверкой пути
@@ -12,19 +18,19 @@ namespace ToursWebAppEXAMProject.Utils
         /// <param name="filePath">путь сохранения картинки</param>
         /// <param name="changeTitleImagePath">значение поля типа IFormFile для названия сохраняемого файла</param>
         /// <param name="webHostEnvironment">webHostEnvironment</param>
-        public async Task SaveImageToFolder(string folder, IFormFile? changeImagePath)
+        public async Task SaveImageToFolder(string folder, IFormFile? imageFileName)
         {
             // проверка существования папки сохранения, если ее нет, то она создается + полный путь к папке
             var fullPathToFolder = GetOrCreateFolderPath(folder);
 
             // создаем абсолютный и относительный пути к файлу
-            var fullFilePath = string.Empty;
-            var relativeFilePath = string.Empty;
+            var fullImageFilePath = string.Empty;
+            var relativeImageFilePath = string.Empty;
 
-            if (changeImagePath != null)
+            if (imageFileName != null)
             {
-                fullFilePath = $"{fullPathToFolder}{changeImagePath.FileName}";
-                relativeFilePath = $"{folder}{changeImagePath.FileName}";
+                fullImageFilePath = $"{fullPathToFolder}{imageFileName.FileName}";
+                relativeImageFilePath = $"{folder}{imageFileName.FileName}";
             }
             else
             {
@@ -32,20 +38,36 @@ namespace ToursWebAppEXAMProject.Utils
             }
 
             // сохраняем картинку и в свойство MainImagePath сохраняем путь к ней
-            using (var fstream = new FileStream(fullFilePath, FileMode.Create))
+            using (var fstream = new FileStream(fullImageFilePath, FileMode.Create))
             {
-                if (changeImagePath != null)
+                if (imageFileName != null)
                 {
-                    await changeImagePath.CopyToAsync(fstream);
-                    _logger.Debug($"Новая картинка сохранена по пути: {relativeFilePath}\n");
+                    await imageFileName.CopyToAsync(fstream);
+                    _logger.Debug($"Новая картинка сохранена по пути: {relativeImageFilePath}\n");
                 }
                 else
                 {
-                    _logger.Error($"Ошибка сохранения картинки. Путь: {relativeFilePath}\n");
+                    _logger.Error($"Ошибка сохранения картинки. Путь: {relativeImageFilePath}\n");
                     return;
                 }
             }
         }
+
+        /// <summary>
+        /// Метод проверки существования картинки по ее относительному пути.
+        /// </summary>
+        /// <param name="relativePath">Относительный путь к картинке</param>
+        /// <returns>Результат проверки физич. существования картинки (True or False)</returns>
+        private bool IsImageExists(string? relativePath)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath))
+                return false;
+
+            var fullPath = Path.Combine(_env.WebRootPath, relativePath.TrimStart('/'));
+
+            return System.IO.File.Exists(fullPath);
+        }
+
 
         /// <summary>
         /// Метод проверки существования пути сохранения (папки сохранения); если ее нет, она создается
@@ -69,10 +91,12 @@ namespace ToursWebAppEXAMProject.Utils
 
         public string GetFullPathToFolderPhotoGallery()
         {
+            // TODO: заменить ручной ввод абсолютного пути на поиск через метод, использовать этот метод везде, где нужно получить абсолютный путь к папке PhotoGallery
             return "E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
         }
         public string GetRelativePath(string fullPath)
         {
+            // TODO: заменить ручной ввод относительного пути на поиск через метод, использовать этот метод везде, где нужно получить относительный путь к папке PhotoGallery
             var relativePath = fullPath.Replace("E:/C#_VS_2022/ToursWebAppEXAMProject/ToursWebAppEXAMProject/wwwroot", "");
             return relativePath;
         }

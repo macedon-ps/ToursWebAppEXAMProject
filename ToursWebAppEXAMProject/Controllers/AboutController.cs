@@ -25,6 +25,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _EmailService = EmailService;
         }
         
+
         /// <summary>
         /// Метод вывода стартовой страницы About
         /// </summary>
@@ -46,6 +47,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View(viewModel);
 		}
 
+
         /// <summary>
         /// Метод вывода меню редактирования страницы About
         /// </summary>
@@ -59,6 +61,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /About/EditMenuAboutPage.\n");
             return View(allPages);
         }
+
 
         /// <summary>
         /// Метод создания новой версии страницы About
@@ -74,6 +77,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("EditAboutPage", newViewModel);
         }
 
+
         /// <summary>
         /// Метод вывода на редактирование страницы About по ее id
         /// </summary>
@@ -88,6 +92,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /About/EditAboutPage.\n");
             return View(editViewModel);
         }
+
 
         /// <summary>
         /// Метод удаления страницы About по ее id
@@ -105,6 +110,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", deleteModel);
         }
 
+
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult DeletePicture(string fullPathToFile)
         {
@@ -115,16 +121,21 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("DeletePicture", fullPathToFile);
         }
 
+
         /// <summary>
         /// Метод сохранения страницы About с данными, введенными редактором
         /// </summary>
         /// <param name="viewModel">Вью модель EditAboutPageViewModel</param>
-        /// <param name="formValues">Данные формы ввода типа IFormCollection</param>
-        /// <param name="changeTitleImagePath">Данные формы ввода типа IFormFile</param>
+        /// <param name="MainImagePath">Путь к главной картинке</param>
+        /// <param name="AboutImagePath">Путь к картинке About</param>
+        /// <param name="DetailsImagePath">Путь к картинке деталей</param>
+        /// <param name="OperationModeImagePath">Путь к картинке операций</param>
+        /// <param name="PhotoGalleryImagePath">Путь к картинке фотогалереи</param>
+        /// <param name="FeedbackImagePath">Путь к картинке формы обратной связи</param>
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public IActionResult SaveAboutPage(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
+        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
         {
             try
             {
@@ -132,7 +143,8 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.Debug("Вью-модель EditAboutPageViewModel прошла валидацию. ");
                     
-                    var newViewModel = _AboutUtils.SetEditAboutViewModelAndSave(viewModel, formValues, changeMainImagePath, changeAboutImagePath, changeDetailsImagePath, changeOperationModeImagePath, changePhotoGalleryImagePath, changeFeedbackImagePath);
+                    var newViewModel = await _AboutUtils.SetEditAboutViewModelAndSaveAsync
+                        (viewModel, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, FeedbackImagePath);
                     _logger.Debug("Вью-модель EditAboutPageViewModel заполнена данными из формыи успешно сохранена в БД. ");
            
                     _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
@@ -140,12 +152,16 @@ namespace ToursWebAppEXAMProject.Controllers
                 }
                 else
                 {
-                    _logger.Warn("Вью-модель EditAboutPageViewModel не прошла валидацию. ");
-                  
-                    viewModel = _AboutUtils.SetEditAboutViewByFormValues(viewModel, formValues);
-                    _logger.Debug("Вью-модель EditAboutPageViewModel заполнена отдельными данными из формы. ");
+                    _logger.Warn("Вью-модель EditAboutPageViewModel не прошла валидацию.");
 
-                    _logger.Trace("Возвращено EditAboutPage.cshtml\n");
+                    foreach (var modelState in ModelState)
+                    {
+                        foreach (var error in modelState.Value.Errors)
+                        {
+                            _logger.Warn($"Ошибка поля {modelState.Key}: {error.ErrorMessage}");
+                        }
+                    }
+
                     return View("EditAboutPage", viewModel);
                 }
             }
@@ -157,6 +173,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", error.Message);
             }
         }
+
 
         /// <summary>
         /// Метод вывода формы обратной связи с пользователями сайта
@@ -171,14 +188,14 @@ namespace ToursWebAppEXAMProject.Controllers
             return View(viewModel);
         }
 
+
         /// <summary>
         /// Метод вывода формы обратной связи с данными, введенными пользователями сайта
         /// </summary>
         /// <param name="customer">Модель пользователя сайта</param>
-        /// <param name="textAreaForm">Данные формы ввода типа IFormCollection</param>
         /// <returns></returns>
         [HttpPost]
-		public async Task<IActionResult> FeedBackForm(CorrespondenceViewModel model, IFormCollection textAreaForm)
+		public async Task<IActionResult> FeedBackForm(CorrespondenceViewModel model)
 		{
             try
             {
@@ -217,7 +234,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         }
                         
 
-                        model.Question = textAreaForm["textArea"].ToString();
+                        /*model.Question = textAreaForm["textArea"].ToString();*/
                         model.QuestionDate = DateTime.Now;
 
                         var correspondence = _FeedbackUtils.CreateCorrespondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
@@ -260,7 +277,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.Debug("Вью-модель CorrespondenceViewModel не прошла валидацию. ");
 
-                    model.Question = textAreaForm["textArea"].ToString();
+                    /*model.Question = textAreaForm["textArea"].ToString();*/
                     model.QuestionDate = DateTime.Now;
 
                     _logger.Trace("Возвращено /About/FeedBackForm.\n");
@@ -276,6 +293,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
 		}
 
+
         /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы About
         /// </summary>
@@ -289,6 +307,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту About/TechTaskSupport.\n");
             return View(viewModel);
 		}
+
 
         /// <summary>
         /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы About

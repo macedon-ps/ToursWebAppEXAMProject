@@ -4,14 +4,14 @@
 
 <div class="editPage">
     
-    @if (Model.ToString().Contains("EditAboutPageViewModel"))
+    @if (Model is EditAboutPageViewModel)
     {
         @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
 
         <div class="editHeader">
 
             <h3 class="title">Сохранение объекта прошло  успешно!</h3>
-            <h4 class="title">Данные сохраненного объекта::</h4>
+            <h4 class="title">Данные сохраненного объекта:</h4>
             <hr class="horizontal-line" />
             <br />
             <div>
@@ -29,7 +29,7 @@
             </div>
         </div>
     }
-    @if (Model.ToString().Contains("CorrespondenceViewModel"))
+    @if (Model is CorrespondenceViewModel)
     {
         @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
 
@@ -57,7 +57,7 @@
             </div>
         </div>
     }
-    @if (Model.ToString().Contains("Blog") || Model.ToString().Contains("City") || Model.ToString().Contains("Country") || Model.ToString().Contains("New") || Model.ToString().Contains("Product"))
+    @if (Model is Blog || Model is City || Model is Country || Model is New || Model is Product)
     {
         @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
 
@@ -105,7 +105,4 @@
             </div>
         </div>
     }
-
-    
-    
 </div>

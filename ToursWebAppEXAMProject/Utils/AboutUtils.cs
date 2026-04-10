@@ -29,6 +29,7 @@ namespace ToursWebAppEXAMProject.Utils
             return isActualVersion ?? new EditAboutPageViewModel();
         }
 
+
         public EditAboutPageViewModel GetModel(int id)
         {
             var editViewModel = _AboutPage.GetItemById(id);
@@ -36,12 +37,14 @@ namespace ToursWebAppEXAMProject.Utils
             return editViewModel;
         }
 
+
         public IEnumerable<EditAboutPageViewModel> GetAllModel()
         {
             var allModels = _AboutPage.GetAllItems();
             
             return allModels;
         }
+
 
         public EditAboutPageViewModel CreateModel()
         {
@@ -51,80 +54,64 @@ namespace ToursWebAppEXAMProject.Utils
             return newViewModel;
         }
 
+
         public void DeleteModel(int id)
         {
             var aboutPage = _AboutPage.GetItemById(id);
             _AboutPage.DeleteItem(aboutPage, id);
         }
 
-        public async Task<EditAboutPageViewModel> SetEditAboutViewModelAndSave(EditAboutPageViewModel viewModel, IFormCollection formValues, IFormFile? changeMainImagePath, IFormFile? changeAboutImagePath, IFormFile? changeDetailsImagePath, IFormFile? changeOperationModeImagePath, IFormFile? changePhotoGalleryImagePath, IFormFile? changeFeedbackImagePath)
+
+        public async Task<EditAboutPageViewModel> SetEditAboutViewModelAndSaveAsync(EditAboutPageViewModel viewModel, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
         {
             // Main
-            if (changeMainImagePath != null)
+            if (MainImagePath != null)
             {
                 var folder = "/images/AboutPage/Main/";
-                await _FileUtils.SaveImageToFolder(folder, changeMainImagePath);
-                viewModel.MainImagePath = $"{folder}{changeMainImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, MainImagePath);
+                viewModel.MainImagePath = $"{folder}{MainImagePath.FileName}";
             }
 
             // About
-            if (changeAboutImagePath != null)
+            if (AboutImagePath != null)
             {
                 var folder = "/images/AboutPage/About/";
-                await _FileUtils.SaveImageToFolder(folder, changeAboutImagePath);
-                viewModel.AboutImagePath = $"{folder}{changeAboutImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, AboutImagePath);
+                viewModel.AboutImagePath = $"{folder}{AboutImagePath.FileName}";
             }
 
             // Details
-            if (changeDetailsImagePath != null)
+            if (DetailsImagePath != null)
             {
                 var folder = "/images/AboutPage/Details/";
-                await _FileUtils.SaveImageToFolder(folder, changeDetailsImagePath);
-                viewModel.DetailsImagePath = $"{folder}{changeDetailsImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, DetailsImagePath);
+                viewModel.DetailsImagePath = $"{folder}{DetailsImagePath.FileName}";
             }
             // OperationMode
-            if (changeOperationModeImagePath != null)
+            if (OperationModeImagePath != null)
             {
                 var folder = "/images/AboutPage/OperationMode/";
-                await _FileUtils.SaveImageToFolder(folder, changeOperationModeImagePath);
-                viewModel.OperationModeImagePath = $"{folder}{changeOperationModeImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, OperationModeImagePath);
+                viewModel.OperationModeImagePath = $"{folder}{OperationModeImagePath.FileName}";
             }
             // PhotoGallery
-            if (changePhotoGalleryImagePath != null)
+            if (PhotoGalleryImagePath != null)
             {
                 var folder = "/images/AboutPage/PhotoGallery/";
-                await _FileUtils.SaveImageToFolder(folder, changePhotoGalleryImagePath);
-                viewModel.PhotoGalleryImagePath = $"{folder}{changePhotoGalleryImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, PhotoGalleryImagePath);
+                viewModel.PhotoGalleryImagePath = $"{folder}{PhotoGalleryImagePath.FileName}";
             }
             // Feedback
-            if (changeFeedbackImagePath != null)
+            if (FeedbackImagePath != null)
             {
                 var folder = "/images/AboutPage/Feedback/";
-                await _FileUtils.SaveImageToFolder(folder, changeFeedbackImagePath);
-                viewModel.FeedbackImagePath = $"{folder}{changeFeedbackImagePath.FileName}";
+                await _FileUtils.SaveImageToFolder(folder, FeedbackImagePath);
+                viewModel.FeedbackImagePath = $"{folder}{FeedbackImagePath.FileName}";
             }
 
-            viewModel.MainFullDescription = formValues["fullInfoMain"];
-            viewModel.AboutFullDescription = formValues["fullInfoAbout"];
-            viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
-            viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
-            viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
-            viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
             viewModel.DateAdded = DateTime.Now;
 
             _AboutPage.SaveItem(viewModel, viewModel.Id);
-
-            return viewModel;
-        }
-
-        public EditAboutPageViewModel SetEditAboutViewByFormValues(EditAboutPageViewModel viewModel, IFormCollection formValues)
-        {
-            viewModel.MainFullDescription = formValues["fullInfoMain"];
-            viewModel.AboutFullDescription = formValues["fullInfoAbout"];
-            viewModel.DetailsFullDescription = formValues["fullInfoDetails"];
-            viewModel.OperationModeFullDescription = formValues["fullInfoOperationMode"];
-            viewModel.PhotoGalleryFullDescription = formValues["fullInfoPhotoGallery"];
-            viewModel.FeedbackFullDescription = formValues["fullInfoFeedback"];
 
             return viewModel;
         }

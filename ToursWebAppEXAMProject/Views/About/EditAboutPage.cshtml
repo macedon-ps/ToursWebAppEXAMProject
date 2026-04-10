@@ -38,7 +38,7 @@
                 <div class="displayFlexCol">
                     <label asp-for="IsActual"></label>
                     <h4>Помните, что актуальная версия должна быть только одна. Если их больше, отображаться будет первая из списка</h4>
-                    <h4>Если ни одна версия не выдела как актуальная, то выводиться на экран будет пустая страница без данных</h4>
+                    <h4>Если ни одна версия не выделена как актуальная, то выводиться на экран будет пустая страница без данных</h4>
                     
                     <div class="flexRow">
                         <h4>Актуальна ли данная версия: </h4>
@@ -64,18 +64,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="MainFullDescription"></label>
-                    <textarea name="fullInfoMain" rows="20" cols="100" asp-for="MainFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="MainFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="MainFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="MainImagePath"></label>
                     <h3>@Model.MainImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.MainImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.MainImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeMainImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="MainImagePath" accept="image/*" />
                     <span asp-validation-for="MainImagePath"></span>
                 </div>
 
@@ -92,18 +90,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="AboutFullDescription"></label>
-                    <textarea name="fullInfoAbout" rows="20" cols="100" asp-for="AboutFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="AboutFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="AboutFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="AboutImagePath"></label>
                     <h3>@Model.AboutImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.AboutImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.AboutImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeAboutImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="AboutImagePath" value="" accept="image/*" />
                     <span asp-validation-for="AboutImagePath"></span>
                 </div>
 
@@ -120,18 +116,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="DetailsFullDescription"></label>
-                    <textarea name="fullInfoDetails" rows="20" cols="100" asp-for="DetailsFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="DetailsFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="DetailsFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="DetailsImagePath"></label>
                     <h3>@Model.DetailsImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.DetailsImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.DetailsImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeDetailsImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="DetailsImagePath" accept="image/*" />
                     <span asp-validation-for="DetailsImagePath"></span>
                 </div>
 
@@ -148,18 +142,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="OperationModeFullDescription"></label>
-                    <textarea name="fullInfoOperationMode" rows="20" cols="100" asp-for="OperationModeFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="OperationModeFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="OperationModeFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="OperationModeImagePath"></label>
                     <h3>@Model.OperationModeImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.OperationModeImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.OperationModeImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeOperationModeImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="OperationModeImagePath" accept="image/*" />
                     <span asp-validation-for="OperationModeImagePath"></span>
                 </div>
 
@@ -176,19 +168,17 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="PhotoGalleryFullDescription"></label>
-                    <textarea name="fullInfoPhotoGallery" rows="20" cols="100" asp-for="PhotoGalleryFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="PhotoGalleryFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="PhotoGalleryFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="PhotoGalleryImagePath"></label>
                     <h3>@Model.PhotoGalleryImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
                     <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
-                    <input type="file" name="changePhotoGalleryImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="PhotoGalleryImagePath" accept="image/*" />
                     <span asp-validation-for="PhotoGalleryImagePath"></span>
                 </div>
 
@@ -227,18 +217,16 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="FeedbackFullDescription"></label>
-                    <textarea name="fullInfoFeedback" rows="20" cols="100" asp-for="FeedbackFullDescription">
-                        Это текстовая область для CKEditor4
-                    </textarea>
+                    <textarea asp-for="FeedbackFullDescription" rows="20" cols="100"></textarea>
                     <span asp-validation-for="FeedbackFullDescription"></span>
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="FeedbackImagePath"></label>
                     <h3>@Model.FeedbackImagePath</h3>
                     <div class="titleImage">
-                        <img src="@Model.FeedbackImagePath" alt="Титульная картинка" align="left" width="50%"><img>
+                        <img src="@Model.FeedbackImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <input type="file" name="changeFeedbackImagePath" value="" accept="image/*" />
+                    <input type="file" asp-for="FeedbackImagePath" accept="image/*" />
                     <span asp-validation-for="FeedbackImagePath"></span>
                 </div>
 
@@ -248,16 +236,10 @@
     </div>
 </div>
 <script>
-    var newCKEditMain = CKEDITOR.replace('fullInfoMain');
-    newCKEditMain.updateElement();
-    var newCKEditAbout = CKEDITOR.replace('fullInfoAbout');
-    newCKEditAbout.updateElement();
-    var newCKEditDetails = CKEDITOR.replace('fullInfoDetails');
-    newCKEditDetails.updateElement();
-    var newCKEditfullInfoOperationMode = CKEDITOR.replace('fullInfoOperationMode');
-    newCKEditfullInfoOperationMode.updateElement();
-    var newCKEditfullInfoPhotoGallery = CKEDITOR.replace('fullInfoPhotoGallery');
-    newCKEditfullInfoPhotoGallery.updateElement();
-    var newCKEditfullInfoFeedback = CKEDITOR.replace('fullInfoFeedback');
-    newCKEditfullInfoFeedback.updateElement();
+    var newCKEditMain = CKEDITOR.replace('MainFullDescription');
+    var newCKEditAbout = CKEDITOR.replace('AboutFullDescription');
+    var newCKEditDetails = CKEDITOR.replace('DetailsFullDescription');
+    var newCKEditfullInfoOperationMode = CKEDITOR.replace('OperationModeFullDescription');
+    var newCKEditfullInfoPhotoGallery = CKEDITOR.replace('PhotoGalleryFullDescription');
+    var newCKEditfullInfoFeedback = CKEDITOR.replace('FeedbackFullDescription');
 </script>
