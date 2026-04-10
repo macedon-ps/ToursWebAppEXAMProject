@@ -122,6 +122,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 		}
 
+
 		/// <summary>
 		/// Метод GetItemById(int id), кот. используется для возврата конкретной сущности по ее Id
 		/// </summary>
@@ -155,6 +156,7 @@ namespace ToursWebAppEXAMProject.Repositories
                 return new T();
 			}
 		}
+
 
 		/// <summary>
 		/// Метод GetQueryResultItemsAfterFullName(string keyword), кот. используется для возврата результатов выборки сущностей из БД по ключевому слову
@@ -209,6 +211,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 		}
 
+
 		/// <summary>
 		/// Метод SaveItem(T item), кот. используется для создания новой/изменения существующей сущности по ее объекту
 		/// </summary>
@@ -247,6 +250,7 @@ namespace ToursWebAppEXAMProject.Repositories
                 _logger.Error($"Создание/обновление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
+
 
 		/// <summary>
 		/// Метод DeleteItem(int id), кот. используется для удаления сущности по ее id

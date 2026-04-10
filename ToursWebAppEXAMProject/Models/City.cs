@@ -41,7 +41,7 @@ namespace ToursWebAppEXAMProject.Models
         [Required(ErrorMessage = "Выберите титульную картинку города")]
         [Display(Name = "Титульная картинка города")]
         [StringLength(100, ErrorMessage = "Путь к титульной картинке города не должен содержать более 100 символов")]
-        public string TitleImagePath { get; set; } = "Нет титульной картинки города";
+        public string? TitleImagePath { get; set; }
 
         public DateTime? DateAdded { get; set; }
         public virtual Country? Country { get; set; } 

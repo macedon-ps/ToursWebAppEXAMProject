@@ -66,6 +66,6 @@ namespace ToursWebAppEXAMProject.ViewModels
 		/// Адрес карты / или фотографии
 		/// </summary>
 		[Display(Name = "Карта / фотографии:")]
-		public string MapImagePath { get; set; } = "/images/Maps/UkraineMap.jpg";
+		public string? MapImagePath { get; set; }
 	}
 }
