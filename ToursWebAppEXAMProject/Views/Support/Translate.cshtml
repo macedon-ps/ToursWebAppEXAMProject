@@ -22,7 +22,7 @@
                     <div>
                         <label asp-for="LanguageFrom"></label>
                         <select asp-for="LanguageFrom" class="languageFrom"
-                            asp-items="@Model.LanguagesList" name="langFromSelect">
+                            asp-items="@Model.LanguagesList">
                         </select>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div>
                         <label asp-for="LanguageTo"></label>
                         <select asp-for="LanguageTo" class="languageTo"
-                            asp-items="@Model.LanguagesList" name="langToSelect">   
+                            asp-items="@Model.LanguagesList">   
                         </select>
                     </div>
                 </div>
@@ -38,8 +38,7 @@
                 <div class="area">
                     <div class="area-origin">
                         <h3 class="title">Оригинальный текст:</h3>
-                        <textarea asp-for="TextOrigin" rows="7" cols="79" class="text-area-origin">
-                        </textarea>
+                        <textarea asp-for="TextOrigin" rows="7" cols="79" class="text-area-origin"></textarea>
                     </div>
                     <div class="area-translate">
                         <h3 class="title">Перевод текста:</h3>

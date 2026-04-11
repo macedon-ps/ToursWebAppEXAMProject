@@ -18,6 +18,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _TechTaskUtils = TechTaskUtils;
         }
 
+
         /// <summary>
         /// Метод вывода стартовой страницы Support
         /// </summary>
@@ -27,6 +28,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			_logger.Trace("Переход по маршруту /Support/Index.\n");
             return View();
 		}
+
 
         [HttpGet]
         /// <summary>
@@ -53,13 +55,14 @@ namespace ToursWebAppEXAMProject.Controllers
             
         }
         
+
         /// <summary>
         /// Метод вывода страницы для перевода текста с данными перевода
         /// </summary>
         /// <param name="viewModel">вью-модель перевода текста</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Translate(TranslateTextViewModel viewModel, IFormCollection formValues)
+        public IActionResult Translate(TranslateTextViewModel viewModel)
         {
             try
             {
@@ -67,7 +70,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.Debug("Вью-модель TranslateTextViewModel прошла валидацию. ");
                     
-                    var newViewModel = _SupportUtils.GetModel(viewModel, formValues);
+                    var newViewModel = _SupportUtils.GetModel(viewModel);
                     _logger.Debug("Вью-модель TranslateTextViewModel заполнена данными из формы. ");
 
                     _logger.Trace("Переход по маршруту /Support/Translate.\n");
@@ -91,15 +94,18 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         public IActionResult GetMap()
         {
             return View("OdessaStepMap");
         }
 
+
         public IActionResult GetMap2()
         {
             return View("KhersonStepMap");
         }
+
 
         /// <summary>
         /// Метод предоставления услуги поддержки
@@ -141,6 +147,7 @@ namespace ToursWebAppEXAMProject.Controllers
 			return View("GetSupport", serviceItem);
 		}
 
+
         /// <summary>
         /// Метод вывода ТЗ и прогресса его выполнения для страницы Support
         /// </summary>
@@ -154,6 +161,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту Support/TechTaskSupport.\n");
             return View(viewModel);
 		}
+
 
         /// <summary>
         /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Support

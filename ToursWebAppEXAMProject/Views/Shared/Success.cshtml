@@ -72,7 +72,7 @@
                     <h4>Название:</h4>
                     <p>@Model.Name</p>
                 </div>
-                @if (Model.ToString().Contains("City"))
+                @if (Model is City)
                 {
                     <div class="check-isCapital">
                         <h4>Является ли столицей:</h4>
@@ -87,7 +87,7 @@
                     <h4>Полное описание:</h4>
                     <p>@Model.FullDescription</p>
                 </div>
-                @if (Model.ToString().Contains("Blog"))
+                @if (Model is Blog)
                 {
                     <div class="displayFlexCol">
                         <h4>Все сообщения:</h4>

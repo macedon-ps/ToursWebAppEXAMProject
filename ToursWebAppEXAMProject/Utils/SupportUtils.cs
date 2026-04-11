@@ -16,6 +16,7 @@ namespace ToursWebAppEXAMProject.Utils
             _MemoryCache = MemoryCache;
         }
 
+
         /// <summary>
         /// Метод получения вью-модели TranslateTextViewModel
         /// </summary>
@@ -44,19 +45,17 @@ namespace ToursWebAppEXAMProject.Utils
             return viewModel;
         }
 
+
         /// <summary>
         /// Метод получения вью-модели TranslateTextViewModel для Post формы
         /// </summary>
         /// <param name="viewModel"></param>
         /// <param name="formValues"></param>
         /// <returns></returns>
-        public TranslateTextViewModel GetModel(TranslateTextViewModel viewModel, IFormCollection formValues)
+        public TranslateTextViewModel GetModel(TranslateTextViewModel viewModel)
         {
             if (viewModel.TextOrigin != null)
             {
-                viewModel.LanguageFrom = formValues["langFromSelect"];
-                viewModel.LanguageTo = formValues["langToSelect"];
-
                 viewModel.Languages = JsonSerializer.Deserialize<IList<Language>>(viewModel.LanguagesListJson);
                 viewModel.LanguagesList = new SelectList(viewModel.Languages, "Code", "Name");
 
