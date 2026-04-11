@@ -374,6 +374,21 @@ select.languageTo{
 .check-isCapital{
 	margin-bottom: 1.2em;
 }
+/* Возможность копирования текста на страницах сайта */
+
+/* общий запрет на копирование текста */
+body {
+	user-select: none;
+}
+
+/* разрешение на копирование текста */
+input,
+textarea,
+.cke_editable,
+.copy-allowed {
+	user-select: text;
+}
+
 /* Container */
 .container {
 	margin: 0 auto;
