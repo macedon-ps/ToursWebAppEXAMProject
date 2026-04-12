@@ -6,6 +6,13 @@
         Blogs,
         Products,
         Countries,
-        Cities
+        Cities,
+        About_Main,
+        About_About,
+        About_Details,
+        About_OperationMode,
+        About_PhotoGallery,
+        About_PhotoGallery_Collection,
+        About_Feedback
     }
 }
