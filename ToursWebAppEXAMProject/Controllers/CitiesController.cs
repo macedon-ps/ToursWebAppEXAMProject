@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
-using System.Diagnostics.Metrics;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -18,6 +16,7 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             _CityUtils = CityUtils;
         }
+
 
         /// <summary>
         /// Метод вывода всех городов
@@ -43,6 +42,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View(cities);
             }
         }
+
 
         /// <summary>
         /// Метод вывода города по его id
@@ -70,6 +70,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод создания города
         /// </summary>
@@ -83,6 +84,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /Cities/CreateCity.cshtml\n");
             return View(cityViewModel);
         }
+
 
         /// <summary>
         /// Метод редактирования города по его id
@@ -99,6 +101,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /Cities/EditCity.\n");
             return View(city);
         }
+
 
         /// <summary>
         /// Метод вывода результатов выборки городов по тому, что ищем - полное название или ключевое слово (букву)
@@ -130,6 +133,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод удаления отдельного города по его id
         /// </summary>
@@ -150,6 +154,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", city);
         }
 
+
         /// <summary>
         /// Метод сохранения города с данными, введенными пользователем
         /// </summary>
@@ -169,26 +174,20 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        await _CityUtils.SaveImagePathAsync(titleImagePath);
+                        cityModel.TitleImagePath = await _CityUtils.SaveImagePathAsync(titleImagePath);
                     }
-
-                    cityModel = _CityUtils.SetCityModel(cityModel, titleImagePath);
 
                     if (cityModel.CountryId !=0)
                     {
                         _CityUtils.SaveCity(cityModel);
                         _logger.Debug("Город успешно сохранен в БД. ");
+                    }
 
-                        _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                        return View("Success", cityModel);
-                    }
-                    else
-                    {
-                        _logger.Warn("Модель City не прошла валидацию. Не задана страна. ");
-                        
-                        _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
-                        return View("EditCity", cityModel);
-                    }
+                    cityModel.DateAdded = DateTime.Now;
+
+
+                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    return View("Success", cityModel);
                 }
                 else
                 {
@@ -206,6 +205,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
         }
+
 
         /// <summary>
         /// API-метод для получения списка городов по id страны, который используется для динамического заполнения выпадающего списка городов на странице Search при выборе страны.

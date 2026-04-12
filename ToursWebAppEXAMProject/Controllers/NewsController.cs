@@ -18,6 +18,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _NewsUtils = NewsUtils;
         }
 
+
         /// <summary>
         /// Метод вывода всех новостей
         /// </summary>
@@ -42,6 +43,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View(newsItems);
             }
         }
+
 
         /// <summary>
         /// Метод вывода новости по ее id
@@ -69,6 +71,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод создания новости
         /// </summary>
@@ -82,6 +85,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /News/EditNews.cshtml\n");
             return View("EditNews", newsItem);
         }
+
 
         /// <summary>
         /// Метод редактирования новости по ее id
@@ -98,6 +102,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /News/EditNews.\n");
             return View(newsItem);
         }
+
 
         /// <summary>
         /// Метод вывода результатов выборки новостей по тому, что ищем - полное название или ключевое слово (букву)
@@ -129,6 +134,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод удаления отдельной новости по ее id
         /// </summary>
@@ -149,6 +155,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", newsItem);
         }
 
+
         /// <summary>
         /// Метод сохранения новости с данными, введенными пользователем
         /// </summary>
@@ -168,10 +175,10 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        await _NewsUtils.SaveNewImageByFileNameAsync(titleImagePath);
+                        newsModel.TitleImagePath = await _NewsUtils.SaveNewImageByFileNameAsync(titleImagePath);
                     }
 
-                    newsModel = _NewsUtils.SetNewsModel(newsModel, titleImagePath);
+                    newsModel.DateAdded = DateTime.Now;
                     _NewsUtils.SaveNewsModel(newsModel);
                     _logger.Debug("Новость успешно сохранена в БД. ");
                     

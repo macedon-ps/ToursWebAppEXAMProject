@@ -1,5 +1,7 @@
-﻿using ToursWebAppEXAMProject.Interfaces;
+﻿using ToursWebAppEXAMProject.Enums;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Utils
 {
@@ -8,20 +10,23 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly IQueryResultInterface _QueryResult;
-        private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
 
-        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, IQueryResultInterface QueryResult, FileUtils FileUtils)
+
+        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, IQueryResultInterface QueryResult, ImageStorageService ImageStorageService)
         {
             _AllCountries = AllCountries;
             _AllCities = AllCities;
             _QueryResult = QueryResult;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
         }
+
 
         public IEnumerable<Country> GetCountries()
         {
             return _AllCountries.GetAllItems();
         }
+
 
         public Country GetCountryById(int id)
         {
@@ -31,6 +36,7 @@ namespace ToursWebAppEXAMProject.Utils
 
             return country;
         }
+
 
         public Country GetCountryForEdit(int id)
         {
@@ -42,6 +48,7 @@ namespace ToursWebAppEXAMProject.Utils
             return country;
         }
 
+
         public IEnumerable<Country> QueryResult(bool isFullName, string insertedText)
         {
             var countries = _AllCountries.GetQueryResultItemsAfterFullName(insertedText, isFullName);
@@ -49,30 +56,19 @@ namespace ToursWebAppEXAMProject.Utils
             return countries;
         }
 
+
         public void DeleteCountryById(Country country)
         {
             _AllCountries.DeleteItem(country, country.Id);
         }
 
-        public async Task SaveImagePathAsync(IFormFile changeTitleImagePath)
+
+        public async Task<string?> SaveImagePathAsync(IFormFile? imageFileName)
         {
-            var folder = "/images/CountriesTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
+            var folder = ImageFolder.Countries;
+            return await _ImageStorageService.SaveAsync(folder, imageFileName);
         }
 
-        public Country SetCountryModel(Country countryModel, IFormFile? imageFileName)
-        {
-            // добавляем дату добавления новости (текущую дату)
-            countryModel.DateAdded = DateTime.Now;
-
-            if (imageFileName != null)
-            {
-                var folder = "/images/CountriesTitleImages/";
-                countryModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
-            }
-
-            return countryModel;
-        }
 
         public void SaveCountryModel(Country countryModel)
         {
@@ -81,6 +77,7 @@ namespace ToursWebAppEXAMProject.Utils
                 _AllCountries.SaveItem(countryModel, countryModel.Id);
             }
         }
+
 
         public string GetMapByCountryId(int countryId)
         {

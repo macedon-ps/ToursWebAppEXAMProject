@@ -1,9 +1,10 @@
 ﻿
 using Microsoft.Extensions.Caching.Memory;
 using NLog;
-using System.Diagnostics.Metrics;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Utils
@@ -12,28 +13,31 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<City> _AllCities;
         private readonly IBaseInterface<Country> _AllCountries;
-        private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
         private readonly IQueryResultInterface _QueryResult;
         private readonly IMemoryCache _Cache;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, FileUtils FileUtils, IQueryResultInterface QueryResult, IMemoryCache Cache)
+        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, ImageStorageService ImageStorageService, IQueryResultInterface QueryResult, IMemoryCache Cache)
         {
             _AllCities = AllCities;
             _AllCountries = AllCountries;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
             _QueryResult = QueryResult;
             _Cache = Cache;
         }
+
 
         public IEnumerable<City> GetCities()
         {
             return _AllCities.GetAllItems();
         }
 
+
         public City GetCityById(int id)
         {
             return _AllCities.GetItemById(id);
         }
+
 
         public CreateCityViewModel GetCreateCityViewModel()
         {
@@ -46,6 +50,7 @@ namespace ToursWebAppEXAMProject.Utils
             return cityViewModel;
         }
 
+
         public City GetCityForEdit(int id)
         {
             var city = _AllCities.GetItemById(id);
@@ -54,6 +59,7 @@ namespace ToursWebAppEXAMProject.Utils
             return city;
         }
 
+
         public IEnumerable<City> QueryResult(bool isFullName, string insertedText)
         {
             var cities = _AllCities.GetQueryResultItemsAfterFullName(insertedText, isFullName);
@@ -61,31 +67,19 @@ namespace ToursWebAppEXAMProject.Utils
             return cities;
         }
 
+
         public void DeleteCityById(City city)
         {
             _AllCities.DeleteItem(city, city.Id);
         }
 
-        public async Task SaveImagePathAsync(IFormFile changeTitleImagePath)
+
+        public async Task<string?> SaveImagePathAsync(IFormFile? imageFileName)
         {
-            var folder = "/images/CitiesTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
+            var folder = ImageFolder.Cities;
+            return await _ImageStorageService.SaveAsync(folder, imageFileName);
         }
 
-        public City SetCityModel(City cityModel, IFormFile? imageFileName)
-        {
-
-            // если мы хотим поменять картинку
-            cityModel.DateAdded = DateTime.Now;
-
-            if (imageFileName != null)
-            {
-                var folder = "/images/CitiesTitleImages/";
-                cityModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
-            }
-
-            return cityModel;
-        }
 
         public void SaveCity(City cityModel)
         {
@@ -94,6 +88,7 @@ namespace ToursWebAppEXAMProject.Utils
                 _AllCities.SaveItem(cityModel, cityModel.Id);
             }
         }
+
 
         public List<City> GetCitiesByCountryId(int countryId)
         {

@@ -1,58 +1,53 @@
-﻿using ToursWebAppEXAMProject.Interfaces;
+﻿using ToursWebAppEXAMProject.Enums;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Utils
 {
     public class BlogUtils
     {
         private readonly IBaseInterface<Blog> _AllBlogs;
-        private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
 
-        public BlogUtils(IBaseInterface<Blog> AllBlogs, FileUtils FileUtils)
+
+        public BlogUtils(IBaseInterface<Blog> AllBlogs, ImageStorageService ImageStorageService)
         {
              _AllBlogs = AllBlogs;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
         }
+
 
         public IEnumerable<Blog> GetBlogs()
         {
             return _AllBlogs.GetAllItems();
         }
 
+
         public Blog GetBlogById(int id)
         {
             return _AllBlogs.GetItemById(id);
         }
+
 
         public IEnumerable<Blog> QueryResult(bool isFullName, string insertedText)
         {
             return _AllBlogs.GetQueryResultItemsAfterFullName(insertedText, isFullName);
         }
 
+
         public void DeleteBlogById(Blog blog)
         {
             _AllBlogs.DeleteItem(blog, blog.Id);
         }
 
-        public async Task SaveBlogImageByFileNameAsync(IFormFile changeTitleImagePath)
+
+        public async Task<string?> SaveBlogImageByFileNameAsync(IFormFile? imageFileName)
         {
-            var folder = "/images/BlogsTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
+            var folder = ImageFolder.Blogs;
+            return await _ImageStorageService.SaveAsync(folder, imageFileName);
         }
 
-        public Blog SetBlogModel(Blog blogModel, IFormFile? imageFileName)
-        {
-            // добавляем дату добавления блога (текущую дату)            
-            blogModel.DateAdded = DateTime.Now;
-
-            if (imageFileName != null)
-            {
-                var folder = "/images/BlogsTitleImages/";
-                blogModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
-            }
-
-            return blogModel;
-        }
 
         public void SaveBlogModel(Blog blogModel)
         {
@@ -61,6 +56,7 @@ namespace ToursWebAppEXAMProject.Utils
                 _AllBlogs.SaveItem(blogModel, blogModel.Id);
             }
         }
+
 
         public Blog SetBlogModelWithChatDataAndSave(Blog blog, string userName, string message)
         {

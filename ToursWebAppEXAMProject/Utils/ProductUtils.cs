@@ -1,5 +1,7 @@
-﻿using ToursWebAppEXAMProject.Interfaces;
+﻿using ToursWebAppEXAMProject.Enums;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Utils
@@ -10,20 +12,22 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly IQueryResultInterface _QueryResult;
-        private readonly FileUtils _FileUtils;
-        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IQueryResultInterface QueryResult, FileUtils FileUtils) 
+        private readonly ImageStorageService _ImageStorageService;
+        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IQueryResultInterface QueryResult, ImageStorageService ImageStorageService) 
         { 
             _AllProducts = Products;
             _AllCountries = Countries;
             _AllCities = Cities;
             _QueryResult = QueryResult;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
         }
+
 
         public IEnumerable<Product> GetProducts()
         {
             return _AllProducts.GetAllItems();
         }
+
 
         public Product GetProductById(int id)
         {
@@ -31,6 +35,7 @@ namespace ToursWebAppEXAMProject.Utils
 
             return product;
         }
+
 
         public CreateProductViewModel GetCreateProductViewModel()
         {
@@ -45,12 +50,14 @@ namespace ToursWebAppEXAMProject.Utils
             return productViewModel;
         }
 
+
         public IEnumerable<Product> GetProductsQueryResultForEdit(bool isFullName, string insertedText)
         {
             var products = _AllProducts.GetQueryResultItemsAfterFullName(insertedText, isFullName);
 
             return products;
         }
+
 
         /// <summary>
         /// Метод поиска туристических продуктов по запросу во вью-модели SearchProductViewModel. Выборка турпродуктов как результат поиска по фильтрам (Search).
@@ -69,30 +76,19 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
+
         public void DeleteProductById(Product product)
         {
             _AllProducts.DeleteItem(product, product.Id);
         }
 
-        public async Task SaveProductImageByFileNameAsync(IFormFile changeTitleImagePath)
+
+        public async Task<string?> SaveProductImageByFileNameAsync(IFormFile? imageFileName)
         {
-            var folder = "/images/ProductsTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, changeTitleImagePath);
+            var folder = ImageFolder.Products;
+            return await _ImageStorageService.SaveAsync(folder, imageFileName);
         }
 
-        public Product SetProductModel(Product productModel, IFormFile? imageFileName)
-        {
-            // добавляем дату добавления турпродукта (текущую дату)
-            productModel.DateAdded = DateTime.Now;
-
-            if (imageFileName != null)
-            {
-                var folder = "/images/ProductsTitleImages/";
-                productModel.TitleImagePath = $"{folder}{imageFileName.FileName}";
-            }
-
-            return productModel;
-        }
 
         public void SaveProductModel(Product productModel)
         {

@@ -169,10 +169,10 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        await _BlogUtils.SaveBlogImageByFileNameAsync(titleImagePath);
+                        blogModel.TitleImagePath = await _BlogUtils.SaveBlogImageByFileNameAsync(titleImagePath);
                     }
 
-                    blogModel = _BlogUtils.SetBlogModel(blogModel, titleImagePath);
+                    blogModel.DateAdded = DateTime.Now;
                     _BlogUtils.SaveBlogModel(blogModel);
                     _logger.Debug("Блог успешно сохранен в БД. ");
 

@@ -16,10 +16,13 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             _CountryUtils = CountryUtils;
         }
+
+
         public IActionResult Index()
         {
             return View();
         }
+
 
         /// <summary>
         /// Метод вывода всех стран
@@ -45,6 +48,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View(countries);
             }
         }
+
 
         /// <summary>
         /// Метод вывода страны по ее id
@@ -72,6 +76,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод создания страны
         /// </summary>
@@ -85,6 +90,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /Countries/EditCountry.cshtml\n");
             return View("EditCountry", country);
         }
+
 
         /// <summary>
         /// Метод редактирования страны по ее id
@@ -101,6 +107,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /Countries/EditCountry.\n");
             return View(country);
         }
+
 
         /// <summary>
         /// Метод вывода результатов выборки стран по тому, что ищем - полное название или ключевое слово (букву)
@@ -132,6 +139,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод удаления отдельной страны по ее id
         /// </summary>
@@ -152,6 +160,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", country);
         }
 
+
         /// <summary>
         /// Метод сохранения страны с данными, введенными пользователем
         /// </summary>
@@ -171,10 +180,10 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        await _CountryUtils.SaveImagePathAsync(titleImagePath);
+                        countryModel.TitleImagePath = await _CountryUtils.SaveImagePathAsync(titleImagePath);
                     }
 
-                    countryModel = _CountryUtils.SetCountryModel(countryModel, titleImagePath);
+                    countryModel.DateAdded = DateTime.Now;
                     _CountryUtils.SaveCountryModel(countryModel);
                     _logger.Debug("Страна успешно сохранена в БД. ");
 
@@ -197,6 +206,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
         }
+
 
         /// <summary>
         /// API-метод для получения карты страны по id страны.

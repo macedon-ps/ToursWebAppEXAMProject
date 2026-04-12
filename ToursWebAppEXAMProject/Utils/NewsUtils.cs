@@ -1,57 +1,53 @@
-﻿using ToursWebAppEXAMProject.Interfaces;
+﻿using ToursWebAppEXAMProject.Enums;
+using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Utils
 {
     public class NewsUtils
     {
         private readonly IBaseInterface<New> _AllNews;
-        private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
         
-        public NewsUtils(IBaseInterface<New> News, FileUtils FileUtils) 
+
+        public NewsUtils(IBaseInterface<New> News, ImageStorageService ImageStorageService) 
         {
             _AllNews = News;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
         }
+
 
         public IEnumerable<New> GetNews()
         {
             return _AllNews.GetAllItems();
         }
 
+
         public New GetNewsById(int id)
         {
             return _AllNews.GetItemById(id);
         }
+
 
         public IEnumerable<New> QueryResult(bool isFullName, string insertedText)
         {
             return _AllNews.GetQueryResultItemsAfterFullName(insertedText, isFullName);
         }
 
+
         public void DeleteNewsById(New newsItem)
         {
             _AllNews.DeleteItem(newsItem, newsItem.Id);
         }
 
-        public async Task SaveNewImageByFileNameAsync(IFormFile imageFileName)
+
+        public async Task<string?> SaveNewImageByFileNameAsync(IFormFile? imageFileName)
         {
-            var folder = "/images/NewsTitleImages/";
-            await _FileUtils.SaveImageToFolder(folder, imageFileName);
+            var folder = ImageFolder.News;
+            return await _ImageStorageService.SaveAsync(folder, imageFileName);
         }
 
-        public New SetNewsModel(New newsModel, IFormFile? imageFileName)
-        {
-            // добавляем дату добавления новости (текущую дату)
-            newsModel.DateAdded = DateTime.Now;
-
-            if (imageFileName != null)
-            {
-                newsModel.TitleImagePath = $"/images/NewsTitleImages/{imageFileName.FileName}";
-            }
-            
-            return newsModel;    
-        }
 
         public void SaveNewsModel(New newsModel)
         {
@@ -60,6 +56,5 @@ namespace ToursWebAppEXAMProject.Utils
                 _AllNews.SaveItem(newsModel, newsModel.Id);
             }
         }
-
     }
 }

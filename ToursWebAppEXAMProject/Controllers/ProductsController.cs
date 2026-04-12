@@ -19,6 +19,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _ProductUtils = ProductUtils;
         }
 
+
         /// <summary>
         /// Метод вывода всех турпродуктов
         /// </summary>
@@ -43,6 +44,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View(products);
             }
         }
+
 
         /// <summary>
         /// Метод вывода турпродукта по его id
@@ -70,6 +72,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод создания турпродукта
         /// </summary>
@@ -86,6 +89,7 @@ namespace ToursWebAppEXAMProject.Controllers
             
         }
 
+
         /// <summary>
         /// Метод редактирования турпродукта по его id
         /// </summary>
@@ -101,6 +105,7 @@ namespace ToursWebAppEXAMProject.Controllers
             _logger.Trace("Переход по маршруту /Products/EditProduct.\n");
             return View(product);
         }
+
 
         /// <summary>
         /// Метод вывода результатов выборки турпродуктов по тому, что ищем - полное название или ключевое слово (букву). Выборка турпродуктов для редактирования (Edit).
@@ -132,6 +137,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
         }
 
+
         /// <summary>
         /// Метод вывода результатов выборки турпродуктов по Id страны и города. Выборка турпродуктов в поиске (Search).
         /// </summary>
@@ -162,7 +168,6 @@ namespace ToursWebAppEXAMProject.Controllers
         }
 
 
-
         /// <summary>
         /// Метод удаления отдельного турпродукта по его id
         /// </summary>
@@ -183,6 +188,7 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", product);
         }
 
+
         /// <summary>
         /// Метод сохранения турпродукта с данными, введенными пользователем
         /// </summary>
@@ -202,26 +208,19 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        await _ProductUtils.SaveProductImageByFileNameAsync(titleImagePath);
+                        productModel.TitleImagePath = await _ProductUtils.SaveProductImageByFileNameAsync(titleImagePath);
                     }
-
-                    productModel = _ProductUtils.SetProductModel(productModel, titleImagePath);
 
                     if (productModel.CountryId !=0 && productModel.CityId !=0)
                     {
                         _ProductUtils.SaveProductModel(productModel);
                         _logger.Debug("Турпродукт успешно сохранен в БД. ");
+                    }
 
-                        _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
-                        return View("Success", productModel);
-                    }
-                    else
-                    {
-                        _logger.Warn("Модель Product не прошла валидацию. Не задана страна и/или город. ");
-                        
-                        _logger.Trace("Возвращено /Products/EditProduct.cshtml\n");
-                        return View("EditProduct", productModel);
-                    }
+                    productModel.DateAdded = DateTime.Now;
+
+                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    return View("Success", productModel);
                 }
                 else
                 {
