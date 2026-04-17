@@ -56,7 +56,7 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     AboutPageVersionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
