@@ -5,7 +5,7 @@ namespace ToursWebAppEXAMProject.ViewModels
 {
     public class EditAboutPageViewModel
     {
-
+        // старые свойства, на переходной период, они будут удалены в итоге
         public int Id { get; set; }
 
         [Display(Name = "Ключевое слово")]
@@ -135,6 +135,13 @@ namespace ToursWebAppEXAMProject.ViewModels
 
 
         public DateTime? DateAdded { get; set; }
+
+
+        // новые свойства на переходной период, они и останутся в итоге
+        public AboutPageVersion AboutPageVersion { get; set; } = new AboutPageVersion();
+
+
+        public List<string> CollectionImagesPath { get; set; } = new List<string>();
 
     }
 }
