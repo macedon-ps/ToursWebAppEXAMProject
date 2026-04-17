@@ -36,7 +36,10 @@ builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
 builder.Services.AddTransient<IBaseInterface<Offer>, BaseRepository<Offer>>();
 builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
+// и старый, и новый вариант репозитория для страницы "О компании", на переходной период, потом старый будет удалён
+// (это для - EditAboutPageViewModel и AboutPageVersion)
 builder.Services.AddTransient<IBaseInterface<EditAboutPageViewModel>, BaseRepository<EditAboutPageViewModel>>();
+builder.Services.AddTransient<IBaseInterface<AboutPageVersion>, BaseRepository<AboutPageVersion>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<SearchUtils>();

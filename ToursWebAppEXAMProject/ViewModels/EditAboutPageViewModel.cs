@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.ViewModels
@@ -138,10 +139,8 @@ namespace ToursWebAppEXAMProject.ViewModels
 
 
         // новые свойства на переходной период, они и останутся в итоге
+        [NotMapped]
         public AboutPageVersion AboutPageVersion { get; set; } = new AboutPageVersion();
-
-
-        public List<string> CollectionImagesPath { get; set; } = new List<string>();
 
     }
 }

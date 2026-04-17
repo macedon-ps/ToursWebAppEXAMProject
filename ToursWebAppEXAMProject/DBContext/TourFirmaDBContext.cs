@@ -28,8 +28,10 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Tour> Tours { get; set; } = null!;
 		public virtual DbSet<TechTaskViewModel> TechTaskViewModels { get; set; } = null!;
 		public virtual DbSet<EditAboutPageViewModel> EditAboutPage { get; set; } = null!;
+        public virtual DbSet<AboutPageVersion> AboutPageVersions { get; set; } = null!;
+		public virtual DbSet<PhotoGalleryImage> PhotoGalleryImages { get; set; } = null!;
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
