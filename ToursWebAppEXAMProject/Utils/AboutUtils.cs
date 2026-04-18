@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Utils
@@ -7,12 +8,14 @@ namespace ToursWebAppEXAMProject.Utils
     public class AboutUtils
     {
         private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
+        private readonly IBaseInterface<AboutPageVersion> _AboutVersion;
         private readonly FeedbackUtils _Feedback;
         private readonly FileUtils _FileUtils;
 
-        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPage, FeedbackUtils Feedback, FileUtils FileUtils)
+        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPage, IBaseInterface<AboutPageVersion> AboutVersion, FeedbackUtils Feedback, FileUtils FileUtils)
         {
             _AboutPage = AboutPage;
+            _AboutVersion = AboutVersion;
             _Feedback = Feedback;
             _FileUtils = FileUtils;
         }
@@ -23,10 +26,22 @@ namespace ToursWebAppEXAMProject.Utils
         /// <returns></returns>
         public EditAboutPageViewModel GetModel()
         {
-            // выводим всегда актуальную на данный момент версию страницы About
-            var isActualVersion = _AboutPage.GetAllItems().FirstOrDefault(v => v.IsActual == true);
+            var version = _AboutVersion
+                .GetAllItems()
+                .FirstOrDefault(v => v.IsActual);
 
-            return isActualVersion ?? new EditAboutPageViewModel();
+            if (version == null)
+                return new EditAboutPageViewModel();
+
+            var viewModel = new EditAboutPageViewModel
+            {
+                // TODO: Временно Id, IsActual берется из вью-модели
+                AboutPageVersion = version,
+                DateAdded = version.DateAdded,
+                IsActual = version.IsActual
+            };
+
+            return viewModel;
         }
 
 

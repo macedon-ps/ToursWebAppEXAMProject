@@ -35,8 +35,9 @@ namespace ToursWebAppEXAMProject.Controllers
 			var viewModel = _AboutUtils.GetModel();
             _logger.Debug("Получена вью-модель EditAboutPageViewModel. ");
 
-            if (viewModel == null || viewModel.Id == 0)
-            {
+            // if (viewModel == null || viewModel.Id == 0) - н.б. вернуть после перехода
+            if (viewModel == null) { 
+          
                 _logger.Warn("Стартовая страница /About/Index.cshtml не создана или ни одна из версий страницы не является актуальной");
 
                 _logger.Trace("Переход по маршруту /About/Sorry.\n");

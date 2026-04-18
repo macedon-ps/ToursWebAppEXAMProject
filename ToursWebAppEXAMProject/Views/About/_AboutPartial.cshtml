@@ -2,14 +2,14 @@
 
 <div>
     <div>
-        <h1 class="title">@Model.AboutTitle</h1>
+        <h1 class="title">@Model.AboutPageVersion.AboutTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.AboutShortDescription</h4>
+        <h4 class="short-description">@Model.AboutPageVersion.AboutShortDescription</h4>
     </div>
     <div class="titleImage40">
-        <img src="@Model.AboutImagePath" alt="@Model.AboutImagePath" class="image-editAboutPage" />
+        <img src="@Model.AboutPageVersion.AboutImagePath" alt="@Model.AboutPageVersion.AboutImagePath" class="image-editAboutPage" />
     </div>
-    <div class="full-description">@Html.Raw(@Model.AboutFullDescription)</div>
+    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.AboutFullDescription)</div>
     <hr class="horizontal-line" />
 </div>

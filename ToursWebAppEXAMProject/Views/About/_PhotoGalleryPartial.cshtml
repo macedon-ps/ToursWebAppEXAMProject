@@ -6,11 +6,15 @@
 <a name="photo_gallery"></a>
 <div>
     <div>
-        <h1 class="title">@Model.PhotoGalleryTitle</h1>
+        <h1 class="title">@Model.AboutPageVersion.PhotoGalleryTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.PhotoGalleryShortDescription</h4>
+        <h4 class="short-description">@Model.AboutPageVersion.PhotoGalleryShortDescription</h4>
     </div>
+    <div class="titleImage40">
+        <img src="@Model.AboutPageVersion.PhotoGalleryImagePath" alt="@Model.AboutPageVersion.PhotoGalleryImagePath" class="image-editAboutPage" />
+    </div>
+    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.PhotoGalleryFullDescription)</div>
     <div class="photoGallery">
         
         @foreach (var image in Directory.GetFiles(folderPath))
@@ -22,7 +26,5 @@
             </div>
         }
     </div>
-    
-    <div class="full-description">@Html.Raw(@Model.PhotoGalleryFullDescription)</div>
     <hr class="horizontal-line" />
 </div>

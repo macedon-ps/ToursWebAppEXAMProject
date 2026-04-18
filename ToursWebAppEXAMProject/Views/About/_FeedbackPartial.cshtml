@@ -3,16 +3,16 @@
 <a name="feedback"></a>
 <div>
     <div>
-        <h1 class="title">@Model.FeedbackTitle</h1>
+        <h1 class="title">@Model.AboutPageVersion.FeedbackTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.FeedbackShortDescription</h4>
+        <h4 class="short-description">@Model.AboutPageVersion.FeedbackShortDescription</h4>
     </div>
     <div class="displayFlexRow">
         <div class="titleImage25">
-            <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
+            <img src="@Model.AboutPageVersion.FeedbackImagePath" alt="@Model.AboutPageVersion.FeedbackImagePath" class="image-editAboutPage" />
         </div>
-        <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
+        <div class="full-description">@Html.Raw(@Model.AboutPageVersion.FeedbackFullDescription)</div>
     </div>
     <hr class="horizontal-line" />
 </div>
