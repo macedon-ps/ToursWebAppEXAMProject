@@ -8,48 +8,38 @@ namespace ToursWebAppEXAMProject.Utils
 {
     public class AboutUtils
     {
-        private readonly IBaseInterface<EditAboutPageViewModel> _AboutPageViewModel;
         private readonly IBaseInterface<AboutPageVersion> _AboutPageVersion;
         private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
         private readonly FileUtils _FileUtils;
 
-        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPageViewModel, IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils)
+        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils)
         {
-            _AboutPageViewModel = AboutPageViewModel;
             _AboutPageVersion = AboutPageVersion;
             _PhotoGalleryImages = PhotoGalleryImages;
             _FileUtils = FileUtils;
         }
 
         /// <summary>
-        /// Метод получения вью-модели EditAboutPageViewModel
+        /// Метод получения модели AboutPageVersion
         /// </summary>
         /// <returns></returns>
-        public EditAboutPageViewModel GetViewModel()
+        public AboutPageVersion GetModel()
         {
-            var version = _AboutPageVersion
+            var model = _AboutPageVersion
                 .GetAllItems()
                 .FirstOrDefault(v => v.IsActual);
 
-            if (version == null)
-                return new EditAboutPageViewModel();
+            if (model == null)
+                return new AboutPageVersion();
 
             var photoGalleryImages = _PhotoGalleryImages
                 .GetAllItems()
-                .Where(img => img.AboutPageVersionId == version.Id)
+                .Where(img => img.AboutPageVersionId == model.Id)
                 .ToList();
 
-            version.CollectionImages = photoGalleryImages;
-
-            var viewModel = new EditAboutPageViewModel
-            {
-                // TODO: Временно Id, IsActual устанавливается во вью-модель, после перехода - убрать их из вью-модели
-                AboutPageVersion = version,
-                DateAdded = version.DateAdded,
-                IsActual = version.IsActual
-            };
-
-            return viewModel;
+            model.CollectionImages = photoGalleryImages;
+           
+            return model;
         }
 
 

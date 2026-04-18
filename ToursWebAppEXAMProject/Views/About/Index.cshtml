@@ -1,4 +1,4 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 @{
     ViewData["Title"] = "О нас";
 }
@@ -13,8 +13,8 @@
         <br />
                 
         <div class="displayFlexRow">
-            <h4>@Model.AboutPageVersion.Keyword</h4>
-            <h4>Дата: @Model.AboutPageVersion.DateAdded</h4>
+            <h4>@Model.Keyword</h4>
+            <h4>Дата: @Model.DateAdded</h4>
         </div>
                        
         @await Html.PartialAsync("_MainPartial")

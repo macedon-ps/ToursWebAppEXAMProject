@@ -1,20 +1,20 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 
 <a name="photo_gallery"></a>
 <div>
     <div>
-        <h1 class="title">@Model.AboutPageVersion.PhotoGalleryTitle</h1>
+        <h1 class="title">@Model.PhotoGalleryTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.AboutPageVersion.PhotoGalleryShortDescription</h4>
+        <h4 class="short-description">@Model.PhotoGalleryShortDescription</h4>
     </div>
     <div class="titleImage40">
-        <img src="@Model.AboutPageVersion.PhotoGalleryImagePath" alt="@Model.AboutPageVersion.PhotoGalleryImagePath" class="image-editAboutPage" />
+        <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" class="image-editAboutPage" />
     </div>
-    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.PhotoGalleryFullDescription)</div>
+    <div class="full-description">@Html.Raw(@Model.PhotoGalleryFullDescription)</div>
     <div class="photoGallery">
         
-        @foreach (var image in Model.AboutPageVersion.CollectionImages)
+        @foreach (var image in Model.CollectionImages)
         {
             <div class="titleImage25">
                 <img src="@image.ImagePath" alt="@image.ImagePath" class="image-photoGallery" />

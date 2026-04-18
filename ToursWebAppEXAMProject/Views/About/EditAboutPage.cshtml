@@ -177,11 +177,12 @@
                     <div class="titleImage">
                         <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
                     <input type="file" asp-for="PhotoGalleryImagePath" accept="image/*" />
                     <span asp-validation-for="PhotoGalleryImagePath"></span>
                 </div>
                 <div class="photoGallery">
+                    <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
+                    <a asp-controller="About" asp-action="AddPicture">Add new photo</a>
                     @foreach (var image in Model.CollectionImages)
                     {
                         <div class="titleImage25 mb2">

@@ -1,16 +1,16 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 
 <a name="operation_mode"></a>
 <div>
     <div>
-        <h1 class="title">@Model.AboutPageVersion.OperationModeTitle</h1>
+        <h1 class="title">@Model.OperationModeTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.AboutPageVersion.OperationModeShortDescription</h4>
+        <h4 class="short-description">@Model.OperationModeShortDescription</h4>
     </div>
     <div class="titleImage40">
-        <img src="@Model.AboutPageVersion.OperationModeImagePath" alt="@Model.AboutPageVersion.OperationModeImagePath" class="image-editAboutPage" />
+        <img src="@Model.OperationModeImagePath" alt="@Model.OperationModeImagePath" class="image-editAboutPage" />
     </div>
-    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.OperationModeFullDescription)</div>
+    <div class="full-description">@Html.Raw(@Model.OperationModeFullDescription)</div>
     <hr class="horizontal-line" />
 </div>

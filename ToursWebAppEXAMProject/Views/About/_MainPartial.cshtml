@@ -1,16 +1,16 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 
 <div>
     <div>
-        <h1 class="title">@Model.AboutPageVersion.MainTitle</h1>
+        <h1 class="title">@Model.MainTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.AboutPageVersion.MainShortDescription</h4>
+        <h4 class="short-description">@Model.MainShortDescription</h4>
     </div>
     <div class="titleImage40">
-        <img src="@Model.AboutPageVersion.MainImagePath" alt="@Model.AboutPageVersion.MainImagePath" class="image-editAboutPage" />
+        <img src="@Model.MainImagePath" alt="@Model.MainImagePath" class="image-editAboutPage" />
     </div>
-    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.MainFullDescription)</div>
+    <div class="full-description">@Html.Raw(@Model.MainFullDescription)</div>
     <hr class="horizontal-line" />
 </div>
     

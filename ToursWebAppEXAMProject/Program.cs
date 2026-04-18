@@ -5,7 +5,6 @@ using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.ConfigFiles;
-using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Services.Hubs;
 using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.Services.Email;
@@ -36,9 +35,6 @@ builder.Services.AddTransient<IBaseInterface<Saller>, BaseRepository<Saller>>();
 builder.Services.AddTransient<IBaseInterface<Offer>, BaseRepository<Offer>>();
 builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
-// и старый, и новый вариант репозитория для страницы "О компании", на переходной период, потом старый будет удалён
-// (это для - EditAboutPageViewModel и AboutPageVersion, PhotoGalleryImage)
-builder.Services.AddTransient<IBaseInterface<EditAboutPageViewModel>, BaseRepository<EditAboutPageViewModel>>();
 builder.Services.AddTransient<IBaseInterface<AboutPageVersion>, BaseRepository<AboutPageVersion>>();
 builder.Services.AddTransient<IBaseInterface<PhotoGalleryImage>, BaseRepository<PhotoGalleryImage>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
@@ -55,8 +51,6 @@ builder.Services.AddTransient<BlogUtils>();
 builder.Services.AddTransient<CountryUtils>();
 builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
-// для переноса данных с EditAboutPageViewModel в AboutPageVersion
-//builder.Services.AddTransient<AboutMigrationUtils>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
@@ -89,18 +83,6 @@ builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
 builder.Configuration.Bind("MapApi", new ConfigMapApi());
 
 var app = builder.Build();
-
-/* код выполняется 1 раз
- * перенос данных со старой вью модели страницы "О компании" (EditAboutPageViewModel) в новую модель(AboutPageVersion) 
- * при запуске приложения, чтобы не потерять данные, которые были до внедрения новой модели. 
- * Этот код можно удалить после того, как данные будут перенесены и проверены. 
-using (var scope = app.Services.CreateScope())
-{
-    var migrator = scope.ServiceProvider
-        .GetRequiredService<AboutMigrationUtils>();
-
-    migrator.MigrateOldData();
-}*/
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

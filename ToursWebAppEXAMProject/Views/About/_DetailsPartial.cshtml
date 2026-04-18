@@ -1,17 +1,17 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 
 <a name="details"></a>
 <div>
     <div>
-        <h1 class="title">@Model.AboutPageVersion.DetailsTitle</h1>
+        <h1 class="title">@Model.DetailsTitle</h1>
     </div>
     <div>
-        <h4 class="short-description">@Model.AboutPageVersion.DetailsShortDescription</h4>
+        <h4 class="short-description">@Model.DetailsShortDescription</h4>
     </div>
     <div class="titleImage40">
-        <img src="@Model.AboutPageVersion.DetailsImagePath" alt="@Model.AboutPageVersion.DetailsImagePath" class="image-editAboutPage" />
+        <img src="@Model.DetailsImagePath" alt="@Model.DetailsImagePath" class="image-editAboutPage" />
     </div>
-    <div class="full-description">@Html.Raw(@Model.AboutPageVersion.DetailsFullDescription)</div>
+    <div class="full-description">@Html.Raw(@Model.DetailsFullDescription)</div>
 
     <h3>Название компании:</h3>
     <p class="copy-allowed">@ConfigData.CompanyName</p>
