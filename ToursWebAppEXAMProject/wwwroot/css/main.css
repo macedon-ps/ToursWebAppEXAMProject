@@ -316,6 +316,7 @@ select.languageTo{
 .photoGallery {
 	display: flex;
 	flex-wrap: wrap;
+	width: 100%;
 }
 .image-photoGallery{
 	padding: 0.5em;
