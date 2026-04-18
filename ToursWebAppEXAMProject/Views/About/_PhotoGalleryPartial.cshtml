@@ -1,7 +1,4 @@
 ﻿@model EditAboutPageViewModel
-@{
-    var folderPath = "E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
-}
 
 <a name="photo_gallery"></a>
 <div>
@@ -17,12 +14,10 @@
     <div class="full-description">@Html.Raw(@Model.AboutPageVersion.PhotoGalleryFullDescription)</div>
     <div class="photoGallery">
         
-        @foreach (var image in Directory.GetFiles(folderPath))
+        @foreach (var image in Model.AboutPageVersion.CollectionImages)
         {
-            var imagePath = image.Replace("E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot", "");
-
             <div class="titleImage25">
-                <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
+                <img src="@image.ImagePath" alt="@image.ImagePath" class="image-photoGallery" />
             </div>
         }
     </div>

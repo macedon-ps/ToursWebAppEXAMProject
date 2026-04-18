@@ -9,13 +9,15 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
         private readonly IBaseInterface<AboutPageVersion> _AboutVersion;
+        private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
         private readonly FeedbackUtils _Feedback;
         private readonly FileUtils _FileUtils;
 
-        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPage, IBaseInterface<AboutPageVersion> AboutVersion, FeedbackUtils Feedback, FileUtils FileUtils)
+        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPage, IBaseInterface<AboutPageVersion> AboutVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FeedbackUtils Feedback, FileUtils FileUtils)
         {
             _AboutPage = AboutPage;
             _AboutVersion = AboutVersion;
+            _PhotoGalleryImages = PhotoGalleryImages;
             _Feedback = Feedback;
             _FileUtils = FileUtils;
         }
@@ -30,12 +32,19 @@ namespace ToursWebAppEXAMProject.Utils
                 .GetAllItems()
                 .FirstOrDefault(v => v.IsActual);
 
+            var photoGalleryImages = _PhotoGalleryImages
+                .GetAllItems()
+                .Where(img => img.AboutPageVersionId == version.Id)
+                .ToList();
+
             if (version == null)
                 return new EditAboutPageViewModel();
 
+            version.CollectionImages = photoGalleryImages;
+
             var viewModel = new EditAboutPageViewModel
             {
-                // TODO: Временно Id, IsActual берется из вью-модели
+                // TODO: Временно Id, IsActual устанавливается во вью-модель, после перехода - убрать их из вью-модели
                 AboutPageVersion = version,
                 DateAdded = version.DateAdded,
                 IsActual = version.IsActual
