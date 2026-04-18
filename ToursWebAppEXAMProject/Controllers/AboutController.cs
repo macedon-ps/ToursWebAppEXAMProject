@@ -4,6 +4,7 @@ using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.Services.Email;
 using NLog;
+using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -32,11 +33,11 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult Index()
 		{
-			var viewModel = _AboutUtils.GetModel();
-            _logger.Debug("Получена вью-модель EditAboutPageViewModel. ");
+			var model = _AboutUtils.GetModel();
+            _logger.Debug("Получена модель AboutPageVersion. ");
 
-            if (viewModel == null || viewModel.Id == 0)
-            {
+            if (model == null || model.Id == 0)
+            { 
                 _logger.Warn("Стартовая страница /About/Index.cshtml не создана или ни одна из версий страницы не является актуальной");
 
                 _logger.Trace("Переход по маршруту /About/Sorry.\n");
@@ -44,7 +45,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
 
             _logger.Trace("Переход по маршруту /About/Index.\n");
-            return View(viewModel);
+            return View(model);
 		}
 
 
@@ -55,8 +56,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult EditMenuAboutPage()
         {
-            var allPages = _AboutUtils.GetAllModel();
-            _logger.Debug("Получена вью-модель IEnumerable<EditAboutPageViewModel>. ");
+            var allPages = _AboutUtils.GetAllModels();
+            _logger.Debug("Получена модель IEnumerable<AboutPageVersion>. ");
 
             _logger.Trace("Переход по маршруту /About/EditMenuAboutPage.\n");
             return View(allPages);
@@ -71,7 +72,7 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateAboutPage()
         {
             var newViewModel = _AboutUtils.CreateModel();
-            _logger.Debug("Создана вью-модель EditAboutPageViewModel. ");
+            _logger.Debug("Создана модель AboutPageVersion. ");
 
             _logger.Trace("Переход по маршруту /About/EditAboutPage.\n");
             return View("EditAboutPage", newViewModel);
@@ -86,11 +87,11 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult EditAboutPage(int id)
         {
-            var editViewModel = _AboutUtils.GetModel(id);
-            _logger.Debug($"Получена вью-модель EditAboutPageViewModel по id={id}. ");
+            var editModel = _AboutUtils.GetModel(id);
+            _logger.Debug($"Получена модель AboutPageVersion по id={id}. ");
 
             _logger.Trace("Переход по маршруту /About/EditAboutPage.\n");
-            return View(editViewModel);
+            return View(editModel);
         }
 
 
@@ -104,7 +105,7 @@ namespace ToursWebAppEXAMProject.Controllers
         {
             var deleteModel = _AboutUtils.GetModel(id);
             _AboutUtils.DeleteModel(id);
-            _logger.Debug($"Удалена вью-модель EditAboutPageViewModel по id={id}. ");
+            _logger.Debug($"Удалена модель AboutPageVersion по id={id}. ");
 
             _logger.Trace("Возвращено ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", deleteModel);
@@ -125,7 +126,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <summary>
         /// Метод сохранения страницы About с данными, введенными редактором
         /// </summary>
-        /// <param name="viewModel">Вью модель EditAboutPageViewModel</param>
+        /// <param name="model">Модель AboutPageVersion</param>
         /// <param name="MainImagePath">Путь к главной картинке</param>
         /// <param name="AboutImagePath">Путь к картинке About</param>
         /// <param name="DetailsImagePath">Путь к картинке деталей</param>
@@ -135,24 +136,24 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(EditAboutPageViewModel viewModel, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
+        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Вью-модель EditAboutPageViewModel прошла валидацию. ");
+                    _logger.Debug("Модель AboutPageVersion прошла валидацию. ");
                     
-                    var newViewModel = await _AboutUtils.SetEditAboutViewModelAndSaveAsync
-                        (viewModel, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, FeedbackImagePath);
-                    _logger.Debug("Вью-модель EditAboutPageViewModel заполнена данными из формыи успешно сохранена в БД. ");
+                    var newModel = await _AboutUtils.SetEditAboutViewModelAndSaveAsync
+                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, FeedbackImagePath);
+                    _logger.Debug("Модель AboutPageVersion заполнена данными из формыи успешно сохранена в БД. ");
            
                     _logger.Trace("Возвращено ../Shared/Success.cshtml\n");
-                    return View("Success", newViewModel);
+                    return View("Success", newModel);
                 }
                 else
                 {
-                    _logger.Warn("Вью-модель EditAboutPageViewModel не прошла валидацию.");
+                    _logger.Warn("Модель AboutPageVersion не прошла валидацию.");
 
                     foreach (var modelState in ModelState)
                     {
@@ -162,7 +163,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         }
                     }
 
-                    return View("EditAboutPage", viewModel);
+                    return View("EditAboutPage", model);
                 }
             }
             catch (Exception error)

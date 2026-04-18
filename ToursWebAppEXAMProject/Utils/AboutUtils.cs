@@ -1,119 +1,159 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Utils
 {
     public class AboutUtils
     {
-        private readonly IBaseInterface<EditAboutPageViewModel> _AboutPage;
-        private readonly FeedbackUtils _Feedback;
+        private readonly IBaseInterface<AboutPageVersion> _AboutPageVersion;
+        private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
         private readonly FileUtils _FileUtils;
 
-        public AboutUtils(IBaseInterface<EditAboutPageViewModel> AboutPage, FeedbackUtils Feedback, FileUtils FileUtils)
+        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils)
         {
-            _AboutPage = AboutPage;
-            _Feedback = Feedback;
+            _AboutPageVersion = AboutPageVersion;
+            _PhotoGalleryImages = PhotoGalleryImages;
             _FileUtils = FileUtils;
         }
 
         /// <summary>
-        /// Метод получения вью-модели EditAboutPageViewModel
+        /// Метод получения модели AboutPageVersion
         /// </summary>
         /// <returns></returns>
-        public EditAboutPageViewModel GetModel()
+        public AboutPageVersion GetModel()
         {
-            // выводим всегда актуальную на данный момент версию страницы About
-            var isActualVersion = _AboutPage.GetAllItems().FirstOrDefault(v => v.IsActual == true);
+            var model = _AboutPageVersion
+                .GetAllItems()
+                .FirstOrDefault(v => v.IsActual);
 
-            return isActualVersion ?? new EditAboutPageViewModel();
+            if (model == null)
+                return new AboutPageVersion();
+
+            var photoGalleryImages = _PhotoGalleryImages
+                .GetAllItems()
+                .Where(img => img.AboutPageVersionId == model.Id)
+                .ToList();
+
+            model.CollectionImages = photoGalleryImages;
+           
+            return model;
         }
 
 
-        public EditAboutPageViewModel GetModel(int id)
+        public AboutPageVersion GetModel(int id)
         {
-            var editViewModel = _AboutPage.GetItemById(id);
+            var editModel = _AboutPageVersion.GetItemById(id);
 
-            return editViewModel;
+            var photoGalleryImages = _PhotoGalleryImages
+                .GetAllItems()
+                .Where(img => img.AboutPageVersionId == id)
+                .ToList();
+
+            editModel.CollectionImages = photoGalleryImages;
+
+            return editModel;
         }
 
 
-        public IEnumerable<EditAboutPageViewModel> GetAllModel()
+        public IEnumerable<AboutPageVersion> GetAllModels()
         {
-            var allModels = _AboutPage.GetAllItems();
-            
+            var allModels = _AboutPageVersion.GetAllItems();
+
+            foreach (var model in allModels)
+            {
+                var photoGalleryImages = _PhotoGalleryImages
+                    .GetAllItems()
+                    .Where(img => img.AboutPageVersionId == model.Id)
+                    .ToList();
+
+                model.CollectionImages = photoGalleryImages;
+            }
+
             return allModels;
         }
 
 
-        public EditAboutPageViewModel CreateModel()
+        public AboutPageVersion CreateModel()
         {
-            var newViewModel = new EditAboutPageViewModel();
-            newViewModel.IsActual = true;
+            var newModel = new AboutPageVersion();
+            newModel.IsActual = true;
 
-            return newViewModel;
+            return newModel;
         }
 
 
         public void DeleteModel(int id)
         {
-            var aboutPage = _AboutPage.GetItemById(id);
-            _AboutPage.DeleteItem(aboutPage, id);
+            var aboutPage = _AboutPageVersion.GetItemById(id);
+
+            // если есть коллекция изображений, то удаляем сперва удаляем их
+            if (aboutPage.CollectionImages != null && aboutPage.CollectionImages.Any())
+            {
+                foreach (var image in aboutPage.CollectionImages)
+                {
+                    _PhotoGalleryImages.DeleteItem(image, image.Id);
+                }
+            }
+            // затем удаляем саму версию страницы "О нас"
+            _AboutPageVersion.DeleteItem(aboutPage, id);
         }
 
 
-        public async Task<EditAboutPageViewModel> SetEditAboutViewModelAndSaveAsync(EditAboutPageViewModel viewModel, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
+        public async Task<AboutPageVersion> SetEditAboutViewModelAndSaveAsync(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
         {
             // Main
             if (MainImagePath != null)
             {
-                var folder = "/images/AboutPage/Main/";
+                var folder = "/images/AboutPageViewModel/Main/";
                 await _FileUtils.SaveImageToFolder(folder, MainImagePath);
-                viewModel.MainImagePath = $"{folder}{MainImagePath.FileName}";
+                model.MainImagePath = $"{folder}{MainImagePath.FileName}";
             }
 
             // About
             if (AboutImagePath != null)
             {
-                var folder = "/images/AboutPage/About/";
+                var folder = "/images/AboutPageViewModel/About/";
                 await _FileUtils.SaveImageToFolder(folder, AboutImagePath);
-                viewModel.AboutImagePath = $"{folder}{AboutImagePath.FileName}";
+                model.AboutImagePath = $"{folder}{AboutImagePath.FileName}";
             }
 
             // Details
             if (DetailsImagePath != null)
             {
-                var folder = "/images/AboutPage/Details/";
+                var folder = "/images/AboutPageViewModel/Details/";
                 await _FileUtils.SaveImageToFolder(folder, DetailsImagePath);
-                viewModel.DetailsImagePath = $"{folder}{DetailsImagePath.FileName}";
+                model.DetailsImagePath = $"{folder}{DetailsImagePath.FileName}";
             }
             // OperationMode
             if (OperationModeImagePath != null)
             {
-                var folder = "/images/AboutPage/OperationMode/";
+                var folder = "/images/AboutPageViewModel/OperationMode/";
                 await _FileUtils.SaveImageToFolder(folder, OperationModeImagePath);
-                viewModel.OperationModeImagePath = $"{folder}{OperationModeImagePath.FileName}";
+                model.OperationModeImagePath = $"{folder}{OperationModeImagePath.FileName}";
             }
             // PhotoGallery
             if (PhotoGalleryImagePath != null)
             {
-                var folder = "/images/AboutPage/PhotoGallery/";
+                var folder = "/images/AboutPageViewModel/PhotoGallery/";
                 await _FileUtils.SaveImageToFolder(folder, PhotoGalleryImagePath);
-                viewModel.PhotoGalleryImagePath = $"{folder}{PhotoGalleryImagePath.FileName}";
+                model.PhotoGalleryImagePath = $"{folder}{PhotoGalleryImagePath.FileName}";
             }
             // Feedback
             if (FeedbackImagePath != null)
             {
-                var folder = "/images/AboutPage/Feedback/";
+                var folder = "/images/AboutPageViewModel/Feedback/";
                 await _FileUtils.SaveImageToFolder(folder, FeedbackImagePath);
-                viewModel.FeedbackImagePath = $"{folder}{FeedbackImagePath.FileName}";
+                model.FeedbackImagePath = $"{folder}{FeedbackImagePath.FileName}";
             }
 
-            viewModel.DateAdded = DateTime.Now;
+            model.DateAdded = DateTime.Now;
 
-            _AboutPage.SaveItem(viewModel, viewModel.Id);
+            _AboutPageVersion.SaveItem(model, model.Id);
 
-            return viewModel;
+            return model;
         }
     }
 }

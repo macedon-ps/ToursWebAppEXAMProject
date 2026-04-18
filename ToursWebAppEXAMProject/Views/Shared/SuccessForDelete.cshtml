@@ -4,7 +4,7 @@
 
 <div class="editPage">
     
-    @if (Model.ToString().Contains("EditAboutPageViewModel"))
+    @if (Model is AboutPageVersion)
     {
         @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
 
@@ -29,7 +29,7 @@
             </div>
         </div>
     }
-    @if (Model.ToString().Contains("Blog") || Model.ToString().Contains("City") || Model.ToString().Contains("Country") || Model.ToString().Contains("New") || Model.ToString().Contains("Product"))
+    @if (Model is Blog || Model is City || Model is Country || Model is New || Model is Product)
     {
         @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
 

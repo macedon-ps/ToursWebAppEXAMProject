@@ -1,4 +1,4 @@
-﻿@model EditAboutPageViewModel
+﻿@model AboutPageVersion
 @{
     ViewData["Title"] = "Редактирование страницы о нас";
 }
@@ -177,33 +177,20 @@
                     <div class="titleImage">
                         <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%" />
                     </div>
-                    <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
                     <input type="file" asp-for="PhotoGalleryImagePath" accept="image/*" />
                     <span asp-validation-for="PhotoGalleryImagePath"></span>
                 </div>
-
-                @{
-                    // TODO: перенести код в контроллер и передать во вью
-                    //var folderPath = _FileUtils.GetFullPathToFolderPhotoGallery();
-
-                    var folderPath = "E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot/images/AboutPage/PhotoGallery";
-                }
-                
                 <div class="photoGallery">
-                    @foreach (var image in Directory.GetFiles(folderPath))
+                    <h4>Добавьте новую фотографию в коллекцию фотографий</h4>
+                    <a asp-controller="About" asp-action="AddPicture">Add new photo</a>
+                    @foreach (var image in Model.CollectionImages)
                     {
-                        // TODO: перенести код в контроллер и передать во вью
-                        // var imagePath = _FileUtils.GetRelativePath(image);
-
-                        var imagePath = image.Replace("E:/C#_VS_2022/1. MY_PROJECTS/1. TourWebApp/ToursWebAppEXAMProject/wwwroot", "");
-
                         <div class="titleImage25 mb2">
-                            <img src="@imagePath" alt="@imagePath" class="image-photoGallery" />
-                            <a asp-controller="About" asp-action="DeletePicture" asp-route-fullPathToFile="@image" class="delete-photo">Delete photo</a>
+                            <img src="@image.ImagePath" alt="@image.ImagePath" class="image-photoGallery" />
+                            <a asp-controller="About" asp-action="DeletePicture" asp-route-fullPathToFile="@image.ImagePath" class="delete-photo">Delete photo</a>
                         </div>
                     }
                 </div>
-                
                 <hr /> <!-- Feedback  -->
                 <div class="displayFlexCol">
                     <label asp-for="FeedbackTitle"></label>

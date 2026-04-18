@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToursWebAppEXAMProject.DBContext;
 
@@ -11,9 +12,11 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    partial class TourFirmaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260417094309_AddAboutPageVersionModels")]
+    partial class AddAboutPageVersionModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -707,8 +710,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -903,6 +905,125 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ToursWebAppEXAMProject.ViewModels.EditAboutPageViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AboutFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AboutImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("AboutShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("AboutTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DetailsFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailsImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DetailsShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("DetailsTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("FeedbackFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeedbackImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FeedbackShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("FeedbackTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsActual")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Keyword")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("MainFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("MainShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("MainTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("OperationModeFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OperationModeImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("OperationModeShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("OperationModeTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PhotoGalleryFullDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoGalleryImagePath")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhotoGalleryShortDescription")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PhotoGalleryTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EditAboutPage");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.ViewModels.TechTaskViewModel", b =>
