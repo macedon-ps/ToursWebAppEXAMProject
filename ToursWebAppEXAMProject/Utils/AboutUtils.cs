@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
-using System;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ViewModels;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Utils
 {
@@ -11,12 +11,14 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<AboutPageVersion> _AboutPageVersion;
         private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
         private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
 
-        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils)
+        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils, ImageStorageService ImageStorageService)
         {
             _AboutPageVersion = AboutPageVersion;
             _PhotoGalleryImages = PhotoGalleryImages;
             _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
         }
 
         /// <summary>
@@ -107,45 +109,45 @@ namespace ToursWebAppEXAMProject.Utils
             // Main
             if (MainImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/Main/";
-                await _FileUtils.SaveImageToFolder(folder, MainImagePath);
+                var folder = ImageFolder.About_Main;
+                await _ImageStorageService.SaveAsync(folder, MainImagePath);
                 model.MainImagePath = $"{folder}{MainImagePath.FileName}";
             }
 
             // About
             if (AboutImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/About/";
-                await _FileUtils.SaveImageToFolder(folder, AboutImagePath);
+                var folder = ImageFolder.About_About;
+                await _ImageStorageService.SaveAsync(folder, AboutImagePath);
                 model.AboutImagePath = $"{folder}{AboutImagePath.FileName}";
             }
 
             // Details
             if (DetailsImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/Details/";
-                await _FileUtils.SaveImageToFolder(folder, DetailsImagePath);
+                var folder = ImageFolder.About_Details;
+                await _ImageStorageService.SaveAsync(folder, DetailsImagePath);
                 model.DetailsImagePath = $"{folder}{DetailsImagePath.FileName}";
             }
             // OperationMode
             if (OperationModeImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/OperationMode/";
-                await _FileUtils.SaveImageToFolder(folder, OperationModeImagePath);
+                var folder = ImageFolder.About_OperationMode;
+                await _ImageStorageService.SaveAsync(folder, OperationModeImagePath);
                 model.OperationModeImagePath = $"{folder}{OperationModeImagePath.FileName}";
             }
             // PhotoGallery
             if (PhotoGalleryImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/PhotoGallery/";
-                await _FileUtils.SaveImageToFolder(folder, PhotoGalleryImagePath);
+                var folder = ImageFolder.About_PhotoGallery;
+                await _ImageStorageService.SaveAsync(folder, PhotoGalleryImagePath);
                 model.PhotoGalleryImagePath = $"{folder}{PhotoGalleryImagePath.FileName}";
             }
             // Feedback
             if (FeedbackImagePath != null)
             {
-                var folder = "/images/AboutPageViewModel/Feedback/";
-                await _FileUtils.SaveImageToFolder(folder, FeedbackImagePath);
+                var folder = ImageFolder.About_Feedback;
+                await _ImageStorageService.SaveAsync(folder, FeedbackImagePath);
                 model.FeedbackImagePath = $"{folder}{FeedbackImagePath.FileName}";
             }
 

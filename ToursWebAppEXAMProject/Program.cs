@@ -8,6 +8,7 @@ using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.Services.Hubs;
 using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,7 @@ builder.Services.AddTransient<BlogUtils>();
 builder.Services.AddTransient<CountryUtils>();
 builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
+builder.Services.AddTransient<ImageStorageService>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации

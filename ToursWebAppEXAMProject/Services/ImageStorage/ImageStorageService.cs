@@ -18,7 +18,7 @@ namespace ToursWebAppEXAMProject.Services.ImageStorage
         /// <param name="file">Имя файла картинки.</param>
         /// <param name="folder">Папка сохранения файла картинки.</param>
         /// <returns>Сохранение файла картинки и возвращение относительного пути к сохраненному файлу.</returns>
-        public async Task<string?> SaveAsync(IFormFile? file, ImageFolder folder)
+        public async Task<string?> SaveAsync(ImageFolder folder, IFormFile? file)
         {
             if (file == null)
             {
