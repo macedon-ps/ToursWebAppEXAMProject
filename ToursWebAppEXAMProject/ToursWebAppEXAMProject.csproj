@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\backgroundPictures\**" />
+    <Content Remove="wwwroot\backgroundPictures\**" />
+    <EmbeddedResource Remove="wwwroot\backgroundPictures\**" />
+    <None Remove="wwwroot\backgroundPictures\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.schema\5.0.1\contentFiles\any\any\NLog.xsd" />
   </ItemGroup>
@@ -40,6 +47,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\CitiesTitleImages\" />
     <Folder Include="wwwroot\images\ProductsTitleImages\" />
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
   <ItemGroup>
