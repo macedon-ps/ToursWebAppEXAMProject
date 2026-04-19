@@ -1,5 +1,5 @@
 ﻿/* Шрифт подключен автономно */
-/* @import url("https://fonts.googleapis.com/css?family=Ubuntu+Condensed"); */
+/* @import url("https://fonts.googleapis.com/css?family=Ubunimagestu+Condensed"); */
 /*
 	Minimaxing by HTML5 UP
 	html5up.net | @ajlkn
@@ -90,7 +90,7 @@ input::-moz-focus-inner {
 body {
 	font-size: 13.5pt;
 	/*background-color: #e3e9dc;*/
-	background-image: url(../images/BackGround/tropical-sea.jpg);
+	background-image: url(../background/blue-water.jpg);
 	/*font-family: 'Ubuntu Condensed', sans-serif;*/
 	font-family: url(/webfonts/UbuntuCondensed-Regular.ttf);
 	color: #878e83;
@@ -1665,7 +1665,7 @@ textarea,
 			height: 32px;
 			line-height: 24px;
 			padding-left: 40px;
-			background: url("images/icon-bubble.png") no-repeat;
+			background: url("assets/icon-bubble.png") no-repeat;
 		}
 
 		article.blog-post .blog-post-image {
@@ -1804,7 +1804,7 @@ textarea,
 /* Banner */
 
 	#banner-wrapper {
-		background: #c8d2bc url(images/bg1.png);
+		background: #c8d2bc url(assets/bg1.png);
 		padding: 2em 0;
 	}
 
@@ -1813,7 +1813,7 @@ textarea,
 		width: 100%;
 		padding: 6em 0;
 		border-radius: 10px;
-		background-image: url(images/banner.jpg);
+		background-image: url(assets/banner.jpg);
 		background-size: cover;
 		text-align: center;
 		box-shadow: inset 0 0 0 20px #fff;
@@ -2037,7 +2037,7 @@ textarea,
 						position: absolute;
 						width: 20px;
 						height: 30px;
-						background: url("images/mobileUI-site-nav-opener-bg.svg");
+						background: url("assets/mobileUI-site-nav-opener-bg.svg");
 						top: 16px;
 						left: 19px;
 					}
@@ -2166,7 +2166,7 @@ textarea,
 		/* Banner */
 
 			#banner-wrapper {
-				background: #c8d2bc url(images/bg1.png);
+				background: #c8d2bc url(assets/bg1.png);
 				padding: 20px 0;
 			}
 
@@ -2216,7 +2216,7 @@ textarea,
 
 	/*
 	.palms {
-	background-image: url(../images/tropical-sea.jpg);
+	background-image: url(../background/tropical-sea.jpg);
 	background-repeat: no-repeat;
 	background-size: auto auto;
 	background-position: center;
