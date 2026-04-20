@@ -18,13 +18,13 @@ namespace ToursWebAppEXAMProject.ConfigFiles
                 { ImageFolder.Products, "images/ProductsTitleImages" },
                 { ImageFolder.Countries, "images/CountriesTitleImages" },
                 { ImageFolder.Cities, "images/CitiesTitleImages" },
-                { ImageFolder.About_Main, "/images/AboutPage/Main/" },
-                { ImageFolder.About_About, "/images/AboutPage/About/" },
-                { ImageFolder.About_Details, "/images/AboutPage/Details/" },
-                { ImageFolder.About_OperationMode, "/images/AboutPage/OperationMode/" },
-                { ImageFolder.About_PhotoGallery, "/images/AboutPage/PhotoGallery/" },
-                { ImageFolder.About_PhotoGallery_Collection, "/images/AboutPage/PhotoGallery_Collection/" },
-                { ImageFolder.About_Feedback, "/images/AboutPage/Feedback/" }
+                { ImageFolder.About_Main, "images/AboutPage/Main/" },
+                { ImageFolder.About_About, "images/AboutPage/About/" },
+                { ImageFolder.About_Details, "images/AboutPage/Details/" },
+                { ImageFolder.About_OperationMode, "images/AboutPage/OperationMode/" },
+                { ImageFolder.About_PhotoGallery, "images/AboutPage/PhotoGallery/" },
+                { ImageFolder.About_PhotoGallery_Collection, "images/AboutPage/PhotoGallery_Collection/" },
+                { ImageFolder.About_Feedback, "images/AboutPage/Feedback/" }
             };
 
         /// <summary>

@@ -104,51 +104,45 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<AboutPageVersion> SetEditAboutViewModelAndSaveAsync(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
+        public async Task<AboutPageVersion> SetEditAboutViewModelAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? FeedbackImageFileName)
         {
             // Main
-            if (MainImagePath != null)
+            if (MainImageFileName != null)
             {
                 var folder = ImageFolder.About_Main;
-                await _ImageStorageService.SaveAsync(folder, MainImagePath);
-                model.MainImagePath = $"{folder}{MainImagePath.FileName}";
+                model.MainImagePath = await _ImageStorageService.SaveAsync(folder, MainImageFileName);
             }
 
             // About
-            if (AboutImagePath != null)
+            if (AboutImageFileName != null)
             {
                 var folder = ImageFolder.About_About;
-                await _ImageStorageService.SaveAsync(folder, AboutImagePath);
-                model.AboutImagePath = $"{folder}{AboutImagePath.FileName}";
+                model.AboutImagePath = await _ImageStorageService.SaveAsync(folder, AboutImageFileName);
             }
 
             // Details
-            if (DetailsImagePath != null)
+            if (DetailsImageFileName != null)
             {
                 var folder = ImageFolder.About_Details;
-                await _ImageStorageService.SaveAsync(folder, DetailsImagePath);
-                model.DetailsImagePath = $"{folder}{DetailsImagePath.FileName}";
+                model.DetailsImagePath = await _ImageStorageService.SaveAsync(folder, DetailsImageFileName);
             }
             // OperationMode
-            if (OperationModeImagePath != null)
+            if (OperationModeImageFileName != null)
             {
                 var folder = ImageFolder.About_OperationMode;
-                await _ImageStorageService.SaveAsync(folder, OperationModeImagePath);
-                model.OperationModeImagePath = $"{folder}{OperationModeImagePath.FileName}";
+                model.OperationModeImagePath = await _ImageStorageService.SaveAsync(folder, OperationModeImageFileName);
             }
             // PhotoGallery
-            if (PhotoGalleryImagePath != null)
+            if (PhotoGalleryImageFileName != null)
             {
                 var folder = ImageFolder.About_PhotoGallery;
-                await _ImageStorageService.SaveAsync(folder, PhotoGalleryImagePath);
-                model.PhotoGalleryImagePath = $"{folder}{PhotoGalleryImagePath.FileName}";
+                model.PhotoGalleryImagePath = await _ImageStorageService.SaveAsync(folder, PhotoGalleryImageFileName);
             }
             // Feedback
-            if (FeedbackImagePath != null)
+            if (FeedbackImageFileName != null)
             {
                 var folder = ImageFolder.About_Feedback;
-                await _ImageStorageService.SaveAsync(folder, FeedbackImagePath);
-                model.FeedbackImagePath = $"{folder}{FeedbackImagePath.FileName}";
+                model.FeedbackImagePath = await _ImageStorageService.SaveAsync(folder, FeedbackImageFileName);
             }
 
             model.DateAdded = DateTime.Now;
