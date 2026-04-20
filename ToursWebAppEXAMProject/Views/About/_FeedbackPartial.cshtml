@@ -18,63 +18,19 @@
 </div>
 
 <div class="displayFlex">
-    <div class="displayFlexCol flexGrow1">
-        <h2>Полезные ссылки:</h2>
+    <div class="flexGrow1">
+        
+        @await Html.PartialAsync("_UsefulLinksPartial")
+        
+    </div>
+    <div class="flexGrow1">
+        
+        @await Html.PartialAsync("_SocialNetsLinksPartial")
 
-        <div>
-            <a href="tel:@ConfigData.CompanyPhone" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Dial.bmp" alt="Позвонить" width="24" height="24" class="iconImage">
-                <h4>Позвонить</h4>
-           </a>
-        </div>
-        <div>
-            <a href="mailto:@ConfigData.CompanyEmail" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Question.bmp" alt="Задать вопрос" width="24" height="24" class="iconImage">
-                <h4>Задать вопрос</h4>
-            </a>
-        </div>
-        <div>
-            <a href="https://@ConfigData.CalculateTourSite" target="_blank"  class="iconLink">
-                <img src="~/images/SideBar/Calculator.bmp" alt="Посчитать тур:" width="24" height="24" class="iconImage">
-                <h4>Посчитать тур</h4>
-            </a>
-        </div>
     </div>
-    <div class="displayFlexCol flexGrow1">
-        <h2>Мы в соцсетях:</h2>
-        <div>
-            <a href="https://@ConfigData.Facebook" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Facebook.png" alt="Facebook" width="24" height="24" class="iconImage">
-                <h4>Facebook</h4>
-            </a>
-        </div>
-        <div>
-            <a href="https://@ConfigData.WhatsApp" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Whatsapp.png" alt="Instagram" width="24" height="24" class="iconImage">
-                <h4>WhatsApp</h4>
-            </a>
-        </div>
-        <div>
-            <a href="https://@ConfigData.Telegram" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Telegram.png" alt="Telegram" width="24" height="24" class="iconImage">
-                <h4>Telegram</h4>
-            </a>
-        </div>
-        <div>
-            <a href="https://@ConfigData.Viber" target="_blank" class="iconLink">
-                <img src="~/images/SideBar/Viber.png" alt="Viber" width="24" height="24" class="iconImage">
-                <h4>Viber</h4>
-            </a>
-        </div>
-    </div>
-    <div class="displayFlexCol flexGrow1">
-        <h2>Feedback:</h2>
-        <div>
-            <a asp-controller="About" asp-action="FeedBackForm" class="iconLink">
-                <img src="~/images/AboutPage/Feedback/Email.jpg" alt="Feedback" width="24" height="24" class="iconImage">
-                <h4>Feedback</h4>
-            </a>
-        </div>
-    </div>
+    <div class="flexGrow1">
+        
+        @await Html.PartialAsync("_FeedbackLinksPartial")
 
+    </div>
 </div>

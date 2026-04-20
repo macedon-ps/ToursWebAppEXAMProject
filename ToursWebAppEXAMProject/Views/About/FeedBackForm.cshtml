@@ -59,7 +59,7 @@
                 </div>
                 <div class="displayFlexCol">
                     <label asp-for="Question"></label>
-                    <textarea asp-for="Question" name="textArea" cols="100" rows="20" ></textarea>
+                    <textarea asp-for="Question" cols="100" rows="20" ></textarea>
                     <span asp-validation-for="Question"></span>
                 </div>
                 <div class="displayFlexCol">
@@ -87,6 +87,5 @@
    </div>
 </div>
 <script>
-    var newCKEdit = CKEDITOR.replace('textArea');
-    newCKEdit.updateElement();
+    var newCKEdit = CKEDITOR.replace('Question');
 </script>

@@ -277,6 +277,10 @@ select.languageTo{
 	.iconLink{
 		display: flex;
 	}
+	.iconLink > h4 {
+		margin-left: 1em;
+		margin-bottom: 1em;
+	}
 	.iconImage{
 		margin-right: 1em;
 	}
@@ -2337,7 +2341,8 @@ padding-top: 1em;
 	margin: 1em 0 0 1em;
 	padding: 1em;
 }
-.asidePage > div{
+.asidePage > div,
+.feedback > div {
 	display: flex;
 	margin-bottom: 0.5em;
 }
@@ -2348,11 +2353,10 @@ padding-top: 1em;
 }
 .asidePage > div > a > h3,
 .asidePage > div > a > h4 {
-	margin-left: 0.5em;
 	margin-bottom: 0;
 }
 .asidePage > h2{
-	margin-bottom: 0.5em;
+	margin-bottom: 0.2em;
 }
 .div-box{
 	padding: 15px 0;
