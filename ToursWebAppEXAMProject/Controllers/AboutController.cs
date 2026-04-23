@@ -5,22 +5,23 @@ using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.Services.Email;
 using NLog;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class AboutController : Controller
 	{
         private readonly AboutUtils _AboutUtils;
-        private readonly FileUtils _FileUtils;
+        private readonly ImageStorageService _ImageStorageService;
         private readonly FeedbackUtils _FeedbackUtils;
         private readonly TechTaskUtils _TechTaskUtils;
         private readonly EmailService _EmailService;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public AboutController(AboutUtils AboutUtils, FileUtils FileUtils, FeedbackUtils FeedbackUtils, TechTaskUtils TechTaskUtils, EmailService EmailService)
+        public AboutController(AboutUtils AboutUtils, ImageStorageService ImageStorageService, FeedbackUtils FeedbackUtils, TechTaskUtils TechTaskUtils, EmailService EmailService)
 		{
             _AboutUtils = AboutUtils;
-            _FileUtils = FileUtils;
+            _ImageStorageService = ImageStorageService;
             _FeedbackUtils = FeedbackUtils;
             _TechTaskUtils = TechTaskUtils;
             _EmailService = EmailService;
@@ -111,15 +112,15 @@ namespace ToursWebAppEXAMProject.Controllers
             return View("SuccessForDelete", deleteModel);
         }
 
-
+       
         [Authorize(Roles = "superadmin,editor")]
-        public IActionResult DeletePicture(string fullPathToFile)
+        public IActionResult DeletePicture(string relativePathToFile)
         {
-            _FileUtils.DeletePhoto(fullPathToFile);
-            _logger.Debug($"Удалена картинка по пути: {fullPathToFile}. ");
+            _ImageStorageService.DeletePhoto(relativePathToFile);
+            _logger.Debug($"Удалена картинка по пути: {relativePathToFile}. ");
 
             _logger.Trace("Переход по маршруту /About/DeletePicture.\n");
-            return View("DeletePicture", fullPathToFile);
+            return View("DeletePicture", relativePathToFile);
         }
 
 
@@ -136,7 +137,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? FeedbackImagePath)
+        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? CollectionImages, IFormFile? FeedbackImagePath)
         {
             try
             {
@@ -144,8 +145,8 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.Debug("Модель AboutPageVersion прошла валидацию. ");
                     
-                    var newModel = await _AboutUtils.SetEditAboutViewModelAndSaveAsync
-                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, FeedbackImagePath);
+                    var newModel = await _AboutUtils.SetAboutPageVersionAndSaveAsync
+                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, CollectionImages, FeedbackImagePath);
                     _logger.Debug("Модель AboutPageVersion заполнена данными из формыи успешно сохранена в БД. ");
            
                     _logger.Trace("Возвращено ../Shared/Success.cshtml\n");

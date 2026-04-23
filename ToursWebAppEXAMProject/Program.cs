@@ -45,7 +45,6 @@ builder.Services.AddTransient<TechTaskUtils>();
 builder.Services.AddTransient<SupportUtils>();
 builder.Services.AddTransient<AboutUtils>();
 builder.Services.AddTransient<FeedbackUtils>();
-builder.Services.AddTransient<FileUtils>();
 builder.Services.AddTransient<EmailService>();
 builder.Services.AddTransient<NewsUtils>();
 builder.Services.AddTransient<BlogUtils>();

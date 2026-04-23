@@ -10,14 +10,12 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<AboutPageVersion> _AboutPageVersion;
         private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
-        private readonly FileUtils _FileUtils;
         private readonly ImageStorageService _ImageStorageService;
 
-        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, FileUtils FileUtils, ImageStorageService ImageStorageService)
+        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, ImageStorageService ImageStorageService)
         {
             _AboutPageVersion = AboutPageVersion;
             _PhotoGalleryImages = PhotoGalleryImages;
-            _FileUtils = FileUtils;
             _ImageStorageService = ImageStorageService;
         }
 
@@ -104,7 +102,7 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<AboutPageVersion> SetEditAboutViewModelAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? FeedbackImageFileName)
+        public async Task<AboutPageVersion> SetAboutPageVersionAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? CollectionImagesFileName, IFormFile? FeedbackImageFileName)
         {
             // Main
             if (MainImageFileName != null)
@@ -138,6 +136,20 @@ namespace ToursWebAppEXAMProject.Utils
                 var folder = ImageFolder.About_PhotoGallery;
                 model.PhotoGalleryImagePath = await _ImageStorageService.SaveAsync(folder, PhotoGalleryImageFileName);
             }
+            // CollectionImagesFileName
+            if (CollectionImagesFileName != null) 
+            {
+                var folder = ImageFolder.About_PhotoGallery_Collection;
+                var collectionImagePath = await _ImageStorageService.SaveAsync(folder, CollectionImagesFileName);
+                
+                var photoGalleryImageModel = new PhotoGalleryImage
+                {
+                    AboutPageVersionId = model.Id,
+                    ImagePath = collectionImagePath
+                };
+                
+                _PhotoGalleryImages.SaveItem(photoGalleryImageModel, photoGalleryImageModel.Id);
+            }
             // Feedback
             if (FeedbackImageFileName != null)
             {
@@ -151,5 +163,6 @@ namespace ToursWebAppEXAMProject.Utils
 
             return model;
         }
+
     }
 }

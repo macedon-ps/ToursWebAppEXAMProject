@@ -1,4 +1,6 @@
-﻿using ToursWebAppEXAMProject.ConfigFiles;
+﻿using Microsoft.EntityFrameworkCore;
+using ToursWebAppEXAMProject.ConfigFiles;
+using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Enums;
 
 namespace ToursWebAppEXAMProject.Services.ImageStorage
@@ -6,10 +8,12 @@ namespace ToursWebAppEXAMProject.Services.ImageStorage
     public class ImageStorageService
     {
         private readonly IWebHostEnvironment _env;
+        private readonly TourFirmaDBContext _context;
 
-        public ImageStorageService(IWebHostEnvironment env)
+        public ImageStorageService(IWebHostEnvironment env, TourFirmaDBContext context)
         {
             _env = env;
+            _context = context;
         }
 
         /// <summary>
@@ -53,6 +57,35 @@ namespace ToursWebAppEXAMProject.Services.ImageStorage
 
             return "/" + Path.Combine(relativeFolder, fileName)
                             .Replace("\\", "/");
+        }
+
+        public void DeletePhoto(string relativePathToFile)
+        {
+            if (string.IsNullOrEmpty(relativePathToFile))
+                return;
+
+            // Убираем начальный '/'
+            var relativePath = relativePathToFile.TrimStart('/');
+
+            string fullPath = Path.Combine(
+                _env.WebRootPath,
+                relativePath
+            );
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+
+            var image = _context.PhotoGalleryImages
+                           .FirstOrDefault(x =>
+                x.ImagePath == "/" + relativePath);
+
+            if (image != null)
+            {
+                _context.PhotoGalleryImages.Remove(image);
+                _context.SaveChanges();
+            }
         }
     }
 }
