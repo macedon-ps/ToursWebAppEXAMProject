@@ -4,6 +4,7 @@ using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.ViewModels;
 using NLog;
+using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Repositories
 {
@@ -118,5 +119,15 @@ namespace ToursWebAppEXAMProject.Repositories
                 _logger.Error($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName} не осуществлено.\nКод ошибки: {ex.Message}");
             }
 		}
-	}
+
+        public TechTaskPage GetPageWithTasks(string pageName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save(TechTaskPage techTasks)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
-using ToursWebAppEXAMProject.ConfigFiles;
-using ToursWebAppEXAMProject.Services.Hubs;
-using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.Services.Hubs;
 using ToursWebAppEXAMProject.Services.ImageStorage;
+using ToursWebAppEXAMProject.Services.TechTasks;
+using ToursWebAppEXAMProject.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,7 @@ builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<IBaseInterface<AboutPageVersion>, BaseRepository<AboutPageVersion>>();
 builder.Services.AddTransient<IBaseInterface<PhotoGalleryImage>, BaseRepository<PhotoGalleryImage>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
+builder.Services.AddTransient<ITechTaskService, TechTaskService>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<SearchUtils>();
 builder.Services.AddTransient<TechTaskUtils>();
