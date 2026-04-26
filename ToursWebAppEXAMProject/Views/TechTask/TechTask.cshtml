@@ -1,0 +1,69 @@
+﻿@model TechTaskPageViewModel
+
+@{
+    ViewData["Title"] = $"ТЗ для страницы {Model.PageName}";
+}
+
+<div class="homePage">
+
+    <div class="homeHeader">
+
+        <h1 class="title">
+            Техническое задание для страницы:
+            <strong>@Model.PageName</strong>
+        </h1>
+
+        <h4 class="title">
+            Вход ограничен ролями "admin" и "superadmin"
+        </h4>
+
+        <hr class="horizontal-line" />
+
+        <div class="text-center">
+
+            <form asp-controller="TechTask" asp-action="Page" method="post">
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="PageName" />
+                <br />
+
+                <!-- ШКАЛА ПРОГРЕССА -->
+                <label>Прогресс выполнения технического задания:</label>
+                <br />
+
+                <progress min="0" max="100" value="@Model.Progress"></progress>
+
+                <span>@Model.Progress%</span>
+                <br /><br />
+
+                <!-- СПИСОК ЗАДАНИЙ -->
+                @for (int i = 0; i < Model.Tasks.Count; i++)
+                {
+                    <div class="techTaskItem">
+
+                        <input type="hidden" asp-for="Tasks[i].Id" />
+                        <input type="hidden" asp-for="Tasks[i].OrderNumber" />
+                        <input type="hidden" asp-for="Tasks[i].TechTaskPageId" />
+
+                        <!-- Checkbox выполнения -->
+                        <input type="checkbox" asp-for="Tasks[i].IsCompleted" class="task-checkbox" />
+
+                        <!-- Номер задания -->
+                        <strong>@(i + 1).</strong>
+
+                        <!-- Текст задания -->
+                        <span class="task-text">
+                            @Html.Raw(Model.Tasks[i].Description)
+                        </span>
+
+                    </div>
+                    <br />
+                }
+                <!-- КНОПКА СОХРАНИТЬ -->
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+
+            </form>
+
+        </div>
+    </div>
+</div>
