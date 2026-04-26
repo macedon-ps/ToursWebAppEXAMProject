@@ -26,14 +26,16 @@ namespace ToursWebAppEXAMProject.Controllers
 
         // POST
         [HttpPost]
-        public IActionResult Page(TechTaskPageViewModel model)
+        public IActionResult Page(TechTaskPageViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                
+                var model = _service.GetPage(viewModel.PageName);
                 _service.Save(model);
             }
 
-            return View("TechTask", model);
+            return View("TechTask", viewModel);
         }
     }
 }

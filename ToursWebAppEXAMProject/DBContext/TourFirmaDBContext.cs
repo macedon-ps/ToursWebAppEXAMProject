@@ -27,6 +27,8 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Saller> Sallers { get; set; } = null!;
 		public virtual DbSet<Tour> Tours { get; set; } = null!;
 		public virtual DbSet<TechTaskViewModel> TechTaskViewModels { get; set; } = null!;
+		public virtual DbSet<TechTaskPage> TechTaskPages { get; set; } = null!;
+		public virtual DbSet<TechTaskItem> TechTaskItems { get; set; } = null!;
 		public virtual DbSet<AboutPageVersion> AboutPageVersions { get; set; } = null!;
 		public virtual DbSet<PhotoGalleryImage> PhotoGalleryImages { get; set; } = null!;
 
