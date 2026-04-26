@@ -15,27 +15,33 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// </summary>
 		double TechTasksCount { get; set; }
 
+
         /// <summary>
         /// Количество выполненных показателей технического задания
         /// </summary>
         double TechTasksTrueCount { get; set; }
+
 
 		/// <summary>
 		/// Прогресс выполнения технического задания, в %
 		/// </summary>
 		double TechTasksProgress { get; set; }
 
+
 		/// <summary>
 		/// Контекс БД
 		/// </summary>
-		private readonly TourFirmaDBContext context;
+		private readonly TourFirmaDBContext _context;
+
 
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public EditTechTasksRepository(TourFirmaDBContext _context)
+
+        public EditTechTasksRepository(TourFirmaDBContext context)
 		{
-			this.context = _context;
+			_context = context;
 		}
+
 
 		/// <summary>
 		/// Метод вывода показателей технического задания и прогресса его выполнения
@@ -48,7 +54,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			
 			try
 			{
-				var techTasksOfPage = context.TechTaskViewModels.FirstOrDefault(p => p.PageName == pageName);
+				var techTasksOfPage = _context.TechTaskViewModels.FirstOrDefault(p => p.PageName == pageName);
 
 				if (techTasksOfPage == null)
 				{
@@ -70,6 +76,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				return new TechTaskViewModel();
 			}
 		}
+
 
 		/// <summary>
 		/// Метод расчета прогресса выполнения технического задания
@@ -93,6 +100,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			return TechTasksProgress;
 		}
 
+
 		public void SaveProgressTechTasks(TechTaskViewModel techTasks)
 		{
             _logger.Debug("Произведено подключение к БД. ");
@@ -109,8 +117,8 @@ namespace ToursWebAppEXAMProject.Repositories
 				{
                     _logger.Debug($"Обновление показателей выполнения ТЗ для страницы {techTasks.PageName}", NLogsModeEnum.Debug);
                     
-					context.Entry(techTasks).State = EntityState.Modified;
-					context.SaveChanges();
+					_context.Entry(techTasks).State = EntityState.Modified;
+					_context.SaveChanges();
 					return;
 				}
 			}
@@ -120,14 +128,46 @@ namespace ToursWebAppEXAMProject.Repositories
             }
 		}
 
+
         public TechTaskPage GetPageWithTasks(string pageName)
         {
-            throw new NotImplementedException();
+            var page = _context.TechTaskPages
+				.Include(p => p.Tasks)
+				.FirstOrDefault(p => p.PageName == pageName);
+
+            if (page == null) throw new Exception($"Страница ТЗ '{pageName}' не найдена.");
+
+            // сортировка заданий
+            page.Tasks = page.Tasks
+                .OrderBy(t => t.OrderNumber)
+                .ToList();
+
+            return page;
         }
+
 
         public void Save(TechTaskPage techTasks)
         {
-            throw new NotImplementedException();
+            // Получаем страницу из БД
+            var pageFromDb = _context.TechTaskPages
+                .Include(p => p.Tasks)
+                .FirstOrDefault(p => p.Id == techTasks.Id);
+
+            if (pageFromDb == null) throw new Exception($"Страница ТЗ с Id={techTasks.Id} не найдена.");
+
+            // Обновляем состояние заданий
+            foreach (var task in techTasks.Tasks)
+            {
+                var taskFromDb = pageFromDb.Tasks
+									.FirstOrDefault(t => t.Id == task.Id);
+
+                if (taskFromDb != null)
+                {
+                    taskFromDb.IsCompleted = task.IsCompleted;
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }

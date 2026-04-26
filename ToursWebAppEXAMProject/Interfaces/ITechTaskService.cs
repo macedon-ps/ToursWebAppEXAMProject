@@ -1,4 +1,5 @@
 ﻿using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Interfaces
 {
@@ -6,8 +7,13 @@ namespace ToursWebAppEXAMProject.Interfaces
     {
         TechTaskPage GetPage(string pageName);
 
+
         void Save(TechTaskPage page);
 
+
         double CalculateProgress(TechTaskPage page);
+
+
+        TechTaskPageViewModel GetPageViewModel(string pageName);
     }
 }

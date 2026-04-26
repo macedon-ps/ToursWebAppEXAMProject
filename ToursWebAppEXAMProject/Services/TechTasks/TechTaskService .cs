@@ -1,5 +1,6 @@
 ﻿using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Services.TechTasks
 {
@@ -40,6 +41,30 @@ namespace ToursWebAppEXAMProject.Services.TechTasks
             progress = Math.Round((double)completed / page.Tasks.Count * 100);
 
             return progress;
+        }
+
+        public TechTaskPageViewModel GetPageViewModel(string pageName)
+        {
+            var page = GetPage(pageName);
+            
+            var viewModel = new TechTaskPageViewModel
+            {
+                Id = page.Id,
+                PageName = page.PageName,
+                
+                Tasks = page.Tasks.Select(t => new TechTaskItem
+                {
+                    Id = t.Id,
+                    OrderNumber = t.OrderNumber,
+                    TechTaskPageId = t.TechTaskPageId,
+                    Description = t.Description,
+                    IsCompleted = t.IsCompleted
+                }).ToList(),
+
+                Progress = CalculateProgress(page),
+            };
+
+            return viewModel;
         }
     }
 }

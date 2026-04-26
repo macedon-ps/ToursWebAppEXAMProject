@@ -8,18 +8,21 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly ITechTaskService _service;
 
+
         public TechTaskController(ITechTaskService service)
         {
             _service = service;
         }
 
+
         // GET
         public IActionResult Page(string pageName)
         {
-            var model = _service.GetPage(pageName);
+            var viewModel = _service.GetPageViewModel(pageName);
 
-            return View("TechTask", model);
+            return View("TechTask", viewModel);
         }
+
 
         // POST
         [HttpPost]
