@@ -300,7 +300,176 @@ namespace ToursWebAppEXAMProject.DBContext
 					.HasDefaultValueSql("('страница')");
 			});
 
-			OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<TechTaskPage>().HasData(
+
+				new TechTaskPage
+				{
+					Id = 1,
+					PageName = "Home"
+				},
+
+				new TechTaskPage
+				{
+					Id = 2,
+					PageName = "Search"
+				},
+
+				new TechTaskPage
+				{
+					Id = 3,
+					PageName = "Edit"
+				},
+
+				new TechTaskPage
+				{
+					Id = 4,
+					PageName = "Support"
+				},
+
+				new TechTaskPage
+				{
+					Id = 5,
+					PageName = "About"
+				},
+
+				new TechTaskPage
+				{
+					Id = 6,
+					PageName = "Common"
+				}
+			);
+
+            modelBuilder.Entity<TechTaskItem>().HasData(
+
+				new TechTaskItem
+				{
+					Id = 1,
+					TechTaskPageId = 1,
+					OrderNumber = 1,
+					IsCompleted = false,
+
+					Description =
+			@"Данная страница д.содержать:
+			<br /><strong>блок навигационных кнопок:</strong>
+			""Новости со всего мира"", ""Блоги о туризме"", ""ТЗ для Home""
+			<br /><strong>большую пейзажную фоновую картинку</strong>
+			(м.б. море, тропический остров с пальмами)
+			<br /><strong>списки новостей и блогов о туризме с вертикальными скроллами</strong>,
+			которые загружаются при открытии страницы вертикальными полосами слева и справа;"
+				},
+
+				new TechTaskItem
+				{
+					Id = 2,
+					TechTaskPageId = 1,
+					OrderNumber = 2,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница со списком новостей</strong>,
+			которая открывается по нажатию на кнопку
+			<strong>""Новости со всего мира""</strong>.
+			<br />В списке новостей <strong>для каждой новости</strong>
+			указываются:
+			титульная картинка,
+			название новости,
+			краткое описание,
+			полное описание,
+			ссылка на полное описание.
+			<br />При нажатии на ссылку
+			<strong>""Подробнее""</strong>
+			открывается новость с:
+			титульной картинкой,
+			названием,
+			полным описанием,
+			id новости и датой сохранения."
+				},
+
+				new TechTaskItem
+				{
+					Id = 3,
+					TechTaskPageId = 1,
+					OrderNumber = 3,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница со списком блогов</strong>,
+			которая открывается по нажатию на кнопку
+			<strong>""Блоги о туризме""</strong>.
+			<br />В списке блогов <strong>для каждого блога</strong>
+			указываются:
+			титульная картинка,
+			название блога,
+			краткое описание,
+			ссылка на полное описание.
+			<br />При нажатии на ссылку
+			<strong>""Подробнее""</strong>
+			открывается блог с:
+			титульной картинкой,
+			названием,
+			полным описанием,
+			сообщениями блоггеров,
+			id блога и датой сохранения."
+				},
+
+				new TechTaskItem
+				{
+					Id = 4,
+					TechTaskPageId = 1,
+					OrderNumber = 4,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована
+			<strong>возможность создания текстовых сообщений блоггеров,
+			редактирования и удаления со стороны редактора сайта</strong>.
+			<br />Д.б. реализован
+			<strong>механизм получения, пересылки и сохранения текстовых сообщений блоггеров</strong>."
+				},
+
+				new TechTaskItem
+				{
+					Id = 5,
+					TechTaskPageId = 1,
+					OrderNumber = 5,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована
+			<strong>функциональность оценивания прогресса выполнения технических задач
+			для каждой страницы</strong>.
+			<br />По нажатию на кнопки:
+			<strong>""ТЗ для Home""</strong>,
+			<strong>""ТЗ для Search""</strong>,
+			<strong>""ТЗ для Admin""</strong>,
+			<strong>""ТЗ для Support""</strong>,
+			<strong>""ТЗ для About""</strong>
+			открываются соответствующие страницы
+			со шкалой прогресса
+			и возможностью редактирования и сохранения выполненных ТЗ."
+				},
+
+				new TechTaskItem
+				{
+					Id = 6,
+					TechTaskPageId = 1,
+					OrderNumber = 6,
+					IsCompleted = false,
+
+					Description =
+			@"Дополнительно:
+			<br />М.б. создан
+			<strong>дополнительный функционал:</strong>
+			<strong>""последние прочитанные новости/блоги""</strong>,
+			<strong>""статистика прочтения новостей/
+			написания сообщений в блогах""</strong>,
+			<strong>""чаще всего читают новости/блоги""</strong>
+			и т.д."
+				}
+
+			);
+
+            OnModelCreatingPartial(modelBuilder);
 		}
 
 		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
