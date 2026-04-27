@@ -5,14 +5,6 @@ namespace ToursWebAppEXAMProject.Interfaces
 {
 	public interface IEditTechTaskInterface
 	{
-        // старые методы
-        TechTaskViewModel GetTechTasksForPage(string pageName);
-
-
-        void SaveProgressTechTasks(TechTaskViewModel techTasks);
-
-
-        // новые методы
         TechTaskPage GetPageWithTasks(string pageName);
 
 

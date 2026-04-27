@@ -26,7 +26,6 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<Product> Products { get; set; } = null!;
 		public virtual DbSet<Saller> Sallers { get; set; } = null!;
 		public virtual DbSet<Tour> Tours { get; set; } = null!;
-		public virtual DbSet<TechTaskViewModel> TechTaskViewModels { get; set; } = null!;
 		public virtual DbSet<TechTaskPage> TechTaskPages { get; set; } = null!;
 		public virtual DbSet<TechTaskItem> TechTaskItems { get; set; } = null!;
 		public virtual DbSet<AboutPageVersion> AboutPageVersions { get; set; } = null!;
@@ -291,16 +290,7 @@ namespace ToursWebAppEXAMProject.DBContext
                     .HasConstraintName("FK__Tour__ProductId__3F466844");
             });
 
-			modelBuilder.Entity<TechTaskViewModel>(entity =>
-			{ 
-				entity.ToTable("TechTaskViewModel");
-
-				entity.Property(e => e.PageName)
-					.HasMaxLength(10)
-					.HasDefaultValueSql("('страница')");
-			});
-
-            modelBuilder.Entity<TechTaskPage>().HasData(
+			modelBuilder.Entity<TechTaskPage>().HasData(
 
 				new TechTaskPage
 				{

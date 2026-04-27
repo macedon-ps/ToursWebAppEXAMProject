@@ -9,13 +9,11 @@ namespace ToursWebAppEXAMProject.Controllers
     public class SearchController: Controller
 	{
 		private readonly SearchUtils _SearchUtils;
-        private readonly TechTaskUtils _TechTaskUtils;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public SearchController(SearchUtils searchUtils, TechTaskUtils techTaskUtils)
+        public SearchController(SearchUtils searchUtils)
 		{
 			_SearchUtils = searchUtils;
-            _TechTaskUtils = techTaskUtils;
         }
 
         /// <summary>
@@ -73,56 +71,5 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
         }
-		       
-		/// <summary>
-        /// Метод вывода ТЗ и прогресса его выполнения для страницы Search
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Roles = "superadmin,admin")]
-        [HttpGet]
-		public IActionResult TechTaskSearch()
-		{
-            var model = _TechTaskUtils.GetTechTaskForPage("Search");
-            _logger.Debug("Получена вью-модель TechTaskViewModel. ");
-
-            _logger.Trace("Переход по маршруту Search/TechTaskSearch.\n");
-            return View(model);
-		}
-
-        /// <summary>
-        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы Search
-        /// </summary>
-        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнения</param>
-        /// <returns></returns>
-        [Authorize(Roles = "superadmin,admin")]
-        [HttpPost]
-		public IActionResult TechTaskSearch(TechTaskViewModel viewModel)
-		{
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _logger.Debug("Вью-модель TechTaskViewModel прошла валидацию. ");
-
-                    _TechTaskUtils.SetTechTaskProgressAndSave(viewModel);
-                    _logger.Debug("Вью-модель TechTaskViewModel заполнена данными и сохранена. ");
-
-                    _logger.Trace("Возвращено /Search/TechTaskHome.cshtml\n");
-                    return View(viewModel);
-                }
-
-                _logger.Warn("Вью-модель TechTaskViewModel не прошла валидацию. Данные модели не сохранены. ");
-
-                _logger.Trace("Возвращено /Search/TechTaskHome.cshtml\n");
-                return View(viewModel);
-            }
-            catch (Exception error)
-            {
-                _logger.Error(error.Message);
-
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
-            }
- 		}
     }
 }

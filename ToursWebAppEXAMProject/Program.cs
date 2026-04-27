@@ -43,7 +43,6 @@ builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>()
 builder.Services.AddTransient<ITechTaskService, TechTaskService>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
 builder.Services.AddTransient<SearchUtils>();
-builder.Services.AddTransient<TechTaskUtils>();
 builder.Services.AddTransient<SupportUtils>();
 builder.Services.AddTransient<AboutUtils>();
 builder.Services.AddTransient<FeedbackUtils>();

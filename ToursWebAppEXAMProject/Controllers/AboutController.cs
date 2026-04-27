@@ -14,16 +14,14 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly AboutUtils _AboutUtils;
         private readonly ImageStorageService _ImageStorageService;
         private readonly FeedbackUtils _FeedbackUtils;
-        private readonly TechTaskUtils _TechTaskUtils;
         private readonly EmailService _EmailService;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public AboutController(AboutUtils AboutUtils, ImageStorageService ImageStorageService, FeedbackUtils FeedbackUtils, TechTaskUtils TechTaskUtils, EmailService EmailService)
+        public AboutController(AboutUtils AboutUtils, ImageStorageService ImageStorageService, FeedbackUtils FeedbackUtils, EmailService EmailService)
 		{
             _AboutUtils = AboutUtils;
             _ImageStorageService = ImageStorageService;
             _FeedbackUtils = FeedbackUtils;
-            _TechTaskUtils = TechTaskUtils;
             _EmailService = EmailService;
         }
         
@@ -294,59 +292,5 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("Error", new ErrorViewModel(error.Message));
             }
 		}
-
-
-        /// <summary>
-        /// Метод вывода ТЗ и прогресса его выполнения для страницы About
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Roles = "superadmin,admin")]
-        public IActionResult TechTaskAbout()
-		{
-            var viewModel = _TechTaskUtils.GetTechTaskForPage("About");
-            _logger.Debug("Получена вью-модель TechTaskViewModel. ");
-
-            _logger.Trace("Переход по маршруту About/TechTaskSupport.\n");
-            return View(viewModel);
-		}
-
-
-        /// <summary>
-        /// Метод редактирования и сохранения данных о прогресса его выполнения ТЗ для страницы About
-        /// </summary>
-        /// <param name="model">Данные с формы для ТЗ и прогресса его выполнени</param>
-        /// <returns></returns>
-        [Authorize(Roles = "superadmin,admin")]
-        [HttpPost]
-		public IActionResult TechTaskAbout(TechTaskViewModel viewModel)
-		{
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _logger.Debug("Вью-модель TechTaskViewModel прошла валидацию. ");
-
-                    _TechTaskUtils.SetTechTaskProgressAndSave(viewModel);
-                    _logger.Debug("Вью-модель TechTaskViewModel заполнена данными и сохранена. ");
-
-                    _logger.Trace("Возвращено /About/TechTaskHome.cshtml\n");
-                    return View(viewModel);
-                }
-                else
-                {
-                    _logger.Warn("Вью-модель TechTaskViewModel не прошла валидацию. Данные модели не сохранены. ");
-
-                    _logger.Trace("Возвращено /About/TechTaskHome.cshtml\n");
-                    return View(viewModel);
-                }
-            }
-            catch (Exception error)
-            {
-                _logger.Error(error.Message);
-
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
-            }
- 		}
 	}
 }
