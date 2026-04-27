@@ -9,6 +9,6 @@
     }
     @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="About" asp-action="TechTaskAbout">ТЗ для About</a>
+        <a asp-controller="TechTask" asp-action="Page" asp-route-pageName="About">ТЗ для About</a>
     }
 </div>

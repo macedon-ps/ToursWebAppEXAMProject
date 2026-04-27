@@ -5,6 +5,6 @@
     <a asp-controller="Cities" asp-action="GetAllCities">Все города</a>
     @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="Search" asp-action="TechTaskSearch">ТЗ для Search</a>
+        <a asp-controller="TechTask" asp-action="Page" asp-route-pageName="Search">ТЗ для Search</a>
     }
 </div>

@@ -469,6 +469,340 @@ namespace ToursWebAppEXAMProject.DBContext
 
 			);
 
+            modelBuilder.Entity<TechTaskItem>().HasData(
+
+				new TechTaskItem
+				{
+					Id = 7,
+					TechTaskPageId = 2,
+					OrderNumber = 1,
+					IsCompleted = false,
+
+					Description =
+			@"Данная страница д.содержать:
+							<br /><strong>блок навигационных кнопок: </strong> ""Поиск туров"", ""Все турпродуктв"", ""Все страны"", ""Все города"", ""ТЗ для Search""
+							< br />< strong > меню поиска:</ strong > страны,
+					города,
+					дат тура,
+					количества туристов и кнопка ""Найти тур""
+							< br />< strong > информативное меню:</ strong > карта местности и описания страны,
+					города,
+					достопримечательностей
+							< br />< strong > галерея с фото:</ strong > фотографии страны,
+					городов,
+					достопримечательностей
+
+							< br /> По нажатию на кнопку < strong > ""Поиск туров"" или ""Найти тур"" </ strong > осуществляется < strong > функционал поиска турпродукта по заданным параметрам поиска </ strong > и выводится < strong > список всех найденных туристических продуктов </ strong > с вертикальным скроллом"
+				},
+
+				new TechTaskItem
+				{
+					Id = 8,
+					TechTaskPageId = 2,
+					OrderNumber = 2,
+					IsCompleted = false,
+
+					Description =
+			@"<strong>Меню поиска</strong> д.содержать: 
+							<br/><strong>выпадающий список стран</strong> (элемент radiobutton - выбор только 1 страны);
+							<br/><strong>выпадающие календари</strong> с <strong>датами начала и окончания тура</strong>);
+							<br/><strong>выпадающий список - количество дней/ночей</strong> (элемент select - выбор 1 или больше вариантов);
+							<br/><strong>выпадающий список людей</strong> (взрослых) + возможность добавить детей (количество и возраст детей) (по умолчанию - 2 взрослых, без детей)
+							<br/><strong>кнопка ""Найти тур""</strong>;
+							< br /> Д.б.организован < strong > поиск туристических продуктов по заданным параметрам </ strong > "
+				},
+
+				new TechTaskItem
+				{
+					Id = 9,
+					TechTaskPageId = 2,
+					OrderNumber = 3,
+					IsCompleted = false,
+
+					Description =
+			@"<strong>Информативное меню</strong> под меню поиска, д. содержать:
+							<br/><strong>раскрытый список городов</strong> данной страны;
+							<br />(элемент select - выбор 1 или больше городов) (расположено - под страной) (при выборе страны - появляются города этой страны);
+							<br/><strong>д.б. карта местности</strong> (рядом с городами):
+							<br/><strong>описание:</strong>
+							<br />при выборе страны - в верхней трети - появляется <strong>описание о стране</strong>
+							<br />при выборе города - в средней трети - появляется <strong>описание о городе</strong>
+							<br />а в нижней трети - появляется <strong>описание о достопримечательности</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 10,
+					TechTaskPageId = 2,
+					OrderNumber = 4,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована <strong>возможность просматривать карту страны</strong>, с нанесенными на нее городами и турпродуктами
+							"
+				},
+
+				new TechTaskItem
+				{
+					Id = 11,
+					TechTaskPageId = 2,
+					OrderNumber = 5,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована <strong>галерея с фото страны, городов и достопримечательностей</strong>
+							<br />выводятся все фото, кот. есть в базе; если их много и они не помещаются, то появляется горизонт. скроллинг<br/>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 12,
+					TechTaskPageId = 2,
+					OrderNumber = 6,
+					IsCompleted = false,
+
+					Description =
+			@"Дополнительно:
+							<br />м.б. реализована <strong>галерея с фото из гостинниц, кафе, других мест</strong>"
+				}
+
+			);
+
+            modelBuilder.Entity<TechTaskItem>().HasData(
+
+				new TechTaskItem
+				{
+					Id = 13,
+					TechTaskPageId = 3,
+					OrderNumber = 1,
+					IsCompleted = false,
+
+					Description =
+			@"Данная страница д. содержать:
+							<br/><strong>блок навигационных кнопок: </strong> ""Редактировать новости"", ""Редактировать блоги"", ""Редактировать турпродукты"", ""ТЗ для Edit"";
+							< br />< strong > общее меню поиска сущностей(новостей / блогов / турпродуктов) по их полному названию / или по ключевому слову </ strong > из названия сущности для выборки из БД;
+							< br />< strong > страницу со списком выбранных сущностей </ strong >,
+					отвечающих критериям поиска."
+				},
+
+				new TechTaskItem
+				{
+					Id = 14,
+					TechTaskPageId = 3,
+					OrderNumber = 2,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница создания, редактирования и удаления новости</strong>, ее названия, краткого и полного описания, пути к титульной картинке"
+				},
+
+				new TechTaskItem
+				{
+					Id = 15,
+					TechTaskPageId = 3,
+					OrderNumber = 3,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница создания, редактирования и удаления блога</strong>, его названия, краткого и полного описания, пути к титульной картинке"
+				},
+
+				new TechTaskItem
+				{
+					Id = 16,
+					TechTaskPageId = 3,
+					OrderNumber = 4,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница создания, редактирования и удаления туристического продукта</strong>, его названия, краткого и полного описания, пути к титульной картинке"
+				},
+
+				new TechTaskItem
+				{
+					Id = 17,
+					TechTaskPageId = 3,
+					OrderNumber = 5,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. организован <strong>доступ для входа на страницу - для редактирования данных БД</strong> - только для сотрудников турфирмы, у кот. <strong> роль ""superadmin"" илм ""editor""</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 18,
+					TechTaskPageId = 3,
+					OrderNumber = 6,
+					IsCompleted = false,
+
+					Description =
+			@"Дополнительно:
+							<br />М.б. созданы <strong>3 роли с разным доступом: </strong>
+							<br />М.б. создана <strong>страница создания, редактирования и удаления страны</strong>, ее названия, краткого и полного описания, пути к титульной картинке
+							<br />М.б. создана <strong>страница создания, редактирования и удаления города</strong>, его названия, краткого и полного описания, пути к титульной картинке"
+				}
+
+			);
+
+            modelBuilder.Entity<TechTaskItem>().HasData(
+
+				new TechTaskItem
+				{
+					Id = 19,
+					TechTaskPageId = 4,
+					OrderNumber = 1,
+					IsCompleted = false,
+
+					Description =
+			@"Данная страница д. содержать:
+							<br /><strong>блок навигационных кнопок:</strong> ""Перевод текста"", ""Карта"" или ""Прогноз погоды"", ""ТЗ для Support"";
+							< br /> по нажатию на кнопку < strong > ""Перевод текста"" </ strong > -раскрывается область,
+					в кот.слева - текст,
+					кот.
+							н.перевести,
+					а справа - перевод на иностр.язык
+							< br /> по нажатию на кнопку < strong > ""Карта"" </ strong > -раскрывается область,
+					в кот.появляется карта данной местности
+							< br /> по нажатию на кнопку < strong > ""Прогноз погоды"" </ strong > -раскрывается область,
+					в кот.появляется прогноз погоды для данной местности"
+				},
+
+				new TechTaskItem
+				{
+					Id = 20,
+					TechTaskPageId = 4,
+					OrderNumber = 2,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница с возможностью перевода текстов на иностранный язык</strong> с использованием <strong>Google Translate API</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 21,
+					TechTaskPageId = 4,
+					OrderNumber = 3,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. создана <strong>страница с выводимой картой местности</strong>, с использованием <strong>Google Map API</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 22,
+					TechTaskPageId = 4,
+					OrderNumber = 4,
+					IsCompleted = false,
+
+					Description =
+			@"М.б. создана <strong>страница с прогнозом погоды для данной местности</strong>, с использованием <strong>Open Weather API</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 23,
+					TechTaskPageId = 4,
+					OrderNumber = 5,
+					IsCompleted = false,
+
+					Description =
+			@"М.б. создана <strong>страница с информацией о странах, об их географическом положении, об их достопримечательностях</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 24,
+					TechTaskPageId = 4,
+					OrderNumber = 6,
+					IsCompleted = false,
+
+					Description =
+			@"Дополнительно:
+							<br />М.б. создана <strong>страница с информацией о странах, об их истории, политическом устройстве, праве, традициях и обычаях местного населения, об объектах сферы гостеприимства (гостинницы, кафе и т.д.)</strong>"
+				}
+
+			);
+
+            modelBuilder.Entity<TechTaskItem>().HasData(
+
+				new TechTaskItem
+				{
+					Id = 25,
+					TechTaskPageId = 5,
+					OrderNumber = 1,
+					IsCompleted = false,
+
+					Description =
+			@"Данная страница д. содержать:
+							<br/><strong>блок навигационных кнопок:</strong> ""Наши реквизиты"", ""Режим работы"", ""Фотогаллерея"", ""Обратная связь"", ""Edit AboutPage"", ""ТЗ для About""
+							< br />< strong > блок рекизитов тур.фирмы </ strong >
+							< br />< strong > блок с информацией о режиме работы турфирмы </ strong >
+							< br />< strong > блок с фотографиями путешествий по странам мира </ strong > "
+				},
+
+				new TechTaskItem
+				{
+					Id = 26,
+					TechTaskPageId = 5,
+					OrderNumber = 2,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. <strong>страница для создания, редактирования и удаления разных версий страницы About</strong>.
+							<br />Д.б. организован <strong>доступ к данной функциональности по ролям ""superadmin"", ""editor""</strong>"
+				},
+
+				new TechTaskItem
+				{
+					Id = 27,
+					TechTaskPageId = 5,
+					OrderNumber = 3,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. <strong>страница с формой обратной связи с клиентами туристической фирмы</strong>
+							<br />Д.б. реализован <strong>функционал создания, отправки, сохранения вопросов от клиентов и просмотра  ответов на них от туристической фирмы</strong> (+ для боковой панели)"
+				},
+
+				new TechTaskItem
+				{
+					Id = 28,
+					TechTaskPageId = 5,
+					OrderNumber = 4,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована возможность <strong>звонить из приложения и отправлять сообщения по email</strong> (+ для боковой панели)"
+				},
+
+				new TechTaskItem
+				{
+					Id = 29,
+					TechTaskPageId = 5,
+					OrderNumber = 5,
+					IsCompleted = false,
+
+					Description =
+			@"Д.б. реализована возможность <strong>общения с клиентами через социальные сети Facebook, WhatsApp, Telegram, Viber</strong> (+ для боковой панели)"
+				},
+
+				new TechTaskItem
+				{
+					Id = 30,
+					TechTaskPageId = 5,
+					OrderNumber = 6,
+					IsCompleted = false,
+
+					Description =
+			@"Дополнительно:
+							<br />М.б. реализован <strong>функционал подсчета стоимости поездки</strong> (+ для боковой панели)"
+				}
+
+			);
+
             OnModelCreatingPartial(modelBuilder);
 		}
 

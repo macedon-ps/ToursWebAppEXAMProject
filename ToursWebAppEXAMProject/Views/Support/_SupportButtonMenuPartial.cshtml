@@ -5,6 +5,6 @@
     <a asp-controller="Support" asp-action="GetMap2">Карта Херсона / КА "Шаг"</a>
     @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="Support" asp-action="TechTaskSupport">ТЗ для Support</a>
+        <a asp-controller="TechTask" asp-action="Page" asp-route-pageName="Support">ТЗ для Support</a>
     }
 </div>
