@@ -8,6 +8,9 @@ namespace ToursWebAppEXAMProject.Interfaces
         TechTaskPage GetPage(string pageName);
 
 
+        TechTaskPage GetPageFromViewModel(TechTaskPageViewModel viewModel);
+
+
         void Save(TechTaskPage page);
 
 

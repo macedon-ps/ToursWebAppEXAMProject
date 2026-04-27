@@ -19,6 +19,27 @@ namespace ToursWebAppEXAMProject.Services.TechTasks
         }
 
 
+        public TechTaskPage GetPageFromViewModel(TechTaskPageViewModel viewModel)
+        {
+            
+            var page = new TechTaskPage
+            {
+                Id = viewModel.Id,
+                PageName = viewModel.PageName,
+                Tasks = viewModel.Tasks.Select(t => new TechTaskItem
+                {
+                    Id = t.Id,
+                    OrderNumber = t.OrderNumber,
+                    TechTaskPageId = t.TechTaskPageId,
+                    Description = t.Description,
+                    IsCompleted = t.IsCompleted
+                }).ToList()
+            };
+
+            return page;
+        }
+
+
         public void Save(TechTaskPage page)
         {
             CalculateProgress(page);
