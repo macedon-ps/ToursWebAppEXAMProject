@@ -21,7 +21,7 @@
 
         <div class="text-center">
 
-            <form asp-controller="TechTask" asp-action="Page" method="post">
+            <form asp-controller="TechTask" asp-action="Page" asp-route-pageName="@Model.PageName" method="post">
 
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="PageName" />
@@ -44,6 +44,7 @@
                         <input type="hidden" asp-for="Tasks[i].Id" />
                         <input type="hidden" asp-for="Tasks[i].OrderNumber" />
                         <input type="hidden" asp-for="Tasks[i].TechTaskPageId" />
+                        <input type="hidden" asp-for="Tasks[i].Description" />
 
                         <!-- Checkbox выполнения -->
                         <input type="checkbox" asp-for="Tasks[i].IsCompleted" class="task-checkbox" />

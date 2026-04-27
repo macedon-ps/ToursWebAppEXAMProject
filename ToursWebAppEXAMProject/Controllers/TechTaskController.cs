@@ -31,7 +31,8 @@ namespace ToursWebAppEXAMProject.Controllers
             if (ModelState.IsValid)
             {
                 
-                var model = _service.GetPage(viewModel.PageName);
+                var model = _service.GetPageFromViewModel(viewModel);
+                viewModel.Progress = _service.CalculateProgress(model);
                 _service.Save(model);
             }
 

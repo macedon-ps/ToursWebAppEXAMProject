@@ -3,6 +3,6 @@
     <a asp-controller="Blogs" asp-action="GetAllBlogs">Блоги о туризме</a>
     @if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
-        <a asp-controller="Home" asp-action="TechTaskHome">ТЗ для Home</a>
+        <a asp-controller="TechTask" asp-action="Page" asp-route-pageName="Home">ТЗ для Home</a>
     }
 </div>
