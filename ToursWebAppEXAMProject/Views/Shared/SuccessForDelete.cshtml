@@ -6,7 +6,7 @@
     
     @if (Model is AboutPageVersion)
     {
-        @await Html.PartialAsync("../About/_AboutButtonMenuPartial")
+        @await Html.PartialAsync("../About/_AboutButtonMenuPartial");
 
         <div class="editHeader">
 
@@ -31,7 +31,7 @@
     }
     @if (Model is Blog || Model is City || Model is Country || Model is New || Model is Product)
     {
-        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
+        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial");
 
         <div class="editHeader">
 
@@ -58,6 +58,30 @@
                 </div>
                 
             </div>
+        </div>
+    }
+    @if (Model is TechTaskItem)
+    {
+        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial");
+
+        <div class="editHeader">
+
+            <h3 class="title">Удаление объекта прошло  успешно!</h3>
+            <h4 class="title">Данные удаленного объекта:</h4>
+            <hr class="horizontal-line" />
+            <br />
+            <div>
+                <div class="displayFlexCol">
+                    <h4>Id: @Model.Id</h4>
+                    <h4>PageId: @Model.TechTaskPageId</h4>
+                    <h4>OrderNumber: @Model.OrderNumber</h4>
+                    <h4>IsCompleted: @Model.IsCompleted</h4>
+                </div>
+                <div class="displayFlexCol">
+                    <h4>Описание ТЗ:</h4>
+                    <p>@Model.Description</p>
+                </div>
+             </div>
         </div>
     }
 </div>

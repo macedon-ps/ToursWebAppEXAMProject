@@ -154,7 +154,7 @@
                     <h2>1. Создание технических заданий:</h2>
 
                     <div class="div-box">
-                        <form asp-controller="TechTask" asp-action="CreateTechTask" method="get">
+                        <form asp-controller="TechTask" asp-action="CreateTechTaskItem" method="get">
                             <input type="submit" value="Создать" />
                         </form>
                     </div>
@@ -165,7 +165,7 @@
 
                         <h4>Выберите режим ввода:</h4>
 
-                        <form asp-controller="TechTask" asp-action="GetQueryResultTechTasks" method="get">
+                        <form asp-controller="TechTask" asp-action="GetQueryResultTechTaskItems" method="get">
                             <input type="radio" asp-for="IsFullName" value="true" /><span class="spanMarginLR">Полное название</span>
                             <input type="radio" asp-for="IsFullName" value="false" /><span class="spanMarginLR">Ключевое слово</span>
                             <div>

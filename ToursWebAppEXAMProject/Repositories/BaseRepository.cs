@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using NLog;
@@ -85,6 +84,9 @@ namespace ToursWebAppEXAMProject.Repositories
 					break;
 				case "EditAboutPage":
 					itemKeyword[0] = "страница About"; itemKeyword[1] = "страницы About"; itemKeyword[2] = "страницы About"; itemKeyword[3] = "страниц About";
+					break;
+				case "TechTaskItem":
+					itemKeyword[0] = "техническое задание"; itemKeyword[1] = "технического задания"; itemKeyword[2] = "технические задания"; itemKeyword[3] = "технических заданий";
 					break;
 			}
 		}
@@ -179,15 +181,33 @@ namespace ToursWebAppEXAMProject.Repositories
 				
 				if (isFullName)
 				{
-					items = dbSetEntityItems
-					.FromSqlRaw($"Select * from {itemTypeName} where Name = '{keyword}'")
-					.ToList();
+					if (typeof(T) == typeof(TechTaskItem))
+					{
+						items = dbSetEntityItems
+						.FromSqlRaw($"Select * from {itemTypeName} where Description = '{keyword}'")
+						.ToList();
+					}
+					else 
+					{
+                        items = dbSetEntityItems
+                        .FromSqlRaw($"Select * from {itemTypeName} where Name = '{keyword}'")
+                        .ToList();
+                    }
 				}
 				else
 				{
-					items = dbSetEntityItems
-					.FromSqlRaw($"Select * from {itemTypeName} where Name like '%{keyword}%'")
-					.ToList();
+					if(typeof(T) == typeof(TechTaskItem))
+					{
+                        items = dbSetEntityItems
+						.FromSqlRaw($"Select * from {itemTypeName} where Description like '%{keyword}%'")
+						.ToList();
+					}
+					else
+					{
+                        items = dbSetEntityItems
+                        .FromSqlRaw($"Select * from {itemTypeName} where Name like '%{keyword}%'")
+                        .ToList();
+                    }
 				}
 												
 				if (items == null)

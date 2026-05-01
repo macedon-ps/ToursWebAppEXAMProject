@@ -39,6 +39,7 @@ builder.Services.AddTransient<IBaseInterface<Blog>, BaseRepository<Blog>>();
 builder.Services.AddTransient<IBaseInterface<New>, BaseRepository<New>>();
 builder.Services.AddTransient<IBaseInterface<AboutPageVersion>, BaseRepository<AboutPageVersion>>();
 builder.Services.AddTransient<IBaseInterface<PhotoGalleryImage>, BaseRepository<PhotoGalleryImage>>();
+builder.Services.AddTransient<IBaseInterface<TechTaskItem>, BaseRepository<TechTaskItem>>();
 builder.Services.AddTransient<IEditTechTaskInterface, EditTechTasksRepository>();
 builder.Services.AddTransient<ITechTaskService, TechTaskService>();
 builder.Services.AddTransient<IQueryResultInterface, QueryResultRepository>();
@@ -52,6 +53,7 @@ builder.Services.AddTransient<BlogUtils>();
 builder.Services.AddTransient<CountryUtils>();
 builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
+builder.Services.AddTransient<TechTaskItemUtils>();
 builder.Services.AddTransient<ImageStorageService>();
 
 // подключение аутентификации и авторизации

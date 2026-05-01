@@ -10,6 +10,7 @@
     @if (User.Identity != null && User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("superadmin")))
     {
         <a asp-controller="Edit" asp-action="Index" asp-route-type="TechTaskItem">Cr | Ed | Del ТЗ</a>
+        <a asp-controller="TechTask" asp-action="GetAllTechTaskItems">Все ТЗ</a>
         <a asp-controller="TechTask" asp-action="Page" asp-route-pageName="Edit" class="smallFontSize">ТЗ для Edit</a>
     }
 </div>

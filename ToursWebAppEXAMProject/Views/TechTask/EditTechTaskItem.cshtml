@@ -1,0 +1,48 @@
+﻿@model TechTaskItem
+@{
+    ViewData["Title"] = "Редактирование записи о ТЗ";
+}
+
+<div class="editPage">
+
+    @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
+
+    <div class="editHeader">
+
+        @* для CKEditor 4 *@
+        <script src="~/js/ckeditor4/ckeditor.js"></script>
+
+        <form asp-controller="TechTask" asp-action="SaveTechTaskItem" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <div asp-validation-summary="All"></div>
+                <div class="displayFlexCol">
+                    <label asp-for="TechTaskPageId"></label>
+                    <p>Home - 1, Search - 2, Edit - 3, Support - 4, About - 5, Common - 6</p>
+                    <input type="text" asp-for="TechTaskPageId" />
+                    <span asp-validation-for="TechTaskPageId"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="OrderNumber"></label>
+                    <input type="text" asp-for="OrderNumber" />
+                    <span asp-validation-for="OrderNumber   "></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="IsCompleted"></label>
+                    <input type="checkbox" asp-for="IsCompleted" />
+                    <span asp-validation-for="IsCompleted"></span>
+                </div>
+                <div class="displayFlexCol">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="20" cols="100"></textarea>
+                    <span asp-validation-for="Description"></span>
+                </div>
+                
+                <input type="submit" value="Сохранить" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var newCKEdit = CKEDITOR.replace('Description');
+</script>

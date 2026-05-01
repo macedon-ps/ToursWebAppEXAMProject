@@ -105,4 +105,28 @@
             </div>
         </div>
     }
+    @if (Model is TechTaskItem)
+    {
+        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
+
+        <div class="editHeader">
+
+            <h3 class="title">Сохранение объекта прошло  успешно!</h3>
+            <h4 class="title">Данные сохраненного объекта:</h4>
+            <hr class="horizontal-line" />
+            <br />
+            <div>
+                <div class="displayFlexCol">
+                    <h4>Id: @Model.Id</h4>
+                    <h4>PageId: @Model.TechTaskPageId</h4>
+                    <h4>OrderNumber: @Model.OrderNumber</h4>
+                    <h4>IsCompleted: @Model.IsCompleted</h4>
+                </div>
+                <div class="displayFlexCol">
+                    <h4>Описание ТЗ:</h4>
+                    <p>@Model.Description</p>
+                </div>
+             </div>
+        </div>
+    }
 </div>

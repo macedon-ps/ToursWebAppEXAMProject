@@ -1,0 +1,31 @@
+﻿@model IEnumerable<TechTaskItem>
+@{
+    ViewData["Title"] = "Все ТЗ";
+}
+
+@{
+    <div class="editPage">
+
+        @await Html.PartialAsync("../Edit/_EditButtonMenuPartial")
+
+        <div class="editHeader">
+            @foreach (var techTask in @Model)
+            {
+                <div>
+                    <div class="displayFlexCol">
+                        <div>
+                            <h4>Id: @techTask.Id</h4>
+                            <h4>PageId: @techTask.TechTaskPageId</h4>
+                            <h4>OrderNumber: @techTask.OrderNumber</h4>
+                            <h4>IsCompleted: @techTask.IsCompleted</h4>
+                        </div>
+                        <div>
+                            <h4>@techTask.Description</h4>
+                        </div>
+                        <hr class="horizontal-line"/>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
