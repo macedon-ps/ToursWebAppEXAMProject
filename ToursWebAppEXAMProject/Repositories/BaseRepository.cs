@@ -18,14 +18,13 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// </summary>
 		private readonly DbSet<T> dbSetEntityItems;
 
-		/// <summary>
-		/// Статическое сойство для логирования событий
-		/// </summary>
-		
-		public string[] itemKeyword = new string[4];
-		private readonly string itemTypeName;
+        /// <summary>
+        /// Статическое сойство для логирования событий
+        /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly string itemTypeName;
+        
         /// <summary>
         /// DI. Подключение зависимости. Связывание с комнтекстом
         /// </summary>
@@ -35,60 +34,6 @@ namespace ToursWebAppEXAMProject.Repositories
 			context = _context;
 			dbSetEntityItems = _context.Set<T>();		
 			itemTypeName = typeof(T).Name;
-			switch (itemTypeName)
-			{
-				case "Product":
-					itemKeyword[0] = "турпродукт"; itemKeyword[1] = "турпродукта"; itemKeyword[2] = "турпродукты"; itemKeyword[3]= "турпродуктов";
-					break;
-				case "City":
-					itemKeyword[0] = "город"; itemKeyword[1] = "города"; itemKeyword[2] = "города"; itemKeyword[3] = "городов";
-					break;
-				case "Country":
-					itemKeyword[0] = "страна"; itemKeyword[1] = "страны"; itemKeyword[2] = "страны"; itemKeyword[3] = "стран";
-					break;
-				case "Hotel":
-					itemKeyword[0] = "гостинница"; itemKeyword[1] = "гостинницы"; itemKeyword[2] = "гостинницы"; itemKeyword[3] = "гостинниц";
-					break;
-				case "Location":
-					itemKeyword[0] = "локация"; itemKeyword[1] = "локации"; itemKeyword[2] = "локации"; itemKeyword[3] = "локаций";
-					break;
-				case "DateTour":
-					itemKeyword[0] = "дата тура"; itemKeyword[1] = "даты тура"; itemKeyword[2] = "даты туров"; itemKeyword[3] = "дат туров";
-					break;
-				case "Food":
-					itemKeyword[0] = "режим питания"; itemKeyword[1] = "режима питания"; itemKeyword[2] = "режимы питания"; itemKeyword[3] = "режимов питания";
-					break;
-				case "Tour":
-					itemKeyword[0] = "тур"; itemKeyword[1] = "тура"; itemKeyword[2] = "туры"; itemKeyword[3] = "туров";
-					break;
-				case "Customer":
-					itemKeyword[0] = "покупатель"; itemKeyword[1] = "покупателя"; itemKeyword[2] = "покупатели"; itemKeyword[3] = "покупателей";
-					break;
-                case "Asker":
-                    itemKeyword[0] = "спрашивающий"; itemKeyword[1] = "спрашивающего"; itemKeyword[2] = "спрашивающие"; itemKeyword[3] = "спрашивающих";
-                    break;
-                case "Correspondence":
-                    itemKeyword[0] = "сообщение"; itemKeyword[1] = "сообщения"; itemKeyword[2] = "сообщения"; itemKeyword[3] = "сообщений";
-                    break;
-                case "Saller":
-					itemKeyword[0] = "продавец"; itemKeyword[1] = "продавца"; itemKeyword[2] = "продавцы"; itemKeyword[3] = "продавецов";
-					break;
-				case "Ofertum":
-					itemKeyword[0] = "оферта"; itemKeyword[1] = "оферты"; itemKeyword[2] = "оферты"; itemKeyword[3] = "оферт";
-					break;
-				case "Blog":
-					itemKeyword[0] = "сообщение блога"; itemKeyword[1] = "сообщения блога"; itemKeyword[2] = "сообщения блогов"; itemKeyword[3] = "сообщений блогов";
-					break;
-				case "New":
-					itemKeyword[0] = "новость"; itemKeyword[1] = "новости"; itemKeyword[2] = "новости"; itemKeyword[3] = "новостей";
-					break;
-				case "EditAboutPage":
-					itemKeyword[0] = "страница About"; itemKeyword[1] = "страницы About"; itemKeyword[2] = "страницы About"; itemKeyword[3] = "страниц About";
-					break;
-				case "TechTaskItem":
-					itemKeyword[0] = "техническое задание"; itemKeyword[1] = "технического задания"; itemKeyword[2] = "технические задания"; itemKeyword[3] = "технических заданий";
-					break;
-			}
 		}
 		
 		/// <summary>
@@ -97,7 +42,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public IEnumerable<T> GetAllItems()
 		{
-			_logger.Debug($"Произведено подключение к БД. Запрашиваются все {itemKeyword[2]}. ");
+			_logger.Debug($"Произведено подключение к БД. Запрашиваются все модели {itemTypeName}. ");
 			
 			try
 			{
@@ -105,7 +50,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-					_logger.Warn($"В БД нет {itemKeyword[3]}\n");
+					_logger.Warn($"В БД нет моделей {itemTypeName}\n");
 					
 					return items;
 				}
@@ -118,7 +63,7 @@ namespace ToursWebAppEXAMProject.Repositories
             }
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка {itemKeyword[3]} не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Выборка моделей {itemTypeName} не осуществлена. \nКод ошибки: {ex.Message}\n");
                 
 				return new List<T>();
 			}
@@ -132,7 +77,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public T GetItemById(int id)
 		{
-            _logger.Debug($"Произведено подключение к БД. Запрашивается {itemKeyword[1]} с id = {id}. ");
+            _logger.Debug($"Произведено подключение к БД. Запрашивается модель {itemTypeName} с id = {id}. ");
             
 			try
 			{
@@ -140,7 +85,7 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (item == null)
 				{
-                    _logger.Warn($"В БД отсутствует {itemKeyword[1]} с Id = {id}.\n");
+                    _logger.Warn($"В БД отсутствует модель {itemTypeName} с Id = {id}.\n");
                     
 					return new T();
 				}
@@ -153,7 +98,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка {itemKeyword[1]} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Выборка модели {itemTypeName} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new T();
 			}
@@ -168,7 +113,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <exception cref="NotImplementedException"></exception>
 		public IEnumerable<T> GetQueryResultItemsAfterFullName(string keyword, bool isFullName)
 		{
-            _logger.Debug($"Произведено подключение к БД. Запрашиваются {itemKeyword[2]} по ключевому слову \"{keyword}\". ");
+            _logger.Debug($"Произведено подключение к БД. Запрашиваются модели {itemTypeName} по ключевому слову \"{keyword}\". ");
             
 			try
 			{
@@ -212,7 +157,7 @@ namespace ToursWebAppEXAMProject.Repositories
 												
 				if (items == null)
 				{
-                    _logger.Warn($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
+                    _logger.Warn($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
                    
 					return new List<T>();
 				}
@@ -225,7 +170,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка {itemKeyword[3]} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new List<T>();
 			}
@@ -250,7 +195,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				}
 				if(item != null && id==0)
 				{
-                    _logger.Debug($"Создание нового(ой) {itemKeyword[1]}.\n");
+                    _logger.Debug($"Создание новой модели {itemTypeName}.\n");
                     
 					dbSetEntityItems.Add(item);
 					context.SaveChanges();
@@ -258,7 +203,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				}
 				if(item != null && id != 0)
 				{
-                    _logger.Debug($"Обновление существующего(ей) {itemKeyword[1]}.\n");
+                    _logger.Debug($"Обновление существующеей модели {itemTypeName}.\n");
                     
 					context.Entry(item).State = EntityState.Modified;
 					context.SaveChanges();
@@ -267,7 +212,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Создание/обновление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Создание/обновление модели {itemTypeName} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 
@@ -284,7 +229,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			{
 				if (dbSetEntityItems.Find(id)!=null)
 				{
-                    _logger.Debug($"Удаление {itemKeyword[1]}");
+                    _logger.Debug($"Удаление модели {itemTypeName} с Id = {id}.\n");
                     
 					dbSetEntityItems.Remove(tItem);
 					context.SaveChanges();
@@ -292,7 +237,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Удаление {itemKeyword[1]} не осуществлено.\nКод ошибки: {ex.Message}\n");
+                _logger.Error($"Удаление модели {itemTypeName} с Id = {id} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 	}
