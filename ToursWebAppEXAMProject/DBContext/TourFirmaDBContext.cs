@@ -329,6 +329,40 @@ namespace ToursWebAppEXAMProject.DBContext
 				}
 			);
 
+            modelBuilder.Entity<TechTaskItem>(entity =>
+            {
+                entity.ToTable("TechTaskItem");
+
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(e => e.IsCompleted)
+                    .IsRequired();
+
+                entity.Property(e => e.OrderNumber)
+                    .IsRequired();
+
+                entity.Property(e => e.TechTaskPageId)
+                    .IsRequired();
+
+                // Индекс для сортировки/поиска
+                entity.HasIndex(e => e.TechTaskPageId);
+
+                entity.HasIndex(e => e.OrderNumber);
+
+                entity.HasOne(e => e.TechTaskPage)
+					.WithMany(p => p.Tasks)
+					.HasForeignKey(e => e.TechTaskPageId)
+					.OnDelete(DeleteBehavior.Cascade);
+							});
+
+
             modelBuilder.Entity<TechTaskItem>().HasData(
 
 				new TechTaskItem

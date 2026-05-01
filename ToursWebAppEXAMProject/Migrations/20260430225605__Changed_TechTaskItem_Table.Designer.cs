@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToursWebAppEXAMProject.DBContext;
 
@@ -11,9 +12,11 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    partial class TourFirmaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260430225605__Changed_TechTaskItem_Table")]
+    partial class _Changed_TechTaskItem_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -820,11 +823,16 @@ namespace ToursWebAppEXAMProject.Migrations
                     b.Property<int>("TechTaskPageId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TechTaskPageId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderNumber");
 
                     b.HasIndex("TechTaskPageId");
+
+                    b.HasIndex("TechTaskPageId1");
 
                     b.ToTable("TechTaskItem", (string)null);
 
@@ -1369,13 +1377,15 @@ namespace ToursWebAppEXAMProject.Migrations
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.TechTaskItem", b =>
                 {
-                    b.HasOne("ToursWebAppEXAMProject.Models.TechTaskPage", "TechTaskPage")
-                        .WithMany("Tasks")
+                    b.HasOne("ToursWebAppEXAMProject.Models.TechTaskPage", null)
+                        .WithMany()
                         .HasForeignKey("TechTaskPageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TechTaskPage");
+                    b.HasOne("ToursWebAppEXAMProject.Models.TechTaskPage", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("TechTaskPageId1");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
