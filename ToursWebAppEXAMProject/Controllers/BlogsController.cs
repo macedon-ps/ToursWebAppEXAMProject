@@ -78,8 +78,8 @@ namespace ToursWebAppEXAMProject.Controllers
             var blog = new Blog();
             _logger.Debug("Создается модель Blog. ");
 
-            _logger.Trace("Переход по маршруту /Blogs/EditBlogs.cshtml\n");
-            return View("EditBlogs", blog);
+            _logger.Trace("Переход по маршруту /Blogs/EditBlog.cshtml\n");
+            return View("EditBlog", blog);
         }
 
         /// <summary>
