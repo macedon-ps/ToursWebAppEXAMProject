@@ -1,0 +1,19 @@
+﻿@model MyErrorViewModel
+@{
+    ViewData["Title"] = "Ошибка работы приложения";
+}  
+<div class="errorPage">
+        <div class="errorHeader">
+            <h3>Упс, вы допустили ошибку:</h3><br/>
+            
+            <h2>Содержание ошибки:</h2><br/>
+            <h3 class="text-danger">@Model.ErrorMessage</h3><br/>
+            
+            <h2>Время ошибки: </h2><br/>
+            <h3 class="text-danger">@Model.DateTimeError</h3>
+        </div>
+   </div>
+
+
+
+

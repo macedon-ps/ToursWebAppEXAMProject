@@ -1,25 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ToursWebAppEXAMProject.ViewModels
+﻿namespace ToursWebAppEXAMProject.ViewModels
 {
-	public class ErrorViewModel
-	{
-		/// <summary>
-		/// Сообщение об ошибке
-		/// </summary>
-		[Display(Name = "Сообщение об ошибке")]
-		public string? ErrorMessage { get; set; }
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
 
-		/// <summary>
-		/// Дата и время возникновния ошибки
-		/// </summary>
-		[Display(Name = "Дата и время ошибки")]
-		public DateTime DateTimeError { get; set; }
-
-		public ErrorViewModel(string? errorMessage)
-		{
-			DateTimeError = DateTime.Now;
-			ErrorMessage = errorMessage;
-		}
-	}
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        
+    }
 }

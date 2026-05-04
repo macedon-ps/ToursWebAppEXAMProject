@@ -42,10 +42,10 @@ blockquote, q {
 	quotes: none;
 }
 
-	blockquote:before, blockquote:after, q:before, q:after {
-		content: '';
-		content: none;
-	}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
 
 table {
 	border-collapse: collapse;
@@ -75,17 +75,17 @@ input::-moz-focus-inner {
 
 /* Basic */
 
-	html {
-		box-sizing: border-box;
-	}
+html {
+	box-sizing: border-box;
+}
 
-	*, *:before, *:after {
-		box-sizing: inherit;
-	}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
 
-	@-ms-viewport {
-		width: device-width;
-	}
+@-ms-viewport {
+	width: device-width;
+}
 
 body {
 	font-size: 13.5pt;
@@ -2234,6 +2234,14 @@ textarea,
 	position: relative;
 	height: 550px;
 }
+.errorPage {
+    min-height: 560px;
+    background-color: #7dced8;
+    margin: 1em 0 0 0;
+    padding: 1em;
+    background-image: url(../background/Error.png);
+	background-size: 100%;
+}
 .homeHeader, .editHeader,
 .supportHeader, .aboutHeader, .accountHeader,
 .usersHeader, .rolesHeader, .errorHeader {
@@ -2501,7 +2509,13 @@ padding-top: 1em;
 .block3Right {
 	max-width: 50%;
 }
-.text-danger {
-	color: #e2842a;
-	font-size: 1.2em;
+.text-danger-text {
+	text-align: center;
+	margin: 11em auto 1em;
+	padding: 0;
+}
+.text-danger-text2 {
+	text-align: center;
+	margin: 1em auto 1em;
+	padding: 0;
 }
