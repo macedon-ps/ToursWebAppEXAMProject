@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.Extensions.Caching.Memory;
-using NLog;
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
@@ -16,7 +15,7 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly ImageStorageService _ImageStorageService;
         private readonly IQueryResultInterface _QueryResult;
         private readonly IMemoryCache _Cache;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, ImageStorageService ImageStorageService, IQueryResultInterface QueryResult, IMemoryCache Cache)
         {
             _AllCities = AllCities;

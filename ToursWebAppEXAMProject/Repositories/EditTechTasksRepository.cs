@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using ToursWebAppEXAMProject.ViewModels;
-using NLog;
 using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Repositories
@@ -32,9 +29,6 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// Контекс БД
 		/// </summary>
 		private readonly TourFirmaDBContext _context;
-
-
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 
         public EditTechTasksRepository(TourFirmaDBContext context)

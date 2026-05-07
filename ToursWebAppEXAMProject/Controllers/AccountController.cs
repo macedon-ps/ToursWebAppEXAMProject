@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Services.Email;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -12,17 +12,18 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
-            _logger.Trace("Переход по маршруту /Account/Index.\n");
+            _logger.LogTrace("Переход по маршруту /Account/Index.\n");
             return View();
         }
 
@@ -33,7 +34,7 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            _logger.Trace("Переход по маршруту /Account/Register.\n");
+            _logger.LogTrace("Переход по маршруту /Account/Register.\n");
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 // создание токена  с подтверждением по email
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Вью-модель RegisterViewModel прошла валидацию. ");
+                    _logger.LogDebug("Вью-модель RegisterViewModel прошла валидацию. ");
 
                     // добавляем пользователя
                     User user = new User { Email = viewModel.Email, UserName = viewModel.Email, BirthYear = viewModel.Year };
@@ -59,7 +60,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если пользователь создан
                     if (result.Succeeded)
                     {
-                        _logger.Debug($"Зарегистрирован новый пользователь {user.UserName}. ");
+                        _logger.LogDebug($"Зарегистрирован новый пользователь {user.UserName}. ");
 
                         // генерация токена для пользователя и адреса для колбека
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -72,11 +73,11 @@ namespace ToursWebAppEXAMProject.Controllers
                         // отправка сообщения на эл.почту для подтверждения регистрации
                         EmailService emailService = new EmailService();
                         await emailService.SendEmailAsync(viewModel.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
-                        _logger.Debug($"Отправлено сообщение пользователю {viewModel.Email} для подтверждения его email. ");
+                        _logger.LogDebug($"Отправлено сообщение пользователю {viewModel.Email} для подтверждения его email. ");
 
                         var message = $"Для завершения регистрации нового пользователя приложения {user.UserName}, проверьте электронную почту {user.Email} и перейдите по ссылке, указанной в письме";
 
-                        _logger.Trace("Переход по маршруту /Account/Message.\n");
+                        _logger.LogTrace("Переход по маршруту /Account/Message.\n");
                         return View("Message", message);
                     }
                     else
@@ -84,19 +85,25 @@ namespace ToursWebAppEXAMProject.Controllers
                         foreach (var error in result.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
-                            _logger.Error($"Error's code: {error.Code}\nError's description: {error.Description}");
+
+                            _logger.LogError($"Error's code: {error.Code}\nError's description: {error.Description}");
                         }
                     }
                 }
-                _logger.Trace("Возвращено /Account/Register.\n");
+                _logger.LogTrace("Возвращено /Account/Register.\n");
                 return View(viewModel);
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке вью-модели RegisterViewModel.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
 
@@ -113,12 +120,12 @@ namespace ToursWebAppEXAMProject.Controllers
             if (userId == null || code == null)
             {   
                 
-                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован или не имеет подтверждающего токена регистрации"));
+                return View("MyError", new MyErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован или не имеет подтверждающего токена регистрации"));
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован"));
+                return View("MyError", new MyErrorViewModel("Ваш Email не прошел подтверждение, т.к. пользователь не зарегистрирован"));
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
@@ -129,7 +136,7 @@ namespace ToursWebAppEXAMProject.Controllers
             }
             else
             {
-                return View("Error", new ErrorViewModel("Ваш Email не прошел подтверждение"));
+                return View("MyError", new MyErrorViewModel("Ваш Email не прошел подтверждение"));
             }
         }
 

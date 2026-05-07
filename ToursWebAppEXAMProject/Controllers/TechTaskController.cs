@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Utils;
@@ -12,12 +12,13 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         private readonly ITechTaskService _service;
         private readonly TechTaskItemUtils _techTaskItemUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<TechTaskController> _logger;
 
-        public TechTaskController(ITechTaskService service, TechTaskItemUtils techTaskItemUtils)
+        public TechTaskController(ITechTaskService service, TechTaskItemUtils techTaskItemUtils, ILogger<TechTaskController> logger)
         {
             _service = service;
             _techTaskItemUtils = techTaskItemUtils;
+            _logger = logger;
         }
 
 
@@ -49,19 +50,18 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetAllTechTaskItems()
         {
             var techTaskItems = _techTaskItemUtils.GetTechTaskItems();
-            _logger.Debug("Получена модель IEnumerable<TechTaskItem>. ");
+            _logger.LogDebug("Получена модель IEnumerable<TechTaskItem>. ");
 
             if (techTaskItems == null)
             {
-                _logger.Warn("В БД нет ни одного ТЗ. ");
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                _logger.LogWarning("В БД нет ни одного ТЗ. ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml.\n");
                 return View("Nothing", new NothingViewModel("В БД нет ни одного ТЗ."));
             }
             else
             {
-                _logger.Debug("Выводятся все ТЗ. ");
-                _logger.Trace("Переход по маршруту /TechTask/GetAllTechtaskItems.\n");
+                _logger.LogDebug("Выводятся все ТЗ. ");
+                _logger.LogTrace("Переход по маршруту /TechTask/GetAllTechtaskItems.\n");
                 return View(techTaskItems);
             }
         }
@@ -74,9 +74,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateTechTaskItem()
         {
             var techTaskItem = new TechTaskItem();
-            _logger.Debug("Создается модель TechTaskItem. ");
+            _logger.LogDebug("Создается модель TechTaskItem. ");
             
-            _logger.Trace("Переход по маршруту /TechTask/EditTechTaskItem.cshtml\n");
+            _logger.LogTrace("Переход по маршруту /TechTask/EditTechTaskItem.cshtml\n");
             return View("EditTechTaskItem", techTaskItem);
         }
 
@@ -91,9 +91,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditTechTaskItem(int id)
         {
             var techTaskItem = _techTaskItemUtils.GetTechTaskItemById(id);
-            _logger.Debug($"Получена модель TechTaskItem по id={id}. ");
+            _logger.LogDebug($"Получена модель TechTaskItem по id={id}. ");
 
-            _logger.Trace("Переход по маршруту /TechTask/EditTechTaskItem.cshtml\n");
+            _logger.LogTrace("Переход по маршруту /TechTask/EditTechTaskItem.cshtml\n");
             return View(techTaskItem);
         }
 
@@ -112,8 +112,8 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _techTaskItemUtils.DeleteTechTaskItemById(techTaskItem);
             }
-            _logger.Debug($"Удален ТЗ по id={id}. ");
-            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
+            _logger.LogDebug($"Удален ТЗ по id={id}. ");
+            _logger.LogTrace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", techTaskItem);
         }
 
@@ -129,20 +129,20 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetQueryResultTechTaskItems(bool isFullName, string insertedText)
         {
             var techTaskItems = _techTaskItemUtils.QueryResult(isFullName, insertedText);
-            _logger.Debug("Получена модель IEnumerable<TechTaskItem>. ");
+            _logger.LogDebug("Получена модель IEnumerable<TechTaskItem>. ");
 
             if (techTaskItems == null)
             {
-                _logger.Warn($"По результатам запроса получен пустой список ТЗ по запросу \"...{insertedText}...\". ");
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                _logger.LogWarning($"По результатам запроса получен пустой список ТЗ по запросу \"...{insertedText}...\". ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет ТЗ по запросу \"...{insertedText}...\"."));
             }
             else
             {
-                _logger.Debug("Получен список ТЗ по результатам запроса. ");
-                _logger.Debug($"Выводятся все ТЗ по запросу \"...{insertedText}...\". ");
+                _logger.LogDebug("Получен список ТЗ по результатам запроса. ");
+                _logger.LogDebug($"Выводятся все ТЗ по запросу \"...{insertedText}...\". ");
 
-                _logger.Trace("Переход по маршруту /TechTask/GetQueryResultTechTaskItems.\n");
+                _logger.LogTrace("Переход по маршруту /TechTask/GetQueryResultTechTaskItems.\n");
                 return View(techTaskItems);
             }
         }
@@ -162,27 +162,32 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель TechTaskItem прошла валидацию. ");
+                    _logger.LogDebug("Модель TechTaskItem прошла валидацию. ");
 
                     _techTaskItemUtils.SaveTechTaskItem(techTaskItem);
-                    _logger.Debug("ТЗ успешно сохранено в БД. ");
+                    _logger.LogDebug("ТЗ успешно сохранено в БД. ");
 
-                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", techTaskItem);
                 }
                 else
                 {
-                    _logger.Warn("Модель TechTaskItem не прошла валидацию. ");          
-                    _logger.Trace("Возвращено /TechTask/EditTechTaskItem.cshtml\n");
+                    _logger.LogWarning("Модель TechTaskItem не прошла валидацию. ");          
+                    _logger.LogTrace("Возвращено /TechTask/EditTechTaskItem.cshtml\n");
                     return View("EditTechTaskItem", techTaskItem);
                 }
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке модели TechTaskItem.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
     }

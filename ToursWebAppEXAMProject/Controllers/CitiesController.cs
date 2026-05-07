@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class CitiesController : Controller
     {
         private readonly CityUtils _CityUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<CitiesController> _logger;
 
-        public CitiesController(CityUtils CityUtils)
+        public CitiesController(CityUtils CityUtils, ILogger<CitiesController> logger)
         {
             _CityUtils = CityUtils;
+            _logger = logger;
         }
 
 
@@ -25,20 +26,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetAllCities()
         {
             var cities = _CityUtils.GetCities();
-            _logger.Debug("Получена модель IEnumerable<City>. ");
+            _logger.LogDebug("Получена модель IEnumerable<City>. ");
 
             if (cities == null)
             {
-                _logger.Warn("В БД нет ни одного города. ");
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                _logger.LogWarning("В БД нет ни одного города. ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml.\n");
                 return View("Nothing", new NothingViewModel("В БД нет ни одного города."));
             }
             else
             {
-                _logger.Debug("Выводятся все города. ");
+                _logger.LogDebug("Выводятся все города. ");
 
-                _logger.Trace("Переход по маршруту /Cities/GetAllCities.\n");
+                _logger.LogTrace("Переход по маршруту /Cities/GetAllCities.\n");
                 return View(cities);
             }
         }
@@ -52,20 +52,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetCity(int id)
         {
             var city = _CityUtils.GetCityById(id);
-            _logger.Debug($"Получена модель City по id = {id}. ");
+            _logger.LogDebug($"Получена модель City по id = {id}. ");
 
             if (city.Id == 0)
             {
-                _logger.Warn($"В БД нет города с id = {id}. ");
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                _logger.LogWarning($"В БД нет города с id = {id}. ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет страны с id = {id}.\n"));
             }
             else
             {
-                _logger.Debug($"Выводится город с id = {id}. ");
+                _logger.LogDebug($"Выводится город с id = {id}. ");
 
-                _logger.Trace($"Переход по маршруту /Cities/GetCity?id={id}.\n");
+                _logger.LogTrace($"Переход по маршруту /Cities/GetCity?id={id}.\n");
                 return View(city);
             }
         }
@@ -79,9 +78,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateCity()
         {
             var cityViewModel = _CityUtils.GetCreateCityViewModel();
-            _logger.Debug("Создается вью-модель CreateCityViewModel. ");
+            _logger.LogDebug("Создается вью-модель CreateCityViewModel. ");
 
-            _logger.Trace("Переход по маршруту /Cities/CreateCity.cshtml\n");
+            _logger.LogTrace("Переход по маршруту /Cities/CreateCity.cshtml\n");
             return View(cityViewModel);
         }
 
@@ -96,9 +95,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditCity(int id)
         {
             var city = _CityUtils.GetCityForEdit(id);
-            _logger.Debug($"Получена модель City по id={id}. ");
+            _logger.LogDebug($"Получена модель City по id={id}. ");
 
-            _logger.Trace("Переход по маршруту /Cities/EditCity.\n");
+            _logger.LogTrace("Переход по маршруту /Cities/EditCity.\n");
             return View(city);
         }
 
@@ -114,21 +113,20 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetQueryResultCities(bool isFullName, string insertedText)
         {
             var cities = _CityUtils.QueryResult(isFullName, insertedText);
-            _logger.Debug("Получена модель IEnumerable<City>. ");
+            _logger.LogDebug("Получена модель IEnumerable<City>. ");
 
             if (cities == null)
             {
-                _logger.Warn($"По результатам запроса получен пустой список городов по запросу \"...{insertedText}...\". ");
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml\n");
+                _logger.LogWarning($"По результатам запроса получен пустой список городов по запросу \"...{insertedText}...\". ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет городов по запросу \"...{insertedText}...\"."));
             }
             else
             {
-                _logger.Debug("Получен список городов по результатам запроса. ");
-                _logger.Debug($"Выводятся все города по запросу. ");
+                _logger.LogDebug("Получен список городов по результатам запроса. ");
+                _logger.LogDebug($"Выводятся все города по запросу. ");
 
-                _logger.Trace("Переход по маршруту /Cities/GetQueryResultCities.\n");
+                _logger.LogTrace("Переход по маршруту /Cities/GetQueryResultCities.\n");
                 return View(cities);
             }
         }
@@ -148,9 +146,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _CityUtils.DeleteCityById(city);
             }
-            _logger.Debug($"Удален город по id={id}. ");
+            _logger.LogDebug($"Удален город по id={id}. ");
 
-            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
+            _logger.LogTrace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", city);
         }
 
@@ -169,7 +167,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель City прошла валидацию. ");
+                    _logger.LogDebug("Модель City прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
@@ -180,29 +178,34 @@ namespace ToursWebAppEXAMProject.Controllers
                     if (cityModel.CountryId !=0)
                     {
                         _CityUtils.SaveCity(cityModel);
-                        _logger.Debug("Город успешно сохранен в БД. ");
+                        _logger.LogDebug("Город успешно сохранен в БД. ");
                     }
 
                     cityModel.DateAdded = DateTime.Now;
 
 
-                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", cityModel);
                 }
                 else
                 {
-                    _logger.Warn("Модель City не прошла валидацию. ");
+                    _logger.LogWarning("Модель City не прошла валидацию. ");
                     
-                    _logger.Trace("Возвращено /Cities/EditCity.cshtml\n");
+                    _logger.LogTrace("Возвращено /Cities/EditCity.cshtml\n");
                     return View("EditCity", cityModel);
                 }
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке модели City.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
 

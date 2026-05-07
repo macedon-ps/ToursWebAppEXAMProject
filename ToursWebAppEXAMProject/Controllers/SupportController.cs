@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using NLog;
-using ToursWebAppEXAMProject.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SupportController : Controller
 	{
         private readonly SupportUtils _SupportUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<SupportController> _logger;
 
-        public SupportController(SupportUtils SupportUtils)
+        public SupportController(SupportUtils SupportUtils, ILogger<SupportController> logger)
 		{
             _SupportUtils = SupportUtils;
+            _logger = logger;
         }
 
 
@@ -23,7 +23,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         public IActionResult Index()
 		{
-			_logger.Trace("Переход по маршруту /Support/Index.\n");
+			_logger.LogTrace("Переход по маршруту /Support/Index.\n");
             return View();
 		}
 
@@ -38,19 +38,23 @@ namespace ToursWebAppEXAMProject.Controllers
             try
             {
                 var viewModel = _SupportUtils.GetModel();
-                _logger.Debug("Получена вью-модель TranslateTextViewModel. ");
+                _logger.LogDebug("Получена вью-модель TranslateTextViewModel. ");
 
-                _logger.Trace("Переход по маршруту /Support/Index.\n");
+                _logger.LogTrace("Переход по маршруту /Support/Index.\n");
                 return View(viewModel);
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при получении вью-модели TranslateTextViewModel.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel() 
+                { 
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+                
+                return View("Error", errorInfo);
             }
-            
         }
         
 
@@ -66,29 +70,34 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Вью-модель TranslateTextViewModel прошла валидацию. ");
+                    _logger.LogDebug("Вью-модель TranslateTextViewModel прошла валидацию. ");
                     
                     var newViewModel = _SupportUtils.GetModel(viewModel);
-                    _logger.Debug("Вью-модель TranslateTextViewModel заполнена данными из формы. ");
+                    _logger.LogDebug("Вью-модель TranslateTextViewModel заполнена данными из формы. ");
 
-                    _logger.Trace("Переход по маршруту /Support/Translate.\n");
+                    _logger.LogTrace("Переход по маршруту /Support/Translate.\n");
                     return View(viewModel);
                 }
                 else
                 {
-                    _logger.Warn("Вью-модель TranslateTextViewModel не прошла валидацию. Данные модели не сохранены. ");
-
-                    _logger.Trace("Возвращено /Support/Translate.cshtml\n");
+                    _logger.LogWarning("Вью-модель TranslateTextViewModel не прошла валидацию. Данные модели не сохранены. ");
+                    _logger.LogTrace("Возвращено /Support/Translate.cshtml\n");
+                    
                     return View(viewModel);
                 }
                     
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке вью-модели TranslateTextViewModel.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
 
@@ -139,8 +148,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 return View("WeatherForecast");
             }
 			*/
-            // WriteLogs($"Переход по маршруту /Support/GetSupport?service={service}.\n");
-            
+                        
             var serviceItem = service;
 			return View("GetSupport", serviceItem);
 		}

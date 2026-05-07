@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
@@ -13,6 +14,9 @@ using ToursWebAppEXAMProject.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// настройка логирования через NLog и удаление всех стандартных провайдеров логирования
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 // подключение сервиса, кот. добавляет контроллеры и представления
 builder.Services.AddControllersWithViews();
 
@@ -89,12 +93,16 @@ builder.Configuration.Bind("MapApi", new ConfigMapApi());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
 	app.UseExceptionHandler("/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

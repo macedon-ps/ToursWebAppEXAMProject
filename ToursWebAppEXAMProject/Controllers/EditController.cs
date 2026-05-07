@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using ToursWebAppEXAMProject.ViewModels;
-using ToursWebAppEXAMProject.Utils;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     [Authorize]
     public class EditController : Controller
     {
-		private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<EditController> _logger;
 
-        	     
+        public EditController(ILogger<EditController> logger)
+        {
+            _logger = logger;
+        }
+
         /// <summary>
         /// Метод вывода стартовой страницы Edit
         /// </summary>
@@ -20,9 +22,9 @@ namespace ToursWebAppEXAMProject.Controllers
 		public IActionResult Index(string type = "New")
 		{
             var viewModel = new EditMenuViewModel(false, "", type);
-            _logger.Debug("Получена вью-модель EditMenuViewModel с дефолтными параметрами. ");
+            _logger.LogDebug("Получена вью-модель EditMenuViewModel с дефолтными параметрами. ");
 
-            _logger.Trace("Переход по маршруту /Edit/Index.\n");
+            _logger.LogTrace("Переход по маршруту /Edit/Index.\n");
             return View(viewModel);
 		}
 	}

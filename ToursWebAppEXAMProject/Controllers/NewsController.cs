@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
@@ -11,11 +11,12 @@ namespace ToursWebAppEXAMProject.Controllers
     {
         
         private readonly NewsUtils _NewsUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<NewsController> _logger;
 
-        public NewsController(NewsUtils NewsUtils)
+        public NewsController(NewsUtils NewsUtils, ILogger<NewsController> logger)
         {
             _NewsUtils = NewsUtils;
+            _logger = logger;
         }
 
 
@@ -26,20 +27,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetAllNews()
         {
             var newsItems = _NewsUtils.GetNews();
-            _logger.Debug("Получена модель IEnumerable<New>. ");
+            _logger.LogDebug("Получена модель IEnumerable<New>. ");
 
             if (newsItems == null)
             {
-                _logger.Warn("В БД нет ни одной новости. "); 
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                _logger.LogWarning("В БД нет ни одной новости. "); 
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml.\n");
                 return View("Nothing", new NothingViewModel("В БД нет ни одной новости."));
             }
             else
             {
-                _logger.Debug("Выводятся все новости. ");
+                _logger.LogDebug("Выводятся все новости. ");
 
-                _logger.Trace("Переход по маршруту /News/GetAllNews.\n");
+                _logger.LogTrace("Переход по маршруту /News/GetAllNews.\n");
                 return View(newsItems);
             }
         }
@@ -53,20 +53,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetNews(int id)
         {
             var newsItem = _NewsUtils.GetNewsById(id);
-            _logger.Debug($"Получена модель New по id = {id}. ");
+            _logger.LogDebug($"Получена модель New по id = {id}. ");
 
             if (newsItem.Id == 0)
             {
-                _logger.Warn($"В БД нет новости с id = {id}. ");
-
-                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                _logger.LogWarning($"В БД нет новости с id = {id}. ");
+                _logger.LogTrace("Возвращено ../Shared//Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет новости с id = {id}.\n"));
             }
             else
             {
-                _logger.Debug($"Выводится новость с id = {id}. ");
+                _logger.LogDebug($"Выводится новость с id = {id}. ");
 
-                _logger.Trace($"Переход по маршруту /News/GetNesw?id={id}.\n");
+                _logger.LogTrace($"Переход по маршруту /News/GetNews?id={id}.\n");
                 return View(newsItem);
             }
         }
@@ -80,9 +79,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateNews()
         {
             var newsItem = new New();
-            _logger.Debug("Создается модель New. ");
+            _logger.LogDebug("Создается модель New. ");
 
-            _logger.Trace("Переход по маршруту /News/EditNews.cshtml\n");
+            _logger.LogTrace("Переход по маршруту /News/EditNews.cshtml\n");
             return View("EditNews", newsItem);
         }
 
@@ -97,9 +96,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditNews(int id)
         {
             var newsItem = _NewsUtils.GetNewsById(id);
-            _logger.Debug($"Получена модель New по id={id}. ");
+            _logger.LogDebug($"Получена модель New по id={id}. ");
 
-            _logger.Trace("Переход по маршруту /News/EditNews.\n");
+            _logger.LogTrace("Переход по маршруту /News/EditNews.\n");
             return View(newsItem);
         }
 
@@ -115,21 +114,20 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetQueryResultNews(bool isFullName, string insertedText)
         {
             var newsItems = _NewsUtils.QueryResult(isFullName, insertedText);
-            _logger.Debug("Получена модель IEnumerable<New>. ");
+            _logger.LogDebug("Получена модель IEnumerable<New>. ");
                      
             if (newsItems == null)
             {
-                _logger.Warn($"По результатам запроса получен пустой список новостей по запросу \"...{insertedText}...\". ");
-
-                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                _logger.LogWarning($"По результатам запроса получен пустой список новостей по запросу \"...{insertedText}...\". ");
+                _logger.LogTrace("Возвращено ../Shared//Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет новостей по запросу \"...{insertedText}...\"."));
             }
             else
             {
-                _logger.Debug("Получен список новостей по результатам запроса. ");
-                _logger.Debug($"Выводятся все новости по запросу. ");
+                _logger.LogDebug("Получен список новостей по результатам запроса. ");
+                _logger.LogDebug($"Выводятся все новости по запросу. ");
 
-                _logger.Trace("Переход по маршруту /News/GetQueryResultNews.\n");
+                _logger.LogTrace("Переход по маршруту /News/GetQueryResultNews.\n");
                 return View(newsItems);
             }
         }
@@ -149,9 +147,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _NewsUtils.DeleteNewsById(newsItem);
             }
-            _logger.Debug($"Удалена новость по id={id}. ");
+            _logger.LogDebug($"Удалена новость по id={id}. ");
 
-            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
+            _logger.LogTrace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", newsItem);
         }
 
@@ -170,7 +168,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель News прошла валидацию. ");
+                    _logger.LogDebug("Модель News прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
@@ -180,25 +178,30 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     newsModel.DateAdded = DateTime.Now;
                     _NewsUtils.SaveNewsModel(newsModel);
-                    _logger.Debug("Новость успешно сохранена в БД. ");
+                    _logger.LogDebug("Новость успешно сохранена в БД. ");
                     
-                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", newsModel);
                 }
                 else
                 {
-                    _logger.Warn("Модель New не прошла валидацию. ");
+                    _logger.LogWarning("Модель New не прошла валидацию. ");
                                         
-                    _logger.Trace("Возвращено /News/EditNews.cshtml\n");
+                    _logger.LogTrace("Возвращено /News/EditNews.cshtml\n");
                     return View("EditNews", newsModel);
                 }
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке модели New.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
     }

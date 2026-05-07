@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using NLog;
 using ToursWebAppEXAMProject.Models;
 
 namespace ToursWebAppEXAMProject.Repositories
@@ -19,9 +18,9 @@ namespace ToursWebAppEXAMProject.Repositories
 		private readonly DbSet<T> dbSetEntityItems;
 
         /// <summary>
-        /// Статическое сойство для логирования событий
+        /// Свойство для логирования событий
         /// </summary>
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<BaseRepository<T>> _logger;
 
         private readonly string itemTypeName;
         
@@ -29,12 +28,13 @@ namespace ToursWebAppEXAMProject.Repositories
         /// DI. Подключение зависимости. Связывание с комнтекстом
         /// </summary>
         /// <param name="_context">контекст подключения к БД</param>
-        public BaseRepository(TourFirmaDBContext _context)
+        public BaseRepository(TourFirmaDBContext _context, ILogger<BaseRepository<T>> logger)
 		{
 			context = _context;
 			dbSetEntityItems = _context.Set<T>();		
 			itemTypeName = typeof(T).Name;
-		}
+			_logger = logger;
+        }
 		
 		/// <summary>
 		/// Метод GetAllItems(), кот. используется для возврата коллекции сущностей из БД
@@ -42,7 +42,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public IEnumerable<T> GetAllItems()
 		{
-			_logger.Debug($"Произведено подключение к БД. Запрашиваются все модели {itemTypeName}. ");
+			_logger.LogDebug($"Произведено подключение к БД. Запрашиваются все модели {itemTypeName}. ");
 			
 			try
 			{
@@ -50,20 +50,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (items == null)
 				{
-					_logger.Warn($"В БД нет моделей {itemTypeName}\n");
+					_logger.LogWarning($"В БД нет моделей {itemTypeName}\n");
 					
 					return items;
 				}
 				else
 				{
-                    _logger.Debug("Выборка осуществлена успешно\n");
+                    _logger.LogDebug("Выборка осуществлена успешно\n");
                     
 					return items ;
 				}
             }
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка моделей {itemTypeName} не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Выборка моделей {itemTypeName} не осуществлена. \nКод ошибки: {ex.Message}\n");
                 
 				return new List<T>();
 			}
@@ -77,7 +77,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <returns></returns>
 		public T GetItemById(int id)
 		{
-            _logger.Debug($"Произведено подключение к БД. Запрашивается модель {itemTypeName} с id = {id}. ");
+            _logger.LogDebug($"Произведено подключение к БД. Запрашивается модель {itemTypeName} с id = {id}. ");
             
 			try
 			{
@@ -85,20 +85,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
 				if (item == null)
 				{
-                    _logger.Warn($"В БД отсутствует модель {itemTypeName} с Id = {id}.\n");
+                    _logger.LogWarning($"В БД отсутствует модель {itemTypeName} с Id = {id}.\n");
                     
 					return new T();
 				}
 				else
 				{
-                    _logger.Debug("Выборка осуществлена успешно\n");
+                    _logger.LogDebug("Выборка осуществлена успешно\n");
                     
 					return item;
 				}
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка модели {itemTypeName} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Выборка модели {itemTypeName} с Id = {id} не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new T();
 			}
@@ -113,7 +113,7 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <exception cref="NotImplementedException"></exception>
 		public IEnumerable<T> GetQueryResultItemsAfterFullName(string keyword, bool isFullName)
 		{
-            _logger.Debug($"Произведено подключение к БД. Запрашиваются модели {itemTypeName} по ключевому слову \"{keyword}\". ");
+            _logger.LogDebug($"Произведено подключение к БД. Запрашиваются модели {itemTypeName} по ключевому слову \"{keyword}\". ");
             
 			try
 			{
@@ -157,20 +157,20 @@ namespace ToursWebAppEXAMProject.Repositories
 												
 				if (items == null)
 				{
-                    _logger.Warn($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
+                    _logger.LogWarning($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
                    
 					return new List<T>();
 				}
 				else
 				{
-                    _logger.Debug("Выборка осуществлена успешно.\n");
+                    _logger.LogDebug("Выборка осуществлена успешно.\n");
                     
 					return items;
 				}
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new List<T>();
 			}
@@ -183,19 +183,19 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <param name="item">объект сущности</param>
 		public void SaveItem(T item, int id)
 		{
-            _logger.Debug("Произведено подключение к БД. ");
+            _logger.LogDebug("Произведено подключение к БД. ");
             
 			try
 			{
 				if (item == null)
 				{
-                    _logger.Warn("Модель не существует.\n");
+                    _logger.LogWarning("Модель не существует.\n");
                     
 					return;
 				}
 				if(item != null && id==0)
 				{
-                    _logger.Debug($"Создание новой модели {itemTypeName}.\n");
+                    _logger.LogDebug($"Создание новой модели {itemTypeName}.\n");
                     
 					dbSetEntityItems.Add(item);
 					context.SaveChanges();
@@ -203,7 +203,7 @@ namespace ToursWebAppEXAMProject.Repositories
 				}
 				if(item != null && id != 0)
 				{
-                    _logger.Debug($"Обновление существующеей модели {itemTypeName}.\n");
+                    _logger.LogDebug($"Обновление существующеей модели {itemTypeName}.\n");
                     
 					context.Entry(item).State = EntityState.Modified;
 					context.SaveChanges();
@@ -212,7 +212,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Создание/обновление модели {itemTypeName} не осуществлено.\nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Создание/обновление модели {itemTypeName} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 
@@ -223,13 +223,13 @@ namespace ToursWebAppEXAMProject.Repositories
 		/// <param name="id">идентификатор сущности</param>
 		public void DeleteItem(T tItem, int id)
 		{
-            _logger.Debug("Произведено подключение к БД. ");
+            _logger.LogDebug("Произведено подключение к БД. ");
             
 			try
 			{
 				if (dbSetEntityItems.Find(id)!=null)
 				{
-                    _logger.Debug($"Удаление модели {itemTypeName} с Id = {id}.\n");
+                    _logger.LogDebug($"Удаление модели {itemTypeName} с Id = {id}.\n");
                     
 					dbSetEntityItems.Remove(tItem);
 					context.SaveChanges();
@@ -237,7 +237,7 @@ namespace ToursWebAppEXAMProject.Repositories
 			}
 			catch (Exception ex)
 			{
-                _logger.Error($"Удаление модели {itemTypeName} с Id = {id} не осуществлено.\nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Удаление модели {itemTypeName} с Id = {id} не осуществлено.\nКод ошибки: {ex.Message}\n");
             }
 		}
 	}

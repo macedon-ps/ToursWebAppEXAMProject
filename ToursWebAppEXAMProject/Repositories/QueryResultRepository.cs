@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using NLog;
-using System.Diagnostics.Metrics;
-using ToursWebAppEXAMProject.DBContext;
-using ToursWebAppEXAMProject.Enums;
+﻿using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 
@@ -12,22 +7,16 @@ namespace ToursWebAppEXAMProject.Repositories
     public class QueryResultRepository : IQueryResultInterface
 	{
 		private readonly TourFirmaDBContext _context;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<QueryResultRepository> _logger;
 
-        public string[] itemKeyword = new string[4];
-		
-		/// <summary>
+        /// <summary>
 		/// DI. Подключение зависимости. Связывание с комнтекстом
 		/// </summary>
 		/// <param name="_context">контекст подключения к БД</param>
-		public QueryResultRepository(TourFirmaDBContext context)
+		public QueryResultRepository(TourFirmaDBContext context, ILogger<QueryResultRepository> logger)
 		{
 			_context = context;
-			
-			itemKeyword[0] = "город"; 
-			itemKeyword[1] = "города"; 
-			itemKeyword[2] = "города"; 
-			itemKeyword[3] = "городов";
+			_logger = logger;
 		}
 
         /// <summary>
@@ -39,7 +28,7 @@ namespace ToursWebAppEXAMProject.Repositories
         /// нет турпродуктов или возникает ошибка.</returns>
         public IEnumerable<Product> GetProductsByCountryIdAndCityId(int? countryId, int? cityId)
         {
-            _logger.Debug($"Произведено подключение к БД. Запрашиваются турпродукты для Id страны \"{countryId}\" и для Id города \"{cityId}\". ");
+            _logger.LogDebug($"Произведено подключение к БД. Запрашиваются турпродукты для Id страны \"{countryId}\" и для Id города \"{cityId}\". ");
 
             try
             {
@@ -55,20 +44,20 @@ namespace ToursWebAppEXAMProject.Repositories
 
                 if (products == null)
                 {
-                    _logger.Warn($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена.\n");
+                    _logger.LogWarning($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена.\n");
 
                     return new List<Product>();
                 }
                 else
                 {
-                    _logger.Debug($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" осуществлена успешно.\n");
+                    _logger.LogDebug($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" осуществлена успешно.\n");
 
                     return products;
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
+                _logger.LogError($"Выборка турпородуктов по Id страны \"{countryId}\" и Id города \"{cityId}\" не осуществлена. \nКод ошибки: {ex.Message}\n");
 
                 return new List<Product>();
             }

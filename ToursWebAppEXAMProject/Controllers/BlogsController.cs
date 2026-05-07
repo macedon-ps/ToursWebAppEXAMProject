@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ViewModels;
 using ToursWebAppEXAMProject.Utils;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class BlogsController : Controller
     {
         private readonly BlogUtils _BlogUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<BlogsController> _logger;
 
-        public BlogsController(BlogUtils BlogUtils)
+        public BlogsController(BlogUtils BlogUtils, ILogger<BlogsController> logger)
         {
             _BlogUtils = BlogUtils;
+            _logger = logger;
         }
 
         /// <summary>
@@ -24,20 +25,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetAllBlogs()
         {
             var blogs = _BlogUtils.GetBlogs();
-            _logger.Debug("Получена модель IEnumerable<Blog>. ");
+            _logger.LogDebug("Получена модель IEnumerable<Blog>. ");
 
             if (blogs == null)
             {
-                _logger.Warn("В БД нет ни одного блога. ");
-
-                _logger.Trace("Возвращено ../Shared/Nothing.cshtml.\n");
+                _logger.LogWarning("В БД нет ни одного блога. ");
+                _logger.LogTrace("Возвращено ../Shared/Nothing.cshtml.\n");
                 return View("Nothing", new NothingViewModel("В БД нет ни одного блога."));
             }
             else
             {
-                _logger.Debug("Выводятся все блоги. ");
+                _logger.LogDebug("Выводятся все блоги. ");
 
-                _logger.Trace("Переход по маршруту /Blogs/GetBlogs.\n");
+                _logger.LogTrace("Переход по маршруту /Blogs/GetBlogs.\n");
                 return View(blogs);
             }
         }
@@ -50,20 +50,19 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult GetBlog(int id)
         {
             var blog = _BlogUtils.GetBlogById(id);
-            _logger.Debug($"Получена модель Blog по id = {id}. ");
+            _logger.LogDebug($"Получена модель Blog по id = {id}. ");
 
             if (blog.Id == 0)
             {
-                _logger.Warn($"В БД нет блога с id = {id}. ");
-
-                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                _logger.LogWarning($"В БД нет блога с id = {id}. ");
+                _logger.LogTrace("Возвращено ../Shared//Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет блога с id = {id}.\n"));
             }
             else
             {
-                _logger.Debug($"Выводится новость с id = {id}. ");
+                _logger.LogDebug($"Выводится новость с id = {id}. ");
 
-                _logger.Trace($"Переход по маршруту /News/GetBlog?id={id}.\n");
+                _logger.LogTrace($"Переход по маршруту /News/GetBlog?id={id}.\n");
                 return View(blog);
             }
         }
@@ -76,9 +75,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult CreateBlog()
         {
             var blog = new Blog();
-            _logger.Debug("Создается модель Blog. ");
+            _logger.LogDebug("Создается модель Blog. ");
 
-            _logger.Trace("Переход по маршруту /Blogs/EditBlog.cshtml\n");
+            _logger.LogTrace("Переход по маршруту /Blogs/EditBlog.cshtml\n");
             return View("EditBlog", blog);
         }
 
@@ -92,9 +91,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult EditBlog(int id)
         {
             var blog = _BlogUtils.GetBlogById(id);
-            _logger.Debug($"Получена модель Blog по id={id}. ");
+            _logger.LogDebug($"Получена модель Blog по id={id}. ");
 
-            _logger.Trace("Переход по маршруту /Blogs/EditBlog.\n");
+            _logger.LogTrace("Переход по маршруту /Blogs/EditBlog.\n");
             return View(blog);
         }
 
@@ -108,24 +107,23 @@ namespace ToursWebAppEXAMProject.Controllers
         [HttpGet]
         public IActionResult GetQueryResultBlogs(bool isFullName, string insertedText)
         {
-            _logger.Trace("Переход по маршруту /Blogs/GetQueryResultBlogs. ");
+            _logger.LogTrace("Переход по маршруту /Blogs/GetQueryResultBlogs. ");
 
             var blogs = _BlogUtils.QueryResult(isFullName, insertedText);
-            _logger.Debug("Получена модель IEnumerable<Blog>. ");
+            _logger.LogDebug("Получена модель IEnumerable<Blog>. ");
 
             if (blogs == null)
             {
-                _logger.Warn($"По результатам запроса получен пустой список блогов по запросу \"...{insertedText}...\". ");
-
-                _logger.Trace("Возвращено ../Shared//Nothing.cshtml\n");
+                _logger.LogWarning($"По результатам запроса получен пустой список блогов по запросу \"...{insertedText}...\". ");
+                _logger.LogTrace("Возвращено ../Shared//Nothing.cshtml\n");
                 return View("Nothing", new NothingViewModel($"В БД нет блогов по запросу \"...{insertedText}...\"."));
             }
             else
             {
-                _logger.Debug("Получен список блогов по результатам запроса. ");
-                _logger.Debug($"Выводятся все блоги по запросу. ");
+                _logger.LogDebug("Получен список блогов по результатам запроса. ");
+                _logger.LogDebug($"Выводятся все блоги по запросу. ");
 
-                _logger.Trace("Переход по маршруту /Blogs/GetQueryResultBlogs.\n");
+                _logger.LogTrace("Переход по маршруту /Blogs/GetQueryResultBlogs.\n");
                 return View(blogs);
             }
         }
@@ -144,9 +142,9 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 _BlogUtils.DeleteBlogById(blog);
             }
-            _logger.Debug($"Удален блог по id={id}. ");
+            _logger.LogDebug($"Удален блог по id={id}. ");
 
-            _logger.Trace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
+            _logger.LogTrace("Переход по маршруту ../Shared/SuccessForDelete.cshtml\n");
             return View("SuccessForDelete", blog);
         }
 
@@ -164,7 +162,7 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель Blog прошла валидацию. ");
+                    _logger.LogDebug("Модель Blog прошла валидацию. ");
 
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
@@ -174,25 +172,30 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     blogModel.DateAdded = DateTime.Now;
                     _BlogUtils.SaveBlogModel(blogModel);
-                    _logger.Debug("Блог успешно сохранен в БД. ");
+                    _logger.LogDebug("Блог успешно сохранен в БД. ");
 
-                    _logger.Trace("Переход по маршруту ../Shared/Success.cshtml\n");
+                    _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", blogModel);
                 }
                 else
                 {
-                    _logger.Warn("Модель Blog не прошла валидацию. ");
+                    _logger.LogWarning("Модель Blog не прошла валидацию. ");
                                         
-                    _logger.Trace("Возвращено /Blogs/EditBlog.cshtml\n");
+                    _logger.LogTrace("Возвращено /Blogs/EditBlog.cshtml\n");
                     return View("EditBlog", blogModel);
                 }
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
+                _logger.LogError(error, "Ошибка при обработке модели Blog.");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
 
-                _logger.Trace("Возвращено ../Shared/Error.cshtml\n");
-                return View("Error", new ErrorViewModel(error.Message));
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
 
@@ -207,12 +210,12 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult SaveBlogMessage(int blogId, string userName, string message)
         {
             var blog = _BlogUtils.GetBlogById(blogId);
-            _logger.Debug($"Получена модель Blog по id={blogId}. ");
+            _logger.LogDebug($"Получена модель Blog по id={blogId}. ");
 
             blog = _BlogUtils.SetBlogModelWithChatDataAndSave(blog, userName, message);
-            _logger.Debug("Модель Blog заполнена данными из чата и сохранена. ");
+            _logger.LogDebug("Модель Blog заполнена данными из чата и сохранена. ");
 
-            _logger.Trace("Переход по маршруту /Blogs/GetBlog.\n");
+            _logger.LogTrace("Переход по маршруту /Blogs/GetBlog.\n");
             return RedirectToAction("GetBlog", "Blogs", new { id = blogId } );
         }
     }

@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ToursWebAppEXAMProject.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using ToursWebAppEXAMProject.Utils;
-using NLog;
+using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Controllers
 {
     public class SearchController: Controller
 	{
 		private readonly SearchUtils _SearchUtils;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger<SearchController> _logger;
 
-        public SearchController(SearchUtils searchUtils)
+        public SearchController(SearchUtils searchUtils, ILogger<SearchController> logger)
 		{
 			_SearchUtils = searchUtils;
+            _logger = logger;
         }
 
         /// <summary>
@@ -24,9 +24,9 @@ namespace ToursWebAppEXAMProject.Controllers
         public IActionResult Index(int? countryId, int? cityId, string? map)
         {
             var searchViewModel = _SearchUtils.GetModel(countryId, cityId, map);
-            _logger.Debug("Получена вью-модель SearchProductViewModel по дефолту. ");
+            _logger.LogDebug("Получена вью-модель SearchProductViewModel по дефолту. ");
 
-            _logger.Trace("Переход по маршруту /Search/Index.\n");
+            _logger.LogTrace("Переход по маршруту /Search/Index.\n");
             return View(searchViewModel);
         }
 
@@ -42,14 +42,14 @@ namespace ToursWebAppEXAMProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.Debug("Модель прошла валидацию");
+                    _logger.LogDebug("Модель прошла валидацию");
 
                     var countryId = viewModel.CountryIdSelected;
                     var cityId = viewModel.CityIdSelected;
 
                     if (countryId.HasValue && cityId.HasValue)
                     {
-                        _logger.Trace($"Redirect: countryId={countryId}, cityId={cityId}");
+                        _logger.LogTrace($"Redirect: countryId={countryId}, cityId={cityId}");
 
                         return RedirectToAction(
                             "GetProductsQueryResultForSearch",
@@ -58,17 +58,24 @@ namespace ToursWebAppEXAMProject.Controllers
                         );
                     }
 
-                    _logger.Warn("Не выбрана страна или город");
+                    _logger.LogWarning("Не выбрана страна или город");
                     return View(viewModel);
                 }
 
-                _logger.Warn("ModelState невалиден");
+                _logger.LogWarning("ModelState невалиден");
                 return View(viewModel);
             }
             catch (Exception error)
             {
-                _logger.Error(error.Message);
-                return View("Error", new ErrorViewModel(error.Message));
+                _logger.LogError(error, "Ошибка при получении вью-модели SearchProductViewModel .");
+                _logger.LogTrace("Возвращено ../Shared/Error.cshtml\n");
+
+                var errorInfo = new ErrorViewModel()
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                };
+
+                return View("Error", errorInfo);
             }
         }
     }
