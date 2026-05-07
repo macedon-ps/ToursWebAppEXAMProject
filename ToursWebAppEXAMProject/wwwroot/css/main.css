@@ -66,13 +66,6 @@ input::-moz-focus-inner {
 	padding: 0;
 }
 
-/*input, select, textarea {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	-ms-appearance: none;
-	appearance: none;
-}*/
-
 /* Basic */
 
 html {
@@ -2218,21 +2211,28 @@ textarea,
 			}
 	}
 
-	/*
-	.palms {
-	background-image: url(../background/tropical-sea.jpg);
-	background-repeat: no-repeat;
-	background-size: auto auto;
-	background-position: center;
-	opacity: 0.9;
-	}
-	*/
 
 .homePage, .searchPage, .editPage,
-.supportPage, .aboutPage, .accountPage, 
+.supportPage, .aboutPage, .accountPage,
 .usersPage, .rolesPage, .errorPage {
 	position: relative;
 	height: 550px;
+	background-color: #7dced8;
+}
+.homePage {
+	
+}
+.searchPage {
+	background-image: url(../background/Search.png);
+}
+.editPage {
+	background-image: url(../background/Edit.png);
+}
+.supportPage {
+	background-image: url(../background/Support.png);
+}
+.aboutPage {
+	
 }
 .errorPage {
     min-height: 560px;
@@ -2246,30 +2246,51 @@ textarea,
 .supportHeader, .aboutHeader, .accountHeader,
 .usersHeader, .rolesHeader, .errorHeader {
 	height: 500px;
-	background-color: #7dced8;
 	padding: 1em;
 	margin: 0;
 	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
 }
+.homeHeader {
+	background-image: url(../background/Home_2.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
 .searchHeader {
 	height: 500px;
-	background-color: #7dced8;
 	padding: 0 1em 1em;
 	margin: 0;
 	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
 }
+.searchHeader {
+    background-image: url(../background/Search_2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
 .searchHeader-unscroll {
 	height: 500px;
-	background-color: #7dced8;
 	padding: 0 1em 1em;
 	margin: 0.8em 0 0 0;
 	display: flex;
 	flex-direction: column;
-	background-color: #62cad1;
+}
+.editHeader {
+	background-image: url(../background/Edit_2.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.supportHeader {
+	background-image: url(../background/Support_2.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.aboutHeader {
+	background-image: url(../background/About_2.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
 .accountHeader {
 	margin-top: 1em;
