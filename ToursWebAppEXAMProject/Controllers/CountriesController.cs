@@ -193,7 +193,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.LogWarning("Модель Country не прошла валидацию. ");
                     
                     _logger.LogTrace("Возвращено /Countries/EditCountry.cshtml\n");
-                    return View("EditNews", countryModel);
+                    return View("EditCountry", countryModel);
                 }
             }
             catch (Exception error)

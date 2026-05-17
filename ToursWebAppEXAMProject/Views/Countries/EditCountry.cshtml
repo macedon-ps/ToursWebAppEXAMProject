@@ -53,6 +53,9 @@
                     </div>
                 </div>
                 <div class="displayFlexCol">
+                    
+                    @await Html.PartialAsync("_RecommedationsForCreatingMapsLinkPartial");
+                    
                     <label asp-for="CountryMapPath"></label>
                     <input type="text" asp-for="CountryMapPath" />
                     <span asp-validation-for="CountryMapPath"></span>

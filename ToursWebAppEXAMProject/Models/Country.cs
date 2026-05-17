@@ -32,12 +32,10 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(50, ErrorMessage = "Название столицы страны не должно содержать более 50 символов")]
         public string Capital { get; set; } = "Столица страны";
 
-        [Required(ErrorMessage = "Выберите титульную картинку страны")]
         [Display(Name = "Титульная картинка страны")]
         [StringLength(100, ErrorMessage = "Путь к титульной картинке страны не должен содержать более 100 символов")]
         public string? TitleImagePath { get; set; }
 
-        [Required(ErrorMessage = "Выберите ссылку на карту страны в GoogleMaps")]
         [Display(Name = "Ссылка на карту страны в GoogleMaps")]
         [StringLength(200, ErrorMessage = "Ссылка на карту страны в GoogleMaps не должна содержать более 200 символов")]
         public string? CountryMapPath { get; set; }

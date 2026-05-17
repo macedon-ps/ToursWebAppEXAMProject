@@ -38,7 +38,6 @@ namespace ToursWebAppEXAMProject.Models
         [Display(Name = "Является ли столицей страны ?")]
         public bool isCapital { get; set; } = false;
 
-        [Required(ErrorMessage = "Выберите титульную картинку города")]
         [Display(Name = "Титульная картинка города")]
         [StringLength(100, ErrorMessage = "Путь к титульной картинке города не должен содержать более 100 символов")]
         public string? TitleImagePath { get; set; }
