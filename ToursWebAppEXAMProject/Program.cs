@@ -103,8 +103,8 @@ else
 	app.UseHsts();
 }
 
-
-app.UseHttpsRedirection();
+// отключил, чтобы не конфликтовало с Render, не сбрасывало Deploy
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
