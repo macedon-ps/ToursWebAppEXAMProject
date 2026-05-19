@@ -9,11 +9,13 @@ namespace ToursWebAppEXAMProject.Controllers
 	{
         private readonly SupportUtils _SupportUtils;
         private readonly ILogger<SupportController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public SupportController(SupportUtils SupportUtils, ILogger<SupportController> logger)
-		{
+        public SupportController(SupportUtils SupportUtils, ILogger<SupportController> logger, IConfiguration configuration)
+        {
             _SupportUtils = SupportUtils;
             _logger = logger;
+            _configuration = configuration;
         }
 
 
@@ -104,12 +106,16 @@ namespace ToursWebAppEXAMProject.Controllers
 
         public IActionResult GetMap()
         {
+            ViewData["MapApiKey"] = _configuration["MAP_API_KEY"];
+
             return View("OdessaStepMap");
         }
 
 
         public IActionResult GetMap2()
         {
+            ViewData["MapApiKey"] = _configuration["MAP_API_KEY"];
+
             return View("KhersonStepMap");
         }
 

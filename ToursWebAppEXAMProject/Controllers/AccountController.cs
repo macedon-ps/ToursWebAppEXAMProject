@@ -13,12 +13,14 @@ namespace ToursWebAppEXAMProject.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<AccountController> _logger;
+        private readonly EmailService _emailService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger, EmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -71,8 +73,13 @@ namespace ToursWebAppEXAMProject.Controllers
                             protocol: HttpContext.Request.Scheme);
 
                         // отправка сообщения на эл.почту для подтверждения регистрации
-                        EmailService emailService = new EmailService();
-                        await emailService.SendEmailAsync(viewModel.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
+
+                        // версия для Development 
+                        // EmailService emailService = new EmailService();
+                        // await emailService.SendEmailAsync(...);
+
+                        // версия для Production
+                        await _emailService.SendEmailAsync(viewModel.Email, $"Confirm the registration of a new user {user.UserName}", $"Подтвердите регистрацию нового пользователя {user.UserName} в приложении, перейдя по ссылке: <a href='{callbackUrl}'>Confirm a new user's registration for {user.UserName}</a>");
                         _logger.LogDebug($"Отправлено сообщение пользователю {viewModel.Email} для подтверждения его email. ");
 
                         var message = $"Для завершения регистрации нового пользователя приложения {user.UserName}, проверьте электронную почту {user.Email} и перейдите по ссылке, указанной в письме";

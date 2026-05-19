@@ -2,20 +2,26 @@
 <html>
   <head>
     <title>Simple Marker</title>
-    <!-- The callback parameter is required, so we use console.debug as a noop -->
-    @*{
+    
+    @*Версия для Development*@
+    @*@{
         var url = $"https://maps.googleapis.com/maps/api/js?key={ConfigMapApi.GetMapApiKey()}";
     }*@
-    @*<script async src="@url">
-    </script>*@
+    
+    @*Версия для Production*@
+    @{
+        var apiKey = ViewData["MapApiKey"];
+        var url = $"https://maps.googleapis.com/maps/api/js?key={apiKey}";
+    }
+    
+    <script async src="@url">
+    </script>
+    
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
       gmp-map {
         height: 100%;
       }
-
-      /* Optional: Makes the sample page fill the window. */
+      
       html,
       body {
          height:100%;
@@ -23,6 +29,7 @@
          padding: 0.5em;
       }
     </style>
+
   </head>
   <body>
     <gmp-map center="46.487117767333984,30.727792739868164" zoom="14" map-id="DEMO_MAP_ID">
