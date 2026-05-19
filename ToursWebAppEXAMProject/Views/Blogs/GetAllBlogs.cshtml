@@ -8,25 +8,36 @@
     @await Html.PartialAsync("../Home/_HomeButtonMenuPartial")
 
     <div class="homeHeader">
-        @foreach(var blog in Model)
+        
+        @if (Model == null || !Model.Any())
         {
             <div>
-                <div class="titleImage">
-                    <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" class="blog-foto">
-                </div>
-                <div class="displayFlexCol">
-                    <div>
-                        <h2>@blog.Name</h2>
-                    </div>
-                    <div>
-                        <h4>@blog.ShortDescription</h4>
-                    </div>
-                    <div class="dateAdded">
-                        <h4>@blog.DateAdded</h4>
-                        <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
-                    </div>
-                </div>
-            </div> 
+                <h3 class="title marginTop2">Извините, но блогов в БД пока нет</h3>
+            </div>
         }
+        else
+        {
+            @foreach (var blog in Model)
+            {
+                <div>
+                    <div class="titleImage">
+                        <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" class="blog-foto">
+                    </div>
+                    <div class="displayFlexCol">
+                        <div>
+                            <h2>@blog.Name</h2>
+                        </div>
+                        <div>
+                            <h4>@blog.ShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@blog.DateAdded</h4>
+                            <a asp-controller="Blogs" asp-action="GetBlog" asp-route-id="@blog.Id">Подробнее ...</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        
     </div>
 </div>

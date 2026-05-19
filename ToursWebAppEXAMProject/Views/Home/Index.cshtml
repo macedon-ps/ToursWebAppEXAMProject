@@ -42,7 +42,7 @@
                 }
             </div>
             <div class="col-6 col-12-medium">
-                @if (Model.AllBlogs == null)
+                @if (Model.AllBlogs == null || !Model.AllBlogs.Any())
                 {
                     <div>
                         <h3 class="title marginTop2">Извините, но блогов в БД пока нет</h3>

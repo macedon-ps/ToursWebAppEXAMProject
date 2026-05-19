@@ -7,27 +7,37 @@
     @await Html.PartialAsync("../Home/_HomeButtonMenuPartial")
 
     <div class="homeHeader">
-        @foreach(var newItem in Model)
+       @if (Model == null || !Model.Any())
         {
             <div>
-                <div class="titleImage">
-                    <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" class="new-foto">
-                </div>
-                <div class="displayFlexCol">
-                    <div>
-                        <h2>@newItem.Name</h2>
-                    </div>
-                    <div>
-                        <h4>@newItem.ShortDescription</h4>
-                    </div>
-                    <div class="dateAdded">
-                        <h4>@newItem.DateAdded</h4>
-                        <a asp-controller="News" asp-action="GetNews" asp-route-id="@newItem.Id">Подробнее ...</a>
-                    </div>
-                </div>
-            </div> 
+                <h3 class="title marginTop2">Извините, но новостей в БД пока нет</h3>
+            </div>
         }
-    </div>
+        else
+        {
+            @foreach (var newItem in Model)
+            {
+                <div>
+                    <div class="titleImage">
+                        <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" class="new-foto">
+                    </div>
+                    <div class="displayFlexCol">
+                        <div>
+                            <h2>@newItem.Name</h2>
+                        </div>
+                        <div>
+                            <h4>@newItem.ShortDescription</h4>
+                        </div>
+                        <div class="dateAdded">
+                            <h4>@newItem.DateAdded</h4>
+                            <a asp-controller="News" asp-action="GetNews" asp-route-id="@newItem.Id">Подробнее ...</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+     </div>
 </div>
  
     

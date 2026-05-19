@@ -12,17 +12,26 @@
         <hr class="horizontal-line" />
         <br />
                 
-        <div class="displayFlexRow">
-            <h4>@Model.Keyword</h4>
-            <h4>Дата: @Model.DateAdded</h4>
-        </div>
-                       
-        @await Html.PartialAsync("_MainPartial")
-        @await Html.PartialAsync("_AboutPartial")
-        @await Html.PartialAsync("_DetailsPartial")
-        @await Html.PartialAsync("_OperationModePartial")
-        @await Html.PartialAsync("_PhotoGalleryPartial")
-        @await Html.PartialAsync("_FeedbackPartial")
+        @if(Model == null)
+        {
+            <div>
+                <h3 class="title marginTop2">Извините, но страница About пока в разработке</h3>
+            </div>
+        }
+        else
+        {
+            <div class="displayFlexRow">
+                <h4>@Model.Keyword</h4>
+                <h4>Дата: @Model.DateAdded</h4>
+            </div>
+
+            @await Html.PartialAsync("_MainPartial")
+            @await Html.PartialAsync("_AboutPartial")
+            @await Html.PartialAsync("_DetailsPartial")
+            @await Html.PartialAsync("_OperationModePartial")
+            @await Html.PartialAsync("_PhotoGalleryPartial")
+            @await Html.PartialAsync("_FeedbackPartial")
+        }
  
     </div>
 </div>
