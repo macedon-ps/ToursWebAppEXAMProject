@@ -88,7 +88,8 @@ builder.Services.AddDbContext<TourFirmaDBContext>(options =>
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
 builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
-builder.Configuration.Bind("MapApi", new ConfigMapApi());
+// временно, для проверки деплоя
+//builder.Configuration.Bind("MapApi", new ConfigMapApi());
 
 var app = builder.Build();
 

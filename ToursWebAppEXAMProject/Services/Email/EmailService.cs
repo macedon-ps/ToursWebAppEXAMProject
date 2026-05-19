@@ -33,7 +33,8 @@ namespace ToursWebAppEXAMProject.Services.Email
                 // открытие соединения по протоколу SMTP
                 await client.ConnectAsync(ConfigEmail.SmtpServer, ConfigEmail.PortSmtp, ConfigEmail.UseSslSmtp);
                 // аутентификация по электронной почте и коду для приложения для аккаунта
-                await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
+                // временно, для проверки деплоя
+                // await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
                 // отправка сообщения
                 await client.SendAsync(emailMessage);
                 // закрытие соединения
@@ -66,7 +67,8 @@ namespace ToursWebAppEXAMProject.Services.Email
                 // открытие соединения по протоколу SMTP
                 await client.ConnectAsync(ConfigEmail.SmtpServer, ConfigEmail.PortSmtp, ConfigEmail.UseSslSmtp);
                 // аутентификация по электронной почте и коду для приложения для аккаунта
-                await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
+                // временно, для проверки деплоя
+                // await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
                 // отправка сообщения
                 await client.SendAsync(emailMessage);
                 // закрытие соединения
@@ -83,8 +85,9 @@ namespace ToursWebAppEXAMProject.Services.Email
             using (var client = new ImapClient())
             {
                 await client.ConnectAsync(ConfigEmail.ImapServer, ConfigEmail.PortImap, ConfigEmail.UseSslImap);
-                await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
-                
+                // временно , для проверки деплоя   
+                //await client.AuthenticateAsync(ConfigEmail.Email, CodeApp.GetPassword());
+
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
 
