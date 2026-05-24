@@ -1,4 +1,8 @@
-﻿@{
+﻿@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+}
+
+@{
     ViewData["Title"] = "Страница поддержки приложения";
 }
 
@@ -10,34 +14,42 @@
         <h1 class="title">Страница поддержки пользователей приложения:</h1>
         <hr class="horizontal-line" />
         <br />
-        <div>
-            <h2 class="title">Перевод текста:</h2>
-        </div>
-        <a href="https://translate.google.com.ua/" target="_blank">Google Translate</a>
-        <a href="https://www.reverso.net/text-translation" target="_blank">Reverso Translate</a>
-        <br />
-        <a asp-controller="Support" asp-action="Translate">Перевод текста через Google Translate API</a>
+        
+        <h2 class="title">Показать, где я</h2>
+
+        @await Html.PartialAsync("_WhereAmIMapPartial")
+        
+        @* тоже вариант
+        <partial name="_WhereAmIMapPartial" />
+        *@
 
         <hr class="horizontal-line" />
         <br />
 
-        <h2 class="title">КА "ШАГ" на картах Одессы и Херсона:</h2>
+        <h2 class="title">Показать, что рядом</h2>
+        <br />
 
-        <div class="displayFlexRow">
-            <div class="titleImage50">
-                <h3>Карта Одессы</h3>
-                <div class="height270">
-                    <img src="~/images/Maps/Odessa.png" alt="Карта Одессы" align="left">
-                </div>
-                <a asp-controller="Support" asp-action="GetMap">КА "ШАГ" (Одесса)</a>
-            </div>
-            <div class="titleImage50 ">
-                <h3>Карта Херсона</h3>
-                <div class="height270">
-                    <img src="~/images/Maps/Kherson.png" alt="Карта Херсона" align="left">
-                </div>
-                <a asp-controller="Support" asp-action="GetMap2">КА "ШАГ" (Херсон)</a>
-            </div>
-        </div>
+        <h2 class="title">Проложить маршрут</h2>
+        <br />
+
+        <h2 class="title">Показать прогноз погоды</h2>
+        <br />
+
+        <h2 class="title">Перевести текст:</h2>
+        <a href="https://translate.google.com.ua/" target="_blank">Google Translate</a>
+        <a href="https://www.reverso.net/text-translation" target="_blank">Reverso Translate</a>
+        <br />
+        @*<a asp-controller="Support" asp-action="Translate">Перевод текста через Google Translate API</a>*@
+
+        <hr class="horizontal-line" />
+        <br />
+        
     </div>
 </div>
+
+@section Scripts {
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="~/js/support-map.js"></script>
+}
