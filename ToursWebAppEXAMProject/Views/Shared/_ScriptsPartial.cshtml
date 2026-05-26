@@ -10,4 +10,14 @@
     main.js
      <script src="~/js/scripts.min.js" asp-append-version="true"></script>
 *@
-   
+<script>
+    
+    const burgerBtn = document.getElementById("burgerBtn");
+    const nav = document.getElementById("nav");
+
+    burgerBtn.addEventListener("click", () =>
+    {
+        nav.classList.toggle("active");
+    });
+
+</script>   

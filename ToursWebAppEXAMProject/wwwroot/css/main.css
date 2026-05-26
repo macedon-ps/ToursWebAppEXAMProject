@@ -199,17 +199,18 @@ body {
 
 .homeButton a, .searchButton a, .editButton a,
 .supportButton a, .aboutButton a, .accountButton a,
-.usersButton a, .rolesButton a, .errorButton a, 
+.usersButton a, .rolesButton a, .errorButton a,
 .addCityButton a {
 	display: inline-block;
 	padding: 10px 25px;
 	color: white;
 	background-color: #008dab;
 	text-decoration: none;
-	min-width: 12%;
+	width: 8em;
 	border-radius: 10px;
 	text-align: center;
 	margin-right: 0.5em;
+	margin-bottom: 1em;
 }
 .citiesList {
 	padding-left: 1em;
@@ -1674,9 +1675,6 @@ textarea,
 	}
 
 		article.blog-post .comments {
-			position: absolute;
-			top: 0;
-			right: 0;
 			height: 32px;
 			line-height: 24px;
 			padding-left: 40px;
@@ -1750,27 +1748,30 @@ textarea,
 		background-color: #007294;
 	}
 
-	#header {
-		background-image: -moz-linear-gradient(top, #008ead, #007b9d);
-		background-image: -webkit-linear-gradient(top, #008ead, #007b9d);
-		background-image: linear-gradient(top, #008ead, #007b9d);
-		-moz-box-sizing: content-box;
-		-webkit-box-sizing: content-box;
-		box-sizing: content-box;
-		position: relative;
-		margin: 2.5% 0 2.5% 0;
-		padding: 0 40px 0 40px;
-		border-radius: 10px;
-		border: solid 1px #006e8b;
-		box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
-		background-color: #007b9d;
-		height: 86px;
-	}
+		#header {
+			background-image: -moz-linear-gradient(top, #008ead, #007b9d);
+			background-image: -webkit-linear-gradient(top, #008ead, #007b9d);
+			background-image: linear-gradient(top, #008ead, #007b9d);
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+			/*margin: 2.5% 0 2.5% 0;*/
+			padding: 0 40px 0 40px;
+			border-radius: 10px;
+			border: solid 1px #006e8b;
+			box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+			background-color: #007b9d;
+			height: 86px;
+		}
+
+		#header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
 
 		#header h1 {
-			position: absolute;
-			left: 40px;
-			top: 0;
 			color: #fff;
 			font-size: 2.4em;
 			letter-spacing: -2px;
@@ -1782,17 +1783,19 @@ textarea,
 				text-decoration: none;
 			}
 
-		#header nav {
-			position: absolute;
-			right: 40px;
-			top: 1px;
+		#nav {
 			line-height: 84px;
 			text-transform: lowercase;
 			font-size: 1.3em;
 			letter-spacing: -1px;
 		}
 
-			#header nav a {
+		#nav {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+		}
+			#nav a {
 				display: inline-block;
 				text-decoration: none;
 				color: #fff;
@@ -1800,7 +1803,12 @@ textarea,
 				outline: 0;
 			}
 
-				#header nav a.current-page-item {
+			#nav a {
+				font-size: 18px;
+				border-radius: 8px;
+			}
+
+				#nav a.current-page-item {
 					background-image: -moz-linear-gradient(top, #007b99, #007897);
 					background-image: -webkit-linear-gradient(top, #007b99, #007897);
 					background-image: linear-gradient(top, #007b99, #007897);
@@ -1808,50 +1816,21 @@ textarea,
 					box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
 				}
 
-				#header nav a:hover {
+				#nav a:hover {
 					background-image: -moz-linear-gradient(top, #0782a0, #077d9b);
 					background-image: -webkit-linear-gradient(top, #0782a0, #077d9b);
 					background-image: linear-gradient(top, #0782a0, #077d9b);
 					background-color: #0882a1;
 					box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.05), 0px 0px 5px 1px rgba(255, 255, 255, 0.05);
 				}
+/* Nav */
 
-/* Banner */
-
-	#banner-wrapper {
-		background: #c8d2bc url(assets/bg1.png);
-		padding: 2em 0;
-	}
-
-	#banner {
-		position: relative;
-		width: 100%;
-		padding: 6em 0;
-		border-radius: 10px;
-		background-image: url(assets/banner.jpg);
-		background-size: cover;
-		text-align: center;
-		box-shadow: inset 0 0 0 20px #fff;
-	}
-
-		#banner h2 {
-			font-size: 3.3em;
-			color: #fff;
-			text-align: center;
-			letter-spacing: -2px;
-			margin: 0;
-		}
-
-		#banner span {
-			display: block;
-			left: 0;
-			margin: 0.5em 0 0 0;
-			font-size: 1.6em;
-			color: #fff;
-			letter-spacing: -1px;
-			text-transform: lowercase;
-			opacity: 0.8;
-		}
+.burger {
+	display: none;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
 
 /* Main */
 
@@ -1905,29 +1884,14 @@ textarea,
 					line-height: 76px;
 				}
 
-				#header nav {
+				#nav {
 					line-height: 74px;
 					font-size: 1.1em;
 				}
 
-					#header nav a {
+					#nav a {
 						padding: 0 20px 0 20px;
 					}
-
-		/* Banner */
-
-			#banner {
-				width: 100%;
-				padding: 5em 0;
-			}
-
-				#banner h2 {
-					font-size: 3em;
-				}
-
-				#banner span {
-					font-size: 1.4em;
-				}
 
 		/* Footer */
 
@@ -1946,10 +1910,6 @@ textarea,
 
 /* Small */
 
-	#navPanel, #titleBar {
-		display: none;
-	}
-
 	@media screen and (max-width: 980px) {
 
 		/* Basic */
@@ -1957,12 +1917,14 @@ textarea,
 			html, body {
 				overflow-x: hidden;
 			}
-
+			
 		/* Page Wrapper */
 
-			#page-wrapper {
-				padding-top: 44px;
-			}
+        #page-wrapper {
+            padding-top: 44px;
+            display: flex;
+            flex-direction: column;	
+        }
 
 		/* Header */
 
@@ -1974,18 +1936,58 @@ textarea,
 			}
 
 			#header {
+				display: flex;
+				height: 100%;
+				margin-bottom: 1em;
+				/*flex-direction: column;*/
+			}
+
+
+			.burger {
+				display: block;
+				font-size: 32px;
+				z-index: 1001;
+			}
+
+			a#logo {
+				font-size: 24px;
+				margin-left: 1.5em;
+			}
+
+			#nav {
 				display: none;
+				/*flex-direction: column;*/
+				justify-content: space-around;
+				flex-wrap: wrap;
+				align-items: flex-start;
+				width: 100%;
+				/*padding-top: 20px;*/
+				/*margin-top: 15px;*/
 			}
 
-			#banner {
-				padding: 6em 0;
+			#nav.active {
+				display: flex;
 			}
 
-				#banner h2 {
-					font-size: 2.5em;
-				}
+			#nav a {
+				padding: 0 10px;
+				border-bottom: 1px solid #ddd;
+				font-size: 20px;
+				background-color: #7dced8;
+				min-width: 5.5em;
+				flex-wrap: wrap;
+				text-align: center;
+			}
 
-		/* Nav */
+			.homeButton a, .searchButton a, .editButton a,
+			.supportButton a, .aboutButton a, .accountButton a,
+			.usersButton a, .rolesButton a, .errorButton a,
+			.addCityButton a {
+				text-align: center;
+				margin-bottom: 1em;
+				padding: 10px;
+			}
+			/* Nav */
 
 			#page-wrapper {
 				-moz-backface-visibility: hidden;
@@ -2009,9 +2011,6 @@ textarea,
 				transition: transform 0.5s ease;
 				display: block;
 				height: 44px;
-				left: 0;
-				position: fixed;
-				top: 0;
 				width: 100%;
 				z-index: 10001;
 				text-align: center;
@@ -2025,18 +2024,12 @@ textarea,
 				}
 
 				#titleBar .toggle {
-					position: absolute;
-					top: 0;
-					left: 0;
 					width: 80px;
 					height: 60px;
 				}
 
 					#titleBar .toggle:after {
 						content: '';
-						position: absolute;
-						left: 4px;
-						top: 4px;
 						color: #fff;
 						text-align: center;
 						line-height: 31px;
@@ -2049,12 +2042,9 @@ textarea,
 
 					#titleBar .toggle:before {
 						content: '';
-						position: absolute;
 						width: 20px;
 						height: 30px;
 						background: url("assets/mobileUI-site-nav-opener-bg.svg");
-						top: 16px;
-						left: 19px;
 					}
 
 					#titleBar .toggle:active:after {
@@ -2076,8 +2066,6 @@ textarea,
 				height: 100%;
 				left: 0;
 				overflow-y: auto;
-				position: fixed;
-				top: 0;
 				width: 275px;
 				z-index: 10002;
 				background: #00536F;
@@ -2103,7 +2091,7 @@ textarea,
 					#navPanel .link:last-child {
 						border-bottom: 0;
 					}
-
+			
 			body.navPanel-visible #page-wrapper {
 				-moz-transform: translateX(275px);
 				-webkit-transform: translateX(275px);
@@ -2178,30 +2166,6 @@ textarea,
 				width: 100%;
 			}
 
-		/* Banner */
-
-			#banner-wrapper {
-				background: #c8d2bc url(assets/bg1.png);
-				padding: 20px 0;
-			}
-
-			#banner {
-				box-shadow: inset 0 0 0 10px #fff;
-				padding: 4em 1em;
-			}
-
-				#banner h2 {
-					font-size: 2em;
-					letter-spacing: -2px;
-					line-height: 1.25em;
-				}
-
-				#banner span {
-					font-size: 1.25em;
-					letter-spacing: -1px;
-					line-height: 1.25em;
-				}
-
 		/* Main */
 
 			#main {
@@ -2233,12 +2197,8 @@ textarea,
 .homePage, .searchPage, .editPage,
 .supportPage, .aboutPage, .accountPage,
 .usersPage, .rolesPage, .errorPage {
-	position: relative;
 	height: 550px;
 	background-color: #7dced8;
-}
-.homePage {
-	
 }
 .searchPage {
 	background-image: url(../background/Search.png);
@@ -2341,6 +2301,7 @@ textarea,
 .supportButton, .aboutButton, .accountButton,
 .usersButton, .rolesButton, .errorButton {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	background-color: #7dced8;
 	margin-top: 1em;
