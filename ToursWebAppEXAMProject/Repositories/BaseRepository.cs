@@ -117,45 +117,43 @@ namespace ToursWebAppEXAMProject.Repositories
             
 			try
 			{
-				// предполагается возможность поиска коллекции сущностей:
-				// по полному названию						keyword - полное название, IsFullName = true
-				// по ключевому слову в названии			keyword - ключевое слово,  IsFullName = false
-				// p.s. предполагается, что одинаковых названий м.б. несколько, т.к. нет ограничения уникальности для названия объекта сущности
+                // предполагается возможность поиска коллекции сущностей:
+                // по полному названию						keyword - полное название, IsFullName = true
+                // по ключевому слову в названии			keyword - ключевое слово,  IsFullName = false
+                // p.s. предполагается, что одинаковых названий м.б. несколько, т.к. нет ограничения уникальности для названия объекта сущности
 
-				var items = new List<T>();
-				
-				if (isFullName)
-				{
-					if (typeof(T) == typeof(TechTaskItem))
-					{
-						items = dbSetEntityItems
-						.FromSqlRaw($"Select * from {itemTypeName} where Description = '{keyword}'")
-						.ToList();
-					}
-					else 
-					{
-                        items = dbSetEntityItems
-                        .FromSqlRaw($"Select * from {itemTypeName} where Name = '{keyword}'")
-                        .ToList();
+                IQueryable<T> query = dbSetEntityItems;
+
+                if (typeof(T) == typeof(TechTaskItem))
+                {
+                    if (isFullName)
+                    {
+                        query = query.Where(x =>
+                            EF.Property<string>(x, "Description") == keyword);
                     }
-				}
-				else
-				{
-					if(typeof(T) == typeof(TechTaskItem))
-					{
-                        items = dbSetEntityItems
-						.FromSqlRaw($"Select * from {itemTypeName} where Description like '%{keyword}%'")
-						.ToList();
-					}
-					else
-					{
-                        items = dbSetEntityItems
-                        .FromSqlRaw($"Select * from {itemTypeName} where Name like '%{keyword}%'")
-                        .ToList();
+                    else
+                    {
+                        query = query.Where(x =>
+                            EF.Property<string>(x, "Description").Contains(keyword));
                     }
-				}
-												
-				if (items == null)
+                }
+                else
+                {
+                    if (isFullName)
+                    {
+                        query = query.Where(x =>
+                            EF.Property<string>(x, "Name") == keyword);
+                    }
+                    else
+                    {
+                        query = query.Where(x =>
+                            EF.Property<string>(x, "Name").Contains(keyword));
+                    }
+                }
+
+                var items = query.ToList();
+
+                if (items == null)
 				{
                     _logger.LogWarning($"Выборка моделей {itemTypeName} по названию / ключевому слову \"{keyword}\" не осуществлена.\n");
                    
