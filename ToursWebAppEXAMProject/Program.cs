@@ -82,7 +82,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // подключение сервиса использования PostgreSQL
 
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("NeonConnection")));
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());

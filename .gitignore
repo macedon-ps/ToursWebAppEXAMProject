@@ -7,6 +7,9 @@
 /wwwroot/images/
 
 # User-specific files
+// password for Bd parole in ConnectionString
+CodeBd.cs
+
 // password for code app
 CodeApp.cs
 // code for GoogleMapApi
