@@ -79,8 +79,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = false;
 });
 
-// подключение сервиса использования MS SQL Server и БД
-//builder.Services.AddDbContext<TourFirmaDBContext>(x=>x.UseSqlServer(ConfigData.ConnectionString));
+// подключение сервиса использования PostgreSQL
 
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
