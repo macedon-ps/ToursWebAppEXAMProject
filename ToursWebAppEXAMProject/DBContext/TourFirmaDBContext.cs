@@ -31,14 +31,7 @@ namespace ToursWebAppEXAMProject.DBContext
 		public virtual DbSet<AboutPageVersion> AboutPageVersions { get; set; } = null!;
 		public virtual DbSet<PhotoGalleryImage> PhotoGalleryImages { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				optionsBuilder.UseSqlServer(ConfigData.ConnectionString);
-			}
-		}
-
+        
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
             // устранение ошибки определения первичного ключа для IdentityUsersLogins
@@ -50,25 +43,25 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.Name)
 					.HasMaxLength(200)
-					.HasDefaultValueSql("('Заголовок блога')");
+					.HasDefaultValue("('Заголовок блога')");
 
 				entity.Property(e => e.Message)
 					.HasMaxLength(400)
-					.HasDefaultValueSql("('Сообщение')");
+					.HasDefaultValue("('Сообщение')");
 
-				entity.Property(e => e.FullMessageLine).HasDefaultValueSql("('Вся строка сообщений')");
+				entity.Property(e => e.FullMessageLine).HasDefaultValue("('Вся строка сообщений')");
 
 				entity.Property(e => e.ShortDescription)
 					.HasMaxLength(200)
-					.HasDefaultValueSql("('Краткое описание темы блога')");
+					.HasDefaultValue("('Краткое описание темы блога')");
 
-				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание темы блога')");
+				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание темы блога')");
 
 				entity.Property(e => e.TitleImagePath)
 					.HasMaxLength(100)
-					.HasDefaultValueSql("('Нет титульной картинки')");
+					.HasDefaultValue("('Нет титульной картинки')");
 
-                entity.Property(e => e.DateAdded).HasColumnType("datetime");
+                entity.Property(e => e.DateAdded);
 			});
 
 			modelBuilder.Entity<City>(entity =>
@@ -77,19 +70,19 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.Name)
 					.HasMaxLength(50)
-                    .HasDefaultValueSql("('Название города')");
+                    .HasDefaultValue("('Название города')");
 
                 entity.Property(e => e.ShortDescription)
                     .HasMaxLength(400)
-                    .HasDefaultValueSql("('Краткое описание города')");
+                    .HasDefaultValue("('Краткое описание города')");
 
-                entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание города')");
+                entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание города')");
 
-                entity.Property(e => e.isCapital).HasDefaultValueSql("(0)");
+                entity.Property(e => e.isCapital).HasDefaultValue("(0)");
 
                 entity.Property(e => e.TitleImagePath)
                     .HasMaxLength(100)
-                    .HasDefaultValueSql("('Нет титульной картинки города')");
+                    .HasDefaultValue("('Нет титульной картинки города')");
 
                 entity.HasOne(d => d.Country)
 					.WithMany(p => p.Cities)
@@ -104,25 +97,25 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.Name)
 					.HasMaxLength(50)
-					.HasDefaultValueSql("('Название страны')");
+					.HasDefaultValue("('Название страны')");
 
                 entity.Property(e => e.ShortDescription)
                     .HasMaxLength(400)
-                    .HasDefaultValueSql("('Краткое описание страны')");
+                    .HasDefaultValue("('Краткое описание страны')");
 
-                entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание страны')");
+                entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание страны')");
 
                 entity.Property(e => e.Capital)
                     .HasMaxLength(50)
-                    .HasDefaultValueSql("('Столица страны')");
+                    .HasDefaultValue("('Столица страны')");
 
                 entity.Property(e => e.TitleImagePath)
                     .HasMaxLength(100)
-                    .HasDefaultValueSql("('Нет титульной картинки страны')");
+                    .HasDefaultValue("('Нет титульной картинки страны')");
 
                 entity.Property(e => e.CountryMapPath)
                     .HasMaxLength(200)
-                    .HasDefaultValueSql("('Нет ссылки на карту страны в GoogleMaps')");
+                    .HasDefaultValue("('Нет ссылки на карту страны в GoogleMaps')");
 
             });
 
@@ -141,9 +134,9 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("DateTour");
 
-				entity.Property(e => e.DateEnd).HasColumnType("datetime");
+				entity.Property(e => e.DateEnd);
 
-				entity.Property(e => e.DateStart).HasColumnType("datetime");
+				entity.Property(e => e.DateStart);
 			});
 
 			modelBuilder.Entity<Food>(entity =>
@@ -157,7 +150,7 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("Hotel");
 
-				entity.Property(e => e.LevelHotel).HasDefaultValueSql("((2))");
+				entity.Property(e => e.LevelHotel).HasDefaultValue("((2))");
 
 				entity.Property(e => e.Name).HasMaxLength(200);
 
@@ -174,19 +167,19 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.Name)
 					.HasMaxLength(200)
-					.HasDefaultValueSql("('Заголовок новости')");
+					.HasDefaultValue("('Заголовок новости')");
 
 				entity.Property(e => e.ShortDescription)
 					.HasMaxLength(400)
-					.HasDefaultValueSql("('Краткое описание новости')");
+					.HasDefaultValue("('Краткое описание новости')");
 
-				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание новости')");
+				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание новости')");
 
 				entity.Property(e => e.TitleImagePath)
 					.HasMaxLength(100)
-                    .HasDefaultValueSql("('Нет титульной картинки')");
+                    .HasDefaultValue("('Нет титульной картинки')");
 				
-				entity.Property(e => e.DateAdded).HasColumnType("datetime");
+				entity.Property(e => e.DateAdded);
 			});
 
 			modelBuilder.Entity<Offer>(entity =>
@@ -218,7 +211,7 @@ namespace ToursWebAppEXAMProject.DBContext
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(200)
-                    .HasDefaultValueSql("('Название туристического продукта')");
+                    .HasDefaultValue("('Название туристического продукта')");
 
                 entity.HasOne(d => d.Country)
                    .WithMany(p => p.Products)
@@ -234,15 +227,15 @@ namespace ToursWebAppEXAMProject.DBContext
 
                 entity.Property(e => e.ShortDescription)
 					.HasMaxLength(400)
-					.HasDefaultValueSql("('Краткое описание туристического продукта')");
+					.HasDefaultValue("('Краткое описание туристического продукта')");
 
-				entity.Property(e => e.FullDescription).HasDefaultValueSql("('Полное описание туристического продукта')");
+				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание туристического продукта')");
 
 				entity.Property(e => e.TitleImagePath)
 					.HasMaxLength(100)
-                    .HasDefaultValueSql("('Нет титульной картинки')");
+                    .HasDefaultValue("('Нет титульной картинки')");
 
-                entity.Property(e => e.DateAdded).HasColumnType("datetime");
+                entity.Property(e => e.DateAdded);
 
 			});
 
@@ -254,7 +247,7 @@ namespace ToursWebAppEXAMProject.DBContext
 
 				entity.Property(e => e.Position)
 					.HasMaxLength(100)
-					.HasDefaultValueSql("('сотрудник')");
+					.HasDefaultValue("('сотрудник')");
 
 				entity.Property(e => e.Surname).HasMaxLength(50);
 			});
@@ -339,8 +332,7 @@ namespace ToursWebAppEXAMProject.DBContext
                     .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    .IsRequired();
 
                 entity.Property(e => e.IsCompleted)
                     .IsRequired();
