@@ -79,13 +79,18 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = false;
 });
 
-// подключение сервиса использования PostgreSQL
-var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION"); 
-// for Development mode
-// ?? CodeBd.GetConnectionString();
-
-builder.Services.AddDbContext<TourFirmaDBContext>(options =>
+if (builder.Environment.IsDevelopment())
+{
+    var connectionString = CodeBd.GetConnectionString();
+    builder.Services.AddDbContext<TourFirmaDBContext>(options =>
     options.UseNpgsql(connectionString));
+}
+else
+{
+    var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION");
+    builder.Services.AddDbContext<TourFirmaDBContext>(options =>
+    options.UseNpgsql(connectionString));
+}
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
