@@ -80,7 +80,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 // подключение сервиса использования PostgreSQL
-var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION") ?? CodeBd.GetConnectionString();
+var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION"); 
+// for Development mode
+// ?? CodeBd.GetConnectionString();
 
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
     options.UseNpgsql(connectionString));
