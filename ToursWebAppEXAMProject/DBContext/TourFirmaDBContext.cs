@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.ConfigFiles;
-using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.DBContext
 {
@@ -78,7 +76,7 @@ namespace ToursWebAppEXAMProject.DBContext
 
                 entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание города')");
 
-                entity.Property(e => e.isCapital).HasDefaultValue("(0)");
+                entity.Property(e => e.isCapital).HasDefaultValue(0);
 
                 entity.Property(e => e.TitleImagePath)
                     .HasMaxLength(100)
@@ -150,7 +148,7 @@ namespace ToursWebAppEXAMProject.DBContext
 			{
 				entity.ToTable("Hotel");
 
-				entity.Property(e => e.LevelHotel).HasDefaultValue("((2))");
+				entity.Property(e => e.LevelHotel).HasDefaultValue(2);
 
 				entity.Property(e => e.Name).HasMaxLength(200);
 

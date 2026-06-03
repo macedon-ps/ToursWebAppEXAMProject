@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToursWebAppEXAMProject.DBContext;
 
 #nullable disable
@@ -12,8 +12,8 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    [Migration("20260426223528_SeedTechTasksHome")]
-    partial class SeedTechTasksHome
+    [Migration("20260603010401__InitialPostgres")]
+    partial class _InitialPostgres
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,33 +21,32 @@ namespace ToursWebAppEXAMProject.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -56,19 +55,19 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -81,19 +80,19 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -105,17 +104,17 @@ namespace ToursWebAppEXAMProject.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -127,10 +126,10 @@ namespace ToursWebAppEXAMProject.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -142,16 +141,16 @@ namespace ToursWebAppEXAMProject.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -162,115 +161,115 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AboutFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("AboutImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("AboutShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("AboutTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DetailsFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("DetailsImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("DetailsShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("DetailsTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("FeedbackFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FeedbackImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("FeedbackShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("FeedbackTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<bool>("IsActual")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Keyword")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("MainFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MainImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("MainShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("MainTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("OperationModeFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("OperationModeImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("OperationModeShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("OperationModeTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("PhotoGalleryFullDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhotoGalleryImagePath")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("PhotoGalleryShortDescription")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("PhotoGalleryTitle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -281,35 +280,35 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<bool>("IsCustomer")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -320,50 +319,50 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FullDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полное описание темы блога')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Полное описание темы блога')");
 
                     b.Property<string>("FullMessageLine")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Вся строка сообщений')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Вся строка сообщений')");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValueSql("('Сообщение')");
+                        .HasColumnType("character varying(400)")
+                        .HasDefaultValue("('Сообщение')");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValueSql("('Заголовок блога')");
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("('Заголовок блога')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValueSql("('Краткое описание темы блога')");
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("('Краткое описание темы блога')");
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Нет титульной картинки')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");
 
@@ -374,51 +373,50 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FullDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полное описание города')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Полное описание города')");
 
                     b.Property<string>("LocalDescription")
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("character varying(400)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValueSql("('Название города')");
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("('Название города')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValueSql("('Краткое описание города')");
+                        .HasColumnType("character varying(400)")
+                        .HasDefaultValue("('Краткое описание города')");
 
                     b.Property<string>("TitleImagePath")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Нет титульной картинки города')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('Нет титульной картинки города')");
 
                     b.Property<bool>("isCapital")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("(0)");
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 
@@ -431,30 +429,30 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Answer")
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("character varying(400)");
 
                     b.Property<DateTime?>("AnswerDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("AskerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsCustomer")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasColumnType("character varying(400)");
 
                     b.Property<DateTime?>("QuestionDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -467,53 +465,51 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Capital")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValueSql("('Столица страны')");
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("('Столица страны')");
 
                     b.Property<string>("CountryMapPath")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValueSql("('Нет ссылки на карту страны в GoogleMaps')");
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("('Нет ссылки на карту страны в GoogleMaps')");
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FullDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полное описание страны')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Полное описание страны')");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValueSql("('Название страны')");
+                        .HasColumnType("character varying(50)")
+                        .HasDefaultValue("('Название страны')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValueSql("('Краткое описание страны')");
+                        .HasColumnType("character varying(400)")
+                        .HasDefaultValue("('Краткое описание страны')");
 
                     b.Property<string>("TitleImagePath")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Нет титульной картинки страны')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('Нет титульной картинки страны')");
 
                     b.HasKey("Id");
 
@@ -524,32 +520,32 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -560,21 +556,21 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateEnd")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateStart")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("NumberOfDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("NumberOfNights")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -585,14 +581,14 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ModeOfEating")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -603,22 +599,22 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CityId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("LevelHotel")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("((2))");
+                        .HasColumnType("integer")
+                        .HasDefaultValue(2);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -631,38 +627,38 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FullDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полное описание новости')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Полное описание новости')");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValueSql("('Заголовок новости')");
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("('Заголовок новости')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValueSql("('Краткое описание новости')");
+                        .HasColumnType("character varying(400)")
+                        .HasDefaultValue("('Краткое описание новости')");
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Нет титульной картинки')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");
 
@@ -673,18 +669,18 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("SallerId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TourId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -701,17 +697,17 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AboutPageVersionId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -724,44 +720,44 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CityId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("DateAdded")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FullDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("('Полное описание туристического продукта')");
+                        .HasColumnType("text")
+                        .HasDefaultValue("('Полное описание туристического продукта')");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasDefaultValueSql("('Название туристического продукта')");
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("('Название туристического продукта')");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasDefaultValueSql("('Краткое описание туристического продукта')");
+                        .HasColumnType("character varying(400)")
+                        .HasDefaultValue("('Краткое описание туристического продукта')");
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('Нет титульной картинки')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");
 
@@ -776,26 +772,26 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Position")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValueSql("('сотрудник')");
+                        .HasColumnType("character varying(100)")
+                        .HasDefaultValue("('сотрудник')");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -806,28 +802,30 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("TechTaskPageId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderNumber");
+
                     b.HasIndex("TechTaskPageId");
 
-                    b.ToTable("TechTaskItems");
+                    b.ToTable("TechTaskItem", (string)null);
 
                     b.HasData(
                         new
@@ -877,6 +875,198 @@ namespace ToursWebAppEXAMProject.Migrations
                             IsCompleted = false,
                             OrderNumber = 6,
                             TechTaskPageId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Данная страница д.содержать:\r\n							<br /><strong>блок навигационных кнопок: </strong> \"Поиск туров\", \"Все турпродуктв\", \"Все страны\", \"Все города\", \"ТЗ для Search\"\r\n							< br />< strong > меню поиска:</ strong > страны,\r\n					города,\r\n					дат тура,\r\n					количества туристов и кнопка \"Найти тур\"\r\n							< br />< strong > информативное меню:</ strong > карта местности и описания страны,\r\n					города,\r\n					достопримечательностей\r\n							< br />< strong > галерея с фото:</ strong > фотографии страны,\r\n					городов,\r\n					достопримечательностей\r\n\r\n							< br /> По нажатию на кнопку < strong > \"Поиск туров\" или \"Найти тур\" </ strong > осуществляется < strong > функционал поиска турпродукта по заданным параметрам поиска </ strong > и выводится < strong > список всех найденных туристических продуктов </ strong > с вертикальным скроллом",
+                            IsCompleted = false,
+                            OrderNumber = 1,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "<strong>Меню поиска</strong> д.содержать: \r\n							<br/><strong>выпадающий список стран</strong> (элемент radiobutton - выбор только 1 страны);\r\n							<br/><strong>выпадающие календари</strong> с <strong>датами начала и окончания тура</strong>);\r\n							<br/><strong>выпадающий список - количество дней/ночей</strong> (элемент select - выбор 1 или больше вариантов);\r\n							<br/><strong>выпадающий список людей</strong> (взрослых) + возможность добавить детей (количество и возраст детей) (по умолчанию - 2 взрослых, без детей)\r\n							<br/><strong>кнопка \"Найти тур\"</strong>;\r\n							< br /> Д.б.организован < strong > поиск туристических продуктов по заданным параметрам </ strong > ",
+                            IsCompleted = false,
+                            OrderNumber = 2,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "<strong>Информативное меню</strong> под меню поиска, д. содержать:\r\n							<br/><strong>раскрытый список городов</strong> данной страны;\r\n							<br />(элемент select - выбор 1 или больше городов) (расположено - под страной) (при выборе страны - появляются города этой страны);\r\n							<br/><strong>д.б. карта местности</strong> (рядом с городами):\r\n							<br/><strong>описание:</strong>\r\n							<br />при выборе страны - в верхней трети - появляется <strong>описание о стране</strong>\r\n							<br />при выборе города - в средней трети - появляется <strong>описание о городе</strong>\r\n							<br />а в нижней трети - появляется <strong>описание о достопримечательности</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 3,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Д.б. реализована <strong>возможность просматривать карту страны</strong>, с нанесенными на нее городами и турпродуктами\r\n							",
+                            IsCompleted = false,
+                            OrderNumber = 4,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "Д.б. реализована <strong>галерея с фото страны, городов и достопримечательностей</strong>\r\n							<br />выводятся все фото, кот. есть в базе; если их много и они не помещаются, то появляется горизонт. скроллинг<br/>",
+                            IsCompleted = false,
+                            OrderNumber = 5,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Дополнительно:\r\n							<br />м.б. реализована <strong>галерея с фото из гостинниц, кафе, других мест</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 6,
+                            TechTaskPageId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Данная страница д. содержать:\r\n							<br/><strong>блок навигационных кнопок: </strong> \"Редактировать новости\", \"Редактировать блоги\", \"Редактировать турпродукты\", \"ТЗ для Edit\";\r\n							< br />< strong > общее меню поиска сущностей(новостей / блогов / турпродуктов) по их полному названию / или по ключевому слову </ strong > из названия сущности для выборки из БД;\r\n							< br />< strong > страницу со списком выбранных сущностей </ strong >,\r\n					отвечающих критериям поиска.",
+                            IsCompleted = false,
+                            OrderNumber = 1,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "Д.б. создана <strong>страница создания, редактирования и удаления новости</strong>, ее названия, краткого и полного описания, пути к титульной картинке",
+                            IsCompleted = false,
+                            OrderNumber = 2,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "Д.б. создана <strong>страница создания, редактирования и удаления блога</strong>, его названия, краткого и полного описания, пути к титульной картинке",
+                            IsCompleted = false,
+                            OrderNumber = 3,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "Д.б. создана <strong>страница создания, редактирования и удаления туристического продукта</strong>, его названия, краткого и полного описания, пути к титульной картинке",
+                            IsCompleted = false,
+                            OrderNumber = 4,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "Д.б. организован <strong>доступ для входа на страницу - для редактирования данных БД</strong> - только для сотрудников турфирмы, у кот. <strong> роль \"superadmin\" илм \"editor\"</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 5,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "Дополнительно:\r\n							<br />М.б. созданы <strong>3 роли с разным доступом: </strong>\r\n							<br />М.б. создана <strong>страница создания, редактирования и удаления страны</strong>, ее названия, краткого и полного описания, пути к титульной картинке\r\n							<br />М.б. создана <strong>страница создания, редактирования и удаления города</strong>, его названия, краткого и полного описания, пути к титульной картинке",
+                            IsCompleted = false,
+                            OrderNumber = 6,
+                            TechTaskPageId = 3
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "Данная страница д. содержать:\r\n							<br /><strong>блок навигационных кнопок:</strong> \"Перевод текста\", \"Карта\" или \"Прогноз погоды\", \"ТЗ для Support\";\r\n							< br /> по нажатию на кнопку < strong > \"Перевод текста\" </ strong > -раскрывается область,\r\n					в кот.слева - текст,\r\n					кот.\r\n							н.перевести,\r\n					а справа - перевод на иностр.язык\r\n							< br /> по нажатию на кнопку < strong > \"Карта\" </ strong > -раскрывается область,\r\n					в кот.появляется карта данной местности\r\n							< br /> по нажатию на кнопку < strong > \"Прогноз погоды\" </ strong > -раскрывается область,\r\n					в кот.появляется прогноз погоды для данной местности",
+                            IsCompleted = false,
+                            OrderNumber = 1,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Description = "Д.б. создана <strong>страница с возможностью перевода текстов на иностранный язык</strong> с использованием <strong>Google Translate API</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 2,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Description = "Д.б. создана <strong>страница с выводимой картой местности</strong>, с использованием <strong>Google Map API</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 3,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Description = "М.б. создана <strong>страница с прогнозом погоды для данной местности</strong>, с использованием <strong>Open Weather API</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 4,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Description = "М.б. создана <strong>страница с информацией о странах, об их географическом положении, об их достопримечательностях</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 5,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Description = "Дополнительно:\r\n							<br />М.б. создана <strong>страница с информацией о странах, об их истории, политическом устройстве, праве, традициях и обычаях местного населения, об объектах сферы гостеприимства (гостинницы, кафе и т.д.)</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 6,
+                            TechTaskPageId = 4
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Description = "Данная страница д. содержать:\r\n							<br/><strong>блок навигационных кнопок:</strong> \"Наши реквизиты\", \"Режим работы\", \"Фотогаллерея\", \"Обратная связь\", \"Edit AboutPage\", \"ТЗ для About\"\r\n							< br />< strong > блок рекизитов тур.фирмы </ strong >\r\n							< br />< strong > блок с информацией о режиме работы турфирмы </ strong >\r\n							< br />< strong > блок с фотографиями путешествий по странам мира </ strong > ",
+                            IsCompleted = false,
+                            OrderNumber = 1,
+                            TechTaskPageId = 5
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Description = "Д.б. <strong>страница для создания, редактирования и удаления разных версий страницы About</strong>.\r\n							<br />Д.б. организован <strong>доступ к данной функциональности по ролям \"superadmin\", \"editor\"</strong>",
+                            IsCompleted = false,
+                            OrderNumber = 2,
+                            TechTaskPageId = 5
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Description = "Д.б. <strong>страница с формой обратной связи с клиентами туристической фирмы</strong>\r\n							<br />Д.б. реализован <strong>функционал создания, отправки, сохранения вопросов от клиентов и просмотра  ответов на них от туристической фирмы</strong> (+ для боковой панели)",
+                            IsCompleted = false,
+                            OrderNumber = 3,
+                            TechTaskPageId = 5
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Description = "Д.б. реализована возможность <strong>звонить из приложения и отправлять сообщения по email</strong> (+ для боковой панели)",
+                            IsCompleted = false,
+                            OrderNumber = 4,
+                            TechTaskPageId = 5
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Description = "Д.б. реализована возможность <strong>общения с клиентами через социальные сети Facebook, WhatsApp, Telegram, Viber</strong> (+ для боковой панели)",
+                            IsCompleted = false,
+                            OrderNumber = 5,
+                            TechTaskPageId = 5
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Description = "Дополнительно:\r\n							<br />М.б. реализован <strong>функционал подсчета стоимости поездки</strong> (+ для боковой панели)",
+                            IsCompleted = false,
+                            OrderNumber = 6,
+                            TechTaskPageId = 5
                         });
                 });
 
@@ -884,13 +1074,13 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PageName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -933,26 +1123,26 @@ namespace ToursWebAppEXAMProject.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DateTourId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("FoodId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("HotelId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -970,57 +1160,57 @@ namespace ToursWebAppEXAMProject.Migrations
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("BirthYear")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -1029,51 +1219,9 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("ToursWebAppEXAMProject.ViewModels.TechTaskViewModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double?>("ExecuteTechTasksProgress")
-                        .HasColumnType("float");
-
-                    b.Property<bool?>("IsExecuteTechTask1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsExecuteTechTask2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsExecuteTechTask3")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsExecuteTechTask4")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsExecuteTechTask5")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsExecuteTechTask6")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PageName")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasDefaultValueSql("('страница')");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TechTaskViewModel", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1219,13 +1367,13 @@ namespace ToursWebAppEXAMProject.Migrations
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.TechTaskItem", b =>
                 {
-                    b.HasOne("ToursWebAppEXAMProject.Models.TechTaskPage", "Page")
+                    b.HasOne("ToursWebAppEXAMProject.Models.TechTaskPage", "TechTaskPage")
                         .WithMany("Tasks")
                         .HasForeignKey("TechTaskPageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Page");
+                    b.Navigation("TechTaskPage");
                 });
 
             modelBuilder.Entity("ToursWebAppEXAMProject.Models.Tour", b =>
