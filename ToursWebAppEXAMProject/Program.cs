@@ -13,6 +13,10 @@ using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.Services.TechTasks;
 using ToursWebAppEXAMProject.Utils;
 
+// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
+// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior",true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // настройка логирования через NLog и удаление всех стандартных провайдеров логирования
@@ -60,6 +64,8 @@ builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
 builder.Services.AddTransient<TechTaskItemUtils>();
 builder.Services.AddTransient<ImageStorageService>();
+// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
+// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
 builder.Services.AddScoped<MigrationService>();
 
 // подключение аутентификации и авторизации
@@ -81,11 +87,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = false;
 });
 
-builder.Services.AddDbContext<TourFirmaDBContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
+// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
+// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<SqlServerDBContext>(options =>
-options.UseNpgsql(Environment.GetEnvironmentVariable("NEON_CONNECTION")));
+options.UseSqlServer(connectionString));
+
+var connectionString2 = builder.Configuration.GetConnectionString("NeonConnection");
+builder.Services.AddDbContext<TourFirmaDBContext>(options =>
+options.UseNpgsql(connectionString2));
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
@@ -95,6 +106,8 @@ builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
 //builder.Configuration.Bind("MapApi", new ConfigMapApi());
 var app = builder.Build();
 
+// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
+// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
 using (var scope = app.Services.CreateScope())
 {
     var migration = scope.ServiceProvider.GetRequiredService<MigrationService>();
