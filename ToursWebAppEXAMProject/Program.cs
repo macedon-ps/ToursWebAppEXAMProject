@@ -4,6 +4,7 @@ using NLog.Web;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
+using ToursWebAppEXAMProject.Migrations;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.Services.Email;
@@ -59,6 +60,7 @@ builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
 builder.Services.AddTransient<TechTaskItemUtils>();
 builder.Services.AddTransient<ImageStorageService>();
+builder.Services.AddScoped<MigrationService>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
@@ -92,6 +94,13 @@ builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
 // версия для Development, пароль для email берется из класса ConfigEmail, а в Production - из переменных окружения
 //builder.Configuration.Bind("MapApi", new ConfigMapApi());
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var migration = scope.ServiceProvider.GetRequiredService<MigrationService>();
+
+    await migration.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
