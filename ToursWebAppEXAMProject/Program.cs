@@ -64,9 +64,6 @@ builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
 builder.Services.AddTransient<TechTaskItemUtils>();
 builder.Services.AddTransient<ImageStorageService>();
-// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
-// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
-builder.Services.AddScoped<MigrationService>();
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
@@ -87,16 +84,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = false;
 });
 
-// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
-// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<SqlServerDBContext>(options =>
-options.UseSqlServer(connectionString));
-
-var connectionString2 = builder.Configuration.GetConnectionString("NeonConnection");
+// строка подключения к PostgreSQL через переменную среды
+var connectionString = builder.Configuration.GetConnectionString("NeonConnection");
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
-options.UseNpgsql(connectionString2));
+options.UseNpgsql(connectionString));
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
@@ -105,15 +96,6 @@ builder.Configuration.Bind("EmailConfiguration", new ConfigEmail());
 // версия для Development, пароль для email берется из класса ConfigEmail, а в Production - из переменных окружения
 //builder.Configuration.Bind("MapApi", new ConfigMapApi());
 var app = builder.Build();
-
-// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
-// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
-using (var scope = app.Services.CreateScope())
-{
-    var migration = scope.ServiceProvider.GetRequiredService<MigrationService>();
-
-    await migration.MigrateAsync();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
