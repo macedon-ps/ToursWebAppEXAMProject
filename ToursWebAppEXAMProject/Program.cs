@@ -15,6 +15,12 @@ using ToursWebAppEXAMProject.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine($"Environment = {builder.Environment.EnvironmentName}");
+
+Console.WriteLine($"Neon = {builder.Configuration["ConnectionStrings:NeonConnection"]}");
+
+Console.WriteLine(Environment.GetEnvironmentVariable("ConnectionStrings__NeonConnection"));
+
 // настройка логирования через NLog и удаление всех стандартных провайдеров логирования
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
