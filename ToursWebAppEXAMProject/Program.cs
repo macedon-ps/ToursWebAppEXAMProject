@@ -79,18 +79,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = false;
 });
 
-if (builder.Environment.IsDevelopment())
-{
-    var connectionString = CodeBd.GetConnectionString();
-    builder.Services.AddDbContext<TourFirmaDBContext>(options =>
-    options.UseNpgsql(connectionString));
-}
-else
-{
-    var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION");
-    builder.Services.AddDbContext<TourFirmaDBContext>(options =>
-    options.UseNpgsql(connectionString));
-}
+builder.Services.AddDbContext<TourFirmaDBContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+builder.Services.AddDbContext<SqlServerDBContext>(options =>
+options.UseNpgsql(Environment.GetEnvironmentVariable("NEON_CONNECTION")));
 
 // сопоставляем параметры конфигурационного файла appsettings.json: ключ "Project" со свойствами класса ConfigData и ключ  "EmailConfiguration" со свойствами класса EmailConfig
 builder.Configuration.Bind("Project", new ConfigData());
