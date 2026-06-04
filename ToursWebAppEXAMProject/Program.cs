@@ -13,10 +13,6 @@ using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.Services.TechTasks;
 using ToursWebAppEXAMProject.Utils;
 
-// используется 1 раз - для переноса данных со старой MS SQL Server БД локально (SqlServerDBContext) 
-// на новую PostgreSQL БД на сервере Render + Neon (TourFirmaDBContext)
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior",true);
-
 var builder = WebApplication.CreateBuilder(args);
 
 // настройка логирования через NLog и удаление всех стандартных провайдеров логирования
@@ -86,6 +82,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // строка подключения к PostgreSQL через переменную среды
 var connectionString = builder.Configuration.GetConnectionString("NeonConnection");
+
+Console.WriteLine($"ConnectionString found: {connectionString != null}");
+
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
 options.UseNpgsql(connectionString));
 
