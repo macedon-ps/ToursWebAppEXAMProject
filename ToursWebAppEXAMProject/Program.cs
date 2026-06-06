@@ -4,7 +4,6 @@ using NLog.Web;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
-using ToursWebAppEXAMProject.Migrations;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
 using ToursWebAppEXAMProject.Services.Email;
@@ -14,12 +13,6 @@ using ToursWebAppEXAMProject.Services.TechTasks;
 using ToursWebAppEXAMProject.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
-
-Console.WriteLine($"Environment = {builder.Environment.EnvironmentName}");
-
-Console.WriteLine($"Neon = {builder.Configuration["ConnectionStrings:NeonConnection"]}");
-
-Console.WriteLine(Environment.GetEnvironmentVariable("ConnectionStrings__NeonConnection"));
 
 // настройка логирования через NLog и удаление всех стандартных провайдеров логирования
 builder.Logging.ClearProviders();
@@ -88,9 +81,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // строка подключения к PostgreSQL через переменную среды
 var connectionString = builder.Configuration.GetConnectionString("NeonConnection");
-
-Console.WriteLine($"ConnectionString found: {connectionString != null}");
-
 builder.Services.AddDbContext<TourFirmaDBContext>(options =>
 options.UseNpgsql(connectionString));
 
