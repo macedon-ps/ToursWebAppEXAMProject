@@ -1979,13 +1979,25 @@ textarea,
 				text-align: center;
 			}
 
+			.homeHeader, .searchHeader, .editHeader,
+			.supportHeader, .aboutHeader{
+				background-size: 225%;
+				overflow: auto;
+				height: 100%;
+				
+			}
+
+			.asidePage{
+				margin: 12.5em 0 0;
+			}
+
 			.homeButton a, .searchButton a, .editButton a,
 			.supportButton a, .aboutButton a, .accountButton a,
 			.usersButton a, .rolesButton a, .errorButton a,
 			.addCityButton a {
 				text-align: center;
-				margin-bottom: 1em;
-				padding: 10px;
+				margin-bottom: 0.5em;
+				padding: 5px;
 			}
 			/* Nav */
 
