@@ -1,0 +1,22 @@
+﻿@import '../base/_variables.scss';
+
+/* Desktop format */
+@mixin desktop {
+    @media (max-width: $desktop) {
+        @content;
+    }
+}
+
+/* Planshet format */
+@mixin tablet {
+    @media (max-width: $tablet) {
+        @content;
+    }
+}
+
+/* Mobile format */
+@mixin mobile {
+    @media (max-width: $mobile) {
+        @content;
+    }
+}

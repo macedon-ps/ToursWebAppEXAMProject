@@ -13,14 +13,14 @@
         
         <div class="searchMenu">  
 
-            <form class="form" asp-controller="Search" asp-action="Index" method="post" name="myForm">
+            <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
                 
                @* Первый блок элементов: 3 select (список стран, количество дней отдыха, количество отдыхающих), календарь и кнопка "Найти тур" *@
                 
                 <div class="flexRow searchBlock1">   
                     
                     <div class="block1Left">
-                        <label>Страна:</label>
+                        <label class="search-label">Страна:</label>
                         <select asp-for="CountryIdSelected"
                                 asp-items="@Model.CountriesList">
                             <option value="">Выберите страну</option>
@@ -30,14 +30,14 @@
                     <div class="block1Right">
                         @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
                         <div>
-                            <label asp-for="DateFrom"></label>
+                            <label asp-for="DateFrom" class="search-label"></label>
                             <input asp-for="DateFrom" />
                             <input asp-for="DateTo" />
                         </div>
 
                         @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
                         <div class="block1Middle">
-                            <label asp-for="NumberOfDaysFromSelectList"></label>
+                            <label asp-for="NumberOfDaysFromSelectList" class="search-label"></label>
                             <select asp-for="NumberOfDaysFromSelectList"
                                     asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
                             </select>
@@ -45,7 +45,7 @@
 
                         @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
                         <div class="block1Middle">
-                            <label asp-for="NumberOfPeopleFromSelectList"></label>
+                            <label asp-for="NumberOfPeopleFromSelectList" class="search-label"></label>
                             <select asp-for="NumberOfPeopleFromSelectList"
                                     asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
                             </select>

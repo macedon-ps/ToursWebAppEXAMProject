@@ -1,0 +1,40 @@
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+
+.homePage {
+    @extend %page-template;
+}
+
+.homeHeader {
+    @extend %header-page-template;
+    @extend %background-norepeat-template;
+    background-image: url(../background/Home_2.png);
+}
+
+.homeHeaderOne {
+    @extend %header-page-one-template;
+}
+
+.blog-user {
+    @extend %blog-template;
+}
+
+.blog-message {
+    @extend %blog-template;
+}
+
+.list-blog-messages {
+    @extend %blog-template;
+
+    li {
+        margin: 5px 0 10px 0;
+    }
+}
+
+.new-foto {
+    @extend %foto-template;
+}
+
+.blog-foto {
+    @extend %foto-template;
+}

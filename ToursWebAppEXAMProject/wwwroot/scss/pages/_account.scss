@@ -1,0 +1,15 @@
+﻿@import '../base/_templates.scss';
+
+.accountPage {
+    @extend %page-template;
+}
+
+.accountHeader {
+    @extend %header-page-template;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.accountHeaderOne {
+    @extend %header-page-one-template;
+}

@@ -1,0 +1,9 @@
+﻿@import '../base/_templates.scss';
+
+.rolesPage {
+    @extend %page-template;
+}
+
+.rolesHeader {
+    @extend %header-page-template;
+}

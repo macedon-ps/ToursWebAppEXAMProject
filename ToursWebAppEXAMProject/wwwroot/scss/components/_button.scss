@@ -1,0 +1,109 @@
+﻿@import '../base/_variables.scss';
+
+%button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: $background-color_10;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    border-bottom: 2px solid white;
+}
+
+%button_link {
+    display: inline-block;
+    padding: 10px 25px;
+    color: $color_7;
+    background-color: $background-color_2;
+    text-decoration: none;
+    width: 8em;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 0.5em;
+    margin-bottom: 1em;
+}
+
+.homeButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.searchButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.editButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.supportButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.aboutButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.accountButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+    padding: 0;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.usersButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.rolesButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.errorButton {
+    a {
+        @extend %button_link;
+    }
+
+    @extend %button;
+}
+
+.addCityButton {
+    a {
+        @extend %button_link;
+    }
+
+    background-color: $background-color_10;
+    margin-top: 1em;
+    padding: 1em;
+}

@@ -1,0 +1,30 @@
+﻿*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul, ol {
+    padding: 0;
+}
+
+%reset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+html, body, header, menu, nav, footer, aside, h1, h2, h3, h4, h5, h6, p, a, div, span, section, iframe, code, img, strong, u, i, ol, ul, li, form, label, table, tbody, tfoot, thead, tr, th, td, article {
+    @extend %reset;
+}
+

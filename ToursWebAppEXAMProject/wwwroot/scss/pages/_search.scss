@@ -1,0 +1,70 @@
+﻿@import '../base/_templates.scss';
+
+.searchPage {
+    @extend %page-template;
+    background-image: url(../background/Search.png);
+}
+
+.searchHeader {
+    @extend %header-page-template;
+    @extend %background-norepeat-template;
+    padding: 0 1em 1em;
+    background-image: url(../background/Search_2.png);
+}
+
+.searchHeaderOne {
+    @extend %header-page-one-template;
+}
+
+.search-label {
+    padding: 0.5em 1em;
+    font-weight: 600;
+}
+
+.product-foto {
+    @extend %foto-template;
+}
+
+.citiesList {
+    padding-left: 1em;
+    width: 50%;
+}
+
+.image-editAboutPage {
+    width: 100%;
+    margin: 0.5em;
+    padding-right: 0.5em;
+}
+
+.image-countryMap {
+    width: 100%;
+    object-fit: cover;
+}
+
+.image-countryMap50 {
+    min-width: 50%;
+
+    > iframe {
+        width: 100%;
+        height: 88%;
+        object-fit: cover;
+    }
+}
+
+.country-map {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    object-fit: cover;
+
+    iframe {
+        display: block;
+        margin: auto;
+        border: 0;
+    }
+}
+
+.countryData {
+    margin: 1em;
+    padding: 0.5em;
+}

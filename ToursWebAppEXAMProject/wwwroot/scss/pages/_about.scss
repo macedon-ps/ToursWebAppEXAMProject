@@ -1,0 +1,62 @@
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+
+.aboutPage {
+    @extend %page-template;
+}
+
+.aboutHeader {
+    @extend %header-page-template;
+    @extend %background-norepeat-template;
+    background-image: url(../background/About_2.png);
+}
+
+.aboutHeaderOne {
+    @extend %header-page-one-template;
+}
+
+.short-description {
+    margin: 1em auto;
+    width: 80%;
+    text-align: center;
+    font-family: $font-family_3;
+    font-size: 1.2em;
+}
+
+.full-description {
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.iconLink {
+    display: flex;
+
+    > h4 {
+        margin-left: 1em;
+        margin-bottom: 1em;
+    }
+}
+
+.iconImage {
+    margin-right: 1em;
+}
+
+.flexGrow1 {
+    flex-grow: 1;
+}
+
+.photoGallery {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.image-photoGallery {
+    padding: 0.5em;
+    width: 100%;
+    object-fit: cover;
+}
+
+.delete-photo {
+    padding-left: 4em;
+}

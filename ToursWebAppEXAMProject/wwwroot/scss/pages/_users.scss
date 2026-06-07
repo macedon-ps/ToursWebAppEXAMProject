@@ -1,0 +1,9 @@
+﻿@import '../base/_templates.scss';
+
+.usersPage {
+    @extend %page-template;
+}
+
+.usersHeader {
+    @extend %header-page-template;
+}

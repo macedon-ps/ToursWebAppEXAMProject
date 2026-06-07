@@ -1,0 +1,47 @@
+﻿@import '_variables.scss';
+
+%page-template {
+    height: 550px;
+    background-color: $background-color_10;
+}
+
+%header-page-template {
+    height: 500px;
+    padding: 1em;
+    margin: 0;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+%background-norepeat-template {
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+%header-page-one-template {
+    height: 500px;
+    background-color: $background-color_10;
+    padding: 1em;
+    margin: 0;
+    overflow-y: scroll;
+}
+
+%blog-template {
+    padding: 10px 25px 15px 30px;
+    border-radius: 10px;
+    background-color: $background-color_3;
+}
+
+%foto-template {
+    width: 100%;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+}
+
+%img-template {
+    width: 100%;
+    float: left;
+    object-fit: cover;
+    padding: 0.5em 0.5em 0.5em 0;
+}

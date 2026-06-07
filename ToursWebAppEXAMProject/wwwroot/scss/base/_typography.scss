@@ -1,0 +1,141 @@
+﻿@import '_variables.scss';
+@import '_templates.scss';
+
+body {
+    line-height: 1;
+    -webkit-text-size-adjust: none;
+    font-size: 13.5pt;
+    background-image: url(../background/blue-water.jpg);
+    font-family: $font-family_1;
+    color: $color_2;
+    letter-spacing: -1px;
+    user-select: none;
+}
+
+h1 {
+    color: $color_3;
+    text-transform: lowercase;
+    font-size: 2.4em;
+}
+
+h2 {
+    color: $color_3;
+    text-transform: lowercase;
+    font-size: 1.9em;
+    letter-spacing: -1px;
+}
+
+h3 {
+    color: $color_4;
+    font-size: 1.2em;
+    margin-bottom: 0.6em;
+    font-weight: 500;
+}
+
+h4 {
+    color: $color_4;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+}
+
+p {
+    line-height: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+a {
+    color: $color_6;
+    text-decoration: underline;
+}
+
+ul {
+    margin-bottom: 1.25em;
+    padding: 0.25em 0 0 0;
+}
+
+strong {
+    color: $color_5;
+}
+
+article {
+    display: block;
+    margin: 0 0 60px 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 0.3em;
+}
+
+.titleLowHeader {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.horizontal-line {
+    width: 100%;
+    margin-bottom: 1em;
+    border-bottom: 2px solid white;
+}
+
+.horizontal-line-search {
+    width: 100%;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid white;
+}
+
+.titleImage {
+    max-width: 25%;
+
+    img {
+        @extend %img-template;
+    }
+}
+
+.titleImage25 {
+    max-width: 25%;
+}
+
+.titleImage40 {
+    max-width: 40%;
+
+    img {
+        @extend %img-template;
+    }
+}
+
+.titleImage50 {
+    max-width: 50%;
+
+    img {
+        @extend %img-template;
+    }
+}
+
+.dateAdded {
+    display: flex;
+    margin-bottom: 1.2em;
+
+    a {
+        margin-left: 0.6em;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

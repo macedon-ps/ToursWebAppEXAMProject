@@ -1,0 +1,16 @@
+﻿@import '../base/_templates.scss';
+
+.editPage {
+    @extend %page-template;
+    background-image: url(../background/Edit.png);
+}
+
+.editHeader {
+    @extend %header-page-template;
+    @extend %background-norepeat-template;
+    background-image: url(../background/Edit_2.png);
+}
+
+.editHeaderOne {
+    @extend %header-page-one-template;
+}

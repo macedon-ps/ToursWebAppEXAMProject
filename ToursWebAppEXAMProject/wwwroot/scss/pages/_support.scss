@@ -1,0 +1,80 @@
+﻿@import '../base/_templates.scss';
+
+.supportPage {
+    @extend %page-template;
+    background-image: url(../background/Support.png);
+}
+
+.supportHeader {
+    @extend %header-page-template;
+    @extend %background-norepeat-template;
+    background-image: url(../background/Support_2.png);
+}
+
+.supportHeaderOne {
+    @extend %header-page-one-template;
+}
+
+.map1 {
+    width: 400px;
+    height: 300px;
+    margin: 0.5em;
+    padding: 0.3em;
+}
+
+.map2 {
+    width: 400px;
+    height: 300px;
+    margin: 0.5em;
+    padding: 0.3em;
+}
+
+#supportMap {
+    height: 400px;
+    width: 100%;
+}
+
+#mapPreview {
+    display: flex;
+    flex-direction: column;
+
+    img {
+        width: 70%;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+
+    button {
+        width: 20%;
+        margin: 1.5em auto;
+        border-radius: 5px;
+    }
+}
+
+.area {
+    display: flex;
+    margin-top: 1em;
+}
+
+select.languageFrom {
+    margin-left: 1.35em;
+}
+
+select.languageTo {
+    margin-left: 0.7em;
+}
+
+.area-origin, .area-translate {
+    min-width: 50%;
+    min-height: 95%;
+    margin: 0.5em 0.5em 0.5em 0;
+    padding: 0.5em 1em;
+    border: 1px solid black;
+}
+
+.text-area-origin, .text-area-translate {
+    width: 100%;
+    padding: 0.5em 1em;
+    font-family: $font-family_2;
+    font-size: 1.2em;
+}

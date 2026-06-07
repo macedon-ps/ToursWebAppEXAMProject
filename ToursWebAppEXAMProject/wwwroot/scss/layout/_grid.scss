@@ -1,0 +1,41 @@
+﻿@import '../mixins/mixins.scss';
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.displayFlex {
+
+}
+
+.col-2 {
+    width: 16.666%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-10 {
+    width: 83.333%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+@include desktop{
+
+}
+
+@include tablet{
+
+}
+
+@include mobile {
+
+    .col-12-medium {
+        width: 100%;
+    }
+}
