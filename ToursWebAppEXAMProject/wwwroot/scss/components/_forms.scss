@@ -1,3 +1,7 @@
-﻿input {
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
+
+input {
     user-select: text;
 }

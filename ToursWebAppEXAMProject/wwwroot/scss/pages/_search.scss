@@ -1,4 +1,7 @@
-﻿@import '../base/_templates.scss';
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
+
 
 .searchPage {
     @extend %page-template;
@@ -10,15 +13,55 @@
     @extend %background-norepeat-template;
     padding: 0 1em 1em;
     background-image: url(../background/Search_2.png);
+
+    @include tablet {
+        @include header-page-980;
+    }
+}
+
+.searchHeader-unscroll {
+    @extend %header-page-unscroll-template;
 }
 
 .searchHeaderOne {
     @extend %header-page-one-template;
 }
 
+.searchButtonSubmit {
+    padding-top: 1em;
+}
+
 .search-label {
     padding: 0.5em 1em;
     font-weight: 600;
+}
+
+.searchBlock1 {
+    @extend %search-block-template;
+}
+
+.searchBlock2 {
+    @extend %search-block-template;
+}
+
+.searchBlock3 {
+    @extend %search-block-template;
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchBlock4 {
+    @extend %search-block-template;
+    height: 400px;
+}
+
+.searchDelete {
+    display: flex;
+    margin-bottom: 1.2em;
+
+    a {
+        margin-left: 0.6em;
+    }
 }
 
 .product-foto {
@@ -28,12 +71,6 @@
 .citiesList {
     padding-left: 1em;
     width: 50%;
-}
-
-.image-editAboutPage {
-    width: 100%;
-    margin: 0.5em;
-    padding-right: 0.5em;
 }
 
 .image-countryMap {

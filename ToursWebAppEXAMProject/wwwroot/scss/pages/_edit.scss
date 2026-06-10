@@ -1,4 +1,6 @@
-﻿@import '../base/_templates.scss';
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
 
 .editPage {
     @extend %page-template;
@@ -9,8 +11,16 @@
     @extend %header-page-template;
     @extend %background-norepeat-template;
     background-image: url(../background/Edit_2.png);
+
+    @include tablet {
+        @include header-page-980;
+    }
 }
 
 .editHeaderOne {
     @extend %header-page-one-template;
+}
+
+.check-isCapital {
+    margin-bottom: 1.2em;
 }

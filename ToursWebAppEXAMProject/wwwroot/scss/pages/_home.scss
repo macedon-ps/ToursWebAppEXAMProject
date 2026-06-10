@@ -1,5 +1,6 @@
 ﻿@import '../base/_variables.scss';
 @import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
 
 .homePage {
     @extend %page-template;
@@ -9,6 +10,10 @@
     @extend %header-page-template;
     @extend %background-norepeat-template;
     background-image: url(../background/Home_2.png);
+
+    @include tablet {
+        @include header-page-980;
+    }
 }
 
 .homeHeaderOne {
@@ -38,3 +43,5 @@
 .blog-foto {
     @extend %foto-template;
 }
+
+

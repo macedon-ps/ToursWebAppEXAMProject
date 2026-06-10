@@ -1,2 +1,35 @@
-﻿body {
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
+
+#header-wrapper {
+    @include blue-grey-gradient;
+    background-color: $background-color_6;
+}
+
+#header {
+    @include blue-grey-gradient2;
+    background-color: $background-color_4;
+    box-sizing: content-box;
+    padding: 0 40px 0 40px;
+    border-radius: 10px;
+    border: solid 1px #006e8b;
+    box-shadow: inset 0px 0px 0px 1px #12a0bf, 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    h1 {
+        color: $color_9;
+        font-size: 2.4em;
+        letter-spacing: -2px;
+        line-height: 86px;
+
+        a {
+            color: $color_9;
+            text-decoration: none;
+        }
+    }
 }

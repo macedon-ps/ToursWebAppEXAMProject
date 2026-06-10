@@ -1,4 +1,5 @@
 ﻿@import '_variables.scss';
+@import '../mixins/mixins.scss';
 
 %page-template {
     height: 550px;
@@ -19,12 +20,28 @@
     background-size: 100%;
 }
 
+%header-page-unscroll-template {
+    height: 500px;
+    padding: 1em;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
 %header-page-one-template {
     height: 500px;
     background-color: $background-color_10;
     padding: 1em;
     margin: 0;
     overflow-y: scroll;
+}
+
+%search-block-template {
+    width: 100%;
+    margin: 0 0 0.5em 0;
+    padding: 0.5em 1em 0.25em;
+    background-color: $background-color_11;
 }
 
 %blog-template {

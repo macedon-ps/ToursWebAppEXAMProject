@@ -1,2 +1,19 @@
-﻿body {
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
+
+#footer-wrapper {
+    background-color: $background-color_9;
+}
+
+#copyright {
+    text-align: center;
+    color: $color_10;
+    border-top: solid 1px #0693ba;
+    padding: 0.5em 0 0.5em 0;
+    margin: 0.5em 0 0.5em 0;
+
+    a {
+        color: $color_6;
+    }
 }

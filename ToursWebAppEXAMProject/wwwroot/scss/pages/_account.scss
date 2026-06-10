@@ -13,3 +13,30 @@
 .accountHeaderOne {
     @extend %header-page-one-template;
 }
+
+.accountInput {
+    min-width: 300px;
+    height: 35px;
+    border-radius: 10px;
+    margin: 0.5em 0;
+    padding: 0 0 0 1em;
+}
+
+.submitButton {
+    background-color: $background-color_2;
+    text-transform: uppercase;
+    min-width: 200px;
+    border-radius: 6px;
+    margin-top: 1em;
+    padding: 1em 0;
+}
+
+.access-denied-list {
+    width: 60%;
+    text-align: left;
+    margin: 1em auto;
+
+    li {
+        margin-left: 1.5em;
+    }
+}

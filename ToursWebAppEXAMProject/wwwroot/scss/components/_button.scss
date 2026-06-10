@@ -1,4 +1,6 @@
 ﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
 
 %button {
     display: flex;
@@ -96,14 +98,4 @@
     }
 
     @extend %button;
-}
-
-.addCityButton {
-    a {
-        @extend %button_link;
-    }
-
-    background-color: $background-color_10;
-    margin-top: 1em;
-    padding: 1em;
 }

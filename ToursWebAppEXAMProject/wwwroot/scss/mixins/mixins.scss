@@ -1,5 +1,26 @@
 ﻿@import '../base/_variables.scss';
 
+@mixin blue-grey-gradient {
+    background: linear-gradient (top, $color_blue_grey_1, $color_blue_grey_2 );
+}
+
+@mixin blue-grey-gradient2 {
+    background: linear-gradient (top, $color_blue_grey_3, $color_blue_grey_4 );
+}
+
+@mixin header-page-980 {
+    background-size: 225%;
+    overflow: auto;
+    height: 100%;
+}
+
+/* SuperDesktop format */
+@mixin superdesktop {
+    @media (max-width: $superdesktop) {
+        @content;
+    }
+}
+
 /* Desktop format */
 @mixin desktop {
     @media (max-width: $desktop) {

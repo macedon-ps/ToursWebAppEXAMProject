@@ -1,18 +1,7 @@
-﻿*, *::before, *::after {
+﻿@import '_templates.scss';
+
+*, *::before, *::after {
     box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-}
-
-img {
-    max-width: 100%;
-    display: block;
-}
-
-ul, ol {
-    padding: 0;
 }
 
 %reset {

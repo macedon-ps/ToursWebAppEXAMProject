@@ -1,4 +1,6 @@
-﻿@import '../mixins/mixins.scss';
+﻿@import '../base/_variables.scss';
+@import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
 
 .row {
     display: flex;
@@ -23,19 +25,4 @@
 
 .col-12 {
     width: 100%;
-}
-
-@include desktop{
-
-}
-
-@include tablet{
-
-}
-
-@include mobile {
-
-    .col-12-medium {
-        width: 100%;
-    }
 }

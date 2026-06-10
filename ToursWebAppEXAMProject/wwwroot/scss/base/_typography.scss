@@ -1,5 +1,6 @@
 ﻿@import '_variables.scss';
 @import '_templates.scss';
+@import '../mixins/mixins.scss';
 
 body {
     line-height: 1;
@@ -66,76 +67,3 @@ article {
         margin-bottom: 0;
     }
 }
-
-.title {
-    text-align: center;
-    margin-bottom: 0.3em;
-}
-
-.titleLowHeader {
-    text-align: center;
-    margin: 0 auto;
-}
-
-.horizontal-line {
-    width: 100%;
-    margin-bottom: 1em;
-    border-bottom: 2px solid white;
-}
-
-.horizontal-line-search {
-    width: 100%;
-    margin-bottom: 0.5em;
-    border-bottom: 2px solid white;
-}
-
-.titleImage {
-    max-width: 25%;
-
-    img {
-        @extend %img-template;
-    }
-}
-
-.titleImage25 {
-    max-width: 25%;
-}
-
-.titleImage40 {
-    max-width: 40%;
-
-    img {
-        @extend %img-template;
-    }
-}
-
-.titleImage50 {
-    max-width: 50%;
-
-    img {
-        @extend %img-template;
-    }
-}
-
-.dateAdded {
-    display: flex;
-    margin-bottom: 1.2em;
-
-    a {
-        margin-left: 0.6em;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-

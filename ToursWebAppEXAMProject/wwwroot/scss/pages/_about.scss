@@ -1,5 +1,6 @@
 ﻿@import '../base/_variables.scss';
 @import '../base/_templates.scss';
+@import '../mixins/mixins.scss';
 
 .aboutPage {
     @extend %page-template;
@@ -9,10 +10,16 @@
     @extend %header-page-template;
     @extend %background-norepeat-template;
     background-image: url(../background/About_2.png);
+
+    @include tablet {
+        @include header-page-980;
+    }
 }
 
-.aboutHeaderOne {
-    @extend %header-page-one-template;
+.image-editAboutPage {
+    width: 100%;
+    margin: 0.5em;
+    padding-right: 0.5em;
 }
 
 .short-description {
@@ -26,6 +33,15 @@
 .full-description {
     margin: 1em;
     padding: 0.5em;
+}
+
+.checkbox-center {
+    margin: 0 1em;
+
+    input {
+        margin: 0;
+        padding: 0 1em;
+    }
 }
 
 .iconLink {
@@ -59,4 +75,8 @@
 
 .delete-photo {
     padding-left: 4em;
+}
+
+.about-foto {
+    @extend %foto-template;
 }
