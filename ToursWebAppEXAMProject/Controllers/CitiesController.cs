@@ -172,7 +172,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        cityModel.TitleImagePath = await _CityUtils.SaveImagePathAsync(titleImagePath);
+                        var uploadImage = await _CityUtils.SaveCityImageByFileNameAsync(titleImagePath, cityModel.Id);
+                        cityModel.TitleImagePath = uploadImage.Url;
+                        cityModel.ImagePublicId = uploadImage.PublicId;
                     }
 
                     if (cityModel.CountryId !=0)

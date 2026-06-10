@@ -1,20 +1,21 @@
-﻿using ToursWebAppEXAMProject.Enums;
+﻿using CloudinaryDotNet;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Services.ImageStorage;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 
 namespace ToursWebAppEXAMProject.Utils
 {
     public class BlogUtils
     {
         private readonly IBaseInterface<Blog> _AllBlogs;
-        private readonly ImageStorageService _ImageStorageService;
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
 
 
-        public BlogUtils(IBaseInterface<Blog> AllBlogs, ImageStorageService ImageStorageService)
+        public BlogUtils(IBaseInterface<Blog> AllBlogs, CloudinaryImageStorageService CloudinaryImageStorageService)
         {
              _AllBlogs = AllBlogs;
-            _ImageStorageService = ImageStorageService;
+           _CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
 
 
@@ -42,10 +43,11 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<string?> SaveBlogImageByFileNameAsync(IFormFile? imageFileName)
+        public async Task<(string Url, string PublicId)> SaveBlogImageByFileNameAsync(IFormFile? imageFileName, int blogId)
         {
             var folder = ImageFolder.Blogs;
-            return await _ImageStorageService.SaveAsync(folder, imageFileName);
+            var publicId = $"blog_{blogId}";
+            return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
 

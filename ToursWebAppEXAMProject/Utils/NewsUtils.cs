@@ -1,20 +1,20 @@
 ﻿using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Services.ImageStorage;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 
 namespace ToursWebAppEXAMProject.Utils
 {
     public class NewsUtils
     {
         private readonly IBaseInterface<New> _AllNews;
-        private readonly ImageStorageService _ImageStorageService;
-        
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
 
-        public NewsUtils(IBaseInterface<New> News, ImageStorageService ImageStorageService) 
+
+        public NewsUtils(IBaseInterface<New> News, CloudinaryImageStorageService CloudinaryImageStorageService) 
         {
             _AllNews = News;
-            _ImageStorageService = ImageStorageService;
+            _CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
 
 
@@ -42,10 +42,11 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<string?> SaveNewImageByFileNameAsync(IFormFile? imageFileName)
+        public async Task<(string Url, string PublicId)>SaveNewImageByFileNameAsync(IFormFile? imageFileName, int newsId)
         {
             var folder = ImageFolder.News;
-            return await _ImageStorageService.SaveAsync(folder, imageFileName);
+            var publicId = $"news_{newsId}";
+            return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
 

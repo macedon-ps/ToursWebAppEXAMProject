@@ -1,6 +1,7 @@
 ﻿using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.ViewModels;
 
@@ -12,14 +13,14 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly IQueryResultInterface _QueryResult;
-        private readonly ImageStorageService _ImageStorageService;
-        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IQueryResultInterface QueryResult, ImageStorageService ImageStorageService) 
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
+        public ProductUtils(IBaseInterface<Product> Products, IBaseInterface<Country> Countries, IBaseInterface<City> Cities, IQueryResultInterface QueryResult, CloudinaryImageStorageService CloudinaryImageStorageService) 
         { 
             _AllProducts = Products;
             _AllCountries = Countries;
             _AllCities = Cities;
             _QueryResult = QueryResult;
-            _ImageStorageService = ImageStorageService;
+            _CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
 
 
@@ -83,10 +84,11 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<string?> SaveProductImageByFileNameAsync(IFormFile? imageFileName)
+        public async Task<(string Url, string PublicId)> SaveProductImageByFileNameAsync(IFormFile? imageFileName, int productId)
         {
             var folder = ImageFolder.Products;
-            return await _ImageStorageService.SaveAsync(folder, imageFileName);
+            var publicId = $"product_{productId}";
+            return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
 

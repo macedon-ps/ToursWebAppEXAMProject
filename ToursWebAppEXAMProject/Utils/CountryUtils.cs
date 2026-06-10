@@ -1,6 +1,8 @@
-﻿using ToursWebAppEXAMProject.Enums;
+﻿using Microsoft.CodeAnalysis;
+using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 using ToursWebAppEXAMProject.Services.ImageStorage;
 
 namespace ToursWebAppEXAMProject.Utils
@@ -10,15 +12,15 @@ namespace ToursWebAppEXAMProject.Utils
         private readonly IBaseInterface<Country> _AllCountries;
         private readonly IBaseInterface<City> _AllCities;
         private readonly IQueryResultInterface _QueryResult;
-        private readonly ImageStorageService _ImageStorageService;
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
 
 
-        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, IQueryResultInterface QueryResult, ImageStorageService ImageStorageService)
+        public CountryUtils(IBaseInterface<Country> AllCountries, IBaseInterface<City> AllCities, IQueryResultInterface QueryResult, CloudinaryImageStorageService CloudinaryImageStorageService)
         {
             _AllCountries = AllCountries;
             _AllCities = AllCities;
             _QueryResult = QueryResult;
-            _ImageStorageService = ImageStorageService;
+            _CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
 
 
@@ -63,10 +65,11 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<string?> SaveImagePathAsync(IFormFile? imageFileName)
+        public async Task<(string Url, string PublicId)> SaveCountryImageByFileNameAsync(IFormFile? imageFileName, int countryId)
         {
             var folder = ImageFolder.Countries;
-            return await _ImageStorageService.SaveAsync(folder, imageFileName);
+            var publicId = $"country_{countryId}";
+            return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
 

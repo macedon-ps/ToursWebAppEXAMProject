@@ -173,7 +173,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        newsModel.TitleImagePath = await _NewsUtils.SaveNewImageByFileNameAsync(titleImagePath);
+                        var uploadImage = await _NewsUtils.SaveNewImageByFileNameAsync(titleImagePath, newsModel.Id);
+                        newsModel.TitleImagePath = uploadImage.Url;
+                        newsModel.ImagePublicId = uploadImage.PublicId;
                     }
 
                     newsModel.DateAdded = DateTime.Now;

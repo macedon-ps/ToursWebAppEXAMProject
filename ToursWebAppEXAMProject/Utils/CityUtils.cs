@@ -3,6 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.ViewModels;
 
@@ -12,15 +13,15 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<City> _AllCities;
         private readonly IBaseInterface<Country> _AllCountries;
-        private readonly ImageStorageService _ImageStorageService;
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
         private readonly IQueryResultInterface _QueryResult;
         private readonly IMemoryCache _Cache;
 
-        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, ImageStorageService ImageStorageService, IQueryResultInterface QueryResult, IMemoryCache Cache)
+        public CityUtils(IBaseInterface<City> AllCities, IBaseInterface<Country> AllCountries, CloudinaryImageStorageService CloudinaryImageStorageService, IQueryResultInterface QueryResult, IMemoryCache Cache)
         {
             _AllCities = AllCities;
             _AllCountries = AllCountries;
-            _ImageStorageService = ImageStorageService;
+            _CloudinaryImageStorageService = CloudinaryImageStorageService;
             _QueryResult = QueryResult;
             _Cache = Cache;
         }
@@ -73,10 +74,11 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<string?> SaveImagePathAsync(IFormFile? imageFileName)
+        public async Task<(string Url, string PublicId)> SaveCityImageByFileNameAsync(IFormFile? imageFileName, int cityId)
         {
             var folder = ImageFolder.Cities;
-            return await _ImageStorageService.SaveAsync(folder, imageFileName);
+            var publicId = $"city_{cityId}";
+            return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
 

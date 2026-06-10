@@ -167,7 +167,9 @@ namespace ToursWebAppEXAMProject.Controllers
                     // если мы хотим поменять картинку
                     if (titleImagePath != null)
                     {
-                        blogModel.TitleImagePath = await _BlogUtils.SaveBlogImageByFileNameAsync(titleImagePath);
+                        var uploadImage = await _BlogUtils.SaveBlogImageByFileNameAsync(titleImagePath, blogModel.Id);
+                        blogModel.TitleImagePath = uploadImage.Url;
+                        blogModel.ImagePublicId = uploadImage.PublicId;
                     }
 
                     blogModel.DateAdded = DateTime.Now;

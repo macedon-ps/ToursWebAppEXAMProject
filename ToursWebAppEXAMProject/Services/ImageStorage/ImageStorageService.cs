@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ToursWebAppEXAMProject.ConfigFiles;
+﻿using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Enums;
 
@@ -17,7 +16,7 @@ namespace ToursWebAppEXAMProject.Services.ImageStorage
         }
 
         /// <summary>
-        /// Сохраняет загруженный файл изображения в соответствующую папку на сервере и возвращает относительный путь к сохраненному файлу.
+        /// Сохраняет загруженный файл изображения в соответствующую папку внутри проекта и возвращает относительный путь к сохраненному файлу.
         /// </summary>
         /// <param name="file">Имя файла картинки.</param>
         /// <param name="folder">Папка сохранения файла картинки.</param>

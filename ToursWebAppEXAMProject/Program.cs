@@ -6,9 +6,9 @@ using ToursWebAppEXAMProject.DBContext;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Repositories;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 using ToursWebAppEXAMProject.Services.Email;
 using ToursWebAppEXAMProject.Services.Hubs;
-using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.Services.TechTasks;
 using ToursWebAppEXAMProject.Utils;
 
@@ -58,7 +58,8 @@ builder.Services.AddTransient<CountryUtils>();
 builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
 builder.Services.AddTransient<TechTaskItemUtils>();
-builder.Services.AddTransient<ImageStorageService>();
+// builder.Services.AddTransient<ImageStorageService>();            // для хранения изображений в папках проекта
+builder.Services.AddTransient<CloudinaryImageStorageService>();     // для хранения изображений в Cloudinery
 
 // подключение аутентификации и авторизации
 // регистрация фреймворка Identity с пользовательским классом User, стандартным IdentityRole, опциями аутентификации и авторизации
