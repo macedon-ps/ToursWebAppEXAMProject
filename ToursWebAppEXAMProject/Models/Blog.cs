@@ -34,7 +34,10 @@ namespace ToursWebAppEXAMProject.Models
 		[StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
 		public string? TitleImagePath { get; set; }
 
-		[Display(Name = "Время создания")]
+        [Display(Name = "PublicId картинки")]
+        public string ImagePublicId { get; set; } = null!;
+
+        [Display(Name = "Время создания")]
 		[DataType(DataType.Time)]
 		public DateTime? DateAdded { get; set; }
     }

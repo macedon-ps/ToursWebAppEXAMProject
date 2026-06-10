@@ -40,6 +40,9 @@ namespace ToursWebAppEXAMProject.Models
         [StringLength(200, ErrorMessage = "Ссылка на карту страны в GoogleMaps не должна содержать более 200 символов")]
         public string? CountryMapPath { get; set; }
 
+        [Display(Name = "PublicId картинки")]
+        public string ImagePublicId { get; set; } = null!;
+
         public DateTime? DateAdded { get; set; }
         public virtual IEnumerable<City> Cities { get; set; }
 

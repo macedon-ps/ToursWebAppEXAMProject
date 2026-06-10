@@ -131,6 +131,30 @@ namespace ToursWebAppEXAMProject.Models
         public string? FeedbackImagePath { get; set; }
 
 
+        [Display(Name = "PublicId картинки")]
+        public string MainImagePublicId { get; set; } = null!;
+
+
+        [Display(Name = "PublicId картинки")]
+        public string AboutImagePublicId { get; set; } = null!;
+
+
+        [Display(Name = "PublicId картинки")]
+        public string DetailsImagePublicId { get; set; } = null!;
+
+
+        [Display(Name = "PublicId картинки")]
+        public string OperationModeImagePublicId { get; set; } = null!;
+
+
+        [Display(Name = "PublicId картинки")]
+        public string PhotoGalleryImagePublicId { get; set; } = null!;
+
+
+        [Display(Name = "PublicId картинки")]
+        public string FeedbackImagePublicId { get; set; } = null!;
+
+
         public DateTime? DateAdded { get; set; }
 
 
