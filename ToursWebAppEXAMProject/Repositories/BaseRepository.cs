@@ -129,12 +129,12 @@ namespace ToursWebAppEXAMProject.Repositories
                     if (isFullName)
                     {
                         query = query.Where(x =>
-                            EF.Property<string>(x, "Description") == keyword);
+                            EF.Functions.ILike(EF.Property<string>(x, "Description"), keyword));
                     }
                     else
                     {
                         query = query.Where(x =>
-                            EF.Property<string>(x, "Description").Contains(keyword));
+                            EF.Functions.ILike(EF.Property<string>(x, "Description"), $"%{keyword}%"));
                     }
                 }
                 else
@@ -142,12 +142,12 @@ namespace ToursWebAppEXAMProject.Repositories
                     if (isFullName)
                     {
                         query = query.Where(x =>
-                            EF.Property<string>(x, "Name") == keyword);
+							EF.Functions.ILike(EF.Property<string>(x, "Name"), keyword));
                     }
                     else
                     {
                         query = query.Where(x =>
-                            EF.Property<string>(x, "Name").Contains(keyword));
+                            EF.Functions.ILike(EF.Property<string>(x, "Name"), $"%{keyword}%"));
                     }
                 }
 
