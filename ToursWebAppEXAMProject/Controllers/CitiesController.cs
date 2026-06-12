@@ -177,14 +177,13 @@ namespace ToursWebAppEXAMProject.Controllers
                         cityModel.ImagePublicId = uploadImage.PublicId;
                     }
 
+                    cityModel.DateAdded = DateTime.UtcNow;
+
                     if (cityModel.CountryId !=0)
                     {
                         _CityUtils.SaveCity(cityModel);
                         _logger.LogDebug("Город успешно сохранен в БД. ");
                     }
-
-                    cityModel.DateAdded = DateTime.Now;
-
 
                     _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", cityModel);

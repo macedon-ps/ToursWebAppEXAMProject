@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToursWebAppEXAMProject.DBContext;
@@ -11,9 +12,11 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    partial class TourFirmaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260612022951_IncreaseImagePathLength")]
+    partial class IncreaseImagePathLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,8 +381,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");
@@ -430,8 +433,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("('Нет титульной картинки города')");
 
                     b.Property<bool>("isCapital")
@@ -531,8 +534,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("('Нет титульной картинки страны')");
 
                     b.HasKey("Id");
@@ -683,8 +686,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");
@@ -785,8 +788,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("TitleImagePath")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("('Нет титульной картинки')");
 
                     b.HasKey("Id");

@@ -178,7 +178,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         newsModel.ImagePublicId = uploadImage.PublicId;
                     }
 
-                    newsModel.DateAdded = DateTime.Now;
+                    newsModel.DateAdded = DateTime.UtcNow;
                     _NewsUtils.SaveNewsModel(newsModel);
                     _logger.LogDebug("Новость успешно сохранена в БД. ");
                     

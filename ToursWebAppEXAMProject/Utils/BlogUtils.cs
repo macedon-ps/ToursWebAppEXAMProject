@@ -46,7 +46,7 @@ namespace ToursWebAppEXAMProject.Utils
         public async Task<(string Url, string PublicId)> SaveBlogImageByFileNameAsync(IFormFile? imageFileName, int blogId)
         {
             var folder = ImageFolder.Blogs;
-            var publicId = $"blog_{blogId}";
+            var publicId = $"blog_{blogId}_{Path.GetFileNameWithoutExtension(imageFileName.FileName)}";
             return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
@@ -62,7 +62,7 @@ namespace ToursWebAppEXAMProject.Utils
 
         public Blog SetBlogModelWithChatDataAndSave(Blog blog, string userName, string message)
         {
-            var timeMessage = $"{DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
+            var timeMessage = DateTime.UtcNow;
             var allMessageText = $"<p>{timeMessage}: <b>{userName}:</b><br/> {message}</p><br/>";
 
             // если чат пустой, т.е. с дефолтной строкой, то заменяем дефолтную строку пустой строкой и сохраняем

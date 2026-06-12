@@ -56,7 +56,7 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание темы блога')");
 
 				entity.Property(e => e.TitleImagePath)
-					.HasMaxLength(100)
+					.HasMaxLength(500)
 					.HasDefaultValue("('Нет титульной картинки')");
 
                 entity.Property(e => e.DateAdded);
@@ -79,7 +79,7 @@ namespace ToursWebAppEXAMProject.DBContext
                 entity.Property(e => e.isCapital).HasDefaultValue(0);
 
                 entity.Property(e => e.TitleImagePath)
-                    .HasMaxLength(100)
+                    .HasMaxLength(500)
                     .HasDefaultValue("('Нет титульной картинки города')");
 
                 entity.HasOne(d => d.Country)
@@ -108,7 +108,7 @@ namespace ToursWebAppEXAMProject.DBContext
                     .HasDefaultValue("('Столица страны')");
 
                 entity.Property(e => e.TitleImagePath)
-                    .HasMaxLength(100)
+                    .HasMaxLength(500)
                     .HasDefaultValue("('Нет титульной картинки страны')");
 
                 entity.Property(e => e.CountryMapPath)
@@ -174,7 +174,7 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание новости')");
 
 				entity.Property(e => e.TitleImagePath)
-					.HasMaxLength(100)
+					.HasMaxLength(500)
                     .HasDefaultValue("('Нет титульной картинки')");
 				
 				entity.Property(e => e.DateAdded);
@@ -230,7 +230,7 @@ namespace ToursWebAppEXAMProject.DBContext
 				entity.Property(e => e.FullDescription).HasDefaultValue("('Полное описание туристического продукта')");
 
 				entity.Property(e => e.TitleImagePath)
-					.HasMaxLength(100)
+					.HasMaxLength(500)
                     .HasDefaultValue("('Нет титульной картинки')");
 
                 entity.Property(e => e.DateAdded);

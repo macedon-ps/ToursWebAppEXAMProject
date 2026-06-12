@@ -7,7 +7,6 @@ namespace ToursWebAppEXAMProject.Models
         public Product()
         {
             Tours = new HashSet<Tour>();
-            DateAdded = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -31,14 +30,13 @@ namespace ToursWebAppEXAMProject.Models
         public string FullDescription { get; set; } = "Полное описание туристического продукта";
 
         [Display(Name = "Титульная картинка")]
-        [StringLength(100, ErrorMessage = "Путь к титульной картинке не должен содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к титульной картинке не должен содержать более 500 символов")]
         public string? TitleImagePath { get; set; }
 
         [Display(Name = "PublicId картинки")]
-        public string ImagePublicId { get; set; } = null!;
+        public string? ImagePublicId { get; set; }
 
         [Display(Name = "Время создания")]
-        [DataType(DataType.Time)]
         public DateTime? DateAdded { get; set; }
 
         public virtual Country? Country { get; set; } 

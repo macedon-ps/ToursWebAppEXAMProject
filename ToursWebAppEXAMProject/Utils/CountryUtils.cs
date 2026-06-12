@@ -45,7 +45,7 @@ namespace ToursWebAppEXAMProject.Utils
             var country = _AllCountries.GetItemById(id);
             var cities = _AllCities.GetAllItems().Where(c => c.CountryId == id);
             country.Cities = cities;
-            country.DateAdded = DateTime.Now;
+            country.DateAdded = DateTime.UtcNow;
 
             return country;
         }
@@ -68,7 +68,7 @@ namespace ToursWebAppEXAMProject.Utils
         public async Task<(string Url, string PublicId)> SaveCountryImageByFileNameAsync(IFormFile? imageFileName, int countryId)
         {
             var folder = ImageFolder.Countries;
-            var publicId = $"country_{countryId}";
+            var publicId = $"country_{countryId}_{Path.GetFileNameWithoutExtension(imageFileName.FileName)}";
             return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 

@@ -45,10 +45,10 @@ namespace ToursWebAppEXAMProject.ViewModels
         /// Выбранные даты отдыха
         /// </summary>
         [Display(Name = "Даты поездки:")]
-		public DateTime DateFrom { get; set; } = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+		public DateTime DateFrom { get; set; } = Convert.ToDateTime(DateTime.UtcNow);
 
 		// по умолчанию - интервал в 5 дней
-        public DateTime DateTo { get; set; } = Convert.ToDateTime(DateTime.Now.AddDays(5).ToShortDateString());
+        public DateTime DateTo { get; set; } = Convert.ToDateTime(DateTime.UtcNow);
 
         /// <summary>
         /// Количество дней отдыха

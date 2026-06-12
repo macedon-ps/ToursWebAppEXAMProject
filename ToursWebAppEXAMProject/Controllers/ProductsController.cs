@@ -209,13 +209,13 @@ namespace ToursWebAppEXAMProject.Controllers
 
                     }
 
+                    productModel.DateAdded = DateTime.UtcNow;
+
                     if (productModel.CountryId !=0 && productModel.CityId !=0)
                     {
                         _ProductUtils.SaveProductModel(productModel);
                         _logger.LogDebug("Турпродукт успешно сохранен в БД. ");
                     }
-
-                    productModel.DateAdded = DateTime.Now;
 
                     _logger.LogTrace("Переход по маршруту ../Shared/Success.cshtml\n");
                     return View("Success", productModel);

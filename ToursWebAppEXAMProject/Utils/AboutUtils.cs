@@ -2,7 +2,7 @@
 using ToursWebAppEXAMProject.Enums;
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
-using ToursWebAppEXAMProject.Services.ImageStorage;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 
 namespace ToursWebAppEXAMProject.Utils
 {
@@ -10,13 +10,13 @@ namespace ToursWebAppEXAMProject.Utils
     {
         private readonly IBaseInterface<AboutPageVersion> _AboutPageVersion;
         private readonly IBaseInterface<PhotoGalleryImage> _PhotoGalleryImages;
-        private readonly ImageStorageService _ImageStorageService;
+        private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
 
-        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, ImageStorageService ImageStorageService)
+        public AboutUtils(IBaseInterface<AboutPageVersion> AboutPageVersion, IBaseInterface<PhotoGalleryImage> PhotoGalleryImages, CloudinaryImageStorageService CloudinaryImageStorageService)
         {
             _AboutPageVersion = AboutPageVersion;
             _PhotoGalleryImages = PhotoGalleryImages;
-            _ImageStorageService = ImageStorageService;
+            _CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
 
         /// <summary>
@@ -102,50 +102,66 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<AboutPageVersion> SetAboutPageVersionAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? CollectionImagesFileName, IFormFile? FeedbackImageFileName)
+        public async Task<AboutPageVersion> SetAboutPageVersionAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? CollectionImagesFileName, IFormFile? FeedbackImageFileName, int pageId)
         {
             // Main
             if (MainImageFileName != null)
             {
                 var folder = ImageFolder.About_Main;
-                model.MainImagePath = await _ImageStorageService.SaveAsync(folder, MainImageFileName);
+                var publicId = $"main_{pageId}_{Path.GetFileNameWithoutExtension(MainImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.MainImagePath = uploadImage.Url;
+                model.MainImagePublicId = uploadImage.outPublicId;
             }
 
             // About
             if (AboutImageFileName != null)
             {
                 var folder = ImageFolder.About_About;
-                model.AboutImagePath = await _ImageStorageService.SaveAsync(folder, AboutImageFileName);
+                var publicId = $"about_{pageId}_{Path.GetFileNameWithoutExtension(AboutImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.AboutImagePath = uploadImage.Url;
+                model.AboutImagePublicId = uploadImage.outPublicId;
             }
 
             // Details
             if (DetailsImageFileName != null)
             {
                 var folder = ImageFolder.About_Details;
-                model.DetailsImagePath = await _ImageStorageService.SaveAsync(folder, DetailsImageFileName);
+                var publicId = $"details_{pageId}_{Path.GetFileNameWithoutExtension(DetailsImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.DetailsImagePath = uploadImage.Url;
+                model.DetailsImagePublicId = uploadImage.outPublicId;
             }
             // OperationMode
             if (OperationModeImageFileName != null)
             {
                 var folder = ImageFolder.About_OperationMode;
-                model.OperationModeImagePath = await _ImageStorageService.SaveAsync(folder, OperationModeImageFileName);
+                var publicId = $"operation_mode_{pageId}_{Path.GetFileNameWithoutExtension(OperationModeImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.OperationModeImagePath = uploadImage.Url;
+                model.OperationModeImagePublicId = uploadImage.outPublicId;
             }
             // PhotoGallery
             if (PhotoGalleryImageFileName != null)
             {
                 var folder = ImageFolder.About_PhotoGallery;
-                model.PhotoGalleryImagePath = await _ImageStorageService.SaveAsync(folder, PhotoGalleryImageFileName);
+                var publicId = $"photogallery_{pageId}_{Path.GetFileNameWithoutExtension(PhotoGalleryImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.PhotoGalleryImagePath = uploadImage.Url;
+                model.PhotoGalleryImagePublicId = uploadImage.outPublicId;
             }
             // CollectionImagesFileName
             if (CollectionImagesFileName != null) 
             {
                 var folder = ImageFolder.About_PhotoGallery_Collection;
-                var collectionImagePath = await _ImageStorageService.SaveAsync(folder, CollectionImagesFileName);
+                // TODO: изменить механизм сохранения фотографий в фотогаллерею
+                // var collectionImagePath = await _ImageStorageService.SaveAsync(folder, CollectionImagesFileName);
                 
                 var photoGalleryImageModel = new PhotoGalleryImage
                 {
                     AboutPageVersionId = model.Id,
-                    ImagePath = collectionImagePath
+                    // ImagePath = collectionImagePath
                 };
                 
                 _PhotoGalleryImages.SaveItem(photoGalleryImageModel, photoGalleryImageModel.Id);
@@ -154,10 +170,13 @@ namespace ToursWebAppEXAMProject.Utils
             if (FeedbackImageFileName != null)
             {
                 var folder = ImageFolder.About_Feedback;
-                model.FeedbackImagePath = await _ImageStorageService.SaveAsync(folder, FeedbackImageFileName);
+                var publicId = $"feedback_{pageId}_{Path.GetFileNameWithoutExtension(FeedbackImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                model.FeedbackImagePath = uploadImage.Url;
+                model.FeedbackImagePublicId = uploadImage.outPublicId;
             }
 
-            model.DateAdded = DateTime.Now;
+            model.DateAdded = DateTime.UtcNow;
 
             _AboutPageVersion.SaveItem(model, model.Id);
 

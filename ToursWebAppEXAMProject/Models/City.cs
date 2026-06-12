@@ -8,7 +8,6 @@ namespace ToursWebAppEXAMProject.Models
         {
             Hotels = new HashSet<Hotel>();
             Products = new HashSet<Product>();
-            DateAdded = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -39,11 +38,11 @@ namespace ToursWebAppEXAMProject.Models
         public bool isCapital { get; set; } = false;
 
         [Display(Name = "Титульная картинка города")]
-        [StringLength(100, ErrorMessage = "Путь к титульной картинке города не должен содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к титульной картинке города не должен содержать более 500 символов")]
         public string? TitleImagePath { get; set; }
 
         [Display(Name = "PublicId картинки")]
-        public string ImagePublicId { get; set; } = null!;
+        public string? ImagePublicId { get; set; }
 
         public DateTime? DateAdded { get; set; }
         public virtual Country? Country { get; set; } 

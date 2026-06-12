@@ -172,7 +172,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         blogModel.ImagePublicId = uploadImage.PublicId;
                     }
 
-                    blogModel.DateAdded = DateTime.Now;
+                    blogModel.DateAdded = DateTime.UtcNow;
                     _BlogUtils.SaveBlogModel(blogModel);
                     _logger.LogDebug("Блог успешно сохранен в БД. ");
 

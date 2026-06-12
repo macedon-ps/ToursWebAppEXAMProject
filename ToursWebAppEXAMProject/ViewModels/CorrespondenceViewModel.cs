@@ -34,7 +34,6 @@ namespace ToursWebAppEXAMProject.ViewModels
         public string Question { get; set; } = "Вопрос к компании";
 
         [Display(Name = "Время получения сообщения")]
-        [DataType(DataType.Time)]
         public DateTime? QuestionDate { get; set; }
 
         [Display(Name = "Ответ компании")]
@@ -42,7 +41,6 @@ namespace ToursWebAppEXAMProject.ViewModels
         public string? Answer { get; set; }
 
         [Display(Name = "Время ответа на сообщение")]
-        [DataType(DataType.Time)]
         public DateTime? AnswerDate { get; set; }
 
         public CorrespondenceViewModel(){}

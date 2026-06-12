@@ -54,7 +54,7 @@ namespace ToursWebAppEXAMProject.Utils
         public City GetCityForEdit(int id)
         {
             var city = _AllCities.GetItemById(id);
-            city.DateAdded = DateTime.Now;
+            city.DateAdded = DateTime.UtcNow;
 
             return city;
         }
@@ -77,7 +77,7 @@ namespace ToursWebAppEXAMProject.Utils
         public async Task<(string Url, string PublicId)> SaveCityImageByFileNameAsync(IFormFile? imageFileName, int cityId)
         {
             var folder = ImageFolder.Cities;
-            var publicId = $"city_{cityId}";
+            var publicId = $"city_{cityId}_{Path.GetFileNameWithoutExtension(imageFileName.FileName)}";
             return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ToursWebAppEXAMProject.Models;
+using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
 using ToursWebAppEXAMProject.Services.Email;
-using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.Utils;
 using ToursWebAppEXAMProject.ViewModels;
 
@@ -12,18 +12,19 @@ namespace ToursWebAppEXAMProject.Controllers
     public class AboutController : Controller
 	{
         private readonly AboutUtils _AboutUtils;
-        private readonly ImageStorageService _ImageStorageService;
         private readonly FeedbackUtils _FeedbackUtils;
         private readonly EmailService _EmailService;
         private readonly ILogger<AboutController> _logger;
+        //private readonly CloudinaryImageStorageService _CloudinaryImageStorageService;
 
-        public AboutController(AboutUtils AboutUtils, ImageStorageService ImageStorageService, FeedbackUtils FeedbackUtils, EmailService EmailService, ILogger<AboutController> logger)
-		{
+        public AboutController(AboutUtils AboutUtils, FeedbackUtils FeedbackUtils, EmailService EmailService, ILogger<AboutController> logger//, //CloudinaryImageStorageService CloudinaryImageStorageService
+                                                                                                                                               )
+        { 
             _AboutUtils = AboutUtils;
-            _ImageStorageService = ImageStorageService;
             _FeedbackUtils = FeedbackUtils;
             _EmailService = EmailService;
             _logger = logger;
+            //_CloudinaryImageStorageService = CloudinaryImageStorageService;
         }
         
 
@@ -114,7 +115,8 @@ namespace ToursWebAppEXAMProject.Controllers
         [Authorize(Roles = "superadmin,editor")]
         public IActionResult DeletePicture(string relativePathToFile)
         {
-            _ImageStorageService.DeletePhoto(relativePathToFile);
+            // TODO: вызвать метод удаления картинки из AboutUtils
+            // _ImageStorageService.DeletePhoto(relativePathToFile);
             _logger.LogDebug($"Удалена картинка по пути: {relativePathToFile}. ");
 
             _logger.LogTrace("Переход по маршруту /About/DeletePicture.\n");
@@ -135,7 +137,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? CollectionImages, IFormFile? FeedbackImagePath)
+        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? CollectionImages, IFormFile? FeedbackImagePath, int pageId)
         {
             try
             {
@@ -144,7 +146,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.LogDebug("Модель AboutPageVersion прошла валидацию. ");
                     
                     var newModel = await _AboutUtils.SetAboutPageVersionAndSaveAsync
-                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, CollectionImages, FeedbackImagePath);
+                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, CollectionImages, FeedbackImagePath, pageId);
                     _logger.LogDebug("Модель AboutPageVersion заполнена данными из формыи успешно сохранена в БД. ");
            
                     _logger.LogTrace("Возвращено ../Shared/Success.cshtml\n");
@@ -239,7 +241,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         
 
                         /*model.Question = textAreaForm["textArea"].ToString();*/
-                        model.QuestionDate = DateTime.Now;
+                        model.QuestionDate = DateTime.UtcNow;
 
                         var correspondence = _FeedbackUtils.CreateCorrespondence(model.Question, model.QuestionDate, asker.Id, asker.IsCustomer);
                         
@@ -280,7 +282,7 @@ namespace ToursWebAppEXAMProject.Controllers
                 {
                     _logger.LogDebug("Вью-модель CorrespondenceViewModel не прошла валидацию. ");
 
-                    model.QuestionDate = DateTime.Now;
+                    model.QuestionDate = DateTime.UtcNow;
 
                     _logger.LogTrace("Возвращено /About/FeedBackForm.\n");
                     return View(model);

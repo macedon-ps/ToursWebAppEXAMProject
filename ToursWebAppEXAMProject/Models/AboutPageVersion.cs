@@ -102,57 +102,57 @@ namespace ToursWebAppEXAMProject.Models
 
 
         [Display(Name = "Путь к фотографиям общее")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям общее не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям общее не должно содержать более 500 символов")]
         public string? MainImagePath { get; set; }
 
 
         [Display(Name = "Путь к фотографиям о компании")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям о компании не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям о компании не должно содержать более 500 символов")]
         public string? AboutImagePath { get; set; }
 
 
         [Display(Name = "Путь к фотографиям реквизитов")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям реквизитов не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям реквизитов не должно содержать более 500 символов")]
         public string? DetailsImagePath { get; set; }
 
 
         [Display(Name = "Путь к фотографиям режима работы")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям режима работы не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям режима работы не должно содержать более 500 символов")]
         public string? OperationModeImagePath { get; set; }
 
 
         [Display(Name = "Путь к фотографиям фотогалереии")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям фотогалереи не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям фотогалереи не должно содержать более 500 символов")]
         public string? PhotoGalleryImagePath { get; set; }
 
 
         [Display(Name = "Путь к фотографиям обратной связи")]
-        [StringLength(100, ErrorMessage = "Путь к фотографиям обратной связи не должно содержать более 100 символов")]
+        [StringLength(500, ErrorMessage = "Путь к фотографиям обратной связи не должно содержать более 500 символов")]
         public string? FeedbackImagePath { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string MainImagePublicId { get; set; } = null!;
+        public string? MainImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string AboutImagePublicId { get; set; } = null!;
+        public string? AboutImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string DetailsImagePublicId { get; set; } = null!;
+        public string? DetailsImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string OperationModeImagePublicId { get; set; } = null!;
+        public string? OperationModeImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string PhotoGalleryImagePublicId { get; set; } = null!;
+        public string? PhotoGalleryImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
-        public string FeedbackImagePublicId { get; set; } = null!;
+        public string? FeedbackImagePublicId { get; set; } = null!;
 
 
         public DateTime? DateAdded { get; set; }

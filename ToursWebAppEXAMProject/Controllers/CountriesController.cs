@@ -183,7 +183,7 @@ namespace ToursWebAppEXAMProject.Controllers
                         countryModel.ImagePublicId = uploadImage.PublicId;
                     }
 
-                    countryModel.DateAdded = DateTime.Now;
+                    countryModel.DateAdded = DateTime.UtcNow;
                     _CountryUtils.SaveCountryModel(countryModel);
                     _logger.LogDebug("Страна успешно сохранена в БД. ");
 

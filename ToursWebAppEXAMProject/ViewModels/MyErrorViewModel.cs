@@ -18,7 +18,7 @@ namespace ToursWebAppEXAMProject.ViewModels
 
 		public MyErrorViewModel(string? errorMessage)
 		{
-			DateTimeError = DateTime.Now;
+			DateTimeError = DateTime.UtcNow;
 			ErrorMessage = errorMessage;
 		}
 	}

@@ -19,7 +19,7 @@ namespace ToursWebAppEXAMProject.ViewModels
 
         public NothingViewModel(string warnMessage)
         {
-            DateTimeWarn = DateTime.Now;
+            DateTimeWarn = DateTime.UtcNow;
             WarnMessage = warnMessage;
         }
     }

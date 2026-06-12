@@ -2,7 +2,6 @@
 using ToursWebAppEXAMProject.Interfaces;
 using ToursWebAppEXAMProject.Models;
 using ToursWebAppEXAMProject.Services.CloudineryImageStorageService;
-using ToursWebAppEXAMProject.Services.ImageStorage;
 using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Utils
@@ -77,7 +76,6 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-
         public void DeleteProductById(Product product)
         {
             _AllProducts.DeleteItem(product, product.Id);
@@ -87,7 +85,7 @@ namespace ToursWebAppEXAMProject.Utils
         public async Task<(string Url, string PublicId)> SaveProductImageByFileNameAsync(IFormFile? imageFileName, int productId)
         {
             var folder = ImageFolder.Products;
-            var publicId = $"product_{productId}";
+            var publicId = $"product_{productId}_{Path.GetFileNameWithoutExtension(imageFileName.FileName)}";
             return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 

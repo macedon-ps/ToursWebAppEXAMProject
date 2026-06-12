@@ -13,7 +13,6 @@ namespace ToursWebAppEXAMProject.Models
         public string Question { get; set; } = "Вопрос к компании";
 
         [Display(Name = "Время получения сообщения")]
-        [DataType(DataType.Time)]
         public DateTime? QuestionDate { get; set; }
 
         [Display(Name = "Ответ компании")]
@@ -21,7 +20,6 @@ namespace ToursWebAppEXAMProject.Models
         public string? Answer { get; set; } = "Ответ компании";
 
         [Display(Name = "Время ответа на сообщение")]
-        [DataType(DataType.Time)]
         public DateTime? AnswerDate { get; set; }
 
         public bool IsCustomer { get; set; } = false;
@@ -35,7 +33,7 @@ namespace ToursWebAppEXAMProject.Models
         public Correspondence(string question, DateTime? questionDate, int askerId, bool isCustomer) 
         {
             Question = question;
-            QuestionDate = questionDate ?? DateTime.Now;
+            QuestionDate = questionDate ?? DateTime.UtcNow;
             AskerId = askerId;
             IsCustomer = isCustomer;
         }

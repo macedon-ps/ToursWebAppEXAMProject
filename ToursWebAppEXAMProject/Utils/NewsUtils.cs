@@ -45,7 +45,7 @@ namespace ToursWebAppEXAMProject.Utils
         public async Task<(string Url, string PublicId)>SaveNewImageByFileNameAsync(IFormFile? imageFileName, int newsId)
         {
             var folder = ImageFolder.News;
-            var publicId = $"news_{newsId}";
+            var publicId = $"news_{newsId}_{Path.GetFileNameWithoutExtension(imageFileName.FileName)}";
             return await _CloudinaryImageStorageService.UploadAsync(folder, imageFileName, publicId);
         }
 
