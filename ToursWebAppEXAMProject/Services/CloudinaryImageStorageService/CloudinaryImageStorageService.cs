@@ -1,10 +1,7 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using System.Diagnostics;
 using ToursWebAppEXAMProject.ConfigFiles;
 using ToursWebAppEXAMProject.Enums;
-using ToursWebAppEXAMProject.Repositories;
-using ToursWebAppEXAMProject.ViewModels;
 
 namespace ToursWebAppEXAMProject.Services.CloudineryImageStorageService
 {

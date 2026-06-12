@@ -15,7 +15,7 @@
         <h4>Версия страницы v. @Model.Keyword</h4>
         <h4>Дата создания/редактирования: @Model.DateAdded</h4>
  
-        <form asp-controller="About" asp-action="SaveAboutPage" method="post" enctype="multipart/form-data">
+        <form asp-controller="About" asp-action="SaveAboutPage" asp-route-pageId="Id" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id"/>
             <input type="hidden" asp-for="MainImagePath"/>
             <input type="hidden" asp-for="AboutImagePath"/>

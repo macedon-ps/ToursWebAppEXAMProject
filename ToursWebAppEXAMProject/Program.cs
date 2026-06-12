@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using ToursWebAppEXAMProject.ConfigFiles;
@@ -59,6 +60,9 @@ builder.Services.AddTransient<CityUtils>();
 builder.Services.AddTransient<ProductUtils>();
 builder.Services.AddTransient<TechTaskItemUtils>();
 // builder.Services.AddTransient<ImageStorageService>();            // для хранения изображений в папках проекта
+
+var url = builder.Configuration["CLOUDINARY_URL"];
+builder.Services.AddSingleton(new Cloudinary(url));
 builder.Services.AddTransient<CloudinaryImageStorageService>();     // для хранения изображений в Cloudinery
 
 // подключение аутентификации и авторизации
