@@ -137,7 +137,7 @@ namespace ToursWebAppEXAMProject.Controllers
         /// <returns></returns>
         [Authorize(Roles = "superadmin,editor")]
         [HttpPost]
-        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? CollectionImages, IFormFile? FeedbackImagePath, int pageId)
+        public async Task<IActionResult> SaveAboutPage(AboutPageVersion model, IFormFile? MainImagePath, IFormFile? AboutImagePath, IFormFile? DetailsImagePath, IFormFile? OperationModeImagePath, IFormFile? PhotoGalleryImagePath, IFormFile? CollectionImages, IFormFile? FeedbackImagePath)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace ToursWebAppEXAMProject.Controllers
                     _logger.LogDebug("Модель AboutPageVersion прошла валидацию. ");
                     
                     var newModel = await _AboutUtils.SetAboutPageVersionAndSaveAsync
-                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, CollectionImages, FeedbackImagePath, pageId);
+                        (model, MainImagePath, AboutImagePath, DetailsImagePath, OperationModeImagePath, PhotoGalleryImagePath, CollectionImages, FeedbackImagePath);
                     _logger.LogDebug("Модель AboutPageVersion заполнена данными из формыи успешно сохранена в БД. ");
            
                     _logger.LogTrace("Возвращено ../Shared/Success.cshtml\n");

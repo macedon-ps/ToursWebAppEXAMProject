@@ -102,13 +102,13 @@ namespace ToursWebAppEXAMProject.Utils
         }
 
 
-        public async Task<AboutPageVersion> SetAboutPageVersionAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? CollectionImagesFileName, IFormFile? FeedbackImageFileName, int pageId)
+        public async Task<AboutPageVersion> SetAboutPageVersionAndSaveAsync(AboutPageVersion model, IFormFile? MainImageFileName, IFormFile? AboutImageFileName, IFormFile? DetailsImageFileName, IFormFile? OperationModeImageFileName, IFormFile? PhotoGalleryImageFileName, IFormFile? CollectionImagesFileName, IFormFile? FeedbackImageFileName)
         {
             // Main
             if (MainImageFileName != null)
             {
                 var folder = ImageFolder.About_Main;
-                var publicId = $"main_{pageId}_{Path.GetFileNameWithoutExtension(MainImageFileName.FileName)}";
+                var publicId = $"main_{model.Id}_{Path.GetFileNameWithoutExtension(MainImageFileName.FileName)}";
                 var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
                 model.MainImagePath = uploadImage.Url;
                 model.MainImagePublicId = uploadImage.outPublicId;
@@ -118,8 +118,8 @@ namespace ToursWebAppEXAMProject.Utils
             if (AboutImageFileName != null)
             {
                 var folder = ImageFolder.About_About;
-                var publicId = $"about_{pageId}_{Path.GetFileNameWithoutExtension(AboutImageFileName.FileName)}";
-                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                var publicId = $"about_{model.Id}_{Path.GetFileNameWithoutExtension(AboutImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, AboutImageFileName, publicId);
                 model.AboutImagePath = uploadImage.Url;
                 model.AboutImagePublicId = uploadImage.outPublicId;
             }
@@ -128,8 +128,8 @@ namespace ToursWebAppEXAMProject.Utils
             if (DetailsImageFileName != null)
             {
                 var folder = ImageFolder.About_Details;
-                var publicId = $"details_{pageId}_{Path.GetFileNameWithoutExtension(DetailsImageFileName.FileName)}";
-                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                var publicId = $"details_{model.Id}_{Path.GetFileNameWithoutExtension(DetailsImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, DetailsImageFileName, publicId);
                 model.DetailsImagePath = uploadImage.Url;
                 model.DetailsImagePublicId = uploadImage.outPublicId;
             }
@@ -137,8 +137,8 @@ namespace ToursWebAppEXAMProject.Utils
             if (OperationModeImageFileName != null)
             {
                 var folder = ImageFolder.About_OperationMode;
-                var publicId = $"operation_mode_{pageId}_{Path.GetFileNameWithoutExtension(OperationModeImageFileName.FileName)}";
-                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                var publicId = $"operation_mode_{model.Id}_{Path.GetFileNameWithoutExtension(OperationModeImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, OperationModeImageFileName, publicId);
                 model.OperationModeImagePath = uploadImage.Url;
                 model.OperationModeImagePublicId = uploadImage.outPublicId;
             }
@@ -146,8 +146,8 @@ namespace ToursWebAppEXAMProject.Utils
             if (PhotoGalleryImageFileName != null)
             {
                 var folder = ImageFolder.About_PhotoGallery;
-                var publicId = $"photogallery_{pageId}_{Path.GetFileNameWithoutExtension(PhotoGalleryImageFileName.FileName)}";
-                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                var publicId = $"photogallery_{model.Id}_{Path.GetFileNameWithoutExtension(PhotoGalleryImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, PhotoGalleryImageFileName, publicId);
                 model.PhotoGalleryImagePath = uploadImage.Url;
                 model.PhotoGalleryImagePublicId = uploadImage.outPublicId;
             }
@@ -170,8 +170,8 @@ namespace ToursWebAppEXAMProject.Utils
             if (FeedbackImageFileName != null)
             {
                 var folder = ImageFolder.About_Feedback;
-                var publicId = $"feedback_{pageId}_{Path.GetFileNameWithoutExtension(FeedbackImageFileName.FileName)}";
-                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, MainImageFileName, publicId);
+                var publicId = $"feedback_{model.Id}_{Path.GetFileNameWithoutExtension(FeedbackImageFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, FeedbackImageFileName, publicId);
                 model.FeedbackImagePath = uploadImage.Url;
                 model.FeedbackImagePublicId = uploadImage.outPublicId;
             }
