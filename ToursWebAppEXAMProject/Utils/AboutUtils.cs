@@ -155,13 +155,14 @@ namespace ToursWebAppEXAMProject.Utils
             if (CollectionImagesFileName != null) 
             {
                 var folder = ImageFolder.About_PhotoGallery_Collection;
-                // TODO: изменить механизм сохранения фотографий в фотогаллерею
-                // var collectionImagePath = await _ImageStorageService.SaveAsync(folder, CollectionImagesFileName);
-                
+                var publicId = $"photo_for_pageId_{model.Id}_{Path.GetFileNameWithoutExtension(CollectionImagesFileName.FileName)}";
+                var uploadImage = await _CloudinaryImageStorageService.UploadAsync(folder, CollectionImagesFileName, publicId);
+
                 var photoGalleryImageModel = new PhotoGalleryImage
                 {
                     AboutPageVersionId = model.Id,
-                    // ImagePath = collectionImagePath
+                    ImagePath = uploadImage.Url,
+                    PublicId = uploadImage.outPublicId,
                 };
                 
                 _PhotoGalleryImages.SaveItem(photoGalleryImageModel, photoGalleryImageModel.Id);
