@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToursWebAppEXAMProject.DBContext;
@@ -11,9 +12,11 @@ using ToursWebAppEXAMProject.DBContext;
 namespace ToursWebAppEXAMProject.Migrations
 {
     [DbContext(typeof(TourFirmaDBContext))]
-    partial class TourFirmaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260613105927__AddPublicIdForPhotoGalleryImages")]
+    partial class _AddPublicIdForPhotoGalleryImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,8 +173,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("AboutImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("AboutShortDescription")
                         .HasMaxLength(200)
@@ -193,8 +195,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("DetailsImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("DetailsShortDescription")
                         .HasMaxLength(200)
@@ -213,8 +214,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("FeedbackImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FeedbackShortDescription")
                         .HasMaxLength(200)
@@ -229,8 +229,8 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Keyword")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("MainFullDescription")
                         .HasColumnType("text");
@@ -240,8 +240,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("MainImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MainShortDescription")
                         .HasMaxLength(200)
@@ -260,8 +259,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("OperationModeImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("OperationModeShortDescription")
                         .HasMaxLength(200)
@@ -280,8 +278,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("PhotoGalleryImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhotoGalleryShortDescription")
                         .HasMaxLength(200)
@@ -310,26 +307,26 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<bool>("IsCustomer")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -359,8 +356,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValue("('Вся строка сообщений')");
 
                     b.Property<string>("ImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -415,8 +411,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValue("('Полное описание города')");
 
                     b.Property<string>("ImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LocalDescription")
                         .HasMaxLength(400)
@@ -521,8 +516,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValue("('Полное описание страны')");
 
                     b.Property<string>("ImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -562,8 +556,8 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -674,8 +668,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValue("('Полное описание новости')");
 
                     b.Property<string>("ImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -743,13 +736,12 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("PublicId")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -782,8 +774,7 @@ namespace ToursWebAppEXAMProject.Migrations
                         .HasDefaultValue("('Полное описание туристического продукта')");
 
                     b.Property<string>("ImagePublicId")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1126,8 +1117,7 @@ namespace ToursWebAppEXAMProject.Migrations
 
                     b.Property<string>("PageName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

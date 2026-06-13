@@ -14,7 +14,7 @@ namespace ToursWebAppEXAMProject.Models
 
         [Required(ErrorMessage = "Введите название страны")]
         [Display(Name = "Название страны")]
-        [StringLength(50, ErrorMessage = "Название страны не должно содержать более 50 символов")]
+        [StringLength(100, ErrorMessage = "Название страны не должно содержать более 100 символов")]
         public string Name { get; set; } = "Название страны";
 
         [Required(ErrorMessage = "Введите краткое описание страны")]
@@ -28,7 +28,7 @@ namespace ToursWebAppEXAMProject.Models
 
         [Required(ErrorMessage = "Введите название солицы страны")]
         [Display(Name = "Название столицы страны")]
-        [StringLength(50, ErrorMessage = "Название столицы страны не должно содержать более 50 символов")]
+        [StringLength(100, ErrorMessage = "Название столицы страны не должно содержать более 100 символов")]
         public string Capital { get; set; } = "Столица страны";
 
         [Display(Name = "Титульная картинка страны")]
@@ -40,6 +40,7 @@ namespace ToursWebAppEXAMProject.Models
         public string? CountryMapPath { get; set; }
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? ImagePublicId { get; set; }
 
         public DateTime? DateAdded { get; set; }

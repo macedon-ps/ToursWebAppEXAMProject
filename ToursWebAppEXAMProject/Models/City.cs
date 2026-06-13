@@ -17,7 +17,7 @@ namespace ToursWebAppEXAMProject.Models
 
         [Required(ErrorMessage = "Введите название города")]
         [Display(Name = "Название города")]
-        [StringLength(50, ErrorMessage = "Название города не должно содержать более 50 символов")]
+        [StringLength(100, ErrorMessage = "Название города не должно содержать более 100 символов")]
         public string Name { get; set; } = "Название города";
 
         [Required(ErrorMessage = "Введите краткое описание города")]
@@ -42,6 +42,7 @@ namespace ToursWebAppEXAMProject.Models
         public string? TitleImagePath { get; set; }
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? ImagePublicId { get; set; }
 
         public DateTime? DateAdded { get; set; }

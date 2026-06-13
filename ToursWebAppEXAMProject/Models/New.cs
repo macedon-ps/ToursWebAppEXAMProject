@@ -26,6 +26,7 @@ namespace ToursWebAppEXAMProject.Models
         public string? TitleImagePath { get; set; }
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? ImagePublicId { get; set; }
 
         [Display(Name = "Время создания")]

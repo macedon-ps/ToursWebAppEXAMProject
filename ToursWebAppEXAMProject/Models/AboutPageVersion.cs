@@ -7,7 +7,7 @@ namespace ToursWebAppEXAMProject.Models
         public int Id { get; set; }
 
         [Display(Name = "Ключевое слово")]
-        [StringLength(50, ErrorMessage = "Ключевое слово не должно содержать более 50 символов")]
+        [StringLength(100, ErrorMessage = "Ключевое слово не должно содержать более 100 символов")]
         public string? Keyword { get; set; } 
 
 
@@ -132,26 +132,32 @@ namespace ToursWebAppEXAMProject.Models
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? MainImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? AboutImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? DetailsImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? OperationModeImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? PhotoGalleryImagePublicId { get; set; }
 
 
         [Display(Name = "PublicId картинки")]
+        [StringLength(500)]
         public string? FeedbackImagePublicId { get; set; } = null!;
 
 

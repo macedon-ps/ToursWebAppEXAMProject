@@ -1,4 +1,6 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToursWebAppEXAMProject.Models
 {
     public class TechTaskPage
     {
@@ -7,6 +9,7 @@
         /// <summary>
         /// Home, Search, Edit, Support, About, Common
         /// </summary>
+        [StringLength(100)]
         public string PageName { get; set; } = null!;
 
         public List<TechTaskItem> Tasks { get; set; } = new();

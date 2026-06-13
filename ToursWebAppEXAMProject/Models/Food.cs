@@ -1,4 +1,6 @@
-﻿namespace ToursWebAppEXAMProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToursWebAppEXAMProject.Models
 {
     public partial class Food
     {
@@ -8,6 +10,8 @@
         }
 
         public int Id { get; set; }
+
+        [StringLength(100)]
         public string ModeOfEating { get; set; } = null!;
 
         public virtual ICollection<Tour> Tours { get; set; }

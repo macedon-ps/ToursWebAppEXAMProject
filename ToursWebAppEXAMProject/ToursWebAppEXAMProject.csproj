@@ -53,13 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\BlogsTitleImages\" />
-    <Folder Include="wwwroot\images\CitiesTitleImages\" />
-    <Folder Include="wwwroot\images\NewsTitleImages\" />
-    <Folder Include="wwwroot\images\ProductsTitleImages\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="wwwroot\js\ckeditor4\adapters\jquery.js" />
