@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
     <None Remove="C:\Users\КазанчанАндрійАркаді\.nuget\packages\nlog.schema\5.0.1\contentFiles\any\any\NLog.xsd" />
   </ItemGroup>
@@ -53,7 +49,6 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <None Include="compilerconfig.json" />
     <None Include="wwwroot\js\ckeditor4\adapters\jquery.js" />
     <None Include="wwwroot\js\ckeditor4\build-config.js" />
     <None Include="wwwroot\js\ckeditor4\CHANGES.md" />
