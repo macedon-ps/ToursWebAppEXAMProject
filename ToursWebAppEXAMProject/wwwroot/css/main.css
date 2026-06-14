@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /* SuperDesktop format */
 /* Desktop format */
 /* Planshet format */
@@ -308,6 +308,7 @@ article:last-child {
   justify-content: center;
   margin-top: 0;
 }
+
 /* SuperDesktop format */
 /* Desktop format */
 /* Planshet format */
@@ -1716,7 +1717,7 @@ textarea {
     content: "";
     width: 20px;
     height: 30px;
-    background: url("../scss/assets/mobileUI-site-nav-opener-bg.svg");
+    background: url("assets/mobileUI-site-nav-opener-bg.svg");
   }
   #titleBar .toggle:active:after {
     background: rgba(0, 0, 0, 0.2);
@@ -2755,3 +2756,5 @@ select.languageTo {
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 /* Шрифт полностью переработан, изменен и дополнен */
+
+/*# sourceMappingURL=main.css.map */
