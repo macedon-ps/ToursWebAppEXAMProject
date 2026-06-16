@@ -1,10 +1,14 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .row {
     display: flex;
     flex-wrap: wrap;
+
+    @include mix.mobile {
+        flex-direction: column;
+    }
 }
 
 .displayFlex {
@@ -13,6 +17,10 @@
 
 .col-2 {
     width: 16.666%;
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 .col-6 {
@@ -21,6 +29,10 @@
 
 .col-10 {
     width: 83.333%;
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 .col-12 {

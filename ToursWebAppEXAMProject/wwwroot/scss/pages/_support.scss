@@ -1,24 +1,24 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .supportPage {
-    @extend %page-template;
+    @include tmp.page-template;
     background-image: url(../background/Support.png);
 }
 
 .supportHeader {
-    @extend %header-page-template;
-    @extend %background-norepeat-template;
+    @include tmp.header-page-template;
+    @include tmp.background-norepeat-template;
     background-image: url(../background/Support_2.png);
 
-    @include tablet {
-        @include header-page-980;
+    @include mix.tablet {
+        @include tmp.header-page-980;
     }
 }
 
 .supportHeaderOne {
-    @extend %header-page-one-template;
+    @include tmp.header-page-one-template;
 }
 
 .map1 {
@@ -81,6 +81,6 @@ select.languageTo {
 .text-area-origin, .text-area-translate {
     width: 100%;
     padding: 0.5em 1em;
-    font-family: $font-family_2;
+    font-family: vars.$font-family_2;
     font-size: 1.2em;
 }

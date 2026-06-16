@@ -1,6 +1,6 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 table {
     border-collapse: collapse;
@@ -12,7 +12,7 @@ table {
         padding-left: 2em;
         text-align: left;
         font-weight: 600;
-        color: $color_8;
+        color: vars.$color_8;
     }
 
     td {

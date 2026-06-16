@@ -1,43 +1,37 @@
-﻿@import '../base/_variables.scss';
+﻿@use '../base/variables' as vars;
 
 @mixin blue-grey-gradient {
-    background: linear-gradient (top, $color_blue_grey_1, $color_blue_grey_2 );
+    background: linear-gradient (top, vars.$color_blue_grey_1, vars.$color_blue_grey_2 );
 }
 
 @mixin blue-grey-gradient2 {
-    background: linear-gradient (top, $color_blue_grey_3, $color_blue_grey_4 );
-}
-
-@mixin header-page-980 {
-    background-size: 225%;
-    overflow: auto;
-    height: 100%;
+    background: linear-gradient (top, vars.$color_blue_grey_3, vars.$color_blue_grey_4 );
 }
 
 /* SuperDesktop format */
 @mixin superdesktop {
-    @media (max-width: $superdesktop) {
+    @media (max-width: vars.$superdesktop) {
         @content;
     }
 }
 
 /* Desktop format */
 @mixin desktop {
-    @media (max-width: $desktop) {
+    @media (max-width: vars.$desktop) {
         @content;
     }
 }
 
 /* Planshet format */
 @mixin tablet {
-    @media (max-width: $tablet) {
+    @media (max-width: vars.$tablet) {
         @content;
     }
 }
 
 /* Mobile format */
 @mixin mobile {
-    @media (max-width: $mobile) {
+    @media (max-width: vars.$mobile) {
         @content;
     }
 }

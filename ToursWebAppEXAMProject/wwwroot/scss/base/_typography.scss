@@ -1,40 +1,48 @@
-﻿@import '_variables.scss';
-@import '_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use 'variables' as vars;
+@use 'templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 body {
     line-height: 1;
     -webkit-text-size-adjust: none;
     font-size: 13.5pt;
     background-image: url(../background/blue-water.jpg);
-    font-family: $font-family_1;
-    color: $color_2;
+    font-family: vars.$font-family_1;
+    color: vars.$color_2;
     letter-spacing: -1px;
     user-select: none;
 }
 
 h1 {
-    color: $color_3;
+    color: vars.$color_3;
     text-transform: lowercase;
     font-size: 2.4em;
+
+    @include mix.tablet {
+        font-size: 2.2em;
+    }
+
+    @include mix.mobile {
+        font-size: 2em;
+    }
 }
 
 h2 {
-    color: $color_3;
+    color: vars.$color_3;
     text-transform: lowercase;
     font-size: 1.9em;
     letter-spacing: -1px;
 }
 
 h3 {
-    color: $color_4;
+    color: vars.$color_4;
     font-size: 1.2em;
     margin-bottom: 0.6em;
     font-weight: 500;
 }
 
 h4 {
-    color: $color_4;
+    color: vars.$color_4;
     font-size: 1em;
     margin-bottom: 0.5em;
     font-weight: 500;
@@ -46,7 +54,7 @@ p {
 }
 
 a {
-    color: $color_6;
+    color: vars.$color_6;
     text-decoration: underline;
 }
 
@@ -56,7 +64,7 @@ ul {
 }
 
 strong {
-    color: $color_5;
+    color: vars.$color_5;
 }
 
 article {

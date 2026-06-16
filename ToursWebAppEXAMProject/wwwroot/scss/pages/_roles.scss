@@ -1,9 +1,9 @@
-﻿@import '../base/_templates.scss';
+﻿@use '../base/templates' as tmp;
 
 .rolesPage {
-    @extend %page-template;
+    @include tmp.page-template;
 }
 
 .rolesHeader {
-    @extend %header-page-template;
+    @include tmp.header-page-template;
 }

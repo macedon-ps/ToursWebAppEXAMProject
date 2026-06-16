@@ -1,19 +1,19 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 #footer-wrapper {
-    background-color: $background-color_9;
+    background-color: vars.$background-color_9;
 }
 
 #copyright {
     text-align: center;
-    color: $color_10;
+    color: vars.$color_10;
     border-top: solid 1px #0693ba;
     padding: 0.5em 0 0.5em 0;
     margin: 0.5em 0 0.5em 0;
 
     a {
-        color: $color_6;
+        color: vars.$color_6;
     }
 }

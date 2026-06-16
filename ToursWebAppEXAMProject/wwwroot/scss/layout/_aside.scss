@@ -1,10 +1,10 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .asidePage {
     min-height: 560px;
-    background-color: $background-color_10;
+    background-color: vars.$background-color_10;
     margin: 1em 0 0 1em;
     padding: 1em;
 
@@ -29,5 +29,13 @@
 
     > h2 {
         margin-bottom: 0.2em;
+    }
+
+    @include mix.tablet {
+        margin: 12.5em 0 0;
+    }
+
+    @include mix.mobile {
+        margin: 0.5em 0 0;
     }
 }

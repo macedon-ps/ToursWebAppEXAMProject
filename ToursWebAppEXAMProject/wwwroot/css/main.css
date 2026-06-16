@@ -1,69 +1,7 @@
-@charset "UTF-8";
 /* SuperDesktop format */
 /* Desktop format */
 /* Planshet format */
 /* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -77,75 +15,6 @@ html, body, header, menu, nav, footer, aside, h1, h2, h3, h4, h5, h6, p, a, div,
   vertical-align: baseline;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 body {
   line-height: 1;
   -webkit-text-size-adjust: none;
@@ -161,6 +30,16 @@ h1 {
   color: #007897;
   text-transform: lowercase;
   font-size: 2.4em;
+}
+@media (max-width: 980px) {
+  h1 {
+    font-size: 2.2em;
+  }
+}
+@media (max-width: 736px) {
+  h1 {
+    font-size: 2em;
+  }
 }
 
 h2 {
@@ -211,75 +90,6 @@ article:last-child {
   margin-bottom: 0;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .errorButton, .rolesButton, .usersButton, .accountButton, .aboutButton, .supportButton, .editButton, .searchButton, .homeButton {
   display: flex;
   flex-wrap: wrap;
@@ -309,148 +119,10 @@ article:last-child {
   margin-top: 0;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 input {
   user-select: text;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -473,75 +145,6 @@ table {
   margin-right: 0.8em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .burger {
   display: none;
   background: none;
@@ -549,75 +152,6 @@ table {
   cursor: pointer;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage50 img, .titleImage40 img, .titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .flexRow {
   display: flex;
 }
@@ -686,6 +220,13 @@ table {
 .titleImage {
   max-width: 25%;
 }
+.titleImage img {
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
 .titleImage25 {
   max-width: 25%;
 }
@@ -693,9 +234,23 @@ table {
 .titleImage40 {
   max-width: 40%;
 }
+.titleImage40 img {
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
 .titleImage50 {
   max-width: 50%;
 }
+.titleImage50 img {
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
 textarea {
   user-select: text;
 }
@@ -851,82 +406,23 @@ textarea {
   padding: 0;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .row {
   display: flex;
   flex-wrap: wrap;
 }
+@media (max-width: 736px) {
+  .row {
+    flex-direction: column;
+  }
+}
 
 .col-2 {
   width: 16.666%;
+}
+@media (max-width: 736px) {
+  .col-2 {
+    width: 100%;
+  }
 }
 
 .col-6 {
@@ -936,80 +432,16 @@ textarea {
 .col-10 {
   width: 83.333%;
 }
+@media (max-width: 736px) {
+  .col-10 {
+    width: 100%;
+  }
+}
 
 .col-12 {
   width: 100%;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 #header-wrapper {
   background: linear-gradient top, #008dab, #007294;
   background-color: #007294;
@@ -1040,150 +472,12 @@ textarea {
   text-decoration: none;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .container {
   margin: 0 auto;
   max-width: 100%;
   width: 1200px;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 #nav {
   line-height: 84px;
   text-transform: lowercase;
@@ -1217,75 +511,6 @@ textarea {
   box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .asidePage {
   min-height: 560px;
   background-color: #7dced8;
@@ -1310,76 +535,17 @@ textarea {
 .asidePage > h2 {
   margin-bottom: 0.2em;
 }
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
+@media (max-width: 980px) {
+  .asidePage {
+    margin: 12.5em 0 0;
+  }
+}
+@media (max-width: 736px) {
+  .asidePage {
+    margin: 0.5em 0 0;
+  }
 }
 
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 #footer-wrapper {
   background-color: #ced0b7;
 }
@@ -1395,79 +561,6 @@ textarea {
   color: #2240c7;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 @media screen and (max-width: 1680px) {
   .container {
     width: 1200px;
@@ -1545,7 +638,7 @@ textarea {
 }
 @media screen and (max-width: 980px) {
   .container {
-    width: calc(100% - 100px);
+    width: 100%;
   }
   .row {
     display: flex;
@@ -1587,8 +680,6 @@ textarea {
   }
   #header {
     display: flex;
-    height: 100%;
-    margin-bottom: 1em;
   }
   .burger {
     display: block;
@@ -1622,9 +713,6 @@ textarea {
     background-size: 225%;
     overflow: auto;
     height: 100%;
-  }
-  .asidePage {
-    margin: 12.5em 0 0;
   }
   .homeButton a {
     text-align: center;
@@ -1780,26 +868,15 @@ textarea {
 }
 @media screen and (max-width: 736px) {
   .container {
-    width: calc(100% - 40px);
+    width: 100%;
   }
   .row {
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
     align-items: stretch;
-    margin-top: -20px;
-    margin-left: -20px;
   }
-  .row > .col-2 {
-    width: 16.66667%;
-  }
-  .row > .col-6 {
-    width: 50%;
-  }
-  .row > .col-10 {
-    width: 83.33333%;
-  }
-  .row > .col-12 {
+  .row > .col-12-medium {
     width: 100%;
   }
   body {
@@ -1814,11 +891,11 @@ textarea {
   h4 {
     font-size: 1em;
   }
-  ul li img {
-    width: 100px;
-  }
   ul {
     margin: 0 0 1em 0;
+  }
+  ul li img {
+    width: 100px;
   }
   article.blog-post .comments {
     display: block;
@@ -1846,76 +923,20 @@ textarea {
     color: #A6A88F;
   }
 }
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
+.homePage {
   height: 550px;
   background-color: #7dced8;
 }
 
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
+.homeHeader {
   height: 500px;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
   background-repeat: no-repeat;
   background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.list-blog-messages, .blog-message, .blog-user {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .product-foto, .blog-foto, .new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.homeHeader {
   background-image: url(../background/Home_2.png);
 }
 @media (max-width: 980px) {
@@ -1926,42 +947,7 @@ textarea {
   }
 }
 
-.list-blog-messages li {
-  margin: 5px 0 10px 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .searchPage, .homePage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .searchHeader, .homeHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .searchHeaderOne, .homeHeaderOne {
+.homeHeaderOne {
   height: 500px;
   background-color: #7dced8;
   padding: 1em;
@@ -1969,41 +955,54 @@ textarea {
   overflow-y: scroll;
 }
 
-.searchBlock4, .searchBlock3, .searchBlock2, .searchBlock1 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
+.blog-user {
   padding: 10px 25px 15px 30px;
   border-radius: 10px;
   background-color: #bfe8ed;
 }
 
-.about-foto, .product-foto, .new-foto, .blog-foto {
+.blog-message {
+  padding: 10px 25px 15px 30px;
+  border-radius: 10px;
+  background-color: #bfe8ed;
+}
+
+.list-blog-messages {
+  padding: 10px 25px 15px 30px;
+  border-radius: 10px;
+  background-color: #bfe8ed;
+}
+.list-blog-messages li {
+  margin: 5px 0 10px 0;
+}
+
+.new-foto {
   width: 100%;
   aspect-ratio: 3/2;
   object-fit: cover;
 }
 
-.titleImage img, .titleImage40 img, .titleImage50 img {
+.blog-foto {
   width: 100%;
-  float: left;
+  aspect-ratio: 3/2;
   object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
 .searchPage {
+  height: 550px;
+  background-color: #7dced8;
   background-image: url(../background/Search.png);
 }
 
 .searchHeader {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: 100%;
   padding: 0 1em 1em;
   background-image: url(../background/Search_2.png);
 }
@@ -2015,6 +1014,22 @@ textarea {
   }
 }
 
+.searchHeader-unscroll {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchHeaderOne {
+  height: 500px;
+  background-color: #7dced8;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+}
+
 .searchButtonSubmit {
   padding-top: 1em;
 }
@@ -2024,12 +1039,34 @@ textarea {
   font-weight: 600;
 }
 
+.searchBlock1 {
+  width: 100%;
+  margin: 0 0 0.5em 0;
+  padding: 0.5em 1em 0.25em;
+  background-color: #62cad1;
+}
+
+.searchBlock2 {
+  width: 100%;
+  margin: 0 0 0.5em 0;
+  padding: 0.5em 1em 0.25em;
+  background-color: #62cad1;
+}
+
 .searchBlock3 {
+  width: 100%;
+  margin: 0 0 0.5em 0;
+  padding: 0.5em 1em 0.25em;
+  background-color: #62cad1;
   display: flex;
   justify-content: space-between;
 }
 
 .searchBlock4 {
+  width: 100%;
+  margin: 0 0 0.5em 0;
+  padding: 0.5em 1em 0.25em;
+  background-color: #62cad1;
   height: 400px;
 }
 
@@ -2039,6 +1076,12 @@ textarea {
 }
 .searchDelete a {
   margin-left: 0.6em;
+}
+
+.product-foto {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
 }
 
 .citiesList {
@@ -2077,80 +1120,21 @@ textarea {
   padding: 0.5em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .editPage, .homePage, .searchPage {
+.editPage {
   height: 550px;
   background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .editHeader, .homeHeader, .searchHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .editHeader, .homeHeader, .searchHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .editHeaderOne, .homeHeaderOne, .searchHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .new-foto, .blog-foto, .product-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.editPage {
   background-image: url(../background/Edit.png);
 }
 
 .editHeader {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: 100%;
   background-image: url(../background/Edit_2.png);
 }
 @media (max-width: 980px) {
@@ -2161,84 +1145,33 @@ textarea {
   }
 }
 
+.editHeaderOne {
+  height: 500px;
+  background-color: #7dced8;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+}
+
 .check-isCapital {
   margin-bottom: 1.2em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .supportPage, .homePage, .searchPage, .editPage {
+.supportPage {
   height: 550px;
   background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .supportHeader, .homeHeader, .searchHeader, .editHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.aboutHeader, .supportHeader, .homeHeader, .searchHeader, .editHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .supportHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .new-foto, .blog-foto, .product-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.supportPage {
   background-image: url(../background/Support.png);
 }
 
 .supportHeader {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: 100%;
   background-image: url(../background/Support_2.png);
 }
 @media (max-width: 980px) {
@@ -2247,6 +1180,14 @@ textarea {
     overflow: auto;
     height: 100%;
   }
+}
+
+.supportHeaderOne {
+  height: 500px;
+  background-color: #7dced8;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
 }
 
 .map1 {
@@ -2311,76 +1252,20 @@ select.languageTo {
   font-size: 1.2em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .aboutPage, .homePage, .searchPage, .editPage, .supportPage {
+.aboutPage {
   height: 550px;
   background-color: #7dced8;
 }
 
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .aboutHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader {
+.aboutHeader {
   height: 500px;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-}
-
-.aboutHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader {
   background-repeat: no-repeat;
   background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne, .supportHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.about-foto, .new-foto, .blog-foto, .product-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.aboutHeader {
   background-image: url(../background/About_2.png);
 }
 @media (max-width: 980px) {
@@ -2450,74 +1335,34 @@ select.languageTo {
   padding-left: 4em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .accountPage, .homePage, .searchPage, .editPage, .supportPage, .aboutPage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .usersHeader, .rolesHeader, .accountHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .accountHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne, .supportHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.new-foto, .blog-foto, .product-foto, .about-foto {
+.about-foto {
   width: 100%;
   aspect-ratio: 3/2;
   object-fit: cover;
 }
 
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
+.accountPage {
+  height: 550px;
+  background-color: #7dced8;
 }
 
 .accountHeader {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   margin-top: 1em;
   text-align: center;
+}
+
+.accountHeaderOne {
+  height: 500px;
+  background-color: #7dced8;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
 }
 
 .accountInput {
@@ -2546,16 +1391,12 @@ select.languageTo {
   margin-left: 1.5em;
 }
 
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .rolesPage, .homePage, .searchPage, .editPage, .supportPage, .aboutPage, .accountPage {
+.rolesPage {
   height: 550px;
   background-color: #7dced8;
 }
 
-.errorHeader, .usersHeader, .rolesHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader, .accountHeader {
+.rolesHeader {
   height: 500px;
   padding: 1em;
   margin: 0;
@@ -2564,197 +1405,44 @@ select.languageTo {
   flex-direction: column;
 }
 
-.homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne, .supportHeaderOne, .accountHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.new-foto, .blog-foto, .product-foto, .about-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .usersPage, .homePage, .searchPage, .editPage, .supportPage, .aboutPage, .accountPage, .rolesPage {
+.usersPage {
   height: 550px;
   background-color: #7dced8;
 }
 
-.errorHeader, .usersHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader, .accountHeader, .rolesHeader {
+.usersHeader {
   height: 500px;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-}
-
-.homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne, .supportHeaderOne, .accountHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.new-foto, .blog-foto, .product-foto, .about-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-/* SuperDesktop format */
-/* Desktop format */
-/* Planshet format */
-/* Mobile format */
-.errorPage, .homePage, .searchPage, .editPage, .supportPage, .aboutPage, .accountPage, .rolesPage, .usersPage {
-  height: 550px;
-  background-color: #7dced8;
-}
-
-.errorHeader, .homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader, .accountHeader, .rolesHeader, .usersHeader {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
-}
-
-.homeHeader, .searchHeader, .editHeader, .supportHeader, .aboutHeader {
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
-
-.searchHeader-unscroll {
-  height: 500px;
-  padding: 1em;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.errorHeaderOne, .homeHeaderOne, .searchHeaderOne, .editHeaderOne, .supportHeaderOne, .accountHeaderOne {
-  height: 500px;
-  background-color: #7dced8;
-  padding: 1em;
-  margin: 0;
-  overflow-y: scroll;
-}
-
-.searchBlock1, .searchBlock2, .searchBlock3, .searchBlock4 {
-  width: 100%;
-  margin: 0 0 0.5em 0;
-  padding: 0.5em 1em 0.25em;
-  background-color: #62cad1;
-}
-
-.blog-user, .blog-message, .list-blog-messages {
-  padding: 10px 25px 15px 30px;
-  border-radius: 10px;
-  background-color: #bfe8ed;
-}
-
-.new-foto, .blog-foto, .product-foto, .about-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.titleImage img, .titleImage40 img, .titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
 }
 
 .errorPage {
+  height: 550px;
+  background-color: #7dced8;
   margin: 1em 0 0 0;
   padding: 1em;
   background-image: url(../background/Error.png);
   background-size: 100%;
 }
 
-/* Шрифт подключен автономно */
-/* @import url("https://fonts.googleapis.com/css?family=Ubunimagestu+Condensed"); */
-/*
-	Minimaxing by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-/* Шрифт полностью переработан, изменен и дополнен */
+.errorHeader {
+  height: 500px;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.errorHeaderOne {
+  height: 500px;
+  background-color: #7dced8;
+  padding: 1em;
+  margin: 0;
+  overflow-y: scroll;
+}
 
 /*# sourceMappingURL=main.css.map */

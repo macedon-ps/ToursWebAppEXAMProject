@@ -1,36 +1,27 @@
-﻿@import 'base/_reset.scss';
-@import 'base/_variables.scss';
-@import 'base/_typography.scss';
-@import 'components/_button.scss';
-@import 'components/_forms.scss';
-@import 'components/_tables.scss';
-@import 'components/_burger.scss';
-@import 'components/_common.scss';
-@import 'layout/_grid.scss';
-@import 'layout/_header.scss';
-@import 'layout/_container.scss';
-@import 'layout/_nav.scss';
-@import 'layout/_aside.scss';
-@import 'layout/_footer.scss';
-@import 'mixins/mixins.scss';
-@import 'media/_media.scss';
-@import 'pages/_home.scss';
-@import 'pages/_search.scss';
-@import 'pages/_edit.scss';
-@import 'pages/_support.scss';
-@import 'pages/_about.scss';
-@import 'pages/_shared.scss';
-@import 'pages/_account.scss';
-@import 'pages/_roles.scss';
-@import 'pages/_users.scss';
-@import 'pages/_error.scss';
-
-/* Шрифт подключен автономно */
-/* @import url("https://fonts.googleapis.com/css?family=Ubunimagestu+Condensed"); */
-/*
-	Minimaxing by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-
-/* Шрифт полностью переработан, изменен и дополнен */
+﻿@use 'base/reset' as res;
+@use 'base/templates' as tmp;
+@use 'base/variables' as vars;
+@use 'base/typography' as typ;
+@use 'components/button' as btn;
+@use 'components/forms' as frm;
+@use 'components/tables' as tbl;
+@use 'components/burger' as brg;
+@use 'components/common' as com;
+@use 'layout/grid' as grd;
+@use 'layout/header' as hdr;
+@use 'layout/container' as cnt;
+@use 'layout/nav' as nav;
+@use 'layout/aside' as asd;
+@use 'layout/footer' as ftr;
+@use 'mixins/mixins' as mix;
+@use 'media/media' as med;
+@use 'pages/home' as home;
+@use 'pages/search' as srch;
+@use 'pages/edit' as edit;
+@use 'pages/support' as sprt;
+@use 'pages/about' as abot;
+@use 'pages/shared' as shar;
+@use 'pages/account' as acnt;
+@use 'pages/roles' as role;
+@use 'pages/users' as user;
+@use 'pages/error' as errr;

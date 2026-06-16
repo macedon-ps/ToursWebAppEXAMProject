@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "sass": "sass wwwroot/scss/main.scss wwwroot/css/main.css",
+    "sass": "sass wwwroot/scss/main.scss:wwwroot/css/main.css",
     "sass-watch": "sass --watch wwwroot/scss/main.scss:wwwroot/css/main.css"
   },
   "devDependencies": {

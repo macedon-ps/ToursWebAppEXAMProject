@@ -1,30 +1,30 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 
 .searchPage {
-    @extend %page-template;
+    @include tmp.page-template;
     background-image: url(../background/Search.png);
 }
 
 .searchHeader {
-    @extend %header-page-template;
-    @extend %background-norepeat-template;
+    @include tmp.header-page-template;
+    @include tmp.background-norepeat-template;
     padding: 0 1em 1em;
     background-image: url(../background/Search_2.png);
 
-    @include tablet {
-        @include header-page-980;
+    @include mix.tablet {
+        @include tmp.header-page-980;
     }
 }
 
 .searchHeader-unscroll {
-    @extend %header-page-unscroll-template;
+    @include tmp.header-page-unscroll-template;
 }
 
 .searchHeaderOne {
-    @extend %header-page-one-template;
+    @include tmp.header-page-one-template;
 }
 
 .searchButtonSubmit {
@@ -37,21 +37,21 @@
 }
 
 .searchBlock1 {
-    @extend %search-block-template;
+    @include tmp.search-block-template;
 }
 
 .searchBlock2 {
-    @extend %search-block-template;
+    @include tmp.search-block-template;
 }
 
 .searchBlock3 {
-    @extend %search-block-template;
+    @include tmp.search-block-template;
     display: flex;
     justify-content: space-between;
 }
 
 .searchBlock4 {
-    @extend %search-block-template;
+    @include tmp.search-block-template;
     height: 400px;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .product-foto {
-    @extend %foto-template;
+    @include tmp.foto-template;
 }
 
 .citiesList {

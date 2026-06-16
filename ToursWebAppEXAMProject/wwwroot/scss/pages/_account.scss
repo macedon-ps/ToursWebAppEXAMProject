@@ -1,17 +1,18 @@
-﻿@import '../base/_templates.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
 
 .accountPage {
-    @extend %page-template;
+    @include tmp.page-template;
 }
 
 .accountHeader {
-    @extend %header-page-template;
+    @include tmp.header-page-template;
     margin-top: 1em;
     text-align: center;
 }
 
 .accountHeaderOne {
-    @extend %header-page-one-template;
+    @include tmp.header-page-one-template;
 }
 
 .accountInput {
@@ -23,7 +24,7 @@
 }
 
 .submitButton {
-    background-color: $background-color_2;
+    background-color: vars.$background-color_2;
     text-transform: uppercase;
     min-width: 200px;
     border-radius: 6px;

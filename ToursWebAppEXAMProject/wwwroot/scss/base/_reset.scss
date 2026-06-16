@@ -1,4 +1,4 @@
-﻿@import '_templates.scss';
+﻿@use 'templates' as tmp;
 
 *, *::before, *::after {
     box-sizing: border-box;

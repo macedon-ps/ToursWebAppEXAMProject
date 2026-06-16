@@ -1,18 +1,18 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .aboutPage {
-    @extend %page-template;
+    @include tmp.page-template;
 }
 
 .aboutHeader {
-    @extend %header-page-template;
-    @extend %background-norepeat-template;
+    @include tmp.header-page-template;
+    @include tmp.background-norepeat-template;
     background-image: url(../background/About_2.png);
 
-    @include tablet {
-        @include header-page-980;
+    @include mix.tablet {
+        @include tmp.header-page-980;
     }
 }
 
@@ -26,7 +26,7 @@
     margin: 1em auto;
     width: 80%;
     text-align: center;
-    font-family: $font-family_3;
+    font-family: vars.$font-family_3;
     font-size: 1.2em;
 }
 
@@ -78,5 +78,5 @@
 }
 
 .about-foto {
-    @extend %foto-template;
+    @include tmp.foto-template;
 }

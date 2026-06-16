@@ -1,6 +1,6 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 #nav {
     line-height: 84px;
@@ -14,7 +14,7 @@
     a {
         display: inline-block;
         text-decoration: none;
-        color: $color_9;
+        color: vars.$color_9;
         padding: 0 25px 0 25px;
         outline: 0;
         font-size: 18px;
@@ -24,7 +24,7 @@
             background-image: -moz-linear-gradient(top, #0782a0, #077d9b);
             background-image: -webkit-linear-gradient(top, #0782a0, #077d9b);
             background-image: linear-gradient(top, #0782a0, #077d9b);
-            background-color: $background-color_8;
+            background-color: vars.$background-color_8;
             box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.05), 0px 0px 5px 1px rgba(255, 255, 255, 0.05);
         }
     }
@@ -33,7 +33,7 @@
         background-image: -moz-linear-gradient(top, #007b99, #007897);
         background-image: -webkit-linear-gradient(top, #007b99, #007897);
         background-image: linear-gradient(top, #007b99, #007897);
-        background-color: $background-color_7;
+        background-color: vars.$background-color_7;
         box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
     }
 }

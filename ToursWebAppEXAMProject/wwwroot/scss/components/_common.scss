@@ -1,6 +1,6 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .flexRow {
     display: flex;
@@ -73,7 +73,7 @@
     max-width: 25%;
 
     img {
-        @extend %img-template;
+        @include tmp.img-template;
     }
 }
 
@@ -85,7 +85,7 @@
     max-width: 40%;
 
     img {
-        @extend %img-template;
+        @include tmp.img-template;
     }
 }
 
@@ -93,7 +93,7 @@
     max-width: 50%;
 
     img {
-        @extend %img-template;
+        @include tmp.img-template;
     }
 }
 

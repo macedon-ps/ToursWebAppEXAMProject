@@ -1,12 +1,12 @@
-﻿@import '_variables.scss';
-@import '../mixins/mixins.scss';
+﻿@use 'variables' as vars;
+@use '../mixins/mixins' as mix;
 
-%page-template {
+@mixin page-template {
     height: 550px;
-    background-color: $background-color_10;
+    background-color: vars.$background-color_10;
 }
 
-%header-page-template {
+@mixin header-page-template {
     height: 500px;
     padding: 1em;
     margin: 0;
@@ -15,12 +15,12 @@
     flex-direction: column;
 }
 
-%background-norepeat-template {
+@mixin background-norepeat-template {
     background-repeat: no-repeat;
     background-size: 100%;
 }
 
-%header-page-unscroll-template {
+@mixin header-page-unscroll-template {
     height: 500px;
     padding: 1em;
     margin: 0;
@@ -28,35 +28,40 @@
     flex-direction: column;
 }
 
-
-%header-page-one-template {
+@mixin header-page-one-template {
     height: 500px;
-    background-color: $background-color_10;
+    background-color: vars.$background-color_10;
     padding: 1em;
     margin: 0;
     overflow-y: scroll;
 }
 
-%search-block-template {
+@mixin header-page-980 {
+    background-size: 225%;
+    overflow: auto;
+    height: 100%;
+}
+
+@mixin search-block-template {
     width: 100%;
     margin: 0 0 0.5em 0;
     padding: 0.5em 1em 0.25em;
-    background-color: $background-color_11;
+    background-color: vars.$background-color_11;
 }
 
-%blog-template {
+@mixin blog-template {
     padding: 10px 25px 15px 30px;
     border-radius: 10px;
-    background-color: $background-color_3;
+    background-color: vars.$background-color_3;
 }
 
-%foto-template {
+@mixin foto-template {
     width: 100%;
     aspect-ratio: 3/2;
     object-fit: cover;
 }
 
-%img-template {
+@mixin img-template {
     width: 100%;
     float: left;
     object-fit: cover;

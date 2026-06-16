@@ -1,35 +1,35 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 .homePage {
-    @extend %page-template;
+    @include tmp.page-template;
 }
 
 .homeHeader {
-    @extend %header-page-template;
-    @extend %background-norepeat-template;
+    @include tmp.header-page-template;
+    @include tmp.background-norepeat-template;
     background-image: url(../background/Home_2.png);
 
-    @include tablet {
-        @include header-page-980;
+    @include mix.tablet {
+        @include tmp.header-page-980;
     }
 }
 
 .homeHeaderOne {
-    @extend %header-page-one-template;
+    @include tmp.header-page-one-template;
 }
 
 .blog-user {
-    @extend %blog-template;
+    @include tmp.blog-template;
 }
 
 .blog-message {
-    @extend %blog-template;
+    @include tmp.blog-template;
 }
 
 .list-blog-messages {
-    @extend %blog-template;
+    @include tmp.blog-template;
 
     li {
         margin: 5px 0 10px 0;
@@ -37,11 +37,11 @@
 }
 
 .new-foto {
-    @extend %foto-template;
+    @include tmp.foto-template;
 }
 
 .blog-foto {
-    @extend %foto-template;
+    @include tmp.foto-template;
 }
 
 

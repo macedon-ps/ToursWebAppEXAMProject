@@ -1,7 +1,7 @@
-﻿@import '../base/_templates.scss';
+﻿@use '../base/templates' as tmp;
 
 .errorPage {
-    @extend %page-template;
+    @include tmp.page-template;
     margin: 1em 0 0 0;
     padding: 1em;
     background-image: url(../background/Error.png);
@@ -9,9 +9,9 @@
 }
 
 .errorHeader {
-    @extend %header-page-template;
+    @include tmp.header-page-template;
 }
 
 .errorHeaderOne {
-    @extend %header-page-one-template;
+    @include tmp.header-page-one-template;
 }

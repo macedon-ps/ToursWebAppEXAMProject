@@ -1,15 +1,15 @@
-﻿@import '../base/_variables.scss';
-@import '../base/_templates.scss';
-@import '../mixins/mixins.scss';
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
 
 #header-wrapper {
-    @include blue-grey-gradient;
-    background-color: $background-color_6;
+    @include mix.blue-grey-gradient;
+    background-color: vars.$background-color_6;
 }
 
 #header {
-    @include blue-grey-gradient2;
-    background-color: $background-color_4;
+    @include mix.blue-grey-gradient2;
+    background-color: vars.$background-color_4;
     box-sizing: content-box;
     padding: 0 40px 0 40px;
     border-radius: 10px;
@@ -22,13 +22,13 @@
     flex-wrap: wrap;
 
     h1 {
-        color: $color_9;
+        color: vars.$color_9;
         font-size: 2.4em;
         letter-spacing: -2px;
         line-height: 86px;
 
         a {
-            color: $color_9;
+            color: vars.$color_9;
             text-decoration: none;
         }
     }
