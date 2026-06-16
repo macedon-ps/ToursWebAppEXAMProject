@@ -36,4 +36,12 @@
         background-color: vars.$background-color_7;
         box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
     }
+
+    @inclide mix.tablet {
+        line-height: 2.5em;
+    }
+
+    @inclide mix.mobile {
+        line-height: 2em;
+    }
 }

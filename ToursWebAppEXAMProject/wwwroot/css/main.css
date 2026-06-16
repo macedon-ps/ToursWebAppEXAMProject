@@ -472,6 +472,23 @@ textarea {
   text-decoration: none;
 }
 
+.container-header {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 1200px;
+}
+@media (max-width: 736px) {
+  .container-header {
+    min-height: 22em;
+  }
+}
+
+@media (max-width: 736px) {
+  container-header-active {
+    min-height: 22em;
+  }
+}
+
 .container {
   margin: 0 auto;
   max-width: 100%;
@@ -509,6 +526,16 @@ textarea {
   background-image: linear-gradient(top, #007b99, #007897);
   background-color: #007897;
   box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
+}
+@inclide mix.tablet {
+  #nav {
+    line-height: 2.5em;
+  }
+}
+@inclide mix.mobile {
+  #nav {
+    line-height: 2em;
+  }
 }
 
 .asidePage {
@@ -588,14 +615,6 @@ textarea {
   .container {
     width: calc(100% - 70px);
   }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    align-items: stretch;
-    margin-top: -35px;
-    margin-left: -35px;
-  }
   .row > .col-2 {
     width: 16.66667%;
   }
@@ -639,14 +658,6 @@ textarea {
 @media screen and (max-width: 980px) {
   .container {
     width: 100%;
-  }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    align-items: stretch;
-    margin-top: -50px;
-    margin-left: -50px;
   }
   .row > .col-2-medium {
     width: 16.66667%;
@@ -869,12 +880,6 @@ textarea {
 @media screen and (max-width: 736px) {
   .container {
     width: 100%;
-  }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    align-items: stretch;
   }
   .row > .col-12-medium {
     width: 100%;
