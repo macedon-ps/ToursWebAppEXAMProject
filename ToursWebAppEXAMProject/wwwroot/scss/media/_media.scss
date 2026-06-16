@@ -37,13 +37,6 @@
     }
 
     .row {
-        display: flex;
-        flex-wrap: wrap;
-        box-sizing: border-box;
-        align-items: stretch;
-        margin-top: -35px;
-        margin-left: -35px;
-
         > .col-2 {
             width: 16.66667%;
         }
@@ -107,13 +100,6 @@
     }
 
     .row {
-        display: flex;
-        flex-wrap: wrap;
-        box-sizing: border-box;
-        align-items: stretch;
-        margin-top: -50px;
-        margin-left: -50px;
-
         > .col-2-medium {
             width: 16.66667%;
         }
@@ -400,16 +386,10 @@
     }
 
     .row {
-        display: flex;
-        flex-wrap: wrap;
-        box-sizing: border-box;
-        align-items: stretch;
-        
         > .col-12-medium {
             width: 100%;
         }
     }
-
 
     body {
         font-size: 13pt;

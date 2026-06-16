@@ -2,6 +2,22 @@
 @use '../base/templates' as tmp;
 @use '../mixins/mixins' as mix;
 
+.container-header {
+    margin: 0 auto;
+    max-width: 100%;
+    width: 1200px;
+
+    @include mix.mobile {
+        min-height: 6em;
+    }
+}
+
+container-header-active {
+    @include mix.mobile {
+        min-height: 22em;
+    }
+}
+
 .container {
     margin: 0 auto;
     max-width: 100%;
