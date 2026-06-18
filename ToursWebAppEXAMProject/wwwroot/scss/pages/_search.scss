@@ -27,8 +27,24 @@
     @include tmp.header-page-one-template;
 }
 
+.searchMenu {
+    display: flex;
+    flex-direction: column;
+}
+
+.searchCardsGroup {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1em;
+
+    @include mix.tablet {
+        flex-direction: column;
+    }
+}
+
 .searchButtonSubmit {
     padding-top: 1em;
+    margin-bottom: 1em;
 }
 
 .search-label {
@@ -36,12 +52,118 @@
     font-weight: 600;
 }
 
+/* Картка для dropdown стран и городов */
+.cardCountriesCities {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    margin: 0 auto;
+}
+
+/* Картка для полей ввода дат от и до */
+.cardDate {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    margin: 0 auto;
+}
+
+/* Картка для полей ввода численности дней и людей*/
+.cardItemsNumber {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    margin: 0 auto;
+}
+
+/* Картка submit */
+.cardSubmit {
+    min-width: 5em;
+}
+
+.searchCountriesList {
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 2.2em;
+
+    @include mix.mobile {
+        width: 45%;
+        margin: 0 auto;
+    }
+}
+
+.searchCitiesList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @include mix.mobile {
+        width: 45%;
+        margin: 0 auto;
+    }
+}
+
+.searchDateFrom {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    width: 100%;
+    padding-right: 2.5em;
+}
+
+.searchDateTo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.searchDaysNumber {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 0.6em;
+}
+
+.searchPeopleNumber {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 0.6em;
+}
+
+.searchMap {
+    width: 100%;
+}
+
+.country-map {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    object-fit: cover;
+
+    iframe {
+        display: block;
+        margin: auto;
+        border: 0;
+    }
+}
+
 .searchBlock1 {
     @include tmp.search-block-template;
+
+    @include mix.tablet {
+        flex-direction: column;
+    }
 }
 
 .searchBlock2 {
     @include tmp.search-block-template;
+
+    @include mix.tablet {
+        flex-direction: column;
+    }
 }
 
 .searchBlock3 {
@@ -85,19 +207,6 @@
         width: 100%;
         height: 88%;
         object-fit: cover;
-    }
-}
-
-.country-map {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    object-fit: cover;
-
-    iframe {
-        display: block;
-        margin: auto;
-        border: 0;
     }
 }
 

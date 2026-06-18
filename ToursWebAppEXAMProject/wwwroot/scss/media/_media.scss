@@ -75,15 +75,6 @@
         }
     }
 
-    #nav {
-        line-height: 74px;
-        font-size: 1.1em;
-
-        a {
-            padding: 0 20px 0 20px;
-        }
-    }
-
     #footer-wrapper {
         padding: 2em;
     }
@@ -153,28 +144,6 @@
     a#logo {
         font-size: 24px;
         margin-left: 1.5em;
-    }
-
-    #nav {
-        display: none;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        width: 100%;
-
-        a {
-            padding: 0 10px;
-            border-bottom: 1px solid #ddd;
-            font-size: 20px;
-            background-color: vars.$background-color_10;
-            min-width: 5.5em;
-            flex-wrap: wrap;
-            text-align: center;
-        }
-    }
-
-    #nav.active {
-        display: flex;
     }
 
     .aboutHeader {
@@ -315,69 +284,6 @@
         }
     }
 
-    #navPanel {
-        -moz-backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -moz-transform: translateX(-275px);
-        -webkit-transform: translateX(-275px);
-        -ms-transform: translateX(-275px);
-        transform: translateX(-275px);
-        -moz-transition: -moz-transform 0.5s ease;
-        -webkit-transition: -webkit-transform 0.5s ease;
-        transition: transform 0.5s ease;
-        display: block;
-        height: 100%;
-        left: 0;
-        overflow-y: auto;
-        width: 275px;
-        z-index: 10002;
-        background: #00536F;
-        color: vars.$color_9;
-        box-shadow: inset -10px 0px 40px 0px rgba(0, 0, 0, 0.5);
-
-        .link {
-            display: block;
-            color: vars.$color_9;
-            border-top: solid 1px rgba(255, 255, 255, 0.1);
-            border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-            height: 55px;
-            line-height: 55px;
-            padding: 0 15px 0 15px;
-            text-decoration: none;
-
-            &:first-child {
-                border-top: 0;
-            }
-
-            &:last-child {
-                border-bottom: 0;
-            }
-        }
-    }
-
-    body.navPanel-visible {
-        #page-wrapper {
-            -moz-transform: translateX(275px);
-            -webkit-transform: translateX(275px);
-            -ms-transform: translateX(275px);
-            transform: translateX(275px);
-        }
-
-        #titleBar {
-            -moz-transform: translateX(275px);
-            -webkit-transform: translateX(275px);
-            -ms-transform: translateX(275px);
-            transform: translateX(275px);
-        }
-
-        #navPanel {
-            -moz-transform: translateX(0);
-            -webkit-transform: translateX(0);
-            -ms-transform: translateX(0);
-            transform: translateX(0);
-        }
-    }
 }
 
 @media screen and (max-width: 736px) {

@@ -11,32 +11,53 @@
         <h1 class="titleLowHeader">Поиск туристических продуктов:</h1>
         <hr class="horizontal-line-search" />
         
-        <div class="searchMenu">  
+        <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
 
-            <form asp-controller="Search" asp-action="Index" method="post" name="myForm">
-                
-               @* Первый блок элементов: 3 select (список стран, количество дней отдыха, количество отдыхающих), календарь и кнопка "Найти тур" *@
-                
-                <div class="flexRow searchBlock1">   
-                    
-                    <div class="block1Left">
-                        <label class="search-label">Страна:</label>
-                        <select asp-for="CountryIdSelected"
-                                asp-items="@Model.CountriesList">
-                            <option value="">Выберите страну</option>
-                        </select>
+            <div class="searchMenu">
+
+                <div class="searchCardsGroup">
+                    <div class="cardCountriesCities">
+
+                        @* Список стран*@
+                        <div class="searchCountriesList">
+                            <label class="search-label">Страна:</label>
+                            <select asp-for="CountryIdSelected"
+                                    asp-items="@Model.CountriesList">
+                                <option value="">Выберите страну</option>
+                            </select>
+                        </div>
+
+                        @*Список городов*@
+                        <div class="searchCitiesList">
+                            <div id="divForChangeCitiesSelectList">
+                                <label class="search-label">Город:</label>
+                                <select asp-for="CityIdSelected"
+                                        asp-items="@Model.CitiesList">
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="block1Right">
+                    <div class="cardDate">
+
                         @*Даты поездки (выпадающий календарь, по интервалу "от" и "до") class="flexColumn blockWidth20"*@
-                        <div>
+                        <div class="searchDateFrom">
                             <label asp-for="DateFrom" class="search-label"></label>
                             <input asp-for="DateFrom" />
+                        </div>
+
+                        <div class="searchDateTo">
+                            <label asp-for="DateTo" class="search-label"></label>
                             <input asp-for="DateTo" />
                         </div>
 
+                    </div>
+
+                    <div class="cardItemsNumber">
+
                         @*Количество дней отдыха (выпадающий список, единственный выбор, + свой выбор) class="flexColumn blockWidth20"*@
-                        <div class="block1Middle">
+                        <div class="searchDaysNumber">
                             <label asp-for="NumberOfDaysFromSelectList" class="search-label"></label>
                             <select asp-for="NumberOfDaysFromSelectList"
                                     asp-items="@Html.GetEnumSelectList<NumberOfDaysEnum>()">
@@ -44,49 +65,38 @@
                         </div>
 
                         @*Количество взрослых и детей (выпадающий список, единственный выбор, + свой набор) class="flexColumn blockWidth20"*@
-                        <div class="block1Middle">
+                        <div class="searchPeopleNumber">
                             <label asp-for="NumberOfPeopleFromSelectList" class="search-label"></label>
                             <select asp-for="NumberOfPeopleFromSelectList"
                                     asp-items="@Html.GetEnumSelectList<NumberOfPeopleEnum>()">
                             </select>
                         </div>
 
-                        @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
-                        <div>
-                            <input type="submit" value="Найти тур" />
-                        </div>
                     </div>
-                    
-                </div> 
-
-                @* Второй блок элементов: 
-                    1 select (список городов), карта и блоки описаний о странах, городах, достопримечательностъ
-                *@
-
-                <div class="flexRow searchBlock2">   
-                    
-                    @*Список городов*@
-                    <div class="flexColumn block2Left">
-                        <div id="divForChangeCitiesSelectList">
-                            <label>Город:</label>
-                            <select asp-for="CityIdSelected"
-                                    asp-items="@Model.CitiesList">
-                            </select>
-                        </div>
-                    </div>
-
-                    @*Карта страны*@
-                    <div class="flexColumn block2Right">
-                        <label asp-for="MapImagePath"></label>
-                        <div class="country-map">
-                            <div id="countryMap">
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-            </form>
-        </div>
+                
+                <hr class="horizontal-line-search" />
+                    
+                @*Кнопка "Найти тур" class="flexColumn blockWidth20 searchButtonSubmit"*@
+                <div class="cardSubmit">
+                    <input type="submit" value="Найти тур" />
+                </div>
+                    
+                <hr class="horizontal-line-search" />
+
+                @*Карта страны*@
+                <div class="flexColumn searchMap">
+                    <label asp-for="MapImagePath"></label>
+                    <div class="country-map">
+                        <div id="countryMap">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                
+        </form>
+        
      </div>
 </div>
 <script type="module"src="~/js/search.js"></script>

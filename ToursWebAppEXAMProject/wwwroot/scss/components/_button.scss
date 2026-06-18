@@ -31,6 +31,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .searchButton {
@@ -39,6 +43,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .editButton {
@@ -47,6 +55,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .supportButton {
@@ -55,6 +67,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .aboutButton {
@@ -63,6 +79,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .accountButton {
@@ -82,6 +102,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .rolesButton {
@@ -90,6 +114,10 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }
 
 .errorButton {
@@ -98,4 +126,8 @@
     }
 
     @extend %button;
+
+    @include mix.tablet {
+        margin-top: 0;
+    }
 }

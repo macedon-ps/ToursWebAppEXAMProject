@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* SuperDesktop format */
 /* Desktop format */
 /* Planshet format */
@@ -113,10 +114,58 @@ article:last-child {
   margin-bottom: 1em;
 }
 
+@media (max-width: 980px) {
+  .homeButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .searchButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .editButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .supportButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .aboutButton {
+    margin-top: 0;
+  }
+}
+
 .accountButton {
   padding: 0;
   justify-content: center;
   margin-top: 0;
+}
+
+@media (max-width: 980px) {
+  .usersButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .rolesButton {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .errorButton {
+    margin-top: 0;
+  }
 }
 
 input {
@@ -367,33 +416,6 @@ textarea {
   margin-bottom: 2em;
 }
 
-.block1Left {
-  min-width: 16%;
-}
-
-.block2Left {
-  min-width: 16%;
-}
-
-.block1Right {
-  min-width: 84%;
-  display: flex;
-  align-content: space-between;
-  padding-right: 2.5em;
-}
-
-.block1Middle {
-  padding: 0 0.6em;
-}
-
-.block2Right {
-  min-width: 84%;
-}
-
-.block3Right {
-  max-width: 50%;
-}
-
 .text-danger-text {
   text-align: center;
   margin: 11em auto 1em;
@@ -476,16 +498,12 @@ textarea {
   margin: 0 auto;
   max-width: 100%;
   width: 1200px;
-}
-@media (max-width: 736px) {
-  .container-header {
-    min-height: 22em;
-  }
+  transition: min-height 0.3s;
 }
 
 @media (max-width: 736px) {
-  container-header-active {
-    min-height: 22em;
+  .container-header-active {
+    min-height: 9.5em;
   }
 }
 
@@ -503,15 +521,66 @@ textarea {
   display: flex;
   gap: 20px;
   align-items: center;
+  /* 1280 px*/
+}
+@media (max-width: 1280px) {
+  #nav {
+    line-height: 4.5em;
+    font-size: 1.1em;
+  }
+}
+#nav {
+  /* 980 px*/
+}
+@media (max-width: 980px) {
+  #nav {
+    line-height: 2.5em;
+    display: none;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+}
+#nav {
+  /* 736 px*/
+}
+@media (max-width: 736px) {
+  #nav {
+    line-height: 1.8em;
+  }
 }
 #nav a {
   display: inline-block;
   text-decoration: none;
   color: #fff;
-  padding: 0 25px 0 25px;
+  padding: 0 25px;
   outline: 0;
-  font-size: 18px;
+  font-size: 22px;
   border-radius: 8px;
+}
+@media (max-width: 1280px) {
+  #nav a {
+    padding: 0 20px 0 20px;
+  }
+}
+@media (max-width: 980px) {
+  #nav a {
+    padding: 0 18px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    background-color: #7dced8;
+    min-width: 5.5em;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
+@media (max-width: 736px) {
+  #nav a {
+    padding: 0 12px;
+    font-size: 16px;
+  }
 }
 #nav a:hover {
   background-image: -moz-linear-gradient(top, #0782a0, #077d9b);
@@ -527,14 +596,10 @@ textarea {
   background-color: #007897;
   box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.1), 0px 0px 5px 1px rgba(255, 255, 255, 0.1);
 }
-@inclide mix.tablet {
-  #nav {
-    line-height: 2.5em;
-  }
-}
-@inclide mix.mobile {
-  #nav {
-    line-height: 2em;
+
+@media (max-width: 980px) {
+  #nav.active {
+    display: flex;
   }
 }
 
@@ -640,13 +705,6 @@ textarea {
     font-size: 2em;
     line-height: 76px;
   }
-  #nav {
-    line-height: 74px;
-    font-size: 1.1em;
-  }
-  #nav a {
-    padding: 0 20px 0 20px;
-  }
   #footer-wrapper {
     padding: 2em;
   }
@@ -700,25 +758,6 @@ textarea {
   a#logo {
     font-size: 24px;
     margin-left: 1.5em;
-  }
-  #nav {
-    display: none;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    width: 100%;
-  }
-  #nav a {
-    padding: 0 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 20px;
-    background-color: #7dced8;
-    min-width: 5.5em;
-    flex-wrap: wrap;
-    text-align: center;
-  }
-  #nav.active {
-    display: flex;
   }
   .aboutHeader {
     background-size: 225%;
@@ -821,61 +860,6 @@ textarea {
   #titleBar .toggle:active:after {
     background: rgba(0, 0, 0, 0.2);
   }
-  #navPanel {
-    -moz-backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-transform: translateX(-275px);
-    -webkit-transform: translateX(-275px);
-    -ms-transform: translateX(-275px);
-    transform: translateX(-275px);
-    -moz-transition: -moz-transform 0.5s ease;
-    -webkit-transition: -webkit-transform 0.5s ease;
-    transition: transform 0.5s ease;
-    display: block;
-    height: 100%;
-    left: 0;
-    overflow-y: auto;
-    width: 275px;
-    z-index: 10002;
-    background: #00536F;
-    color: #fff;
-    box-shadow: inset -10px 0px 40px 0px rgba(0, 0, 0, 0.5);
-  }
-  #navPanel .link {
-    display: block;
-    color: #fff;
-    border-top: solid 1px rgba(255, 255, 255, 0.1);
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-    height: 55px;
-    line-height: 55px;
-    padding: 0 15px 0 15px;
-    text-decoration: none;
-  }
-  #navPanel .link:first-child {
-    border-top: 0;
-  }
-  #navPanel .link:last-child {
-    border-bottom: 0;
-  }
-  body.navPanel-visible #page-wrapper {
-    -moz-transform: translateX(275px);
-    -webkit-transform: translateX(275px);
-    -ms-transform: translateX(275px);
-    transform: translateX(275px);
-  }
-  body.navPanel-visible #titleBar {
-    -moz-transform: translateX(275px);
-    -webkit-transform: translateX(275px);
-    -ms-transform: translateX(275px);
-    transform: translateX(275px);
-  }
-  body.navPanel-visible #navPanel {
-    -moz-transform: translateX(0);
-    -webkit-transform: translateX(0);
-    -ms-transform: translateX(0);
-    transform: translateX(0);
-  }
 }
 @media screen and (max-width: 736px) {
   .container {
@@ -929,12 +913,12 @@ textarea {
   }
 }
 .homePage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
 }
 
 .homeHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -994,13 +978,13 @@ textarea {
 }
 
 .searchPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
   background-image: url(../background/Search.png);
 }
 
 .searchHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1035,13 +1019,128 @@ textarea {
   overflow-y: scroll;
 }
 
+.searchMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchCardsGroup {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .searchCardsGroup {
+    flex-direction: column;
+  }
+}
+
 .searchButtonSubmit {
   padding-top: 1em;
+  margin-bottom: 1em;
 }
 
 .search-label {
   padding: 0.5em 1em;
   font-weight: 600;
+}
+
+/* Картка для dropdown стран и городов */
+.cardCountriesCities {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  margin: 0 auto;
+}
+
+/* Картка для полей ввода дат от и до */
+.cardDate {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  margin: 0 auto;
+}
+
+/* Картка для полей ввода численности дней и людей*/
+.cardItemsNumber {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  margin: 0 auto;
+}
+
+/* Картка submit */
+.cardSubmit {
+  min-width: 5em;
+}
+
+.searchCountriesList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2.2em;
+}
+@media (max-width: 736px) {
+  .searchCountriesList {
+    width: 45%;
+    margin: 0 auto;
+  }
+}
+
+.searchCitiesList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+@media (max-width: 736px) {
+  .searchCitiesList {
+    width: 45%;
+    margin: 0 auto;
+  }
+}
+
+.searchDateFrom {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  width: 100%;
+  padding-right: 2.5em;
+}
+
+.searchDateTo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.searchDaysNumber {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 0.6em;
+}
+
+.searchPeopleNumber {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 0.6em;
+}
+
+.searchMap {
+  width: 100%;
+}
+
+.country-map {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  object-fit: cover;
+}
+.country-map iframe {
+  display: block;
+  margin: auto;
+  border: 0;
 }
 
 .searchBlock1 {
@@ -1050,12 +1149,22 @@ textarea {
   padding: 0.5em 1em 0.25em;
   background-color: #62cad1;
 }
+@media (max-width: 980px) {
+  .searchBlock1 {
+    flex-direction: column;
+  }
+}
 
 .searchBlock2 {
   width: 100%;
   margin: 0 0 0.5em 0;
   padding: 0.5em 1em 0.25em;
   background-color: #62cad1;
+}
+@media (max-width: 980px) {
+  .searchBlock2 {
+    flex-direction: column;
+  }
 }
 
 .searchBlock3 {
@@ -1108,31 +1217,19 @@ textarea {
   object-fit: cover;
 }
 
-.country-map {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  object-fit: cover;
-}
-.country-map iframe {
-  display: block;
-  margin: auto;
-  border: 0;
-}
-
 .countryData {
   margin: 1em;
   padding: 0.5em;
 }
 
 .editPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
   background-image: url(../background/Edit.png);
 }
 
 .editHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1163,13 +1260,13 @@ textarea {
 }
 
 .supportPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
   background-image: url(../background/Support.png);
 }
 
 .supportHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1258,12 +1355,12 @@ select.languageTo {
 }
 
 .aboutPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
 }
 
 .aboutHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1347,12 +1444,12 @@ select.languageTo {
 }
 
 .accountPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
 }
 
 .accountHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1397,12 +1494,12 @@ select.languageTo {
 }
 
 .rolesPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
 }
 
 .rolesHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1411,12 +1508,12 @@ select.languageTo {
 }
 
 .usersPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
 }
 
 .usersHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;
@@ -1425,7 +1522,7 @@ select.languageTo {
 }
 
 .errorPage {
-  height: 550px;
+  height: 100vh;
   background-color: #7dced8;
   margin: 1em 0 0 0;
   padding: 1em;
@@ -1434,7 +1531,7 @@ select.languageTo {
 }
 
 .errorHeader {
-  height: 500px;
+  height: 100vh;
   padding: 1em;
   margin: 0;
   overflow-y: scroll;

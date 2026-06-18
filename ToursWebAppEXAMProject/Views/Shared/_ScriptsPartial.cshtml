@@ -15,11 +15,13 @@
     const burgerBtn = document.getElementById("burgerBtn");
     const nav = document.getElementById("nav");
     const container = document.getElementById("container-header");
+    const page = document.getElementById("page");
     
     burgerBtn.addEventListener("click", () =>
     {
         nav.classList.toggle("active");
-        container.classList("container-header-active");
+        container.classList.toggle("container-header-active");
+        page.classList.toggle("page-down");
     });
 
 </script>   

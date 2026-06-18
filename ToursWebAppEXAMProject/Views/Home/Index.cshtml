@@ -4,23 +4,24 @@
 }
 
 <div class="homePage">
-    
+
     @await Html.PartialAsync("_HomeButtonMenuPartial")
 
     <div class="homeHeader">
         <h1 class="title">Домашняя страница сайта:</h1><br />
-        <hr class="horizontal-line"/><br/>
+        <hr class="horizontal-line" /><br />
 
         <div class="displayFlex row">
             <div class="col-6 col-12-medium">
-                
+
                 @if (Model.AllNews == null || !Model.AllNews.Any())
                 {
                     <div>
                         <h3 class="title marginTop2">Извините, но новостей в БД пока нет</h3>
                     </div>
                 }
-                else {
+                else
+                {
                     @foreach (var newItem in Model.AllNews)
                     {
                         <div>
@@ -69,14 +70,9 @@
                         </div>
                     }
                 }
-            </div>          
+            </div>
         </div>
     </div>
 </div>
-<script>
-    alert(
-      window.innerWidth + " x " +
-      window.innerHeight +
-      " DPR=" + window.devicePixelRatio
-    );
-</script>
+
+

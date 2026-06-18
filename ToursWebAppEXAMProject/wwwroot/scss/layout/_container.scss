@@ -6,15 +6,12 @@
     margin: 0 auto;
     max-width: 100%;
     width: 1200px;
-
-    @include mix.mobile {
-        min-height: 22em;
-    }
+    transition: min-height .3s;
 }
 
-container-header-active {
+.container-header-active {
     @include mix.mobile {
-        min-height: 22em;
+        min-height: 9.5em;
     }
 }
 

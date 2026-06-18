@@ -2,12 +2,12 @@
 @use '../mixins/mixins' as mix;
 
 @mixin page-template {
-    height: 550px;
+    height: 100vh;
     background-color: vars.$background-color_10;
 }
 
 @mixin header-page-template {
-    height: 500px;
+    height: 100vh;
     padding: 1em;
     margin: 0;
     overflow-y: scroll;
