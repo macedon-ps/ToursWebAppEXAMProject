@@ -24,9 +24,9 @@
                 {
                     @foreach (var newItem in Model.AllNews)
                     {
-                        <div>
+                        <div class="item">
                             <div class="titleImage">
-                                <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath" align="left" width="20%" height="20%">
+                                <img src="@newItem.TitleImagePath" alt="@newItem.TitleImagePath">
                             </div>
                             <div>
                                 <h2>@newItem.Name</h2>
@@ -53,9 +53,9 @@
                 {
                     @foreach (var blog in Model.AllBlogs)
                     {
-                        <div>
+                        <div class="item">
                             <div class="titleImage">
-                                <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath" align="left" width="20%" height="20%">
+                                <img src="@blog.TitleImagePath" alt="@blog.TitleImagePath">
                             </div>
                             <div>
                                 <h2>@blog.Name</h2>

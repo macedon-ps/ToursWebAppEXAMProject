@@ -32,6 +32,14 @@ h2 {
     text-transform: lowercase;
     font-size: 1.9em;
     letter-spacing: -1px;
+
+    @include mix.desktop {
+        font-size: 1.7em;
+    }
+
+    @include mix.mobile {
+        font-size: 1.4em;
+    }
 }
 
 h3 {
@@ -39,6 +47,10 @@ h3 {
     font-size: 1.2em;
     margin-bottom: 0.6em;
     font-weight: 500;
+
+    @include mix.mobile {
+        font-size: 1.1em;
+    }
 }
 
 h4 {
@@ -46,6 +58,10 @@ h4 {
     font-size: 1em;
     margin-bottom: 0.5em;
     font-weight: 500;
+
+    @include mix.mobile {
+        font-size: 0.9em;
+    }
 }
 
 p {

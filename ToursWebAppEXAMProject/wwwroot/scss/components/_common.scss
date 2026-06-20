@@ -15,6 +15,10 @@
     display: flex;
     margin-bottom: 1.2em;
 
+    @include mix.mobile {
+        font-size: 14px;
+    }
+
     a {
         margin-left: 0.6em;
     }
@@ -67,34 +71,6 @@
     width: 100%;
     margin-bottom: 0.5em;
     border-bottom: 2px solid white;
-}
-
-.titleImage {
-    max-width: 25%;
-
-    img {
-        @include tmp.img-template;
-    }
-}
-
-.titleImage25 {
-    max-width: 25%;
-}
-
-.titleImage40 {
-    max-width: 40%;
-
-    img {
-        @include tmp.img-template;
-    }
-}
-
-.titleImage50 {
-    max-width: 50%;
-
-    img {
-        @include tmp.img-template;
-    }
 }
 
 textarea {
@@ -159,8 +135,8 @@ textarea {
 }
 
 .displayFlexCol {
-    display: flex;
-    flex-direction: column;
+    /*display: flex;
+    flex-direction: column;*/
     margin-bottom: 0.5em;
 }
 

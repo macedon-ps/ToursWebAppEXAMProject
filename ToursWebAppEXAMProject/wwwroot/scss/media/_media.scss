@@ -66,14 +66,14 @@
         }
     }
 
-    #header {
+    /*#header {
         height: 76px;
 
         h1 {
             font-size: 2em;
             line-height: 76px;
         }
-    }
+    }*/
 
     #footer-wrapper {
         padding: 2em;
@@ -131,9 +131,9 @@
         background-color: vars.$background-color_6;
     }
 
-    #header {
+    /*#header {
         display: flex;
-    }
+    }*/
 
     .burger {
         display: block;
@@ -146,89 +146,7 @@
         margin-left: 1.5em;
     }
 
-    .aboutHeader {
-        @include tmp.header-page-980;
-    }
 
-    .homeButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .searchButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .editButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .supportButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .aboutButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .accountButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .usersButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .rolesButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .errorButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
-
-    .addCityButton {
-        a {
-            text-align: center;
-            margin-bottom: 0.5em;
-            padding: 5px;
-        }
-    }
 
     #titleBar {
         background-image: -moz-linear-gradient(top, #008dab, #007294);
@@ -299,18 +217,6 @@
 
     body {
         font-size: 13pt;
-    }
-
-    h2 {
-        font-size: 1.4em;
-    }
-
-    h3 {
-        font-size: 1.2em;
-    }
-
-    h4 {
-        font-size: 1em;
     }
 
     ul {

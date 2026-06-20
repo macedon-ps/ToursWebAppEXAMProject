@@ -49,6 +49,16 @@ h2 {
   font-size: 1.9em;
   letter-spacing: -1px;
 }
+@media (max-width: 1280px) {
+  h2 {
+    font-size: 1.7em;
+  }
+}
+@media (max-width: 736px) {
+  h2 {
+    font-size: 1.4em;
+  }
+}
 
 h3 {
   color: #283121;
@@ -56,12 +66,22 @@ h3 {
   margin-bottom: 0.6em;
   font-weight: 500;
 }
+@media (max-width: 736px) {
+  h3 {
+    font-size: 1.1em;
+  }
+}
 
 h4 {
   color: #283121;
   font-size: 1em;
   margin-bottom: 0.5em;
   font-weight: 500;
+}
+@media (max-width: 736px) {
+  h4 {
+    font-size: 0.9em;
+  }
 }
 
 p {
@@ -91,7 +111,7 @@ article:last-child {
   margin-bottom: 0;
 }
 
-.errorButton, .rolesButton, .usersButton, .accountButton, .aboutButton, .supportButton, .editButton, .searchButton, .homeButton {
+.homeButton {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -100,8 +120,12 @@ article:last-child {
   padding: 0.5em 1em;
   border-bottom: 2px solid white;
 }
-
-.errorButton a, .rolesButton a, .usersButton a, .accountButton a, .aboutButton a, .supportButton a, .editButton a, .searchButton a, .homeButton a {
+@media (max-width: 980px) {
+  .homeButton {
+    margin-top: 0;
+  }
+}
+.homeButton a {
   display: inline-block;
   padding: 10px 25px;
   color: white;
@@ -113,59 +137,372 @@ article:last-child {
   margin-right: 0.5em;
   margin-bottom: 1em;
 }
-
 @media (max-width: 980px) {
-  .homeButton {
-    margin-top: 0;
+  .homeButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
   }
 }
 
+.searchButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
+@media (max-width: 1280px) {
+  .searchButton {
+    padding: 8px 13px;
+  }
+}
 @media (max-width: 980px) {
   .searchButton {
     margin-top: 0;
   }
 }
+.searchButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .searchButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.searchButtonSubmit {
+  padding-top: 1em;
+  margin-bottom: 1em;
+}
+
+.editButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .editButton {
     margin-top: 0;
   }
 }
+.editButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .editButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.supportButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .supportButton {
     margin-top: 0;
   }
 }
+.supportButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .supportButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.aboutButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .aboutButton {
     margin-top: 0;
   }
 }
+.aboutButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .aboutButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
 .accountButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
   padding: 0;
   justify-content: center;
   margin-top: 0;
 }
+.accountButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .accountButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.usersButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .usersButton {
     margin-top: 0;
   }
 }
+.usersButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .usersButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.rolesButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .rolesButton {
     margin-top: 0;
   }
 }
+.rolesButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .rolesButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
 
+.errorButton {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #7dced8;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid white;
+}
 @media (max-width: 980px) {
   .errorButton {
     margin-top: 0;
   }
+}
+.errorButton a {
+  display: inline-block;
+  padding: 10px 25px;
+  color: white;
+  background-color: #008dab;
+  text-decoration: none;
+  width: 8em;
+  border-radius: 10px;
+  text-align: center;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+@media (max-width: 980px) {
+  .errorButton a {
+    text-align: center;
+    margin-bottom: 0.5em;
+    padding: 5px;
+  }
+}
+
+.item {
+  display: flow-root;
+}
+
+.titleImage {
+  float: left;
+  width: 25%;
+  margin: 0 0.8em 0.5em 0;
+}
+@media (max-width: 1280px) {
+  .titleImage {
+    width: 30%;
+  }
+}
+@media (max-width: 980px) {
+  .titleImage {
+    width: 40%;
+  }
+}
+@media (max-width: 736px) {
+  .titleImage {
+    width: 100%;
+  }
+}
+.titleImage img {
+  display: block;
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
+.titleImage25 {
+  max-width: 25%;
+}
+
+.titleImage40 {
+  max-width: 40%;
+}
+.titleImage40 img {
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
+.titleImage50 {
+  max-width: 50%;
+}
+.titleImage50 img {
+  width: 100%;
+  float: left;
+  object-fit: cover;
+  padding: 0.5em 0.5em 0.5em 0;
+}
+
+.new-foto {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.blog-foto {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.product-foto {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.image-photoGallery {
+  padding: 0.5em;
+  width: 100%;
+  object-fit: cover;
 }
 
 input {
@@ -213,6 +550,11 @@ table {
 .dateAdded {
   display: flex;
   margin-bottom: 1.2em;
+}
+@media (max-width: 736px) {
+  .dateAdded {
+    font-size: 14px;
+  }
 }
 .dateAdded a {
   margin-left: 0.6em;
@@ -264,40 +606,6 @@ table {
   width: 100%;
   margin-bottom: 0.5em;
   border-bottom: 2px solid white;
-}
-
-.titleImage {
-  max-width: 25%;
-}
-.titleImage img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-.titleImage25 {
-  max-width: 25%;
-}
-
-.titleImage40 {
-  max-width: 40%;
-}
-.titleImage40 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
-}
-
-.titleImage50 {
-  max-width: 50%;
-}
-.titleImage50 img {
-  width: 100%;
-  float: left;
-  object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
 }
 
 textarea {
@@ -357,8 +665,8 @@ textarea {
 }
 
 .displayFlexCol {
-  display: flex;
-  flex-direction: column;
+  /*display: flex;
+  flex-direction: column;*/
   margin-bottom: 0.5em;
 }
 
@@ -501,7 +809,7 @@ textarea {
   transition: min-height 0.3s;
 }
 
-@media (max-width: 736px) {
+@media (max-width: 980px) {
   .container-header-active {
     min-height: 9.5em;
   }
@@ -634,7 +942,7 @@ textarea {
 }
 @media (max-width: 736px) {
   .asidePage {
-    margin: 0.5em 0 0;
+    margin: 4.5em 0 0;
   }
 }
 
@@ -698,13 +1006,14 @@ textarea {
   ul.big-image-list img {
     width: 75px;
   }
-  #header {
-    height: 76px;
-  }
-  #header h1 {
-    font-size: 2em;
-    line-height: 76px;
-  }
+  /*#header {
+      height: 76px;
+
+      h1 {
+          font-size: 2em;
+          line-height: 76px;
+      }
+  }*/
   #footer-wrapper {
     padding: 2em;
   }
@@ -747,9 +1056,9 @@ textarea {
     background: linear-gradient top, #008dab, #007294;
     background-color: #007294;
   }
-  #header {
-    display: flex;
-  }
+  /*#header {
+      display: flex;
+  }*/
   .burger {
     display: block;
     font-size: 32px;
@@ -758,61 +1067,6 @@ textarea {
   a#logo {
     font-size: 24px;
     margin-left: 1.5em;
-  }
-  .aboutHeader {
-    background-size: 225%;
-    overflow: auto;
-    height: 100%;
-  }
-  .homeButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .searchButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .editButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .supportButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .aboutButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .accountButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .usersButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .rolesButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .errorButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
-  }
-  .addCityButton a {
-    text-align: center;
-    margin-bottom: 0.5em;
-    padding: 5px;
   }
   #titleBar {
     background-image: -moz-linear-gradient(top, #008dab, #007294);
@@ -870,15 +1124,6 @@ textarea {
   }
   body {
     font-size: 13pt;
-  }
-  h2 {
-    font-size: 1.4em;
-  }
-  h3 {
-    font-size: 1.2em;
-  }
-  h4 {
-    font-size: 1em;
   }
   ul {
     margin: 0 0 1em 0;
@@ -965,18 +1210,6 @@ textarea {
   margin: 5px 0 10px 0;
 }
 
-.new-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.blog-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
 .searchPage {
   height: 100vh;
   background-color: #7dced8;
@@ -1035,11 +1268,6 @@ textarea {
   }
 }
 
-.searchButtonSubmit {
-  padding-top: 1em;
-  margin-bottom: 1em;
-}
-
 .search-label {
   padding: 0.5em 1em;
   font-weight: 600;
@@ -1049,8 +1277,18 @@ textarea {
 .cardCountriesCities {
   display: flex;
   flex-direction: column;
-  width: 33%;
+  min-width: 33%;
   margin: 0 auto;
+}
+@incluse mix.tablet {
+  .cardCountriesCities {
+    min-width: 50%;
+  }
+}
+@media (max-width: 736px) {
+  .cardCountriesCities {
+    width: 100%;
+  }
 }
 
 /* Картка для полей ввода дат от и до */
@@ -1060,6 +1298,16 @@ textarea {
   width: 33%;
   margin: 0 auto;
 }
+@incluse mix.tablet {
+  .cardDate {
+    min-width: 50%;
+  }
+}
+@media (max-width: 736px) {
+  .cardDate {
+    width: 100%;
+  }
+}
 
 /* Картка для полей ввода численности дней и людей*/
 .cardItemsNumber {
@@ -1068,21 +1316,41 @@ textarea {
   width: 33%;
   margin: 0 auto;
 }
+@incluse mix.tablet {
+  .cardItemsNumber {
+    min-width: 70%;
+  }
+}
+@media (max-width: 736px) {
+  .cardItemsNumber {
+    width: 100%;
+  }
+}
 
 /* Картка submit */
 .cardSubmit {
   min-width: 5em;
+  display: flex;
+  justify-content: right;
+}
+@incluse mix.tablet {
+  .cardSubmit {
+    min-width: 90%;
+  }
+}
+@media (max-width: 736px) {
+  .cardSubmit {
+    width: 100%;
+  }
 }
 
 .searchCountriesList {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 2.2em;
 }
 @media (max-width: 736px) {
   .searchCountriesList {
-    width: 45%;
     margin: 0 auto;
   }
 }
@@ -1094,9 +1362,14 @@ textarea {
 }
 @media (max-width: 736px) {
   .searchCitiesList {
-    width: 45%;
     margin: 0 auto;
   }
+}
+
+#divForChangeCitiesSelectList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .searchDateFrom {
@@ -1104,7 +1377,6 @@ textarea {
   flex-direction: column;
   align-content: space-between;
   width: 100%;
-  padding-right: 2.5em;
 }
 
 .searchDateTo {
@@ -1119,12 +1391,22 @@ textarea {
   width: 100%;
   padding: 0 0.6em;
 }
+@media (max-width: 980px) {
+  .searchDaysNumber {
+    padding: 0;
+  }
+}
 
 .searchPeopleNumber {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 0 0.6em;
+}
+@media (max-width: 980px) {
+  .searchPeopleNumber {
+    padding: 0;
+  }
 }
 
 .searchMap {
@@ -1190,12 +1472,6 @@ textarea {
 }
 .searchDelete a {
   margin-left: 0.6em;
-}
-
-.product-foto {
-  width: 100%;
-  aspect-ratio: 3/2;
-  object-fit: cover;
 }
 
 .citiesList {
@@ -1425,12 +1701,6 @@ select.languageTo {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-}
-
-.image-photoGallery {
-  padding: 0.5em;
-  width: 100%;
-  object-fit: cover;
 }
 
 .delete-photo {

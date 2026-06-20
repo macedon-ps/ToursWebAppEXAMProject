@@ -1,0 +1,68 @@
+﻿@use '../base/variables' as vars;
+@use '../base/templates' as tmp;
+@use '../mixins/mixins' as mix;
+
+.item {
+    display: flow-root;
+}
+
+.titleImage {
+    float: left;
+    width: 25%;
+    margin: 0 0.8em 0.5em 0;
+
+    @include mix.desktop {
+        width: 30%;
+    }
+
+    @include mix.tablet {
+       width: 40%;
+    }
+
+    @include mix.mobile {
+        width: 100%;
+    }
+
+    img {
+        display: block;
+        @include tmp.img-template;
+    }
+}
+
+.titleImage25 {
+    max-width: 25%;
+}
+
+.titleImage40 {
+    max-width: 40%;
+
+    img {
+        @include tmp.img-template;
+    }
+}
+
+.titleImage50 {
+    max-width: 50%;
+
+    img {
+        @include tmp.img-template;
+    }
+}
+
+.new-foto {
+    @include tmp.foto-template;
+}
+
+.blog-foto {
+    @include tmp.foto-template;
+}
+
+.product-foto {
+    @include tmp.foto-template;
+}
+
+.image-photoGallery {
+    padding: 0.5em;
+    width: 100%;
+    object-fit: cover;
+}

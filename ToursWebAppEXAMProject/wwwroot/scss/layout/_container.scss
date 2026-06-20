@@ -10,7 +10,7 @@
 }
 
 .container-header-active {
-    @include mix.mobile {
+    @include mix.tablet {
         min-height: 9.5em;
     }
 }

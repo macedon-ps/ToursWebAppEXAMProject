@@ -42,11 +42,6 @@
     }
 }
 
-.searchButtonSubmit {
-    padding-top: 1em;
-    margin-bottom: 1em;
-}
-
 .search-label {
     padding: 0.5em 1em;
     font-weight: 600;
@@ -56,8 +51,17 @@
 .cardCountriesCities {
     display: flex;
     flex-direction: column;
-    width: 33%;
+    min-width: 33%;
     margin: 0 auto;
+    
+    @incluse mix.tablet{
+        min-width: 50%;
+    }
+
+    @include mix.mobile{
+        width: 100%;
+    }
+
 }
 
 /* Картка для полей ввода дат от и до */
@@ -66,6 +70,14 @@
     flex-direction: column;
     width: 33%;
     margin: 0 auto;
+
+    @incluse mix.tablet {
+        min-width: 50%;
+    }
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 /* Картка для полей ввода численности дней и людей*/
@@ -74,11 +86,29 @@
     flex-direction: column;
     width: 33%;
     margin: 0 auto;
+
+    @incluse mix.tablet {
+        min-width: 70%;
+    }
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 /* Картка submit */
 .cardSubmit {
     min-width: 5em;
+    display: flex;
+    justify-content: right;
+
+    @incluse mix.tablet {
+        min-width: 90%;
+    }
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 .searchCountriesList {
@@ -86,10 +116,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 2.2em;
-
+    
     @include mix.mobile {
-        width: 45%;
         margin: 0 auto;
     }
 }
@@ -100,9 +128,14 @@
     width: 100%;
 
     @include mix.mobile {
-        width: 45%;
         margin: 0 auto;
     }
+}
+
+#divForChangeCitiesSelectList{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .searchDateFrom {
@@ -110,7 +143,6 @@
     flex-direction: column;
     align-content: space-between;
     width: 100%;
-    padding-right: 2.5em;
 }
 
 .searchDateTo {
@@ -124,6 +156,10 @@
     flex-direction: column;
     width: 100%;
     padding: 0 0.6em;
+
+    @include mix.tablet {
+        padding: 0;
+    }
 }
 
 .searchPeopleNumber {
@@ -131,6 +167,10 @@
     flex-direction: column;
     width: 100%;
     padding: 0 0.6em;
+
+    @include mix.tablet {
+        padding: 0;
+    }
 }
 
 .searchMap {
@@ -184,10 +224,6 @@
     a {
         margin-left: 0.6em;
     }
-}
-
-.product-foto {
-    @include tmp.foto-template;
 }
 
 .citiesList {

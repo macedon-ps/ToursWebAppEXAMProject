@@ -2,132 +2,170 @@
 @use '../base/templates' as tmp;
 @use '../mixins/mixins' as mix;
 
-%button {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-color: vars.$background-color_10;
-    margin-top: 1em;
-    padding: 0.5em 1em;
-    border-bottom: 2px solid white;
-}
-
-%button_link {
-    display: inline-block;
-    padding: 10px 25px;
-    color: vars.$color_7;
-    background-color: vars.$background-color_2;
-    text-decoration: none;
-    width: 8em;
-    border-radius: 10px;
-    text-align: center;
-    margin-right: 0.5em;
-    margin-bottom: 1em;
-}
-
 .homeButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .searchButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+    @include tmp.button-template;
+
+    @include mix.desktop {
+        padding: 8px 13px;
+    }
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
-.editButton {
-    a {
-        @extend %button_link;
-    }
+.searchButtonSubmit {
+    padding-top: 1em;
+    margin-bottom: 1em;
+}
 
-    @extend %button;
+.editButton {
+
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .supportButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .aboutButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .accountButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
     padding: 0;
     justify-content: center;
     margin-top: 0;
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
+    }
 }
 
 .usersButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .rolesButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
 
 .errorButton {
-    a {
-        @extend %button_link;
-    }
 
-    @extend %button;
+
+    @include tmp.button-template;
 
     @include mix.tablet {
         margin-top: 0;
+    }
+
+    a {
+        @include tmp.button-link-template;
+
+        @include mix.tablet {
+            @include tmp.button-link-tablet-template;
+        }
     }
 }
