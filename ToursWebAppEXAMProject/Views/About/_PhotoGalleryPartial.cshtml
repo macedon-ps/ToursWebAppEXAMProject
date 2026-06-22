@@ -8,16 +8,16 @@
     <div>
         <h4 class="short-description">@Model.PhotoGalleryShortDescription</h4>
     </div>
-    <div class="titleImage40">
-        <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" class="image-editAboutPage" />
+    <div class="titleImage">
+        <img src="@Model.PhotoGalleryImagePath" alt="@Model.PhotoGalleryImagePath" />
     </div>
     <div class="full-description">@Html.Raw(@Model.PhotoGalleryFullDescription)</div>
     <div class="photoGallery">
         
         @foreach (var image in Model.CollectionImages)
         {
-            <div class="titleImage25">
-                <img src="@image.ImagePath" alt="@image.ImagePath" class="image-photoGallery" />
+            <div class="titleImage">
+                <img src="@image.ImagePath" alt="@image.ImagePath" />
             </div>
         }
     </div>

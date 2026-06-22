@@ -65,7 +65,13 @@
     width: 100%;
     float: left;
     object-fit: cover;
-    padding: 0.5em 0.5em 0.5em 0;
+    padding: 0.5em;
+}
+
+@mixin img-edit-about-template {
+    width: 100%;
+    object-fit: cover;
+    padding: 0.5em;
 }
 
 @mixin button-template {

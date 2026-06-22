@@ -9,14 +9,13 @@
 .titleImage {
     float: left;
     width: 25%;
-    margin: 0 0.8em 0.5em 0;
 
     @include mix.desktop {
         width: 30%;
     }
 
     @include mix.tablet {
-       width: 40%;
+        width: 40%;
     }
 
     @include mix.mobile {
@@ -26,18 +25,35 @@
     img {
         display: block;
         @include tmp.img-template;
+
+        @include mix.mobile {
+            padding: 0.5em 0;
+        }
     }
 }
 
-.titleImage25 {
-    max-width: 25%;
-}
+.titleImageEditAbout {
+    width: 25%;
 
-.titleImage40 {
-    max-width: 40%;
+    @include mix.desktop {
+        width: 30%;
+    }
+
+    @include mix.tablet {
+        width: 40%;
+    }
+
+    @include mix.mobile {
+        width: 100%;
+    }
 
     img {
-        @include tmp.img-template;
+        display: block;
+        @include tmp.img-edit-about-template;
+
+        @include mix.mobile {
+            padding: 0.5em 0;
+        }
     }
 }
 
@@ -59,10 +75,4 @@
 
 .product-foto {
     @include tmp.foto-template;
-}
-
-.image-photoGallery {
-    padding: 0.5em;
-    width: 100%;
-    object-fit: cover;
 }

@@ -8,12 +8,10 @@
     <div>
         <h4 class="short-description">@Model.FeedbackShortDescription</h4>
     </div>
-    <div class="displayFlexRow">
-        <div class="titleImage40">
-            <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" class="image-editAboutPage" />
-        </div>
-        <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
+    <div class="titleImage">
+        <img src="@Model.FeedbackImagePath" alt="@Model.FeedbackImagePath" />
     </div>
+    <div class="full-description">@Html.Raw(@Model.FeedbackFullDescription)</div>
     <hr class="horizontal-line" />
 </div>
 

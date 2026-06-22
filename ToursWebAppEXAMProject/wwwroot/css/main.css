@@ -432,7 +432,6 @@ article:last-child {
 .titleImage {
   float: left;
   width: 25%;
-  margin: 0 0.8em 0.5em 0;
 }
 @media (max-width: 1280px) {
   .titleImage {
@@ -454,21 +453,42 @@ article:last-child {
   width: 100%;
   float: left;
   object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
+  padding: 0.5em;
+}
+@media (max-width: 736px) {
+  .titleImage img {
+    padding: 0.5em 0;
+  }
 }
 
-.titleImage25 {
-  max-width: 25%;
+.titleImageEditAbout {
+  width: 25%;
 }
-
-.titleImage40 {
-  max-width: 40%;
+@media (max-width: 1280px) {
+  .titleImageEditAbout {
+    width: 30%;
+  }
 }
-.titleImage40 img {
+@media (max-width: 980px) {
+  .titleImageEditAbout {
+    width: 40%;
+  }
+}
+@media (max-width: 736px) {
+  .titleImageEditAbout {
+    width: 100%;
+  }
+}
+.titleImageEditAbout img {
+  display: block;
   width: 100%;
-  float: left;
   object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
+  padding: 0.5em;
+}
+@media (max-width: 736px) {
+  .titleImageEditAbout img {
+    padding: 0.5em 0;
+  }
 }
 
 .titleImage50 {
@@ -478,7 +498,7 @@ article:last-child {
   width: 100%;
   float: left;
   object-fit: cover;
-  padding: 0.5em 0.5em 0.5em 0;
+  padding: 0.5em;
 }
 
 .new-foto {
@@ -496,12 +516,6 @@ article:last-child {
 .product-foto {
   width: 100%;
   aspect-ratio: 3/2;
-  object-fit: cover;
-}
-
-.image-photoGallery {
-  padding: 0.5em;
-  width: 100%;
   object-fit: cover;
 }
 
@@ -1652,12 +1666,6 @@ select.languageTo {
     overflow: auto;
     height: 100%;
   }
-}
-
-.image-editAboutPage {
-  width: 100%;
-  margin: 0.5em;
-  padding-right: 0.5em;
 }
 
 .short-description {

@@ -71,8 +71,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="MainImagePath"></label>
                     <h3>@Model.MainImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.MainImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.MainImagePath" alt="Титульная картинка" />
                     </div>
                     <input type="file" asp-for="MainImagePath" accept="image/*" />
                     <span asp-validation-for="MainImagePath"></span>
@@ -97,8 +97,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="AboutImagePath"></label>
                     <h3>@Model.AboutImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.AboutImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.AboutImagePath" alt="Титульная картинка" />
                     </div>
                     <input type="file" asp-for="AboutImagePath" value="" accept="image/*" />
                     <span asp-validation-for="AboutImagePath"></span>
@@ -123,8 +123,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="DetailsImagePath"></label>
                     <h3>@Model.DetailsImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.DetailsImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.DetailsImagePath" alt="Титульная картинка" />
                     </div>
                     <input type="file" asp-for="DetailsImagePath" accept="image/*" />
                     <span asp-validation-for="DetailsImagePath"></span>
@@ -149,8 +149,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="OperationModeImagePath"></label>
                     <h3>@Model.OperationModeImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.OperationModeImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.OperationModeImagePath" alt="Титульная картинка" />
                     </div>
                     <input type="file" asp-for="OperationModeImagePath" accept="image/*" />
                     <span asp-validation-for="OperationModeImagePath"></span>
@@ -175,8 +175,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="PhotoGalleryImagePath"></label>
                     <h3>@Model.PhotoGalleryImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.PhotoGalleryImagePath" alt="Титульная картинка" />
                     </div>
                     <h4>Изменить титульную картинку для PhotoGallery</h4>
                     <input type="file" asp-for="PhotoGalleryImagePath" accept="image/*" />
@@ -189,8 +189,8 @@
                 <div class="photoGallery">
                     @foreach (var image in Model.CollectionImages)
                     {
-                        <div class="titleImage25 mb2">
-                            <img src="@image.ImagePath" alt="@image.ImagePath" class="image-photoGallery" />
+                        <div class="titleImage">
+                            <img src="@image.ImagePath" alt="@image.ImagePath" />
                             <a asp-controller="About" asp-action="DeletePicture" asp-route-relativePathToFile="@image.ImagePath" class="delete-photo">Delete photo</a>
                         </div>
                     }
@@ -214,8 +214,8 @@
                 <div class="displayFlexCol">
                     <label asp-for="FeedbackImagePath"></label>
                     <h3>@Model.FeedbackImagePath</h3>
-                    <div class="titleImage">
-                        <img src="@Model.FeedbackImagePath" alt="Титульная картинка" align="left" width="50%" />
+                    <div class="titleImageEditAbout">
+                        <img src="@Model.FeedbackImagePath" alt="Титульная картинка" />
                     </div>
                     <input type="file" asp-for="FeedbackImagePath" accept="image/*" />
                     <span asp-validation-for="FeedbackImagePath"></span>
