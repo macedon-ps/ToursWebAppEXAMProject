@@ -17,14 +17,25 @@ html, body, header, menu, nav, footer, aside, h1, h2, h3, h4, h5, h6, p, a, div,
 }
 
 body {
+  min-height: 100%;
+  margin: 0;
   line-height: 1;
-  -webkit-text-size-adjust: none;
   font-size: 13.5pt;
   background-image: url(../background/blue-water.jpg);
   font-family: url(/webfonts/UbuntuCondensed-Regular.ttf);
   color: #878e83;
   letter-spacing: -1px;
   user-select: none;
+}
+
+#page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
 }
 
 h1 {
@@ -66,22 +77,12 @@ h3 {
   margin-bottom: 0.6em;
   font-weight: 500;
 }
-@media (max-width: 736px) {
-  h3 {
-    font-size: 1.1em;
-  }
-}
 
 h4 {
   color: #283121;
   font-size: 1em;
   margin-bottom: 0.5em;
   font-weight: 500;
-}
-@media (max-width: 736px) {
-  h4 {
-    font-size: 0.9em;
-  }
 }
 
 p {
@@ -926,13 +927,24 @@ textarea {
 }
 
 .asidePage {
-  min-height: 560px;
   background-color: #7dced8;
-  margin: 1em 0 0 1em;
-  padding: 1em;
+  margin-left: 1em;
+  padding: 2em 1em 4em;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 980px) {
+  .asidePage {
+    margin: 0;
+    padding: 0.5em;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
 }
 .asidePage > div {
   display: flex;
+  flex-direction: column;
   margin-bottom: 0.5em;
 }
 .asidePage > div > a {
@@ -949,19 +961,14 @@ textarea {
 .asidePage > h2 {
   margin-bottom: 0.2em;
 }
-@media (max-width: 980px) {
-  .asidePage {
-    margin: 12.5em 0 0;
-  }
-}
-@media (max-width: 736px) {
-  .asidePage {
-    margin: 4.5em 0 0;
-  }
-}
 
 #footer-wrapper {
   background-color: #ced0b7;
+}
+@media (max-width: 736px) {
+  #footer-wrapper {
+    padding: 0;
+  }
 }
 
 #copyright {
@@ -969,7 +976,12 @@ textarea {
   color: #A6A88F;
   border-top: solid 1px #0693ba;
   padding: 0.5em 0 0.5em 0;
-  margin: 0.5em 0 0.5em 0;
+  margin: 0.5em 0;
+}
+@media (max-width: 736px) {
+  #copyright {
+    line-height: 1.5em;
+  }
 }
 #copyright a {
   color: #2240c7;
@@ -1028,13 +1040,6 @@ textarea {
           line-height: 76px;
       }
   }*/
-  #footer-wrapper {
-    padding: 2em;
-  }
-  #copyright {
-    padding: 1em 0 0 0;
-    margin: 2em 0 0 0;
-  }
 }
 @media screen and (max-width: 980px) {
   .container {
@@ -1157,42 +1162,23 @@ textarea {
   .blog-post-image {
     width: 100%;
   }
-  #footer-wrapper {
-    padding: 40px 0;
-  }
-  #copyright {
-    text-align: center;
-    color: #A6A88F;
-    padding: 30px 0 0 0;
-    font-size: 0.8em;
-    line-height: 1.5em;
-  }
-  #copyright a {
-    color: #A6A88F;
-  }
 }
 .homePage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
+  background-image: url(../background/Home_2.png);
 }
 
 .homeHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url(../background/Home_2.png);
-}
-@media (max-width: 980px) {
-  .homeHeader {
-    background-size: 225%;
-    overflow: auto;
-    height: 100%;
-  }
+  background-repeat: repeat;
 }
 
 .homeHeaderOne {
@@ -1225,22 +1211,22 @@ textarea {
 }
 
 .searchPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
-  background-image: url(../background/Search.png);
+  background-image: url(../background/Search_2.png);
 }
 
 .searchHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: 100%;
+  background-repeat: repeat;
   padding: 0 1em 1em;
-  background-image: url(../background/Search_2.png);
 }
 @media (max-width: 980px) {
   .searchHeader {
@@ -1513,21 +1499,21 @@ textarea {
 }
 
 .editPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
-  background-image: url(../background/Edit.png);
+  background-image: url(../background/Edit_2.png);
 }
 
 .editHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url(../background/Edit_2.png);
+  background-repeat: repeat;
 }
 @media (max-width: 980px) {
   .editHeader {
@@ -1550,21 +1536,21 @@ textarea {
 }
 
 .supportPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
-  background-image: url(../background/Support.png);
+  background-image: url(../background/Support_2.png);
 }
 
 .supportHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url(../background/Support_2.png);
+  background-repeat: repeat;
 }
 @media (max-width: 980px) {
   .supportHeader {
@@ -1645,20 +1631,21 @@ select.languageTo {
 }
 
 .aboutPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
+  background-image: url(../background/About_2.png);
 }
 
 .aboutHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-image: url(../background/About_2.png);
+  background-repeat: repeat;
 }
 @media (max-width: 980px) {
   .aboutHeader {
@@ -1691,10 +1678,13 @@ select.languageTo {
 
 .iconLink {
   display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .iconLink > h4 {
   margin-left: 1em;
   margin-bottom: 1em;
+  min-width: 5em;
 }
 
 .iconImage {
@@ -1722,15 +1712,17 @@ select.languageTo {
 }
 
 .accountPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
 }
 
 .accountHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   margin-top: 1em;
@@ -1772,35 +1764,43 @@ select.languageTo {
 }
 
 .rolesPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
 }
 
 .rolesHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }
 
 .usersPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
 }
 
 .usersHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }
 
 .errorPage {
-  height: 100vh;
+  padding: 1em;
+  background-image: url(...);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
   background-color: #7dced8;
   margin: 1em 0 0 0;
   padding: 1em;
@@ -1809,10 +1809,8 @@ select.languageTo {
 }
 
 .errorHeader {
-  height: 100vh;
   padding: 1em;
   margin: 0;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }

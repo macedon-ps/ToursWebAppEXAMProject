@@ -3,14 +3,24 @@
 @use '../mixins/mixins' as mix;
 
 body {
+    min-height: 100%;
+    margin: 0;
     line-height: 1;
-    -webkit-text-size-adjust: none;
     font-size: 13.5pt;
     background-image: url(../background/blue-water.jpg);
     font-family: vars.$font-family_1;
     color: vars.$color_2;
     letter-spacing: -1px;
     user-select: none;
+}
+#page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
 }
 
 h1 {
@@ -47,10 +57,6 @@ h3 {
     font-size: 1.2em;
     margin-bottom: 0.6em;
     font-weight: 500;
-
-    @include mix.mobile {
-        font-size: 1.1em;
-    }
 }
 
 h4 {
@@ -58,10 +64,6 @@ h4 {
     font-size: 1em;
     margin-bottom: 0.5em;
     font-weight: 500;
-
-    @include mix.mobile {
-        font-size: 0.9em;
-    }
 }
 
 p {

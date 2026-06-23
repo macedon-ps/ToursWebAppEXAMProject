@@ -4,13 +4,13 @@
 
 .aboutPage {
     @include tmp.page-template;
+    background-image: url(../background/About_2.png);
 }
 
 .aboutHeader {
     @include tmp.header-page-template;
     @include tmp.background-norepeat-template;
-    background-image: url(../background/About_2.png);
-
+    
     @include mix.tablet {
         @include tmp.header-page-980;
     }
@@ -40,10 +40,13 @@
 
 .iconLink {
     display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 
     > h4 {
         margin-left: 1em;
         margin-bottom: 1em;
+        min-width: 5em;
     }
 }
 

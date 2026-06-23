@@ -4,14 +4,13 @@
 
 .editPage {
     @include tmp.page-template;
-    background-image: url(../background/Edit.png);
+    background-image: url(../background/Edit_2.png);
 }
 
 .editHeader {
     @include tmp.header-page-template;
     @include tmp.background-norepeat-template;
-    background-image: url(../background/Edit_2.png);
-
+    
     @include mix.tablet {
         @include tmp.header-page-980;
     }

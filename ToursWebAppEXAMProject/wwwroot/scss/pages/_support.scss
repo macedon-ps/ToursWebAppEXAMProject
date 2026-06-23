@@ -4,14 +4,13 @@
 
 .supportPage {
     @include tmp.page-template;
-    background-image: url(../background/Support.png);
+    background-image: url(../background/Support_2.png);
 }
 
 .supportHeader {
     @include tmp.header-page-template;
     @include tmp.background-norepeat-template;
-    background-image: url(../background/Support_2.png);
-
+    
     @include mix.tablet {
         @include tmp.header-page-980;
     }

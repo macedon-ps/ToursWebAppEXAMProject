@@ -2,22 +2,26 @@
 @use '../mixins/mixins' as mix;
 
 @mixin page-template {
-    height: 100vh;
+    padding: 1em;
+    background-image: url(...);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
     background-color: vars.$background-color_10;
+
 }
 
 @mixin header-page-template {
-    height: 100vh;
     padding: 1em;
     margin: 0;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
 }
 
 @mixin background-norepeat-template {
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-repeat: repeat;
+    //background-position: top center;
+    //background-size: contain;
 }
 
 @mixin header-page-unscroll-template {

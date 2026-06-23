@@ -4,16 +4,12 @@
 
 .homePage {
     @include tmp.page-template;
+    background-image: url(../background/Home_2.png);
 }
 
 .homeHeader {
     @include tmp.header-page-template;
     @include tmp.background-norepeat-template;
-    background-image: url(../background/Home_2.png);
-
-    @include mix.tablet {
-        @include tmp.header-page-980;
-    }
 }
 
 .homeHeaderOne {

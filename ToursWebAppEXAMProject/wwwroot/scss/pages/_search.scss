@@ -5,15 +5,14 @@
 
 .searchPage {
     @include tmp.page-template;
-    background-image: url(../background/Search.png);
+    background-image: url(../background/Search_2.png);
 }
 
 .searchHeader {
     @include tmp.header-page-template;
     @include tmp.background-norepeat-template;
     padding: 0 1em 1em;
-    background-image: url(../background/Search_2.png);
-
+    
     @include mix.tablet {
         @include tmp.header-page-980;
     }

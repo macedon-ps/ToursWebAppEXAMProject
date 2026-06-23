@@ -3,13 +3,23 @@
 @use '../mixins/mixins' as mix;
 
 .asidePage {
-    min-height: 560px;
     background-color: vars.$background-color_10;
-    margin: 1em 0 0 1em;
-    padding: 1em;
+    margin-left: 1em;
+    padding: 2em 1em 4em;
+    display: flex;
+    flex-direction: column;
+
+    @include mix.tablet {
+        margin: 0;
+        padding: 0.5em;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
 
     > div {
         display: flex;
+        flex-direction: column;
         margin-bottom: 0.5em;
 
         > a {
@@ -29,13 +39,5 @@
 
     > h2 {
         margin-bottom: 0.2em;
-    }
-
-    @include mix.tablet {
-        margin: 12.5em 0 0;
-    }
-
-    @include mix.mobile {
-        margin: 4.5em 0 0;
     }
 }
