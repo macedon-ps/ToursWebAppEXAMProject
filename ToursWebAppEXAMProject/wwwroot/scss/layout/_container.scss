@@ -19,4 +19,16 @@
     margin: 0 auto;
     max-width: 100%;
     width: 1200px;
+
+    @inclide mix.superdesktop {
+        width: 1200px;
+    }
+
+    @include mix.desktop {
+        width: calc(100% - 70px);
+    }
+
+    @include mix.tablet {
+        width: 100%;
+    }
 }

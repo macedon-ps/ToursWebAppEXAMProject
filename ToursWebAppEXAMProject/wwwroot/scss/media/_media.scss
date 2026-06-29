@@ -2,144 +2,12 @@
 @use '../base/templates' as tmp;
 @use '../mixins/mixins' as mix;
 
-@media screen and (max-width: 1680px) {
-    .container {
-        width: 1200px;
-    }
-
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        box-sizing: border-box;
-        align-items: stretch;
-
-        > .col-2 {
-            width: 16.66667%;
-        }
-
-        > .col-6 {
-            width: 50%;
-        }
-
-        > .col-10 {
-            width: 83.33333%;
-        }
-
-        > .col-12 {
-            width: 100%;
-        }
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    .container {
-        width: calc(100% - 70px);
-    }
-
-    .row {
-        > .col-2 {
-            width: 16.66667%;
-        }
-
-        > .col-6 {
-            width: 50%;
-        }
-
-        > .col-10 {
-            width: 83.33333%;
-        }
-
-        > .col-12 {
-            width: 100%;
-        }
-    }
-
-    ul.small-image-list {
-        img {
-            width: 50px;
-        }
-    }
-
-    ul.big-image-list {
-        img {
-            width: 75px;
-        }
-    }
-
-    /*#header {
-        height: 76px;
-
-        h1 {
-            font-size: 2em;
-            line-height: 76px;
-        }
-    }*/
-
-    
-}
-
 @media screen and (max-width: 980px) {
-    .container {
-        width: 100%;
-    }
-
-    .row {
-        > .col-2-medium {
-            width: 16.66667%;
-        }
-
-        > .col-6-medium {
-            width: 50%;
-        }
-
-        > .col-10-medium {
-            width: 83.33333%;
-        }
-
-        > .col-12-medium {
-            width: 100%;
-        }
-    }
-
-    html {
-        overflow-x: hidden;
-    }
-
-    body {
-        overflow-x: hidden;
-    }
-
-    #page-wrapper {
-        padding-top: 44px;
-        display: flex;
-        flex-direction: column;
-        backface-visibility: hidden;
-        transition: transform 0.5s ease;
-        padding-bottom: 1px;
-    }
-
-    #header-wrapper {
-
-        @include mix.blue-grey-gradient;
-        background-color: vars.$background-color_6;
-    }
-
-    /*#header {
-        display: flex;
-    }*/
-
-    .burger {
-        display: block;
-        font-size: 32px;
-        z-index: 1001;
-    }
-
+    
     a#logo {
         font-size: 24px;
         margin-left: 1.5em;
     }
-
-
 
     #titleBar {
         background-image: -moz-linear-gradient(top, #008dab, #007294);
@@ -198,20 +66,6 @@
 }
 
 @media screen and (max-width: 736px) {
-    .container {
-        width: 100%;
-    }
-
-    .row {
-        > .col-12-medium {
-            width: 100%;
-        }
-    }
-
-    body {
-        font-size: 13pt;
-    }
-
     ul {
         margin: 0 0 1em 0;
 
@@ -222,21 +76,10 @@
         }
     }
 
-    article.blog-post {
-        .comments {
-            display: block;
-            position: relative;
-            top: -0.5em;
-            margin: 0 0 0.5em 0;
-        }
-    }
-
     .button {
         font-size: 1em;
     }
 
-    .blog-post-image {
-        width: 100%;
-    }
+    
 
 }

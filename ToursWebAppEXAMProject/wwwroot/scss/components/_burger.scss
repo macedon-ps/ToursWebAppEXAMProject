@@ -7,4 +7,10 @@
     background: none;
     border: none;
     cursor: pointer;
+
+    @include mix.tablet {
+        display: block;
+        font-size: 32px;
+        z-index: 1001;
+    }
 }

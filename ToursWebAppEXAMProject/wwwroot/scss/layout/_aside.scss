@@ -10,7 +10,7 @@
     flex-direction: column;
 
     @include mix.tablet {
-        margin: 0;
+        margin-left: 0;
         padding: 0.5em;
         flex-direction: row;
         flex-wrap: wrap;

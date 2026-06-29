@@ -5,6 +5,8 @@
 .row {
     display: flex;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: stretch;
 
     @include mix.mobile {
         flex-direction: column;
@@ -12,25 +14,29 @@
 }
 
 .displayFlex {
-
+    display: flex;
 }
 
 .col-2 {
     width: 16.666%;
 
-    @include mix.mobile {
+    @include mix.tablet {
         width: 100%;
     }
 }
 
 .col-6 {
     width: 50%;
+
+    @include mix.mobile {
+        width: 100%;
+    }
 }
 
 .col-10 {
     width: 83.333%;
 
-    @include mix.mobile {
+    @include mix.tablet {
         width: 100%;
     }
 }

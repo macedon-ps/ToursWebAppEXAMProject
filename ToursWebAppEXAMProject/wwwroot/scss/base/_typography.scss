@@ -2,6 +2,12 @@
 @use 'templates' as tmp;
 @use '../mixins/mixins' as mix;
 
+html {
+    @include mix.tablet {
+        overflow-x: hidden;
+    }
+}
+
 body {
     min-height: 100%;
     margin: 0;
@@ -12,11 +18,26 @@ body {
     color: vars.$color_2;
     letter-spacing: -1px;
     user-select: none;
+
+    @include mix.tablet {
+        overflow-x: hidden;
+    }
+
+    @include mix.mobile {
+        font-size: 13pt;
+    }
 }
 #page-wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    @include mix.tablet {
+        padding-top: 44px;
+        padding-bottom: 1px;
+        backface-visibility: hidden;
+        transition: transform 0.5s ease;
+    }
 }
 
 .main-content {

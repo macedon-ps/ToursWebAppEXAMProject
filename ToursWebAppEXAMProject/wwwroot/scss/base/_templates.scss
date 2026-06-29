@@ -8,7 +8,7 @@
     background-position: top center;
     background-size: cover;
     background-color: vars.$background-color_10;
-
+    min-height: 100%;
 }
 
 @mixin header-page-template {
@@ -20,8 +20,6 @@
 
 @mixin background-norepeat-template {
     background-repeat: repeat;
-    //background-position: top center;
-    //background-size: contain;
 }
 
 @mixin header-page-unscroll-template {
@@ -33,11 +31,9 @@
 }
 
 @mixin header-page-one-template {
-    height: 500px;
     background-color: vars.$background-color_10;
     padding: 1em;
     margin: 0;
-    overflow-y: scroll;
 }
 
 @mixin header-page-980 {
