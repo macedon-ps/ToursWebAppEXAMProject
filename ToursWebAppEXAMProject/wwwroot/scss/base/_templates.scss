@@ -83,8 +83,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     background-color: vars.$background-color_10;
-    margin-top: 1em;
-    padding: 0.5em 1em;
+    padding: 0.5em;
     border-bottom: 2px solid white;
 }
 
@@ -97,12 +96,10 @@
     width: 8em;
     border-radius: 10px;
     text-align: center;
-    margin-right: 0.5em;
-    margin-bottom: 1em;
+    margin: 0.2em auto;
 }
 
 @mixin button-link-tablet-template {
     text-align: center;
-    margin-bottom: 0.5em;
     padding: 5px;
 }    

@@ -4,14 +4,14 @@
 
 .container-header {
     margin: 0 auto;
-    max-width: 100%;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     transition: min-height .3s;
 }
 
 .container-header-active {
     @include mix.tablet {
-        min-height: 9.5em;
+        min-height: 10.3em;
     }
 }
 
